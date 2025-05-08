@@ -1,0 +1,14 @@
+﻿@page
+@using Socios.Web.Areas.Interfaces.Pages.Definiciones
+@model IndexModel
+@{
+}
+<div id="definiciones-app">
+    <definiciones-crud>
+
+    </definiciones-crud>
+</div>
+
+@section Scripts {
+    <script src="@Url.Content("~/bundle/Interfaces/Definiciones.js")" asp-append-version="true"></script>
+}

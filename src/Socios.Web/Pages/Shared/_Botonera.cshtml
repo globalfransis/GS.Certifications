@@ -1,0 +1,19 @@
+<div class="row justify-content-around mt-5">
+    @if (Model.Modules is not null)
+    {
+        @foreach (var module in Model.Modules)
+        {
+            <div class="col-md-4 mb-4">
+                <form method="post" asp-page-handler="ProcessRole">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="rolIdm" value="@module.RoleId" />
+                    <div class="custom-card" onclick="this.parentElement.submit()">
+                        <div class="custom-card-body">
+                            <h5 class="custom-card-title">@module.ModuleName</h5>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+    }
+</div>

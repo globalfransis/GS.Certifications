@@ -43,7 +43,7 @@ public class EmailProcessorCommand : IRequest<EmailProcessorResultDto>
 
         public EmailProcessorCommandHandler(
             ICertificationsDbContext dbContext,
-            IEmailInvoiceService emailInvoiceService,
+            //IEmailInvoiceService emailInvoiceService,
             IComprobanteService comprobanteService,
             IEmpresaPortalService empresaPortalService,
             IWebFileTransferServiceBuilder<StorageTypeGSFWFTS,
@@ -51,7 +51,7 @@ public class EmailProcessorCommand : IRequest<EmailProcessorResultDto>
             ILogger<EmailProcessorCommandHandler> logger)
         {
             _dbContext = dbContext;
-            _emailInvoiceService = emailInvoiceService;
+            //_emailInvoiceService = emailInvoiceService;
             _comprobanteService = comprobanteService;
             _empresasPortalService = empresaPortalService;
             _fileTransferServiceBuilder = fileTransferServiceBuilder;

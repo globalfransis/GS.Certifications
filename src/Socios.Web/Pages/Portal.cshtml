@@ -1,0 +1,19 @@
+﻿@page
+@using Socios.Web.Pages
+@model PortalModel
+
+@section BackButton { }
+<div class="mt-1 col main-content">
+    <div class="col-12">
+        <div class="card">  
+            <iframe
+              id="miIframe"
+              src="@Model.ModuleLandingUrl"  
+              width="100%"
+              frameborder="1"
+              style="height: 100vh;">
+              Tu navegador no soporta iframes.
+            </iframe>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,12 @@
-﻿using GS.Certifications.Application.CQRS.DbContexts;
+﻿using GS.Certifications.Application.Commons.Dtos.SfeApi;
+using GS.Certifications.Application.CQRS.DbContexts;
 using GS.Certifications.Application.Interfaces.SfeApi;
-using GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Services;
+using GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Exceptions;
 using GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Services.Analysis.Helpers;
-using GSF.Domain.Entities.Global;
+using GS.Certifications.Domain.Entities.Comprobantes;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Serilog;
-using GS.Certifications.Application.Commons.Dtos.SfeApi;
-using GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Exceptions;
-using GS.Certifications.Domain.Entities.Comprobantes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +20,11 @@ public class DefaultHeaderStrategy : IComprobanteHeaderStrategy
     private readonly ICertificationsDbContext _context;
     private readonly IValidarComprobanteService _validarComprobanteService;
 
-    public DefaultHeaderStrategy(ICertificationsDbContext context, IValidarComprobanteService validarComprobanteService)
+    //public DefaultHeaderStrategy(ICertificationsDbContext context, IValidarComprobanteService validarComprobanteService)
+    public DefaultHeaderStrategy(ICertificationsDbContext context)
     {
         _context = context;
-        _validarComprobanteService = validarComprobanteService;
+        //_validarComprobanteService = validarComprobanteService;
     }
 
     public async Task PopulateHeaderAsync(AnalisysContext context)

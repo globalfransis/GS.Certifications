@@ -1,0 +1,136 @@
+﻿@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
+@model SideBarViewComponent
+@using Microsoft.Extensions.Localization
+@using System.Web
+@inject IStringLocalizer<Socios.Web.Common.Resources.Shared> loc
+@inject IConfiguration Configuration
+<!-- Main side-menu -->
+<div id="drawer" class="main-side-menu border-end d-block">
+    <div class="">
+        @if (Model != null && Model.Options != null)
+        {
+            <div class="d-flex justify-content-center collapsable pt-4 w-100">
+                <div class="menu-item">
+                    <a href="~/index" class="border-0 d-flex justify-content-center"
+                       onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0)"
+                       optionid="0">
+                        <i class="fas fa-home"></i> <span class="ms-2">Inicio</span>
+                    </a>
+                </div>
+
+                @foreach (var option in Model.Options.Options)
+                {
+                    @if (option.Options != null && option.Options.Any())
+                    {
+                        // Mostramos directamente las opciones hijas en lugar del padre
+                        @foreach (var childOption in option.Options)
+                        {
+                            @await Html.PartialAsync("_sideBarOption", childOption, ViewData)
+                        }
+                    }
+                    else
+                    {
+                        <!-- Si no tiene hijos, se muestra normalmente -->
+                        <a class="menu-accordion-body list-group-item border-0"
+                           href="javascript:RedirectToOption(@option.Id, @(option.ParentId != null ? @option.ParentId : option.Id), '@option.Url');"
+                           onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0)">
+                            <i class="@option.Icon"></i> <span>@option.Name</span>
+                        </a>
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    #drawer {
+        margin-top: 54px;
+        position: relative;
+        width: 100% !important;
+        min-width: 100% !important;
+        z-index: 100;
+        opacity: 1;
+        background-color: var(--main-content-color) !important;
+        display: flex;
+        flex-direction: row;
+        @* padding: 10px; *@
+    }
+
+    .menu-item {
+        margin-right: 20px;
+        width: 200px;
+    }
+
+        .menu-item a {
+            text-decoration: none;
+            color: #00acac !important;
+            display: flex !important; 
+            @* padding: 12px 20px; *@
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            align-items: center !important;
+            @* background-color: #00acac; *@
+        }
+@* 
+        .menu-item a:hover,
+        .menu-item a:focus {
+                background-color: #33CCCC;
+        }
+ *@
+        .menu-item-active{
+        @* background-color: #33CCCC !important; /* Más claro que #00ACAC */ *@
+        color: #FFFFFF;
+        font-weight: bold;
+        transform: scale(1.1); /* Aumenta un 10% el tamaño */
+        transition: all 0.3s ease-in-out; /* Transición suave */
+        border-radius: 5px; /* Bordes redondeados para un diseño moderno */
+        }
+
+
+    /* Estilo para los elementos del menú cuando no están en hover */
+    .menu-accordion-body {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        color: #333;
+        text-decoration: none;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-weight: 600;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background-color: #EEEEEE !important;
+        margin-left: 7% !important;
+    }
+
+        .menu-accordion-body:hover {
+            background-color: #E3E3E3 !important;
+        }
+
+        .menu-accordion-body i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+    /* Para los botones de las opciones del menú */
+    .home-button {
+        background-color: #EEEEEE !important;
+    }
+
+        .home-button:hover {
+            background-color: #E3E3E3 !important;
+        }
+
+    /* Estilo para la expansión del menú */
+    .menu-accordion-collapse {
+        background-color: #EEEEEE !important;
+    }
+
+    /* Estado seleccionado de los botones */
+    .selected {
+        background-color: lightgray !important;
+    }
+
+</style>

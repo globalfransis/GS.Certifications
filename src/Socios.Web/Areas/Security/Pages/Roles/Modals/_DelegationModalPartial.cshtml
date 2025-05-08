@@ -1,0 +1,82 @@
+﻿@using Socios.Web.Areas.Security.Pages.Roles.Modals
+@model RoleDelegationPartialModel
+
+
+<div class="modal fade DelegationModalPartial" id="RoleChangeOwner" modal-partial tabindex="-1" role="dialog" aria-labelledby="addContactLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addContactLabel">@loc["Delegar Rol"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div asp-validation-summary="All" class="text-danger" id="ValidationErrors" ajax-errors>
+                    </div>
+
+                    <input id="idChangeOwner" type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="SystemUse" />
+
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" disabled="disabled" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CurrentGroupOwnerName"></label>
+                        <input asp-for="CurrentGroupOwnerName" class="form-control" disabled="disabled" />
+                        <span asp-validation-for="CurrentGroupOwnerName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SelectedGroupOwnerId"></label>
+                        <select class="form-control seletedGroupChangeOwner" asp-for="SelectedGroupOwnerId" id="SelectListGroups"
+                                asp-items="Model.GroupsSelectList" disabled='@(!Model.GroupsSelectList.Any() ? "disabled" : null)'>
+                        </select>
+                        <span asp-validation-for="SelectedGroupOwnerId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @*<button type="submit" class="btn btn-primary ml-2" asp-page="/Users/Index" asp-page-handler="ChangeOwner">
+                        Aceptar
+                    </button>*@
+                    <button type="button" class="btn btn-primary ml-2 btnChangeOwner" disabled='@(!Model.GroupsSelectList.Any() ? "disabled" : null)'>
+                        @loc["Aceptar"]
+                    </button>
+                    <a asp-page="" asp-area="" data-bs-dismiss="modal" class="btn-link" a>@loc["Cerrar"]</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.btnChangeOwner').click(function (event) {
+            //Model here isnt dynamic, so this need to be retrieved by jQuery.
+            var selectedGroupId = $(".seletedGroupChangeOwner").val();
+
+            var model = new Object();
+            model.Id = '@Model.Id';
+            model.Name = '@Model.Name';
+            model.Modified = '@Model.Modified';
+            model.RowVersion = '@Convert.ToBase64String(Model.RowVersion)';
+            model.CurrentGroupOwnerId = '@Model.CurrentGroupOwnerId';
+            model.SelectedGroupOwnerId = parseInt(selectedGroupId);
+
+            $.post({
+                url: baseUrl + '/api/roles/ChangeOwner',
+                contentType: 'application/json; charset=utf-8',
+                //dataType: "json",
+                data: JSON.stringify(model)
+            })
+                .done(response => {
+                    //Close the modal.
+                    successfulOperation();
+                })
+                .fail(function (error) {
+                    handleAjaxCallError(error);
+                })
+        })
+    })
+</script>

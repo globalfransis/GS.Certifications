@@ -1,0 +1,70 @@
+﻿@page
+@using Socios.Web.Areas.Configuration.Pages.Cultures
+@model DetailModel
+
+<form method="post" action="" id="main">
+    <div class="col-12">
+
+        <!-- Title -->
+        <div class="col-12 mt-4">
+            <p class="h5">@loc["Datos Configuración Regional"]</p>
+        </div>
+        <!-- Title end -->
+
+        <div class="card">
+            <input asp-for="Id" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12 mb-4">
+                        <label asp-for="Code"></label>
+                        <input class="form-control" asp-for="Code" maxlength="5" disabled="disabled" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-lg-4 col-sm-12 mb-4">
+                        <label asp-for="Name"></label>
+                        <input class="form-control" asp-for="Name" maxlength="100" disabled="disabled" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-lg-4 col-sm-12 mb-4">
+                        <label asp-for="Language"></label>
+                        <input class="form-control" asp-for="Language" maxlength="2" disabled="disabled" />
+                        <span asp-validation-for="Language" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table buttons -->
+    <div class="col-12 d-flex justify-content-end mb-3 mt-3">
+        <div>
+            <grant grant-name="cultures.update">
+                <a asp-page="Edit" class="btn btn-primary y mr-2 btn-sm"
+                   asp-route-id="@Model.Id">
+                    @loc["Editar"]
+                </a>
+            </grant>
+
+            <grant grant-name="cultures.delete">
+                <button asp-page-handler="Delete"
+                        asp-route-id="@Model.Id"
+                        asp-route-name="@Model.Name"
+                        asp-route-modified="@Model.Modified.ToString("yyyy-MM-dd HH:mm:ss")"
+                        id="@("btnDelete" + Model.Id)"
+                        confirm-delete="¿Está usted seguro que desea eliminar la cultura @Model.Name?"
+                        class="btn btn-danger y mr-2 btn-sm" form="main" type="submit">
+                    @loc["Eliminar"]
+                </button>
+            </grant>
+
+            @*<gsf-cancel-link></gsf-cancel-link>*@
+            <a asp-page="/Cultures/Index" class="btn btn-outline-primary btn-sm mr-2" asp-area="Configuration">@loc["Volver"]</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,25 @@
+﻿@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
+@using System.Web;
+
+<div class="col-12 border-top d-flex footer justify-content-center align-items-center">
+
+    @HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "FooterText").ToString()) @DateTime.Now.Year
+
+    @if (Configuration.GetSection("Application").GetValue(typeof(string), "FooterLinkText") != null)
+    {
+        <a class="btn btn-link" target="_blank" href=@HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "FooterLinkUrl").ToString())>
+            @Configuration.GetSection("Application").GetValue(typeof(string), "FooterLinkText")
+        </a>
+    }
+
+    <small><small>@HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "Version").ToString())</small></small>
+
+</div>
+
+<style>
+    .footer {
+        background-color: #EEEEEE !important;
+    }
+</style>
+

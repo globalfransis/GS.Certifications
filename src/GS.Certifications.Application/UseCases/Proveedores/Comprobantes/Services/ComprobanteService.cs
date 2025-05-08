@@ -54,11 +54,11 @@ public class ComprobanteService : BaseGSFService, IComprobanteService
     /// <param name="documentAnalysisService">Servicio para analizar documentos (ej: extraer datos de PDF).</param>
     /// <param name="context">Contexto de base de datos para las entidades de Socios.</param>
     /// <param name="validarComprobanteService">Servicio para la validación de comprobantes en ARCA.</param>
-    public ComprobanteService(IDocumentAnalysisService documentAnalysisService, ICertificationsDbContext context, IValidarComprobanteService validarComprobanteService, IServiceProvider serviceProvider, IComprobanteTotalStrategy totalStrategy)
+    public ComprobanteService(IDocumentAnalysisService documentAnalysisService, ICertificationsDbContext context/*, IValidarComprobanteService validarComprobanteService*/, IServiceProvider serviceProvider, IComprobanteTotalStrategy totalStrategy)
     {
         this.documentAnalysisService = documentAnalysisService;
         this.context = context;
-        this.validarComprobanteService = validarComprobanteService;
+        //this.validarComprobanteService = validarComprobanteService;
         this.serviceProvider = serviceProvider;
         //_headerStrategy = headerStrategy;
         //_detailStrategy = detailStrategy;
@@ -890,12 +890,12 @@ public class ComprobanteService : BaseGSFService, IComprobanteService
     {
         if (parameters.Modos.Contains(ModoAnalisis.QR) && parameters.Modos.Contains(ModoAnalisis.OCR_CABECERA))
         {
-            _headerStrategy = new DefaultHeaderStrategy(serviceProvider.GetRequiredService<ICertificationsDbContext>(), serviceProvider.GetRequiredService<IValidarComprobanteService>());
+            //_headerStrategy = new DefaultHeaderStrategy(serviceProvider.GetRequiredService<ICertificationsDbContext>(), serviceProvider.GetRequiredService<IValidarComprobanteService>());
         }
         else if (parameters.Modos.Contains(ModoAnalisis.QR))
         {
             //_headerStrategy = new QRHeaderStrategy(serviceProvider.GetRequiredService<ICertificationsDbContext>(), serviceProvider.GetRequiredService<IValidarComprobanteService>());
-            _headerStrategy = new DefaultHeaderStrategy(serviceProvider.GetRequiredService<ICertificationsDbContext>(), serviceProvider.GetRequiredService<IValidarComprobanteService>());
+            //_headerStrategy = new DefaultHeaderStrategy(serviceProvider.GetRequiredService<ICertificationsDbContext>(), serviceProvider.GetRequiredService<IValidarComprobanteService>());
         }
         else if (parameters.Modos.Contains(ModoAnalisis.OCR_CABECERA))
         {

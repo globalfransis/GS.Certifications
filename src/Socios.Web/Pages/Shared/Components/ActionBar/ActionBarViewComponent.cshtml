@@ -1,0 +1,27 @@
+﻿@model ActionBarViewComponent
+@using Microsoft.Extensions.Configuration
+@using GSF.Application.Security.Options.Queries
+@using Microsoft.Extensions.Localization
+@inject IConfiguration Configuration
+@inject IStringLocalizer<Socios.Web.Common.Resources.Shared> loc
+
+
+@if (Model.Options.Options.Count > 0)
+{
+    <!-- Secondary menu (right) -->
+    <div class="col-2 border-start mt-3">
+        <ul class="list-group-flush  p-0 right-menu">
+
+            <li class="list-group-item right-menu-title"><b>@loc["Acciones"]</b></li>
+
+            @foreach (OptionDto option in Model.Options.Options)
+            {
+                <li class="list-group-item list-group-item-action right-menu-item">
+                    <a href="@option.Url">@option.Name</a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    <!-- Secondary menu (right) end-->
+}

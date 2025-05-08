@@ -1,0 +1,236 @@
+﻿@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
+@model             HeaderViewComponent
+@using Microsoft.Extensions.Localization
+@using Socios.Web.Common.Resources
+@inject IStringLocalizer<Shared> SharedLocalizer
+@using System.Web;
+@using Socios.Web.Pages.Shared.Components.Header
+    using Socios.Web.Common.Resources;
+    using Socios.Web.Pages.Shared.Components.Header;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Socios.Web
+
+@if (User.Identity.IsAuthenticated)
+{
+
+    <!-- Mobile Menu -->
+    <div class="d-xl-none p-0">
+        <nav class="navbar header navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+
+                @* <div class="w-20 w-md-10">
+                    <button id="ham-button-mobile" class="ham-button btn navbar-toggler m-0 d-md-inline-block me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand h2 text-light d-none d-md -block" href="#" onclick="window.sessionStorage.setItem('currentOptionId', 0);"> Frontend</a>
+                </div> *@
+
+
+                <div class="flex-fill w-55 w-md-55">
+                    <!-- Enterprise dropdown -->
+                    <div class="dropdown logo-dropdown">
+                        <div class="text-light enterprise-dropdown" aria-expanded="false">
+                            <i class="fas fa-building mr-2" aria-hidden="true"></i>
+                            <b>@Model.CurrentEmpresaPortal.RazonSocial</b>
+                        </div>
+                    </div>
+                    <!-- Enterprise dropdown end -->
+                </div>
+
+
+                <div class="d-inline-flex w-25 w-md-35 justify-content-end">
+
+                    @if (HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "AllowChangeLanguage").ToString()) == "true")
+                    {
+                        <form method="post" action="">
+
+                            <div class="dropdown d-none d-sm-flex">
+                                <button class="btn dropdown-toggle nav-button text-light" type="button" id="dropdownMenuButtonCulture" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <b>
+                                        <i class="fas fa-flag mr-2" aria-hidden="true"></i>
+                                        @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToUpper()
+                                    </b>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item">
+
+                                    </a>
+                                    <a class="dropdown-item"
+                                       asp-controller="Culture"
+                                       asp-action="ChangeCurrent"
+                                       asp-route-culture="es">
+                                        Espa&ntilde;ol
+                                    </a>
+                                    <a class="dropdown-item"
+                                       asp-controller="Culture"
+                                       asp-action="ChangeCurrent"
+                                       asp-route-culture="en">
+                                        English
+                                    </a>
+                                </div>
+                            </div>
+
+                        </form>
+                    }
+
+                    <form asp-area="Security" asp-controller="Login" asp-action="LogOut" method="post">
+
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-button text-light" type="button" id="dropdownMenuButtonUser" data-bs-toggle="dropdown" aria-expanded="false">
+                                <b>
+                                    <i class="fas fa-user-circle mr-2" aria-hidden="true"></i>
+                                    <span class="d-none user-dropdown-text">@User.Identity.Name</span>
+                                </b>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-opt" aria-labelledby="dropdownMenuButton">
+                                <li class="dropdown-item text-truncate"><span class="fw-bold">@SharedLocalizer["Usuario"]: </span>@Model.UserName</li>
+                                <div class="dropdown-divider"></div>
+                                <grant grant-name="config.changepassword">
+                                    <li>
+                                        <a class="dropdown-item text-truncate"
+                                           asp-area="Security"
+                                           asp-page="/PasswordChange">@SharedLocalizer["Cambiar contraseña"]</a>
+                                    </li>
+                                </grant>
+                                <li>
+                                    <a class="dropdown-item text-truncate"
+                                       asp-area="Security"
+                                       asp-page="/Login"
+                                       asp-page-handler="Logout">
+                                        @SharedLocalizer["Cerrar sesión"]
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <nav id="navbar" class="navbar header d-xl-inline-flex d-none d-lg-none d-sm-none d-md-none ">
+
+        <div class="d-inline-flex align-items-center">
+            <div class="environment-ribbon" style="@(Model.CurrentEnvironment != null ? "display:block" : "display:none")">
+                <span>
+                    @Model.CurrentEnvironment
+                </span>
+            </div>
+
+            @* <button id="ham-button" class="ham-button btn px-0 ms-1">
+                <i class="fas fa-bars"></i>
+            </button> *@
+
+            <a class="navbar-brand" onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0);" href="~/index">
+                <div class="d-flex align-items-center justify-content-start ms-5">
+                    <p class="ms-4 h2 text-light m-0" style="font-size: 20px;">
+                        @SharedLocalizer["Portal de"] @Model.CurrentCompany.BusinessName
+                    </p>
+                </div>
+            </a>
+
+            <div class="flex-fill">
+
+                <!-- Enterprise dropdown -->
+                <div class="dropdown logo-dropdown">
+                    <div class="text-light enterprise-dropdown" aria-expanded="false">
+                        <nobr>
+                            <i class="fas fa-building mr-2" aria-hidden="true"></i>
+                            <b>@Model.CurrentEmpresaPortal.RazonSocial</b>
+                        </nobr>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+        <div class="d-flex me-5">
+
+            @if (!String.IsNullOrWhiteSpace(@User.Identity.Name))
+            {
+
+                @if (HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "AllowChangeLanguage").ToString()) == "true")
+                {
+
+                    <form method="post" action="">
+
+
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-button text-light" type="button" id="headerDropdownLanguage" data-bs-toggle="dropdown" aria-expanded="false">
+                                <b>
+                                    <i class="fas fa-flag mr-2" aria-hidden="true"></i>
+                                    @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToUpper()
+                                </b>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="headerDropdownLanguage">
+                                <a class="dropdown-item"
+                                   asp-controller="Culture"
+                                   asp-action="ChangeCurrent"
+                                   asp-route-culture="es">
+                                    Espa&ntilde;ol
+                                </a>
+
+                                <a class="dropdown-item"
+                                   asp-controller="Culture"
+                                   asp-action="ChangeCurrent"
+                                   asp-route-culture="en">
+                                    English
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                }
+            }
+
+            <form asp-area="Security" asp-controller="Login" asp-action="LogOut" method="post">
+
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle nav-button text-light" type="button" id="headerDropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>
+                            <i class="fas fa-user-circle mr-2" aria-hidden="true"></i>
+                            @User.Identity.Name
+                        </b>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-md-end user-dropdown" aria-labelledby="headerDropdownUser">
+                        <li class="dropdown-item-text text-truncate" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@Model.UserName"><span class="fw-bold">@SharedLocalizer["Usuario"]: </span>@Model.UserName</li>
+
+                        <div class="dropdown-divider"></div>
+
+                        <grant grant-name="config.changepassword">
+                            <li>
+                                <a class="dropdown-item text-truncate"
+                                   asp-area="Security"
+                                   asp-page="/PasswordChange">@SharedLocalizer["Cambiar contraseña"]</a>
+                            </li>
+                        </grant>
+                        <li>
+                            <a class="dropdown-item text-truncate"
+                               asp-area="Security"
+                               asp-page="/Login"
+                               asp-page-handler="Logout">
+                                @SharedLocalizer["Cerrar sesión"]
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </form>
+
+        </div>
+    </nav>
+    <style>
+        #navbar {
+            position: fixed;
+            z-index: 10000;
+        }
+    </style>
+}

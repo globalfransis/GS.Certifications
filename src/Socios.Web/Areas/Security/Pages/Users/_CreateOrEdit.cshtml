@@ -1,0 +1,338 @@
+﻿@model Socios.Web.Areas.Security.Pages.Users.UserCrudModel
+@using Socios.Web.Areas.Security.Pages
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SecurityResources> secLoc
+<!-- Filters card -->
+<div class="col-12">
+
+    <!-- Title -->
+    <div class="col-12 mt-4">
+        <p class="h5">@secLoc["Datos Usuario"]</p>
+    </div>
+    <!-- Title end -->
+
+    <div class="card">
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="LoggedUserId" />
+        <input type="hidden" asp-for="LoggedUserSystemUse" />
+        <input type="hidden" asp-for="CurrentGroupId" />
+
+        @*<input asp-for="BackUrl" />*@
+        <input asp-for="RowVersion" />
+
+        <div class="card-body">
+            <div class="row">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger" id="validationSummary">
+                </div>
+
+
+                @if (Model.Mode == "Alta" || Model.Mode == "Modificación")
+                {
+                    <div class="form-group required col-lg-6 col-sm-12 mb-4">
+                        <label class="control-label" asp-for="Login"></label>
+                        <input maxlength="30" class="form-control" asp-for="Login" autocomplete="new-login" />
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group required col-lg-6 col-sm-12 mb-4">
+                        <label class="control-label" asp-for="FirstName"></label>
+                        <input maxlength="50" class="form-control" asp-for="FirstName" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group required col-lg-6 col-sm-12 mb-4">
+                        <label class="control-label" asp-for="LastName"></label>
+                        <input maxlength="50" class="form-control" asp-for="LastName" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group required col-lg-6 col-sm-12 mb-4">
+                        <label class="control-label" asp-for="IdNumber"></label>
+                        <input maxlength="25" class="form-control" asp-for="IdNumber" />
+                        <span asp-validation-for="IdNumber" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label asp-for="Login"></label>
+                        <input class="form-control" asp-for="Login" autocomplete="new-login" />
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label asp-for="FirstName"></label>
+                        <input class="form-control" asp-for="FirstName" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label asp-for="LastName"></label>
+                        <input class="form-control" asp-for="LastName" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label asp-for="IdNumber"></label>
+                        <input class="form-control" asp-for="IdNumber" />
+                        <span asp-validation-for="IdNumber" class="text-danger"></span>
+                    </div>
+                }
+
+                @if (Model.Mode != null && Model.Mode == "Alta")
+                {
+                    <div class="form-group required col-lg-6 col-sm-12 mb-4">
+                        <label class="control-label" asp-for="Password"></label>
+                        <div class="input-group" input-password>
+                            @*disabled="@(Model.Mode != null && Model.Mode == "Alta" ? null : "disabled" )"*@
+                            <input class="form-control pw" id="password" asp-for="Password" disabled="@(Model.Mode != null && Model.Mode == "Alta" ? null : "disabled" )" autocomplete="off" />
+                            <button type="button" class="btn btn-outline-primary btn-sm" style="width: 3em">
+                                <i class="fas fa-eye-slash"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                }
+
+                <div class="col-lg-6 col-sm-12 mb-4">
+                    <label class="control-label" asp-for="PhoneNumber"></label>
+                    <input maxlength="25" class="form-control" asp-for="PhoneNumber" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                @if (Model.Mode == "Alta" || Model.Mode == "Modificación")
+                {
+                    <div class="form-group required col-lg-6 col-sm-12 mb-4">
+                        <label class="control-label" asp-for="Email"></label>
+                        <input maxlength="200" class="form-control" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label asp-for="Email"></label>
+                        <input class="form-control" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                }
+
+                @if (Model.LoggedUserSystemUse.HasValue && Model.LoggedUserSystemUse.Value)
+                {
+
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label class="form-check-label" asp-for="SystemUse"></label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" asp-for="SystemUse">
+                        </div>
+                        <span asp-validation-for="SystemUse" class="text-danger"></span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group required col-12 mt-4">
+        <p class="h5 control-label">@secLoc["Empresas - Grupos"]</p>
+    </div>
+
+    <div class="card mt-3">
+
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-lg-12 col-sm-12" hide-in-detail>
+                    <div class="row">
+
+                        <div class="col-lg-3 col-sm-12 mb-4">
+                            <label asp-for="OrganizationId"></label>
+                            <select formaction="Organization" class="form-select" asp-for="OrganizationId"
+                                    asp-items="Model.OrganizationsSelectList" disabled='@(!Model.OrganizationsSelectList.Any() ? "disabled" : null)'
+                                    onchange="$(form).attr('action', '?handler=organizations'); this.form.submit();">
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-12 mb-4">
+                            <label asp-for="CompanyId"></label>
+                            <select formaction="Company" class="form-select" asp-for="CompanyId" id="SelectListCompany"
+                                    asp-items="Model.CompaniesSelectList" disabled='@(!Model.CompaniesSelectList.Any() ? "disabled" : null)'>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-12 mb-4">
+                            <label asp-for="GroupId"></label>
+                            <select formaction="Groups" class="form-select" asp-for="GroupId" id="SelectListGroups"
+                                    asp-items="Model.GroupsSelectList" disabled='@(!Model.GroupsSelectList.Any() ? "disabled" : null)'>
+                            </select>
+                            <span asp-validation-for="GroupId" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-12 mb-4">
+                            <div class="float-end">
+                                <label></label>
+                                <button class="btn btn-outline-primary btn-sm form-control" asp-page-handler="Add" type="submit" disabled='@((!Model.GroupsSelectList.Any() || !Model.CompaniesSelectList.Any() || !Model.OrganizationsSelectList.Any()) ? "disabled" : null)'>
+                                    <b><i class="fas fa-plus"></i>&nbsp;@secLoc["Agregar"]</b>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-12 table-responsive">
+
+                        <!-- Table -->
+                        <table id="fixed-table" class="table table-bordered table-striped table-hover table-white">
+                            <thead class="table-top text-center align-middle">
+                                <tr>
+                                    <th class="col-1">#</th>
+                                    <th class="col">@secLoc["Empresa"]</th>
+                                    <th class="col">@secLoc["Grupo"]</th>
+
+                                    @if ((Model.Mode != null && Model.Mode != "Detalle"))
+                                    {
+                                        <th class="col-2 text-center">@loc["Eliminar"]</th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!Model.CompaniesUsersGroups.Any())
+                                {
+                                    <tr class="no-data">
+                                        <td colspan="7" class="text-center">@loc["No hay datos ingresados"]</td>
+                                    </tr>
+                                }
+                                @for (var i = 0; i < Model.CompaniesUsersGroups.Count; i++)
+                                {
+                                    <tr>
+                                        <td class="col-1">@{
+                                                int numero = i + 1;
+                                            } @numero</td>
+                                        <td class="col">
+                                            <label asp-for="@Model.CompaniesUsersGroups[i].CompanyName">@Model.CompaniesUsersGroups[i].CompanyName</label>
+                                        </td>
+                                        <td class="col">
+                                            <label asp-for="@Model.CompaniesUsersGroups[i].GroupName">@Model.CompaniesUsersGroups[i].GroupName</label>
+                                            <input type="hidden" asp-for="@Model.CompaniesUsersGroups[i].Id" />
+                                            <input type="hidden" asp-for="@Model.CompaniesUsersGroups[i].CompanyId" />
+                                            <input type="hidden" asp-for="@Model.CompaniesUsersGroups[i].GroupId" />
+                                            <input type="hidden" asp-for="@Model.CompaniesUsersGroups[i].UserId" />
+                                            <input type="hidden" asp-for="@Model.CompaniesUsersGroups[i].CompanyName" />
+                                            <input type="hidden" asp-for="@Model.CompaniesUsersGroups[i].GroupName" />
+                                            <input type="hidden" asp-for="@Model.CompaniesUsersGroups[i].GroupGroupOwerId" />
+                                            <input type="hidden" asp-for="@Model.CompaniesUsersGroups[i].Modifiable" />
+                                        </td>
+
+                                        @if ((Model.Mode != null && Model.Mode != "Detalle"))
+                                        {
+                                            <td class="col-2 text-center">
+                                                @*@{
+                                        bool deleteDisabled = Model.CompaniesUsersGroups[i].GroupId == Model.CurrentGroupId || Model.CompaniesUsersGroups[i].GroupGroupOwerId == Model.CurrentGroupId || Model.CurrentGroupId == default || Model.CompaniesUsersGroups[i].GroupGroupOwerId == default;
+                                        }
+                                        <button type="submit" style="border-style: none; background-color: transparent;" class="@(deleteDisabled ? "text-danger btnRemove" : "text-secondary btnRemove")"
+                                        disabled="@(deleteDisabled ? null : "disabled")"
+                                        asp-page-handler="Remove" asp-route-index="@i">
+                                        <i class="fas fa-trash"></i>
+                                        </button>*@
+                                                @*@{
+                                        var currentCug = Model.CompaniesUsersGroups[i];
+                                        //bool st = (currentCug.GroupId == Model.CurrentGroupId && currentCug.CompanyId == Model.CurrentCompanyId) || (currentCug.GroupGroupOwerId == Model.CurrentGroupId && currentCug.CompanyId == Model.CompanyId) || Model.CurrentGroupId == default || Model.CompaniesUsersGroups[i].GroupGroupOwerId == default; //Default is for the creation of a new relationship.
+                                        bool st = (currentCug.GroupGroupOwerId == Model.CurrentGroupId && currentCug.CompanyId == Model.CurrentCompanyId) || Model.CurrentGroupId == default || Model.CompaniesUsersGroups[i].GroupGroupOwerId == default; //Default is for the creation of a new relationship.
+                                        }*@
+                                                @*@if (Model.CompaniesUsersGroups[i].GroupId == Model.CurrentGroupId || Model.CompaniesUsersGroups[i].GroupGroupOwerId == Model.CurrentGroupId || Model.CurrentGroupId == default || Model.CompaniesUsersGroups[i].GroupGroupOwerId == default) //Default is for the creation of a new relationship.*@
+                                                @if (Model.CompaniesUsersGroups[i].Modifiable)
+                                                {
+                                                    <button type="submit" style="border-style: none; background-color: transparent;" class="text-danger btnRemove"
+                                                            asp-page-handler="Remove" asp-route-index="@i">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <span asp-validation-for="CompaniesUsersGroups" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Table buttons -->
+<div class="col-12 d-flex justify-content-end mb-3 mt-3">
+    <div>
+
+        @{
+            var textCancelButton = (Model.Mode != null && Model.Mode == "Detalle") ? loc["Volver"] : loc["Cancelar"];
+        }
+
+        <button onclick="showSpinner(true)" class="btn btn-primary y pr-2 btn-sm" type="submit" asp-page-handler="Save" disabled='@(!Model.CompaniesUsersGroups.Any() ? "disabled" : null)'>@loc["Aceptar"]</button>
+
+        @if (Model.Mode != null && Model.Mode == "Detalle" && (!Model.SystemUse || Model.Id != Model.LoggedUserId))
+        {
+            <grant grant-name="users.update">
+                <a asp-page="/Users/Edit" class="btn btn-primary y mr-2 btn-sm" asp-area="Security" asp-route-id="@Model.Id">@loc["Editar"]</a>
+            </grant>
+
+            <grant grant-name="users.delete">
+                <button type="submit" class="btn btn-danger y mr-2 btn-sm" asp-page-handler="Delete" id="@("btnDelete" + Model.Id)" show-in-detail
+                        confirm-delete=@loc["¿Está usted seguro que desea eliminar el Usuario {0}?", @Model.Login]
+                        asp-route-id="@Model.Id" asp-route-rowVersion="@Convert.ToBase64String(Model.RowVersion)">
+                    @loc["Eliminar"]
+                </button>
+            </grant>
+        }
+
+        @*<gsf-back-link>@textCancelButton</gsf-back-link>*@
+        @if (Model.Mode == "Detalle")
+        {
+            <a asp-page="/Users/Index" class="btn btn-outline-primary btn-sm mr-2" asp-area="Security">@loc["Volver"]</a>
+        }
+
+        @if (Model.Mode == "Modificación")
+        {
+            <a asp-page="/Users/Detail" class="btn btn-outline-primary btn-sm mr-2" asp-area="Security" asp-route-id="@Model.Id">@loc["Cancelar"]</a>
+        }
+
+        @if (Model.Mode == "Alta")
+        {
+            <a asp-page="/Users/Index" class="btn btn-outline-primary btn-sm mr-2" asp-area="Security">@loc["Cancelar"]</a>
+        }
+    </div>
+</div>
+
+<style type="text/css">
+    /*input.pw {
+            -webkit-text-security: disc;
+        }*/
+</style>
+
+<script>
+    window.onbeforeunload = function () {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    };
+</script>
+<!-- Table buttons end-->
+<script>
+    var passwordField = document.getElementById("password");
+
+    // Comprobamos si el campo está oculto
+    var isPasswordHidden = localStorage.getItem("isPasswordHidden") === "true";
+    if (isPasswordHidden) {
+        passwordField.type = "password";
+    }
+
+    passwordField.addEventListener("input", function () {
+        this.type = "password";
+
+        // Recordar que el campo de contraseña debe estar oculto
+        localStorage.setItem("isPasswordHidden", "true");
+    });
+</script>

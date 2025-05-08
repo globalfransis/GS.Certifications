@@ -1,0 +1,48 @@
+﻿@model GSF.Application.Security.Options.Queries.OptionDto
+
+@if (Model.Options != null && Model.Options.Any())
+{
+    @foreach (var childOption in Model.Options)
+    {
+        @await Html.PartialAsync("_sideBarOption", childOption, ViewData)
+    }
+}
+else
+{
+    <!-- Opción sin submenú (se muestra directamente) -->
+    <div class="menu-item">
+        <a class="border-0 d-flex justify-content-center"
+           optionId="@Model.Id"
+           href="javascript:RedirectToOption(@Model.Id, @Model.ParentId, '@Model.Url');"
+           indent="@ViewData["optionLevel"]">
+           @Model.Name
+        </a>
+    </div>
+    // Harcodeado para la demo
+    <div class="menu-item">
+        <a class="border-0 d-flex justify-content-center">
+            Pagos
+        </a>
+    </div>
+    // Harcodeado para la demo
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentOptionId = window.sessionStorage.getItem("currentOptionId");
+
+        if (currentOptionId) {
+            document.querySelectorAll(".menu-item").forEach(menuItem => {
+                const link = menuItem.querySelector("a"); // Obtiene el <a> dentro del div
+
+                if (link && link.getAttribute("optionid") === currentOptionId) {
+                    console.log(link.getAttribute("optionid"));
+                    link.classList.add("menu-item-active"); // Aplica el estilo activo
+                } else {
+                    console.log(link ? link.getAttribute("optionid") : "No link found");
+                    link.classList.remove("menu-item-active"); // Elimina la clase de otras opciones
+                }
+            });
+        }
+    });
+</script>

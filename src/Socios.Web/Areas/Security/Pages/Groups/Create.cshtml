@@ -1,0 +1,23 @@
+﻿@page
+@model Socios.Web.Areas.Security.Pages.Groups.CreateGroupModel
+
+
+<div class="container">
+
+    <form method="post" action="">
+        <partial name="_CreateOrEdit" model="Model" view-data="ViewData" />
+    </form>
+
+</div>
+
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            var mode = '@Model.Mode';
+            var pageTitle = "@loc["Listado de Grupos"]";
+            var backUrl = '../Groups/Index';
+
+            replaceWindowsHistory(mode, pageTitle, backUrl);
+        });
+    </script>
+}

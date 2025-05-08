@@ -21,10 +21,10 @@ public class QRHeaderStrategy : IComprobanteHeaderStrategy
     private readonly ICertificationsDbContext _context;
     private readonly IValidarComprobanteService _validarComprobanteService;
 
-    public QRHeaderStrategy(ICertificationsDbContext context, IValidarComprobanteService validarComprobanteService)
+    public QRHeaderStrategy(ICertificationsDbContext context/*, IValidarComprobanteService validarComprobanteService*/)
     {
         _context = context;
-        _validarComprobanteService = validarComprobanteService;
+        //_validarComprobanteService = validarComprobanteService;
     }
 
     public async Task PopulateHeaderAsync(AnalisysContext context)

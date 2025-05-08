@@ -1,10 +1,32 @@
 ﻿@page
+@using Socios.Web.Pages
 @model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
+@section BackButton { }
+<div class="mt-5 col main-content">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+                <div class="text-center">
+                    <h3>
+                        Bienvenido <span class="highlight">@Model.CurrentEmpresaPortal?.RazonSocial</span> al portal de
+                    </h3>
+                    <h3 class="highlight">@Model.CurrentCompany?.Name</h3>
+                </div>
+                @if (Model.IsMiFroActive)
+                {
+                    @await Html.PartialAsync("_Botonera")
+                }
+
+            </div>
+        </div>
+    </div>
+
 </div>
+<!-- Main content end-->
+
+<style>
+    .highlight {
+        font-weight: bold;
+    }
+</style>

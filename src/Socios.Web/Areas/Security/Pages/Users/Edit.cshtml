@@ -1,0 +1,24 @@
+﻿@page
+@using Socios.Web.Areas.Security.Pages
+@model Socios.Web.Areas.Security.Pages.Users.EditUserModel
+@inject IStringLocalizer<SecurityResources> secLoc
+
+<div class="">
+
+    <form method="post" action="">
+        <partial name="_CreateOrEdit" model="Model" view-data="ViewData" />
+    </form>
+
+</div>
+
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            var mode = '@Model.Mode';
+            var pageTitle = "@secLoc["Listado de usuarios"]";
+            var backUrl = '../Users/Index';
+
+            replaceWindowsHistory(mode, pageTitle, backUrl)
+        });
+    </script>
+}

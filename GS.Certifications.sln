@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GS.Certifications.Infrastru
 		{8475BA27-6752-4B9F-B1F2-7382751CB478} = {8475BA27-6752-4B9F-B1F2-7382751CB478}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostCore", "src\HostCore\HostCore.csproj", "{D1C7A5F7-CDD2-4F0D-986A-EF733A4F5897}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{B194A986-2146-46AA-B826-7B324B53DE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B194A986-2146-46AA-B826-7B324B53DE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B194A986-2146-46AA-B826-7B324B53DE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1C7A5F7-CDD2-4F0D-986A-EF733A4F5897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1C7A5F7-CDD2-4F0D-986A-EF733A4F5897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1C7A5F7-CDD2-4F0D-986A-EF733A4F5897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1C7A5F7-CDD2-4F0D-986A-EF733A4F5897}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

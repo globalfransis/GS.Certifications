@@ -1,0 +1,130 @@
+﻿@page "{handler?}"
+@model Socios.Web.Areas.Security.Pages.Roles.IndexRoleModel
+<!-- Title -->
+<div class="col-12 mt-4">
+    <p class="h5">@loc["Filtro de Búsqueda"]</p>
+</div>
+<!-- Title end -->
+
+<div class="col-12">
+    <div class="card">
+
+        <div class="card-body">
+            <form method="get">
+
+                <div class="row justify-content-center">
+                    <div class="col mb-4">
+                        <label asp-for="SearchName"></label>
+                        <input type="search" class="form-control" asp-for="SearchName" />
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-center">
+                    <button onclick="showSpinner(true)" type="submit" asp-page-handler="Search" class="btn btn-primary btn-sm">
+                        <i class="fas fa-search"></i>
+                        <span style="font-weight:500;">@loc["Buscar"]</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <br />
+    <!-- Title / action -->
+    <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-3">
+        <p class="h5 m-0">@loc["Listado de Roles"]</p>
+        <grant grant-name="roles.create">
+            <a asp-area="Security" class="btn btn-outline-primary btn-sm" asp-page="/Roles/Create"><b><i class="fas fa-plus"></i> @loc["Agregar"]</b></a>
+        </grant>
+    </div>
+    <!-- Title / action end -->
+    <!-- Table -->
+    <div class="col-12 table-responsive">
+        <table class="table table-bordered table-striped table-hover" convert-to-datatable>
+            <thead class="table-top">
+                <tr>
+                    @*<th scope="col">@loc["Id"]</th>*@
+                    <th class="d-sm-none d-md-table-cell text-center align-middle" style="width: 30% !important" scope="col">@loc["Nombre"]</th>
+                    <th class="d-sm-none d-md-table-cell text-center align-middle" style="width: 40% !important" scope="col">@loc["Descripción"]</th>
+                    <th class="d-sm-none d-md-table-cell text-center align-middle" style="width: 20% !important" scope="col">@loc["Grupo Dueño"]</th>
+                    <th class="d-sm-none d-md-table-cell text-center align-middle" style="width: 10% !important" scope="col" no-sort-datatable>@loc["Acciones"]</th>
+
+                </tr>
+            </thead>
+            @if (!Model.Roles.Any() || !Model.IsPostBack)
+            {
+                <tr class="no-data">
+                    <td colspan="100" class="text-center">@Model.NoDataMessage</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var role in Model.Roles)
+                {
+                    <tr>
+                        @*<td scope="row">@role.Id</td>*@
+                        <td scope="row">
+                            <a class="table-a" asp-page="/Roles/Detail" asp-area="Security" asp-route-id="@role.Id">@role.Name</a>
+                        </td>
+                        <td class="d-sm-none d-md-table-cell gsf-table-cell" scope="row">@role.Description</td>
+                        <td class="d-sm-none d-md-table-cell gsf-table-cell" scope="row">@role.GroupOwnerName</td>
+
+                        <td>
+                            <div class="d-flex justify-content-around">
+                                @{
+                                    var disabled = role.SystemUse ? "disabled" : null;
+                                }
+                                <grant grant-name="roles.update" title="@(role.SystemUse ? @loc["Rol Administrador - No se permite Editar"] : @loc["Editar"])">
+                                    <a asp-page="/Roles/Edit" asp-area="Security" asp-route-id="@role.Id" class="@(role.SystemUse ? "btn btn-link text-body gsf-a-disabled" : "btn btn-link text-body")">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </grant>
+
+                                <grant grant-name="roles.delete" title="@(role.SystemUse ? @loc["Rol Administrador - No se permite Eliminar"] : @loc["Eliminar"])">
+                                    <form method="post">
+                                        <button type="submit" class="btn btn-link text-danger" disabled="@disabled" id="@("btnDelete" + role.Id)"
+                                                asp-page="/Roles/Detail" asp-page-handler="Delete" confirm-delete=@loc["¿Está usted seguro que desea eliminar el Usuario {0}", role.Name]
+                                                asp-route-id="@role.Id" asp-route-rowVersion="@Convert.ToBase64String(role.RowVersion)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </grant>
+
+                                <grant grant-name="roles.delegate" title="@(role.SystemUse ? @loc["Rol Administrador - No se permite Delegar"] : @loc["Delegar"])">
+                                    <form method="get">
+                                        <button type="button" class="btn btn-link text-body" data-toggle="ajax-modal" data-id="@role.Id" disabled="@disabled">
+                                            <i class="fas fa-people-arrows"></i>
+                                        </button>
+                                    </form>
+                                </grant>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+<div class="ModalDelegation" modal-section>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: 'hover'
+            });
+            $('button[data-toggle="ajax-modal"], .OwnerDelegation').click(function (event) {
+                // url to Razor Pages handler which returns modal HTML
+                var id = parseInt($(this).data().id);
+                var url = baseUrl + '/RolesModals/DelegationModal?id=' + id;
+                $.get(url).done(function (data) {
+                    openModal(data);
+                }).fail(function (data) {
+                    handleModalLoadError(data.responseJSON.message);
+                });
+            });
+        });
+    </script>
+}
