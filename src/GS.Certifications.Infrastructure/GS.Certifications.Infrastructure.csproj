@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Persistence\SqlScripts\NewFolder\**" />
+		<EmbeddedResource Remove="Persistence\SqlScripts\NewFolder\**" />
+		<None Remove="Persistence\SqlScripts\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Resources\WBO_VinculacionUsuario.html" />
+		<None Remove="Resources\WPR_ActivacionUsuario.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\UserActivationTemplate_WPR.html" />
+		<EmbeddedResource Include="Resources\WBO_VinculacionUsuario.html" />
+		<EmbeddedResource Include="Resources\WPR_ActivacionUsuario.html" />
+		<EmbeddedResource Include="Resources\WPR_VinculacionUsuario.html" />
+		<EmbeddedResource Include="Resources\PasswordRecoveryTemplate_WPR.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Dapper" Version="2.0.90" />
+		<PackageReference Include="GSF.Infrastructure" Version="1.4.2-beta" />
+		<PackageReference Include="GSF.Microsoft.Graph.Mail" Version="1.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
+		<PackageReference Include="MongoDB.Driver" Version="3.1.0" />
+		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.30.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\GS.Certifications.Application\GS.Certifications.Application.csproj" />
+		<ProjectReference Include="..\GS.Certifications.Domain\GS.Certifications.Domain.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Public\**" />
+    <EmbeddedResource Remove="Public\**" />
+    <None Remove="Public\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GS.Certifications.Domain\GS.Certifications.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="ClosedXML" Version="0.96.0" />
+    <PackageReference Include="Destructurama.Attributed" Version="2.0.0" />
+    <PackageReference Include="EPPlus" Version="7.4.2" />
+    <PackageReference Include="FluentValidation" Version="9.5.1" />
+    <PackageReference Include="GS.AI.DocumentIntelligence.Legacy" Version="1.0.4" />
+    <PackageReference Include="GSF.Application" Version="1.4.2-beta" />
+    <PackageReference Include="GSFSharedResources" Version="1.4.2-beta" />
+    <PackageReference Include="GSFWebFileTransferService.Abstractions" Version="1.0.9" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="6.0.9" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\Seguridad\Queries\" />
+  </ItemGroup>
+
+</Project>

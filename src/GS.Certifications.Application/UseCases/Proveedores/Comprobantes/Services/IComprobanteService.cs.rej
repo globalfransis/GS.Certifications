@@ -1,0 +1,9 @@
+diff a/src/Supplier.Application/UseCases/Proveedores/Comprobantes/Services/IComprobanteService.cs b/src/Supplier.Application/UseCases/Proveedores/Comprobantes/Services/IComprobanteService.cs	(rejected hunks)
+@@ -419,7 +419,6 @@
+     /// <summary>
+     /// Importe total de bonificaciones/descuentos aplicados en el comprobante.
+     /// </summary>
+-    decimal ImporteBonificacion { get; set; }
+     decimal? ImporteBonificacion { get; set; }
+     /// <summary>
+     /// Importe total de percepci�n de IVA.

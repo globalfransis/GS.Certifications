@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\SupplierDomainResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SupplierDomainResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SupplierDomainResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SupplierDomainResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commons\Enums\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GSF.Domain" Version="1.4.2-beta" />
+  </ItemGroup>
+
+</Project>
