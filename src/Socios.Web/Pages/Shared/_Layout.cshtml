@@ -76,7 +76,7 @@
                     }
 
 
-                    @if (!string.IsNullOrWhiteSpace((string)ViewData["Title"]))
+                    @if (!string.IsNullOrWhiteSpace((string)ViewData["Title"]) && Model.ShowTitle)
                     {
 
                         <p class="h4 page-title">@ViewData["Title"].ToString()</p>

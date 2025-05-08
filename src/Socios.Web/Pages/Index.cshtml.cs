@@ -42,7 +42,8 @@ public class IndexModel : BasePageModel
         _currentEmpresaPortalService = currentEmpresaPortalService;
         _currentEmpresaPortalRepository = currentEmpresaPortalRepository;
         _modulesService = modulesService;
-        Title = "";
+        Title = "Inicio";
+        ShowTitle = false;
     }
 
     public async Task OnGet()

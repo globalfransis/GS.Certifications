@@ -36,6 +36,8 @@ public class BasePageModel : PageModel
 
     protected List<SecurityGrantDto> grants;
 
+    public bool ShowTitle { get; set; } = true;
+
     [ViewData]
     public string Title { get; set; }
 
