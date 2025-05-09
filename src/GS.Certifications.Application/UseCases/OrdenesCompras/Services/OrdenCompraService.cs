@@ -95,7 +95,7 @@ public class OrdenCompraService : BaseGSFService, IOrdenCompraService
             empresaPortal = await _context.EmpresasPortales
                 .FirstOrDefaultAsync(src => src.Id == c.EmpresaPortalId);
             if (empresaPortal == null)
-                throw new ValidationErrorException("EmpresaPortal", "No existe la Empresa Portal");
+                throw new ValidationErrorException("EmpresaPortal", "No existe el Socio");
         }
 
         OrdenCompraEstado ordenCompraEstado = await _context.OrdenesComprasEstados
@@ -134,7 +134,7 @@ public class OrdenCompraService : BaseGSFService, IOrdenCompraService
             empresaPortal = await _context.EmpresasPortales
             .FirstOrDefaultAsync(src => src.Id == e.EmpresaPortalId);
             if (empresaPortal == null)
-                throw new ValidationErrorException("EmpresaPortal", "No existe la Empresa Portal");
+                throw new ValidationErrorException("EmpresaPortal", "No existe el Socio");
         }
 
         OrdenCompraEstado ordenCompraEstado = await _context.OrdenesComprasEstados
@@ -293,7 +293,7 @@ public class OrdenCompraService : BaseGSFService, IOrdenCompraService
             throw new ValidationErrorException("OrdenCompra", "Operacion rechazada: Existe un Documento de compra con el tipo asignado");
 
         if (_context.EmpresasOrdenesComprasTipos.Any(src => src.OrdenCompraTipoId == ordenCompraTpo.Id))
-            throw new ValidationErrorException("EmpresaOrdenCompra", "Operacion rechazada: Existe una Empresa Portal asociada al tipo seleccionado");
+            throw new ValidationErrorException("EmpresaOrdenCompra", "Operacion rechazada: Existe un Socio asociado al tipo seleccionado");
 
         IQueryable<GrupoOrdenCompraTipo> grupos = _context.GrupoOrdenesComprasTipos
             .Where(src => src.OrdenCompraTipoId == ordenCompraTpo.Id);

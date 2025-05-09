@@ -6,7 +6,7 @@ public class CuitEmpresaPortalOwnershipResolutionException : EmailProcessorInval
     public string Cuit { get; }
 
     public CuitEmpresaPortalOwnershipResolutionException(string cuit)
-        : base($"No se pudo determinar la univocamente empresa portal para el cuit {cuit}.")
+        : base($"No se pudo determinar univocamente el socio para el cuit {cuit}.")
     {
         Cuit = cuit;
     }

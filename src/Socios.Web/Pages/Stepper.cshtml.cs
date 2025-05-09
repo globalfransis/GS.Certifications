@@ -72,7 +72,7 @@ public class StepperModel : BasePageModel
     {
 
         await SetComboCompanies();
-        if (UsuarioEmpresaPortalId is null) throw new ValidationErrorException("UsuarioEmpresaPortalId", _loc["Debe seleccionar una Empresa Portal."]);
+        if (UsuarioEmpresaPortalId is null) throw new ValidationErrorException("UsuarioEmpresaPortalId", _loc["Debe seleccionar un Socio."]);
 
         await SetupContext();
         return RedirectToPage("/Index");

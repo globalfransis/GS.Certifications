@@ -73,11 +73,11 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
             new Option()
             {
                 Id = ProveedoresBackendOptionId,
-                Name = "Proveedores",
+                Name = "Socios",
                 OrderNo = 50,
                 Icon = "fas fa-users",
                 Code = "PRO",
-                Description = "Modulo de Proveedores",
+                Description = "Modulo de Socios",
                 TargetPath = string.Empty,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Backoffice

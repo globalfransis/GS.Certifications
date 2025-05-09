@@ -91,7 +91,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Command
             if (ueps.Any())
             {
                 throw new ValidationErrorException
-                        ("UsuarioInterno", "El usuario ya esta relacionado con la empresa portal");
+                        ("UsuarioInterno", "El usuario ya esta relacionado con el socio");
             }
 
             UsuarioEmpresaPortal uep = new()

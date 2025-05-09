@@ -655,7 +655,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Service
                 if (context.UsuarioEmpresasPortales.Any(u => u.UserId == usuarioExterno.Id))
                 {
                     throw new ValidationErrorException
-                        ("UsuarioExterno", "El usuario ya esta relacionado con la empresa portal");
+                        ("UsuarioExterno", "El usuario ya esta relacionado con el socio");
                 }
 
                 if (!usuarioExterno.CompaniesUsersGroups.Any(u => u.CompanyId == companyId))

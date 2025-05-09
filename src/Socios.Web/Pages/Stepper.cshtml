@@ -315,7 +315,7 @@
                             <form method="post" action="" style="background-color: transparent;">
 
                                 <div class="form-group col-12 text-center">
-                                    <h2 class="pb-2">Seleccion de Empresa Portal</h2>
+                                    <h2 class="pb-2">Selección de Socio</h2>
                                 </div>
 
                                 <div class="form-group col-12">
@@ -326,7 +326,7 @@
                                     <div class="col-12 mb-4">
                                         <label class="col-form-label login-side-text" placeholder="Default input" asp-for="CompanyId">Empresa</label>
                                         <div>
-                                            <select id="CompanyId" name="" class="form-control" placeholder="Seleccione Empresa Portal" autofocus>
+                                            <select id="CompanyId" name="" class="form-control" placeholder="Seleccione el Socio" autofocus>
                                                 <option value="">Seleccione una Empresa</option>
                                                 @foreach (var uep in Model.Companies)
                                                 {
@@ -340,10 +340,10 @@
 
                                 <div class="form-group col-12 d-flex justify-content-center">
                                     <div class="col-12 mb-4">
-                                        <label class="col-form-label login-side-text" placeholder="Default input" asp-for="UsuarioEmpresaPortalId">Empresa Portal</label>
+                                        <label class="col-form-label login-side-text" placeholder="Default input" asp-for="UsuarioEmpresaPortalId">Socio</label>
                                         <div>
-                                            <select id="UsuarioEmpresaPortalId" name="UsuarioEmpresaPortalId" class="form-control" placeholder="Seleccione Empresa Portal" autofocus>
-                                                <option value="">Seleccione una Empresa Portal</option>
+                                            <select id="UsuarioEmpresaPortalId" name="UsuarioEmpresaPortalId" class="form-control" placeholder="Seleccione el Socio" autofocus>
+                                                <option value="">Seleccione un Socio</option>
                                             </select>
                                         </div>
                                         <span asp-validation-for="UsuarioEmpresaPortalId" class="text-danger"></span>
@@ -402,7 +402,7 @@
                         success: function (data) {
                             var $subcategory = $("#UsuarioEmpresaPortalId");
                             $subcategory.empty(); // Limpiar opciones anteriores
-                            $subcategory.append('<option value="">Seleccione una Empresa Portal</option>');
+                            $subcategory.append('<option value="">Seleccione un Socio</option>');
 
                             // Agregar cada opción retornada
                             $.each(data, function (i, item) {
@@ -416,7 +416,7 @@
                 } else {
                     // Si no se selecciona ninguna categoría, limpiar el combo de subcategorías
                     $("#UsuarioEmpresaPortalId").empty();
-                    $("#UsuarioEmpresaPortalId").append('<option value="">Seleccione una Empresa Portal</option>');
+                    $("#UsuarioEmpresaPortalId").append('<option value="">Seleccione un Socio</option>');
                 }
             });
         });
