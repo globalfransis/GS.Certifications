@@ -1,0 +1,26 @@
+﻿@page
+@model CreateUserModel
+@using GS.Certifications.Web.Areas.Security.Pages
+@using GS.Certifications.Web.Areas.Security.Pages.Users
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SecurityResources> secLoc
+
+
+<div class="container-fluid p-0">
+    <form method="post" action="" id="users">
+        <partial name="_CreateOrEdit" model="Model" view-data="ViewData" />
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            var mode = '@Model.Mode';
+            var pageTitle = "@secLoc["Listado de usuarios"]";
+            var backUrl = '../Users/Index';
+
+            replaceWindowsHistory(mode, pageTitle, backUrl)
+        });
+    </script>
+}
+

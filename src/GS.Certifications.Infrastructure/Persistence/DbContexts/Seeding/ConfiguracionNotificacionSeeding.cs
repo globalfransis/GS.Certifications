@@ -73,7 +73,7 @@ namespace GS.Certifications.Infrastructure.Persistence.DbContexts.Seeding
                     FrecuenciaHora = 0,
                     FrecuenciaMinutos = 0,
                     FrecuenciaSegundos = 45,
-                    DomainFIdm = DomainFIdmConstants.CentrosNavegacion,
+                    DomainFIdm = DomainFIdmConstants.Backoffice,
                     Descripcion = "Vinculación de usuario",
                     TipoNotificacionIdm = GSCertificationsTipoNotificacion.VinculacionUsuarioEmpresaPortal,
                 },

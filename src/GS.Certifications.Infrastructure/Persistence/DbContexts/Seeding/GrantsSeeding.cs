@@ -69,7 +69,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Comprobantes",
                 OptionId = OptionSeeding.ComprobantesBackendOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -78,7 +78,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Comprobantes",
                 OptionId = OptionSeeding.ComprobantesBackendOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -87,7 +87,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Comprobantes",
                 OptionId = OptionSeeding.ComprobantesBackendOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
 
             new Grant()
@@ -97,7 +97,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Empresas Portales",
                 OptionId = OptionSeeding.AdministracionOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -106,7 +106,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Empresas Portales",
                 OptionId = OptionSeeding.AdministracionOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -115,7 +115,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Empresas Portales",
                 OptionId = OptionSeeding.AdministracionOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
 
             new Grant()
@@ -125,7 +125,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Usuarios de Empresas Portales",
                 OptionId = OptionSeeding.AdministracionOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -134,7 +134,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Usuarios de Empresas Portales",
                 OptionId = OptionSeeding.AdministracionOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -143,7 +143,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Usuarios de Empresas Portales",
                 OptionId = OptionSeeding.AdministracionOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
 
             new Grant()
@@ -153,7 +153,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Impuestos",
                 OptionId = OptionSeeding.ImpuestosOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -162,7 +162,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Impuestos",
                 OptionId = OptionSeeding.ImpuestosOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -171,7 +171,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Impuestos",
                 OptionId = OptionSeeding.ImpuestosOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
 
             new Grant()
@@ -181,7 +181,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Percepciones",
                 OptionId = OptionSeeding.PercepcionesOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -190,7 +190,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Percepciones",
                 OptionId = OptionSeeding.PercepcionesOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -199,7 +199,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Percepciones",
                 OptionId = OptionSeeding.PercepcionesOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
 
             new Grant()
@@ -209,7 +209,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Periodos",
                 OptionId = OptionSeeding.PeriodosOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -218,7 +218,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Periodos",
                 OptionId = OptionSeeding.PeriodosOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -227,7 +227,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Periodos",
                 OptionId = OptionSeeding.PeriodosOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
 
             new Grant()
@@ -237,7 +237,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Documentos de Compras",
                 OptionId = OptionSeeding.OrdenesComprasOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -246,7 +246,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Documentos de Compras",
                 OptionId = OptionSeeding.OrdenesComprasOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -255,7 +255,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Documentos de Compras",
                 OptionId = OptionSeeding.OrdenesComprasOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
 
             new Grant()
@@ -265,7 +265,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Tipos de Documentos de Compras",
                 OptionId = OptionSeeding.TiposOrdenesComprasOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -274,7 +274,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Tipos de Documentos de Compras",
                 OptionId = OptionSeeding.TiposOrdenesComprasOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -283,7 +283,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Tipos de Documentos de Compras",
                 OptionId = OptionSeeding.TiposOrdenesComprasOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
 
             new Grant()
@@ -293,7 +293,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Alta de Tipos de Conceptos de Gastos",
                 OptionId = OptionSeeding.ConceptosGastosTiposOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -302,7 +302,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Baja de Tipos de Conceptos de Gastos",
                 OptionId = OptionSeeding.ConceptosGastosTiposOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
@@ -311,7 +311,7 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
                 Description = "Modificación de Tipos de Conceptos de Gastos",
                 OptionId = OptionSeeding.ConceptosGastosTiposOptionId,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             }
         );
     }

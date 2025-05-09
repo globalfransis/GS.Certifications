@@ -1,0 +1,43 @@
+﻿@page
+@using GS.Certifications.Web.Areas.Configuration.Pages.NotificationTypes
+@model DetailNotificationTypeOrganizationModel
+
+<div class="container">
+
+    <form method="post" action="">
+        <partial name="_CreateOrEdit" model="Model" view-data="ViewData" />
+    </form>
+
+</div>
+
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            deactivateControls();
+            var mode = '@Model.Mode';
+            var pageTitle = "@loc["Listado de Tipo de Notificaciones Activas"]";
+            var backUrl = '../NotificationTypes/Index';
+
+            replaceWindowsHistory(mode, pageTitle, backUrl)
+            updateSelectedNotificationTypeValues();
+
+            $("#SelectListNotificationType").change(function () {
+                updateSelectedNotificationTypeValues();
+            });
+
+        });
+
+        function updateSelectedNotificationTypeValues() {
+            var id = $("#SelectListNotificationType").val();
+            var jsonNotificationTypes = $("#NotificationTypesJson").val();
+            var notificationTypes = JSON.parse(jsonNotificationTypes);
+            notificationTypes.forEach(element => {
+                if (element.Id == parseInt(id)) {
+                    console.log(element.Description);
+                    $("#SelectedNotidicationTypeDescription").val(element.Description);
+                    $("#SelectedNotidicationTypeLevel").val(element.NotificationLevel);
+                }
+            })
+        }
+    </script>
+}

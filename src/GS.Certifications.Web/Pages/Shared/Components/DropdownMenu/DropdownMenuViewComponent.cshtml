@@ -1,0 +1,33 @@
+﻿@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
+@model GSF.Application.Security.Modulos.ModuloDto
+<!-- https://www.cssscript.com/multi-level-dropdown-menu-pure-javascript-tidy-menu/ -->
+
+<div class="Header">
+    <ul class="Menu -horizontal">
+        <li class="logo">
+            <a href="/">@Configuration.GetSection("Application").GetValue(typeof(string), "Name")</a>
+        </li>
+
+        @foreach (var opcion in Model.SubModulos)
+        {
+            <li class="@((@opcion.SubModulos != null && @opcion.SubModulos.Any()) ? "-hasSubmenu" : "")">
+
+                <a href="@opcion.Url"><i class="@opcion.Icono"></i><span>@opcion.Nombre</span></a>
+
+                @if (opcion.SubModulos != null && opcion.SubModulos.Any())
+                {
+                    <ul>
+                        @foreach (var submenu in opcion.SubModulos)
+                        {
+                            @await Html.PartialAsync("_opcionMenu", submenu)
+                        }
+
+                    </ul>
+                }
+            </li>
+
+        }
+
+    </ul>
+</div>

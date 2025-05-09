@@ -1,0 +1,190 @@
+﻿@using GS.Certifications.Web.Areas.Configuration.Pages.NotificationTypes
+@model NotificationTypeCrudModel
+<!-- Filters card -->
+<div class="col-12">
+
+    <!-- Title -->
+    <div class="col-12 mt-4">
+        <p class="h5">@loc["Datos Notificación"]</p>
+    </div>
+    <!-- Title end -->
+
+    <div class="card">
+        <input type="hidden" asp-for="Id" />
+
+        <input asp-for="RowVersion" />
+
+        <div class="card-body">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger">
+                </div>
+
+                <div class="col-lg-6 col-sm-12 mb-4">
+                    <label asp-for="NotificationTypeId"></label>
+                    @if ((Model.Mode != null && Model.Mode != "Alta"))
+                    {
+                        <input type="hidden" class="form-control" asp-for="NotificationTypeId" id="SelectListNotificationType" />
+                        <input class="form-control" value="@Model.NotificationTypesList.FirstOrDefault().Name" disabled />
+                    }
+                    else
+                    {
+                        <select formaction="Organization" class="form-select" asp-for="NotificationTypeId" id="SelectListNotificationType"
+                                asp-items="Model.NotificationTypeSelectList" disabled='@(!Model.NotificationTypeSelectList.Any() ? "disabled" : null)'>
+                        </select>
+                        <span asp-validation-for="NotificationTypeId" class="text-danger"></span>
+                    }
+                </div>
+
+                <input type="hidden" asp-for="NotificationTypesJson" name="NotificationTypesJson" id="NotificationTypesJson" />
+
+                <div class="col-lg-6 col-sm-12 mb-4">
+                    <label>@loc["Alcance"]</label>
+                    <input class="form-control" id="SelectedNotidicationTypeLevel" disabled />
+                </div>
+
+                <div class="col-lg-12 col-sm-12 mb-12">
+                    <label>@loc["Descripción"]</label>
+                    <input class="form-control" id="SelectedNotidicationTypeDescription" disabled />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12 mt-4">
+    <p class="h5">@loc["Grupos"]</p>
+</div>
+
+<div class="card mt-3">
+
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-lg-12 col-sm-12" hide-in-detail>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-12 mb-4">
+                        <label asp-for="SelectedGroupId"></label>
+                        <select formaction="Groups" class="form-select" asp-for="SelectedGroupId" id="SelectListGroups"
+                                asp-items="Model.GroupsSelectList" disabled='@(!Model.GroupsSelectList.Any() ? "disabled" : null)'>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-12 mb-4">
+                        <div class="float-start">
+                            <label></label>
+                            <button class="btn btn-outline-primary form-control" asp-page-handler="AddGroup"
+                                    type="submit" disabled='@((!Model.GroupsSelectList.Any() || Model.NotificationTypeId == default) ? "disabled" : null)'>
+                                <b><i class="fas fa-plus"></i>&nbsp;@loc["Agregar"]</b>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row col-12" hide-in-detail>
+                        <div class="col-12">
+                            <span asp-validation-for="SelectedGroups" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-12 col-sm-12">
+                    <table id="fixed-table" class="table table-bordered table-striped table-hover table-white">
+                        <thead class="table-top">
+                            <tr class="d-flex text-center align-middle">
+                                <th class="col-1">#</th>
+                                <th class="col">@loc["Nombre"]</th>
+                                <th class="col">@loc["Descripción"]</th>
+
+                                @if ((Model.Mode != null && Model.Mode != "Detalle"))
+                                {
+                                    <th class="col-2 text-center">@loc["Eliminar"]</th>
+                                }
+
+                            </tr>
+                        </thead>
+                        @if (!Model.SelectedGroups.Any())
+                        {
+                            <tr class="no-data">
+                                <td colspan="7" class="text-center">@loc["No hay datos ingresados"]</td>
+                            </tr>
+                        }
+                        @for (var i = 0; i < Model.SelectedGroups.Count; i++)
+                        {
+                            <tr class="d-flex">
+                                <td class="col-1">@{
+                                        int numero = i + 1;
+                                    } @numero</td>
+                                <td class="col">
+                                    <label asp-for="@Model.SelectedGroups[i].Name">@Model.SelectedGroups[i].Name</label>
+                                </td>
+                                <td class="col">
+                                    <label asp-for="@Model.SelectedGroups[i].Description">@Model.SelectedGroups[i].Description</label>
+                                    <input type="hidden" asp-for="@Model.SelectedGroups[i].Id" />
+                                    <input type="hidden" asp-for="@Model.SelectedGroups[i].Name" />
+                                    <input type="hidden" asp-for="@Model.SelectedGroups[i].Description" />
+                                </td>
+
+                                @if ((Model.Mode != null && Model.Mode != "Detalle"))
+                                {
+                                    <td class="col-2 text-center">
+                                        <button type="submit" style="border-style: none; background-color: transparent;" class="text-danger btnRemove"
+                                                asp-page-handler="RemoveGroup" asp-route-index="@i">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table buttons -->
+<div class="col-12 d-flex justify-content-end mb-3 mt-3">
+    @{
+        var textCancelButton = (Model.Mode != null && Model.Mode == "Detalle") ? loc["Volver"] : loc["Cancelar"];
+    }
+    <button onclick="showSpinner(true)" class="btn btn-primary btn-sm" type="submit" asp-page-handler="Save" disabled='@((!Model.SelectedGroups.Any() || Model.NotificationTypeId == default) ? "disabled" : null)'>@loc["Aceptar"]</button>
+    &nbsp;&nbsp;
+
+    @if (Model.Mode != null && Model.Mode == "Detalle")
+    {
+        <grant grant-name="notifications.update">
+            <a asp-page="/NotificationTypes/Edit" class="btn btn-primary y mr-2 btn-sm" asp-area="Configuration" asp-route-id="@Model.Id">@loc["Editar"]</a>
+            &nbsp;&nbsp;
+        </grant>
+
+        <grant grant-name="notifications.delete">
+            <button type="submit" class="btn btn-danger y mr-2 btn-sm" asp-page-handler="Delete" id="@("btnDelete" + Model.Id)" show-in-detail
+                    confirm-delete=@loc["¿Está usted seguro que desea eliminar la Notificación {0}? Se eliminará para todos los grupos de la Organización.", Model.NotificationTypeName]
+                    asp-route-id="@Model.Id" asp-route-rowVersion="@Convert.ToBase64String(Model.RowVersion)">
+                @loc["Eliminar"]
+            </button>
+            &nbsp;&nbsp;
+        </grant>
+    }
+
+    @*<gsf-back-link>@textCancelButton</gsf-back-link>*@
+    @if (Model.Mode == "Detalle")
+    {
+        <a asp-page="/NotificationTypes/Index" class="btn btn-outline-primary btn-sm mr-2" asp-area="Configuration">@loc["Volver"]</a>
+    }
+
+    @if (Model.Mode == "Modificación")
+    {
+        <a asp-page="/NotificationTypes/Detail" class="btn btn-outline-primary btn-sm mr-2" asp-area="Configuration" asp-route-id="@Model.Id">@loc["Cancelar"]</a>
+    }
+
+    @if (Model.Mode == "Alta")
+    {
+        <a asp-page="/NotificationTypes/Index" class="btn btn-outline-primary btn-sm mr-2" asp-area="Configuration">@loc["Cancelar"]</a>
+    }
+
+</div>
+

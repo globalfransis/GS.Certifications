@@ -57,7 +57,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Command
 
         protected async override Task<Unit> HandleRequestAsync(AddUsuarioInternoToEmpresaPortalCommand request, CancellationToken cancellationToken)
         {
-            User usuario = await _userService.GetByEmailAsync(request.Email, DomainFIdmConstants.CentrosNavegacion);
+            User usuario = await _userService.GetByEmailAsync(request.Email, DomainFIdmConstants.Backoffice);
             await AgregarUsuarioExistente(usuario, request.Roles, request.EmpresaPortalId);
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
@@ -97,7 +97,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Command
             UsuarioEmpresaPortal uep = new()
             {
                 UserId = usuario.Id,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion,
+                DomainFIdm = DomainFIdmConstants.Backoffice,
                 EmpresaPortalId = empresaPortalId,
                 FechaRegistracion = DateTime.Now,
                 Habilitado = true
@@ -122,7 +122,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Command
 
             EmpresaPortal empresaPortal = await _context.EmpresasPortales.FirstOrDefaultAsync(src => src.Id == empresaPortalId);
 
-            VinculacionUsuarioEmpresaEvent vinculacionEvent = new(usuario, DomainFIdmConstants.CentrosNavegacion, empresaPortal);
+            VinculacionUsuarioEmpresaEvent vinculacionEvent = new(usuario, DomainFIdmConstants.Backoffice, empresaPortal);
 
             usuario.PreSaveDomainEvents.Add(vinculacionEvent);
 

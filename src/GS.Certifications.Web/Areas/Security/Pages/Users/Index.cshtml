@@ -1,0 +1,342 @@
+﻿@page "{handler?}"
+@using GS.Certifications.Web.Areas.Security.Pages
+@using GS.Certifications.Web.Areas.Security.Pages.Users
+@model UsersIndexModel
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SecurityResources> secLoc
+@*@section BackButton{
+        <button type="button" class="btn btn-primary mr-2" asp-page="../Index"><i class="fas fa-arrow-left"></i></button>
+    }*@
+
+<div class="col main-content">
+    <!-- Title -->
+    <div class="col-12 mt-4">
+        <p class="h5">@loc["Filtro de Búsqueda"]</p>
+
+    </div>
+    <!-- Title end -->
+
+
+    <div class="col-12">
+
+        <!-- Filters card -->
+        <div class="card">
+            <div class="card-body">
+                <form method="get">
+                    <input type="hidden" asp-for="LoggedUserId" />
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                            <label>@loc["Nombre de Usuario"]</label>
+                            <input type="search" class="form-control" asp-for="SearchLogin" />
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                            <label>@loc["Email"]</label>
+                            <input type="search" class="form-control" asp-for="SearchEmail" />
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                            <label>@loc["Organización"]</label>
+                            <input type="search" class="form-control" asp-for="SearchOrganization" />
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                            <label>@loc["Empresa"]</label>
+                            <input type="search" class="form-control" asp-for="SearchCompany" />
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                            <label>@loc["Grupo"]</label>
+                            <input type="search" class="form-control" asp-for="SearchGroup" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-center">
+                        <button onclick="showSpinner(true)" class="d-none d-md-block btn btn-primary btn-sm">
+                            <i class="fas fa-search"></i>
+                            <span style="font-weight:500;">@loc["Buscar"]</span>
+                        </button>
+
+                        <button onclick="showSpinner(true)" class="d-block d-md-none btn btn-primary btn-lg">
+                            <i class="fas fa-search"></i>
+                            <span style="font-weight:500;">@loc["Buscar"]</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Filters card end -->
+        <!-- Title / action -->
+        <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-3">
+            <p class="h5 m-0">@secLoc["Listado de Usuarios"]</p>
+            <grant grant-name="users.create">
+                <a asp-page="create" type="button" class="btn btn-outline-primary btn-sm"><b><i class="fas fa-plus"></i> @secLoc["Agregar"]</b></a>
+                @*<button class="btn btn-outline-primary btn-sm"><a asp-page="create"><b><i class="fas fa-plus"></i> @secLoc["Agregar"]</b></a></button>*@
+            </grant>
+        </div>
+        <!-- Title / action end -->
+        <!-- Table -->
+
+
+
+        <div class="col-12 table-responsive">
+            <table convert-to-datatable class="table table-bordered table-striped table-hover table-white">
+                <thead class="table-top">
+                    <tr>
+                        @*<th scope="col">Id</th>*@
+                        <th o-sort-datatable class="text-center col-1" scope="col">@loc["Nombre de Usuario"]</th>
+                        <th o-sort-datatable class="text-center col-2 d-none d-xxl-table-cell" scope="col">@loc["Nombre"]</th>
+                        <th o-sort-datatable class="text-center col-2 d-none d-xxl-table-cell" scope="col">@loc["Apellido"]</th>
+                        <th o-sort-datatable class="text-center col-2" scope="col">@loc["Email"]</th>
+                        <th o-sort-datatable class="text-center col-1 d-none d-xxl-table-cell" scope="col">@loc["Documento"]</th>
+                        <th o-sort-datatable class="text-center col-1" scope="col">@loc["Empresas"]</th>
+                        <th o-sort-datatable class="text-center col-1 d-none d-xxl-table-cell" scope="col">@loc["Grupos"]</th>
+                        <th o-sort-datatable class="text-center col-1 d-none d-xxl-table-cell" scope="col">@loc["Grupo Dueño"]</th>
+                        <th o-sort-datatable class="text-center col-1" no-sort-datatable>@loc["Acciones"]</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if (!Model.Users.Any())
+                    {
+                        <tr class="no-data">
+                            <td colspan="100" class="text-center">@loc["No se encontraron datos"]</td>
+                        </tr>
+                    }
+
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td class="text-center align-middle col-1" scope="row">
+                                <a class="table-a" asp-page="/Users/Detail" asp-area="Security" asp-route-id="@user.Id">@user.Login</a>
+                            </td>
+                            <td class="text-center align-middle d-none d-xxl-table-cell col-2">@user.FirstName</td>
+                            <td class="text-center align-middle d-none d-xxl-table-cell col-2">@user.LastName</td>
+                            <td class="text-center align-middle col-2 truncate" title="@user.Email">@user.Email</td>
+                            <td class="text-center align-middle d-none d-xxl-table-cell col-1">@user.IdNumber</td>
+                            <td class="text-center align-middle col-1 truncate" title="@user.CompaniesNames">@user.CompaniesNames</td>
+                            <td class="text-center align-middle d-none d-xxl-table-cell col-1 truncate" title="@user.GroupsNames">@user.GroupsNames</td>
+                            <td class="text-center align-middle d-none d-xxl-table-cell col-1" title="@user.GroupOwner.Name">@user.GroupOwner.Name</td>
+
+                            <td class="col-1">
+                                <div class="d-flex justify-content-center">
+                                    @{
+                                        var disabled = user.SystemUse ? "disabled" : null;
+                                        var userActionsEnabled = !user.SystemUse || user.Id != Model.LoggedUserId;
+                                    }
+                                    <grant grant-name="users.update" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Editar"] : @loc["Editar"])">
+                                        <a asp-page="/Users/Edit" asp-area="Security" asp-route-id="@user.Id" class="@(!userActionsEnabled ? "btn btn-link text-body gsf-a-disabled" : "btn btn-link text-body")">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </grant>
+
+                                    <grant grant-name="users.delete" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Eliminar"] : @loc["Eliminar"])">
+                                        <form method="post">
+                                            <div>
+
+                                                <button type="submit" class="btn btn-link text-danger" disabled="@disabled" id="@("btnDelete" + user.Id)"
+                                                        asp-page="/Users/Detail" asp-page-handler="Delete" confirm-delete=@loc["¿Está usted seguro que desea eliminar el Usuario {0}", @user.Login]
+                                                        asp-route-id="@user.Id" asp-route-rowVersion="@Convert.ToBase64String(user.RowVersion)">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </grant>
+
+                                    <grant grant-name="users.delegate" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Delegar"] : @loc["Delegar"])">
+                                        <form method="get">
+                                            <button type="button" class="btn btn-link text-body" data-toggle="ajax-modal" data-id="@user.Id" disabled="@disabled">
+                                                <i class="fas fa-people-arrows"></i>
+                                            </button>
+                                        </form>
+                                    </grant>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+
+        @*=== DESKTOP ===*@
+        @*<div class="d-none d-xxl-block">
+        <table convert-to-datatable class="table table-bordered table-striped table-hover">
+        <thead class="table-top">
+        <tr>
+        <th o-sort-datatable class="text-center col-1" scope="col">@loc["Nombre de Usuario"]</th>
+        <th o-sort-datatable class="text-center col-2 .d-none .d-md-block .d-xl-none d-none d-md-table-cell " scope="col">@loc["Nombre"]</th>
+        <th o-sort-datatable class="text-center col-2 .d-none .d-md-block .d-xl-none d-none d-md-table-cell " scope="col">@loc["Apellido"]</th>
+        <th o-sort-datatable class="text-center col-2" scope="col">@loc["Email"]</th>
+        <th o-sort-datatable class="text-center col-1 .d-none .d-md-block .d-xl-none d-none d-md-table-cell " scope="col">@loc["Documento"]</th>
+        <th o-sort-datatable class="text-center col-1" scope="col">@loc["Empresas"]</th>
+        <th o-sort-datatable class="text-center col-1 .d-none .d-md-block .d-xl-none d-none d-md-table-cell " scope="col">@loc["Grupos"]</th>
+        <th o-sort-datatable class="text-center col-1 .d-none .d-md-block .d-xl-none d-none d-md-table-cell " scope="col">@loc["Grupo Dueño"]</th>
+        <th o-sort-datatable class="text-center col-1" no-sort-datatable>@loc["Acciones"]</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @if (!Model.Users.Any())
+        {
+        <tr class="no-data">
+        <td colspan="100" class="text-center">@loc["No se encontraron datos"]</td>
+        </tr>
+        }
+
+        @foreach (var user in Model.Users)
+        {
+        <tr>
+        <td class="text-center align-middle col-1" scope="row">
+        <a class="table-a" asp-page="/Users/Detail" asp-area="Security" asp-route-id="@user.Id">@user.Login</a>
+        </td>
+        <td class="text-center align-middle .d-none .d-md-block .d-xl-none d-none d-md-table-cell  col-2">@user.FirstName</td>
+        <td class="text-center align-middle .d-none .d-md-block .d-xl-none d-none d-md-table-cell  col-2">@user.LastName</td>
+        <td class="text-center align-middle col-2 truncate" title="@user.Email">@user.Email</td>
+        <td class="text-center align-middle .d-none .d-md-block .d-xl-none d-none d-md-table-cell  col-1">@user.IdNumber</td>
+        <td class="text-center align-middle col-1 truncate" title="@user.CompaniesNames">@user.CompaniesNames</td>
+        <td class="text-center align-middle .d-none .d-md-block .d-xl-none d-none d-md-table-cell  col-1 truncate" title="@user.GroupsNames">@user.GroupsNames</td>
+        <td class="text-center align-middle .d-none .d-md-block .d-xl-none d-none d-md-table-cell  col-1" title="@user.GroupOwner.Name">@user.GroupOwner.Name</td>
+
+        <td class="col-1">
+        <div class="d-flex justify-content-center">
+        @{
+        var disabled = user.SystemUse ? "disabled" : null;
+        var userActionsEnabled = !user.SystemUse || user.Id != Model.LoggedUserId;
+        }
+        <grant grant-name="users.update" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Editar"] : @loc["Editar"])">
+        <a asp-page="/Users/Edit" asp-area="Security" asp-route-id="@user.Id" class="@(!userActionsEnabled ? "btn btn-link text-body gsf-a-disabled" : "btn btn-link text-body")">
+        <i class="fas fa-edit"></i>
+        </a>
+        </grant>
+
+        <grant grant-name="users.delete" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Eliminar"] : @loc["Eliminar"])">
+        <form method="post">
+        <div>
+
+        <button type="submit" class="btn btn-link text-danger" disabled="@disabled" id="@("btnDelete" + user.Id)"
+        asp-page="/Users/Detail" asp-page-handler="Delete" confirm-delete=@loc["¿Está usted seguro que desea eliminar el Usuario {0}", @user.Login]
+        asp-route-id="@user.Id" asp-route-rowVersion="@Convert.ToBase64String(user.RowVersion)">
+        <i class="fas fa-trash"></i>
+        </button>
+        </div>
+        </form>
+        </grant>
+
+        <grant grant-name="users.delegate" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Delegar"] : @loc["Delegar"])">
+        <form method="get">
+        <button type="button" class="btn btn-link text-body" data-toggle="ajax-modal" data-id="@user.Id" disabled="@disabled">
+        <i class="fas fa-people-arrows"></i>
+        </button>
+        </form>
+        </grant>
+        </div>
+        </td>
+        </tr>
+        }
+        </tbody>
+
+        </table>
+        </div>*@
+
+        @*=== MOBILE ===*@
+        @* <div class="d-block d-xxl-none">
+        <table convert-to-datatable class="table table-bordered table-striped table-hover" no-search length-change>
+        <thead class="table-top">
+        <tr>
+        <th o-sort-datatable class="text-center col-1" scope="col">@loc["Nombre de Usuario"]</th>
+        <th o-sort-datatable class="text-center col-1" scope="col">@loc["Email"]</th>
+        <th o-sort-datatable class="text-center col-1" scope="col">@loc["Empresas"]</th>
+        <th o-sort-datatable class="text-center col-1" no-sort-datatable>@loc["Acciones"]</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @if (!Model.Users.Any())
+        {
+        <tr class="no-data">
+        <td colspan="100" class="text-center">@loc["No se encontraron datos"]</td>
+        </tr>
+        }
+
+        @foreach (var user in Model.Users)
+        {
+        <tr>
+        <td class="text-center align-middle" scope="row">
+        <a class="table-a" asp-page="/Users/Detail" asp-area="Security" asp-route-id="@user.Id">@user.Login</a>
+        </td>
+        <td class="text-center align-middle col-1" title="@user.Email">@user.Email</td>
+        <td class="text-center align-middle col-1" title="@user.CompaniesNames">@user.CompaniesNames</td>
+
+        <td>
+        <div class="d-flex justify-content-center flex-wrap">
+        @{
+        var disabled = user.SystemUse ? "disabled" : null;
+        var userActionsEnabled = !user.SystemUse || user.Id != Model.LoggedUserId;
+        }
+        <grant grant-name="users.update" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Editar"] : @loc["Editar"])">
+        <a asp-page="/Users/Edit" asp-area="Security" asp-route-id="@user.Id" class="@(!userActionsEnabled ? "btn btn-link text-body gsf-a-disabled" : "btn btn-link text-body")">
+        <i class="fas fa-edit"></i>
+        </a>
+        </grant>
+
+        <grant grant-name="users.delete" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Eliminar"] : @loc["Eliminar"])">
+        <form method="post">
+        <button type="submit" class="btn btn-link text-danger" disabled="@disabled" id="@("btnDelete" + user.Id)"
+        asp-page="/Users/Detail" asp-page-handler="Delete" confirm-delete=@loc["¿Está usted seguro que desea eliminar el Usuario {0}", @user.Login]
+        asp-route-id="@user.Id" asp-route-rowVersion="@Convert.ToBase64String(user.RowVersion)">
+        <i class="fas fa-trash"></i>
+        </button>
+        </form>
+        </grant>
+
+        <grant grant-name="users.delegate" title="@(!userActionsEnabled ? @loc["Usuario Administrador/Actual - No se permite Delegar"] : @loc["Delegar"])">
+        <form method="get">
+        <button type="button" class="btn btn-link text-body" data-toggle="ajax-modal" data-id="@user.Id" disabled="@disabled">
+        <i class="fas fa-people-arrows"></i>
+        </button>
+        </form>
+        </grant>
+        </div>
+        </td>
+        </tr>
+        }
+        </tbody>
+
+        </table>
+        </div>*@
+
+    </div>
+
+</div>
+
+
+<div class="ModalDelegation" modal-section>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('button[data-toggle="ajax-modal"], .OwnerDelegation').click(function (event) {
+                // url to Razor Pages handler which returns modal HTML
+                var id = parseInt($(this).data().id);
+                //var url = '/Security/Users/Index?id=' + id + '&handler=DelegationModalPartial';
+                var url = baseUrl + '/UsersModals/DelegationModal?id=' + id;
+                $.get(url).done(function (data) {
+                    //$('.ModalDelegation').html(data);
+                    //$('[modal-section]').html(data);
+                    //$(document).find('.DelegationModalPartial').modal('show');
+                    //$('[modal-partial]').modal('show');
+                    openModal(data);
+                }).fail(function (data) {
+                    handleModalLoadError(data.responseJSON.message);
+                });
+            });
+        });
+    </script>
+}
+

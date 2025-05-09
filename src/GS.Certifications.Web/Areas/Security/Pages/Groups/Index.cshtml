@@ -1,0 +1,159 @@
+﻿@page "{handler?}"
+@using GS.Certifications.Web.Areas.Security.Pages.Groups
+@model GroupsIndexModel
+<!-- Title -->
+<div class="col-12 mt-4">
+    <p class="h5">@loc["Filtro de Búsqueda"]</p>
+</div>
+<!-- Title end -->
+
+
+<div class="col-12">
+
+    <div class="card">
+
+        <div class="card-body">
+            <form method="get">
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <label asp-for="SearchName"></label>
+                        <input type="search" class="form-control" asp-for="SearchName" />
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <label asp-for="SearchOrganization"></label>
+                        <input type="search" class="form-control" asp-for="SearchOrganization" />
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <label asp-for="SearchRole"></label>
+                        <input type="search" class="form-control" asp-for="SearchRole" />
+                    </div>
+
+                </div>
+
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="submit" asp-page-handler="Search" onclick="showSpinner(true)" class="btn btn-primary btn-sm">
+                        <i class="fas fa-search"></i>
+                        <span style="font-weight:500;">@loc["Buscar"]</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <br />
+
+
+    <!-- Title / action -->
+    <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-3">
+        <p class="h5 m-0">@loc["Listado de Grupos de Usuarios"]</p>
+        <grant grant-name="groups.create">
+            <a asp-area="Security" class="btn btn-outline-primary btn-sm" asp-page="/Groups/Create"><b><i class="fas fa-plus"></i> @loc["Agregar"]</b></a>
+        </grant>
+
+    </div>
+    <!-- Title / action end -->
+    <!-- Table -->
+    <div class="col-12 table-responsive">
+
+        <table class="table table-bordered table-striped table-hover" convert-to-datatable>
+            <thead class="table-top">
+                <tr class="text-center align-middle">
+                    <th scope="col">@loc["Nombre"]</th>
+                    <th class="d-sm-none d-md-table-cell" scope="col">@loc["Descripción"]</th>
+                    <th class="d-sm-none d-md-table-cell" scope="col">@loc["Organizaciones"]</th>
+                    <th class="d-sm-none d-md-table-cell" scope="col">@loc["Roles"]</th>
+                    <th class="d-sm-none d-md-table-cell" scope="col">@loc["Grupo Dueño"]</th>
+
+                    <th class="col-1 text-center" no-sort-datatable>@loc["Acciones"]</th>
+
+                </tr>
+            </thead>
+            @if (!Model.Groups.Any() || !Model.IsPostBack)
+            {
+                <tr class="no-data">
+                    <td colspan="100" class="text-center">@Model.NoDataMessage</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var group in Model.Groups)
+                {
+                    <tr>
+                        <td scope="row">
+                            <a class="table-a" asp-page="/Groups/Detail" asp-area="Security" asp-route-id="@group.Id">@group.Name</a>
+                        </td>
+                        <td class="d-sm-none d-md-table-cell">@group.Description</td>
+
+                        <td data-toggle="tooltip" data-placement="bottom" title="@group.OrganizationsNames" class="d-sm-none d-md-table-cell gsf-table-cell">
+                            @group.OrganizationsNames
+                        </td>
+
+                        <td data-toggle="tooltip" data-placement="bottom" title="@group.RolesNames" class="d-sm-none d-md-table-cell gsf-table-cell">
+                            @group.RolesNames
+                        </td>
+                        <td class="d-sm-none d-md-table-cell">@group.GroupOwnerName</td>
+
+                        <td>
+                            <div class="d-flex justify-content-around">
+                                @{
+                                    var groupIsSysmteUse = group.SystemUse;
+                                    var disabled = group.SystemUse ? "disabled" : null;
+                                    //Note: the group can be edited even if is SystemUse.
+                                }
+                                <grant grant-name="groups.update" title="@loc["Editar"]">
+                                    <a asp-page="/Groups/Edit" asp-area="Security" asp-route-id="@group.Id" class="btn btn-link text-body">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </grant>
+
+                                <grant grant-name="groups.delete" title="@(group.SystemUse ? @loc["Grupo Administrador - No se permite Eliminar"] : @loc["Eliminar"])">
+                                    <form method="post">
+                                        <button type="submit" class="btn btn-link text-danger" disabled="@disabled" id="@("btnDelete" + group.Id)"
+                                                asp-page="/Groups/Detail" asp-page-handler="Delete" confirm-delete=@loc["¿Está usted seguro que desea eliminar el Grupo {0}?", group.Name]
+                                                asp-route-id="@group.Id" asp-route-rowVersion="@Convert.ToBase64String(group.RowVersion)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </grant>
+
+                                <grant grant-name="groups.delegate" title="@(group.SystemUse ? @loc["Grupo Administrador - No se permite Delegar"] : @loc["Delegar"])">
+                                    <form method="get">
+                                        <button type="button" class="btn btn-link text-body" data-toggle="ajax-modal" data-id="@group.Id" disabled="@disabled">
+                                            <i class="fas fa-people-arrows"></i>
+                                        </button>
+                                    </form>
+                                </grant>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+
+<div class="ModalDelegation" modal-section>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('button[data-toggle="ajax-modal"], .OwnerDelegation').click(function (event) {
+                // url to Razor Pages handler which returns modal HTML
+                var id = parseInt($(this).data().id);
+                var url = baseUrl + '/GroupsModals/DelegationModal?id=' + id;
+                $.get(url).done(function (data) {
+                    openModal(data);
+                }).fail(function (data) {
+                    handleModalLoadError(data.responseJSON.message);
+                });
+            });
+        });
+    </script>
+}

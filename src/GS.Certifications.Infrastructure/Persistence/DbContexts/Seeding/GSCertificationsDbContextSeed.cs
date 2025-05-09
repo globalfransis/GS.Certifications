@@ -13,7 +13,7 @@ namespace GS.Certifications.Infrastructure.Persistence.DbContexts.Seeding;
 
 public static class GSCertificationsDbContextSeed
 {
-    public const long BackOfficeIdm = DomainFIdmConstants.CentrosNavegacion;
+    public const long BackOfficeIdm = DomainFIdmConstants.Backoffice;
 
     public static async Task SeedAsync(ICertificationsDbContext context)
     {
@@ -21,7 +21,7 @@ public static class GSCertificationsDbContextSeed
 
         if (await context.DomainFs.AnyAsync())
         {
-            var domain = await context.DomainFs.FirstOrDefaultAsync(x => x.Idm == DomainFIdmConstants.CentrosNavegacion);
+            var domain = await context.DomainFs.FirstOrDefaultAsync(x => x.Idm == DomainFIdmConstants.Backoffice);
             domain.Name = "BackOffice";
             domain.Description = "BackOffice";
             domain.RowVersion = domain.RowVersion;

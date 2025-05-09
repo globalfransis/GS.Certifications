@@ -1,0 +1,120 @@
+﻿@page "{handler?}"
+@using GS.Certifications.Web.Areas.Configuration.Pages.NotificationTypes
+@model IndexNotificationTypesModel
+<!-- Title -->
+<div class="col-12 mt-4">
+    <p class="h5">@loc["Filtro de Búsqueda"]</p>
+</div>
+<!-- Title end -->
+
+<div class="col-12">
+
+    <!-- Filters card -->
+    <div class="card">
+        <div class="card-body">
+            <form method="get" action="">
+
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                        <label asp-for="NotificationLevelId"></label>
+                        <select formaction="Organization" class="form-select" asp-for="NotificationLevelId" id="SelectListOrganization"
+                                asp-items="Model.NotificationLevelSelectList" disabled='@(!Model.NotificationLevelSelectList.Any() ? "disabled" : null)'>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                        <label asp-for="NotificationTypeId"></label>
+                        <select formaction="Organization" class="form-select" asp-for="NotificationTypeId" id="SelectListOrganization"
+                                asp-items="Model.NotificationTypeSelectList" disabled='@(!Model.NotificationTypeSelectList.Any() ? "disabled" : null)'>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-center">
+                    <button onclick="showSpinner(true)" type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-search"></i>
+                        <span style="font-weight:500;">@loc["Buscar"]</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Filters card end -->
+    <!-- Title / action -->
+    <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-3">
+        <p class="h5 m-0">@loc["Listado de Notificaciones por Organización"]</p>
+        <grant grant-name="notifications.create">
+            <a asp-area="Configuration" asp-page="/NotificationTypes/Create" type="button" class="btn btn-outline-primary btn-sm"><b><i class="fas fa-plus"></i> @loc["Agregar"]</b></a>
+        </grant>
+    </div>
+    <!-- Title / action end -->
+
+    <div class="col-12 table-responsive">
+        <table convert-to-datatable class="table table-bordered table-striped table-hover">
+            <thead class="table-top">
+                <tr>
+                    <th scope="col" class="d-sm-none d-md-table-cell w-10 text-center align-middle">@loc["Nombre"]</th>
+                    <th scope="col" class="d-sm-none d-md-table-cell w-50 text-center align-middle">@loc["Descripción"]</th>
+                    <th scope="col" class="d-sm-none d-md-table-cell w-10 text-center align-middle">@loc["Alcance"]</th>
+
+                    <th scope="col" class="col-1 w-5 text-center align-middle" no-sort-datatable>@loc["Acciones"]</th>
+
+                </tr>
+            </thead>
+            @if (!Model.ActiveNotifications.Any())
+            {
+                <tr class="no-data">
+                    <td colspan="100" class="no-data text-center">@loc["No se encontraron datos"]</td>
+                </tr>
+            }
+
+            @foreach (var notificationTypeOrg in Model.ActiveNotifications)
+            {
+                <tr>
+                    <td scope="row" class="w-20 text-left">
+                        <a class="table-a" asp-page="/NotificationTypes/Detail" asp-area="Configuration" asp-route-id="@notificationTypeOrg.Id">@notificationTypeOrg.NotificationType.Name</a>
+                    </td>
+                    <td class="w-50 d-sm-none d-md-table-cell text-left" scope="row">@notificationTypeOrg.NotificationType.Description</td>
+                    <td class="d-sm-none d-md-table-cell text-left" scope="row">@notificationTypeOrg.NotificationType.NotificationLevel</td>
+
+                    <td class="w-10 text-left">
+                        <div class="d-flex justify-content-center flex-wrap">
+                            <grant grant-name="notifications.update">
+                                <a asp-page="/NotificationTypes/Edit" asp-route-id="@notificationTypeOrg.Id" class="btn btn-link text-body"
+                                   title="@loc["Editar"]">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </grant>
+
+                            <grant grant-name="notifications.delete">
+                                <form method="post">
+                                    <button id="@("btnDelete" + notificationTypeOrg.Id)" type="submit" class="btn btn-link text-danger"
+                                            title="@loc["Eliminar"]"
+                                            confirm-delete=@loc["¿Está usted seguro que desea eliminar la Notificación {0}? Se eliminará para todos los grupos de la Organización.", notificationTypeOrg.NotificationType.Name]
+                                            asp-page="/NotificationTypes/Detail"
+                                            asp-page-handler="Delete"
+                                            asp-route-id="@notificationTypeOrg.Id"
+                                            asp-route-rowVersion="@Convert.ToBase64String(notificationTypeOrg.RowVersion)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </grant>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: 'hover'
+            });
+        });
+    </script>
+}

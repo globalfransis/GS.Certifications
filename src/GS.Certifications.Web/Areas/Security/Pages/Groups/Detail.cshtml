@@ -1,0 +1,24 @@
+﻿@page
+@using GS.Certifications.Web.Areas.Security.Pages.Groups
+@model DetailGroupModel
+
+<div class="container">
+
+    <form method="post">
+        <partial name="_CreateOrEdit" model="Model" view-data="ViewData" />
+    </form>
+
+</div>
+
+@section Scripts {
+    <script>
+        jQuery(document).ready(function () {
+            deactivateControls();
+            var mode = '@Model.Mode';
+            var pageTitle = "@loc["Listado de Grupos"]";
+            var backUrl = '../Groups/Index';
+
+            replaceWindowsHistory(mode, pageTitle, backUrl);
+        });
+    </script>
+}

@@ -1,0 +1,165 @@
+﻿@model RoleCrudModel
+@using GS.Certifications.Web.Areas.Security.Pages.Roles
+@using GS.Certifications.Web.Areas.Security.Pages
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SecurityResources> secLoc
+
+<!-- Just for Vue-->
+<div class="col-12" id="app">
+
+    <!-- Title -->
+    <div class="col-12 mt-4">
+        <p class="h5">@secLoc["Datos Rol"]</p>
+    </div>
+    <!-- Title end -->
+
+    <div class="card">
+
+        <input type="hidden" asp-for="Id" />
+
+        <input asp-for="RowVersion" />
+
+        <div class="card-body">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger" id="validationSummary">
+                </div>
+
+                @if (Model.Mode == "Alta" || Model.Mode == "Modificación")
+                {
+                    <div class="form-group required col-lg-6 col-sm-12 mb-4">
+                        <label class="control-label" for="Name">Nombre</label>
+                        <input maxlength="30" v-model="name" class="form-control" type="text" name="Name" asp-for="Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group required col-lg-6 col-sm-12 mb-4">
+                        <label class="control-label" for="Description">Descripción</label>
+                        <input maxlength="100" v-model="description" class="form-control" type="text" name="Description" asp-for="Description">
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label for="Name">Nombre</label>
+                        <input v-model="name" class="form-control" type="text" name="Name" asp-for="Name">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label for="Description">Descripción</label>
+                        <input v-model="description" class="form-control" type="text" name="Description" asp-for="Description">
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                }
+
+                @if (Model.Mode != "Alta")
+                {
+                    <div class="col-lg-6 col-sm-12 mb-4">
+                        <label asp-for="GroupOwnerName"></label>
+                        <input class="form-control" type="text" name="GroupOwnerName" asp-for="GroupOwnerName" readonly="readonly">
+                        <span asp-validation-for="GroupOwnerName" class="text-danger"></span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Mode == "Alta" || Model.Mode == "Modificación")
+    {
+        <div class="form-group required col-12 mt-4">
+            <p class="h5 control-label">@loc["Opciones y Permisos"]</p>
+        </div>
+    }
+    else
+    {
+        <div class="col-12 mt-4">
+            <p class="h5">@loc["Opciones y Permisos"]</p>
+        </div>
+    }
+
+    <div class="card mt-3">
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                    @{
+                        string disabledTree = Model.Mode == "Detalle" ? "true" : "false";
+                    }
+
+                    <treeselect :multiple="true"
+                                :value-consists-of="valueConsistsOf"
+                                :options="children"
+                                :searchable="true"
+                                :default-expand-level="1"
+                    @*:flat="true"
+                                :auto-deselect-ancestors="false"
+                                :auto-deselect-descendants="true"
+                                :auto-select-ancestors="true"
+                                :auto-select-descendants="false"*@
+                                placeholder="@loc["Seleccione las Opciones y Permisos..."]"
+                                :always-open="false"
+                                :append-to-body="true"
+                                :show-count="true"
+                    @*open-direction="bottom"*@
+                                :max-height="500" @*:max-height="Infinity" *@
+                                search-nested
+                                :disabled=@disabledTree
+                                v-model="selectedValues" />
+                    <treeselect-value :value="selectedValues" />
+                </div>
+                <div class="col">
+                    <span asp-validation-for="SelectedGrants" class="text-danger d-flex"></span>
+                    <span asp-validation-for="SelectedOptions" class="text-danger d-flex"></span>
+                </div>
+            </div>
+            <input type="hidden" v-model="selectedValues" id="SelectedValues" name="SelectedValues" asp-for="SelectedValues" />
+            <input type="hidden" asp-for="TreeOptions" name="TreeOptions" id="TreeOptions" />
+        </div>
+
+    </div>
+
+    <!-- Table buttons -->
+    <div class="col-12 d-flex justify-content-end mb-3 mt-3">
+        @{
+            var textCancelButton = (Model.Mode != null && Model.Mode == "Detalle") ? loc["Volver"] : loc["Cancelar"];
+        }
+        @*<button class="btn btn-primary ml-2" type="submit" asp-page-handler="Save">@actionButtonText</button>*@
+        <button onclick="showSpinner(true)" class="btn btn-primary btn-sm" type="submit">@loc["Aceptar"]</button>
+        &nbsp;&nbsp;
+
+        @if (Model.Mode != null && Model.Mode == "Detalle" && !Model.SystemUse)
+        {
+            <grant grant-name="roles.update">
+                <a asp-page="/Roles/Edit" class="btn btn-primary y mr-2 btn-sm" asp-area="Security" asp-route-id="@Model.Id">@loc["Editar"]</a>
+                &nbsp;&nbsp;
+            </grant>
+
+            <grant grant-name="roles.delete">
+                <button type="submit" class="btn btn-danger y mr-2 btn-sm" asp-page-handler="Delete" show-in-detail
+                        id="@("btnDelete" + Model.Id)" confirm-delete=@loc["¿Está usted seguro que desea eliminar el Rol {0}?", Model.Name]
+                        asp-route-id="@Model.Id" asp-route-rowVersion="@Convert.ToBase64String(Model.RowVersion)">
+                    @loc["Eliminar"]
+                </button>
+                &nbsp;&nbsp;
+            </grant>
+        }
+
+        @*<gsf-back-link>@textCancelButton</gsf-back-link>*@
+        @if (Model.Mode == "Detalle")
+        {
+            <a asp-page="/Roles/Index" class="btn btn-outline-primary btn-sm mr-2" asp-area="Security">@loc["Volver"]</a>
+        }
+
+        @if (Model.Mode == "Modificación")
+        {
+            <a asp-page="/Roles/Detail" class="btn btn-outline-primary btn-sm mr-2" asp-area="Security" asp-route-id="@Model.Id">@loc["Cancelar"]</a>
+        }
+
+        @if (Model.Mode == "Alta")
+        {
+            <a asp-page="/Roles/Index" class="btn btn-outline-primary btn-sm mr-2" asp-area="Security">@loc["Cancelar"]</a>
+        }
+
+    </div>
+</div>

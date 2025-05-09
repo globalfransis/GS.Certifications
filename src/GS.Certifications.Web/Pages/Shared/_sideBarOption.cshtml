@@ -1,0 +1,57 @@
+﻿@model GSF.Application.Security.Options.Queries.OptionDto
+
+@{
+    @if (Model.Options != null && Model.Options.Any())
+    {
+
+
+        <div class="accordion-item" indent="@ViewData["optionLevel"]">
+
+            <h2 class="accordion-header" id="headingOne">
+
+
+                <button class="accordion-button menu-accordion-button border-0 collapsable-item collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target=@string.Format("{0}{1}", "#collapseOption", Model.Id)
+                        aria-expanded="true" aria-controls="collapseOne"
+                        onclick="window.sessionStorage.setItem('currentOptionParentId', @Model.Id">
+                    <i class="@Model.Icon ms-3"></i><span class="ms-3">@Model.Name</span>
+                </button>
+            </h2>
+
+            <div id=@string.Format("{0}{1}", "collapseOption", Model.Id)
+                 class="accordion-collapse menu-accordion-collapse border-0 collapse" aria-labelledby="headingOne">
+                @{
+                    ViewData["parentOptionId"] = Model.Id;
+                }
+
+                @{
+                    ViewData["optionLevel"] = (int)ViewData["optionLevel"] + 1;
+                }
+
+                @foreach (var childOption in Model.Options)
+                {
+                    @await Html.PartialAsync("_sideBarOption", childOption, ViewData)
+                    ;
+                }
+
+                @{
+                    ViewData["optionLevel"] = (int)ViewData["optionLevel"] - 1;
+                }
+
+            </div>
+
+        </div>
+
+    }
+    else
+    {
+
+
+        <a class="accordion-body menu-accordion-body list-group-item border-0" optionId="@Model.Id" href="javascript:RedirectToOption(@Model.Id, @Model.ParentId, '@Model.Url');"
+           indent="@ViewData["optionLevel"]">
+            <i class="@Model.Icon"></i><span class="ms-3">@Model.Name</span>
+        </a>
+
+    }
+}
+

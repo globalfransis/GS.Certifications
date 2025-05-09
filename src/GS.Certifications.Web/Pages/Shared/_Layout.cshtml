@@ -1,0 +1,302 @@
+﻿@using Microsoft.Extensions.Configuration
+@using GSF.Application.Common.Interfaces
+@using System.Web;
+@using Microsoft.Extensions.Localization
+@inject IConfiguration Configuration
+@inject ITargetPathResolver _targetPathResolver
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> loc
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>@HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "Name").ToString()) - @ViewBag.Title</title>
+
+    @* css *@
+    <link rel="icon" type="image/x-icon" href="~/favicon.png" />
+    <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+
+    @if (User.Identity.IsAuthenticated && !String.IsNullOrWhiteSpace(User.FindFirst("css_theme").Value))
+    {
+        <link rel="stylesheet" href="~/css/themes/@String.Concat(User.FindFirst("css_theme").Value, ".css")" />
+    }
+</head>
+<body id="layoutbody">
+    <div class="top" id="spinner" style="display:none">
+        <div class="loading loading--full-height"></div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+
+
+            @{
+                if (User.Identity.IsAuthenticated)
+                    @await Component.InvokeAsync("Header")
+                ;
+            }
+
+            <!-- Sidebar -->
+            @{
+                if (User.Identity.IsAuthenticated)
+                    @await Component.InvokeAsync("SideBar")
+                ;
+            }
+            <!-- /#sidebar-wrapper -->
+            <!-- Page Content -->
+
+            <div id="pagecontent" class="ms-5 col px-5 pb-5 content">
+
+                <!-- Breadcrumb -->
+                @*<div class="col-12 mt-2 mb-5">
+                <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item">Seguridad</li>
+                <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+                </ol>
+                </nav>
+                </div>*@
+                <!-- Breadcrumb end -->
+
+                <div class="col-12 d-flex align-items-center mt-4">
+                    @if (IsSectionDefined("BackButton"))
+                    {
+                        @RenderSection("BackButton", required: false)
+                    }
+                    else
+                    {
+                        <gsf-back-button></gsf-back-button>
+                    }
+
+
+                    @if (!string.IsNullOrWhiteSpace((string)ViewData["Title"]) && Model.ShowTitle)
+                    {
+
+                        <p class="h4 page-title">@ViewData["Title"].ToString()</p>
+                    }
+                </div>
+
+                @{
+                    var persistentErrorMessage = ((string)TempData["PersistentErrorMessage"]);
+                }
+
+                @if (!string.IsNullOrWhiteSpace(persistentErrorMessage))
+                {
+                    <div class="row text-center mt-5">
+                        <div class="col">
+                            <div class="alert alert-danger font-weight-bold">@persistentErrorMessage</div>
+                        </div>
+                    </div>
+                }
+
+
+                <div id="clientPersistentMessage">
+                    @*Handled by journey.js*@
+                </div>
+                @{
+                    var message = (string)TempData["PersistentMessage"];
+                }
+                @if (!string.IsNullOrWhiteSpace(message))
+                {
+                    <div class="text-center mt-4">
+                        <div class="col">
+                            <div class="fw-bold alert alert-success font-weight-bold">@message</div>
+                        </div>
+                    </div>
+                }
+
+
+                <div class="row">
+                    <div class="col">
+                        @RenderBody()
+
+                        <div id="layoutToast">
+                        </div>
+
+                        <div id="layoutModal" class="modal fade">
+                        </div>
+                    </div><!-- div col body  -->
+                    <!-- ActionBar -->
+                    @{
+                        if (User.Identity.IsAuthenticated)
+                            @await Component.InvokeAsync("ActionBar")
+                        ;
+                    }
+
+                    @await Html.PartialAsync("_Footer")
+
+                </div>
+
+                @*<a href="#" class="secondary-menu-float d-block d-sm-block d-md-block d-lg-none d-xl-none" data-bs-toggle="modal" data-bs-target="#secondaryMenuModal">
+                <i class="fa fa-plus my-float"></i>
+                </a>*@
+                <!-- Modal -->
+                @*<div class="modal fade" id="secondaryMenuModal" tabindex="-1" aria-labelledby="secondaryMenuModal" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Secondary Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <div class="list-group">
+                <h6>Options</h6>
+                <button type="button" class="list-group-item list-group-item-action" aria-current="true">
+                Option 1
+                </button>
+                <button type="button" class="list-group-item list-group-item-action">Option 2</button>
+                <button type="button" class="list-group-item list-group-item-action">Option 3</button>
+                <div class="dropdown-divider mb-3"></div>
+                <h6>Tareas</h6>
+                <button type="button" class="list-group-item list-group-item-action" aria-current="true">
+                Option 1
+                </button>
+                <button type="button" class="list-group-item list-group-item-action">Option 2</button>
+                <button type="button" class="list-group-item list-group-item-action">Option 3</button>
+                <button type="button" class="list-group-item list-group-item-action">Option 4</button>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>*@
+
+                <!-- cierre row layout-->
+                @await Html.PartialAsync("_ScriptsPartial")
+                @await Html.PartialAsync("_Constants")
+            </div>
+
+        </div>
+
+        <!-- /#page-content-wrapper -->
+    </div>
+
+    <script>
+        var _forceBack = @((ViewData["forceBack"] != null && (bool)ViewData["forceBack"] == true).ToString().ToLower());
+        var _navigationKey = '@Context.Items["navigationKey"]'
+        var __homeNavigationKey = '/index';
+        var __homeUrl = '@_targetPathResolver.GetResolvedUri("/")'
+
+
+        var viewdataName = '@ViewData["Name"]';
+        var __errorMessage = '@TempData["ErrorMessage"]';
+        var __alertMessage = '@TempData["AlertMessage"]';
+        var __successMessage = '@TempData["SuccessMessage"]';
+
+
+        var showValidationErrors = () => {
+            if (__errorMessage == null || __errorMessage == "") {
+                let vErrors = document.getElementsByClassName('field-validation-error')
+                if (vErrors.length) {
+                    __errorMessage = "Operación rechazada";
+                }
+            }
+            if (__errorMessage == null || __errorMessage == "") {
+                let vErrors = document.getElementsByClassName('validation-summary-errors')
+                if (vErrors.length) {
+
+                    __errorMessage = "Operación rechazada";
+                }
+            }
+        }
+        this.showValidationErrors();
+
+
+
+    </script>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/datatables.net/jquery.dataTables.min.js"></script>
+    @*<script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>*@
+    @*<link href="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.css" rel="stylesheet" />*@
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.13.1/sorting/datetime-moment.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" crossorigin="anonymous" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/font-awesome/js/all.min.js" asp-append-version="true"></script>
+    <script src="~/js/navigation.js" asp-append-version="true"></script>
+    <script src="~/js/journey.js" asp-append-version="true"></script>
+    <script src="~/js/Generic.js" asp-append-version="true"></script>
+    <script src="~/js/localStorage.js" asp-append-version="true"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
+    <script src="~/js/notifications.js" asp-append-version="true" type="text/javascript"></script>
+
+    <script src="~/js/menu.js" asp-append-version="true"></script>
+    <script src="~/js/autocomplete.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+    <style>
+
+
+        /* Style #1 */
+        .loading {
+            display: flex;
+            justify-content: center;
+        }
+
+        .loading--full-height {
+            align-items: center;
+            height: 100%;
+        }
+
+        .loading::after {
+            content: "";
+            width: 100px;
+            height: 100px;
+            border: 10px solid #dddddd;
+            border-top-color: #50b5da;
+            border-radius: 50%;
+            transform: rotate(0.16turn);
+            animation: loading 1s ease infinite;
+            left: 50%;
+            top: 50%;
+            display: block;
+            position: absolute;
+            z-index: 999;
+        }
+
+        @@keyframes loading {
+            /* Safari support */
+            from {
+                transform: rotate(0turn);
+            }
+
+            to {
+                transform: rotate(1turn);
+            }
+        }
+
+        #top {
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: none;
+            position: absolute;
+            background-color: #50b5da;
+            color: #aaaaaa;
+            opacity: .4;
+            filter: alpha(opacity=30);
+        }
+
+        #layoutbody.active {
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 999 !important;
+        }
+    </style>
+
+</body>
+
+</html>

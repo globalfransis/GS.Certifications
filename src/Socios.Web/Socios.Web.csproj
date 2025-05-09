@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+	<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,10 +39,63 @@
 	  <PackageReference Include="Serilog.Sinks.Seq" Version="5.0.0" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Content Remove="Pages\Shared\_GeneralLocStringsPartialView.cshtml" />
+		<Content Remove="wwwroot\static\ErrorReportTemplate.html" />
+		<Content Remove="wwwroot\static\security\PasswordRecoveryTemplate.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Areas\Security\Pages\Login.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Login.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="appsettings.Development.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\GS.Certifications.Domain\GS.Certifications.Domain.csproj" />
     <ProjectReference Include="..\GS.Certifications.Infrastructure\GS.Certifications.Infrastructure.csproj" />
     <ProjectReference Include="..\HostCore\HostCore.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Areas\Security\Pages\Login.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Login.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties libman_1json__JsonSchema="" />
+		</VisualStudio>
+	</ProjectExtensions>
+
+	<ItemGroup>
+		<UpToDateCheckInput Remove="Pages\Shared\_GeneralLocStringsPartialView.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<_ContentIncludedByDefault Remove="Pages\Shared\_GeneralLocStringsPartialView.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Controllers\NewFolder\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Areas\Security\Pages\Login.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Login.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
 
 </Project>

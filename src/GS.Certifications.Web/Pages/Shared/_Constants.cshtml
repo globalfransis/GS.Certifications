@@ -1,0 +1,14 @@
+﻿@using GSF.Application.Common.Interfaces;
+@using Microsoft.AspNetCore.Http
+@using Microsoft.Extensions.Configuration
+
+@inject IConfiguration configuration 
+
+@{
+}
+
+<script>
+    // Datos de aplicación
+    const appName = "@configuration.GetSection("Application:Name").Value";
+</script>
+

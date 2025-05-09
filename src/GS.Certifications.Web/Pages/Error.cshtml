@@ -1,0 +1,82 @@
+﻿@page "{handler?}"
+@using GS.Certifications.Web.Pages
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> loc
+@model ErrorModel
+@{
+    Layout = null;
+}
+@{
+    ViewData["Title"] = "Error";
+}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Boarding - Error</title>
+
+    @* css *@
+    <link rel="icon" type="image/x-icon" href="~/favicon.png" />
+    <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+</head>
+<body class="align-middle" style="background-image: url('@Url.Content("~/img/Oops.png")'); background-position: 120px 120px;">
+    @if (!Model.IsReportDispatched)
+    {
+        <div class="d-flex justify-content-center" style="margin-top: 5%;">
+            <div class="card p-4" style="border:30px solid #333; border-radius: 12px;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center">
+                        <h3 class="text-danger ">@loc["Se produjo un error inesperado"]</h3>
+                    </div>
+                    <div class="d-flex justify-content-center mb-4">
+                        <img src="~/img/Oops100.png" class="img-fluid w-50" alt="Oops" />
+                    </div>
+                    <form asp-page="error" method="post">
+                        <div class="mb-3">
+                            <h5>
+                                @loc["Ya tenemos los datos del error ocurrido:"]
+                            </h5>
+                            <p>@Model.ErrorMessage</p>
+                            <label for="errordescription" class="form-label">@loc["Opcionalmente, para ayudarnos a solucionar el error, envianos una breve descripción de la tarea que estabas realizando."]</label>
+                            <textarea asp-for="UserDescription" class="form-control" id="errordescription" rows="3"></textarea>
+                            <div class="mb-3">
+                                <input type="hidden" asp-for="LogFilter" />
+                            </div>
+                            <input type="hidden" asp-for="FirstLoad" />
+                            <div class="mb-3 fa-pull-right">
+                                <button type="submit" class="btn btn-sm btn-primary">@loc["Enviar"]</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <a href="@Url.Content("~/")" class="card-link">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center align-middle" style="margin-top: 5%;">
+            <div class="card p-4" style="border:30px solid #0094ff; border-radius: 12px;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-center align-middle">
+
+                        <h3 class="text-success">@loc["¡Muchas gracias por reportar este problema!, esperamos solucionarlo pronto."]</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="@Url.Content("~/")" class="card-link">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+    }
+    <script src="~/js/journey.js" asp-append-version="true"></script>
+</body>
+</html>

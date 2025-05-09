@@ -80,7 +80,7 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Description = "Modulo de Proveedores",
                 TargetPath = string.Empty,
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Option()
             {
@@ -92,7 +92,7 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Description = "Carga de Comprobantes",
                 TargetPath = "Proveedores/Comprobantes/Index",
                 Transferable = true,
-                DomainFIdm = DomainFIdmConstants.CentrosNavegacion
+                DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Option
             {

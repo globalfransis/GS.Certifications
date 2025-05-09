@@ -1,0 +1,404 @@
+﻿@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
+@model HeaderViewComponent
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> SharedLocalizer
+@using System.Web;
+@using GS.Certifications.Web.Common.Resources;
+@using GS.Certifications.Web.Pages.Shared.Components.Header;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Boarding.Web
+
+@if (User.Identity.IsAuthenticated)
+{
+
+    <!-- Mobile Menu -->
+    <div class="d-xl-none p-0">
+        <nav class="navbar header navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <div class="w-20 w-md-10">
+                    <button id="ham-button-mobile" class="ham-button btn navbar-toggler m-0 d-md-inline-block me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+
+                    <a class="navbar-brand h2 text-light d-none d-md -block" href="#" onclick="window.sessionStorage.setItem('currentOptionId', 0);"> Backend</a>
+                    @* <a class="navbar-brand h2 text-light d-none d-md -block" href="#" onclick="window.sessionStorage.setItem('currentOptionId', 0);"> @HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "Name").ToString())</a> *@
+                </div>
+
+
+                <div class="flex-fill w-55 w-md-55">
+                    <!-- Enterprise dropdown -->
+                    <div class="dropdown logo-dropdown">
+                        <button class="btn dropdown-toggle text-truncate nav-button text-light" type="button" id="sidebarDropdownCompany" data-bs-toggle="dropdown" aria-expanded="false" @*style="max-width: 70%;"*@>
+                            <i class="fas fa-building mr-2" aria-hidden="true"></i>
+                            <span class="text-truncate business-button business-button-md">
+                                <b class="business-name">@Model.CurrentCompany.BusinessName</b>
+                            </span>
+
+                            <!-- si estoy autenticado y hay una imagen -->
+                            <!--@if (User.Identity.IsAuthenticated && @String.IsNullOrWhiteSpace(User.FindFirst("logo").Value) == false)
+                            {
+                                                <img src="~/img/logo/@User.FindFirst("logo").Value" alt="logo_empresa"
+                                             class="img img-responsive img-fluid"
+                                             style="max-width: 240px;" />
+                            }
+                            else
+                            {
+                                                <div class="empresa">
+                                    @Configuration.GetSection("Application").GetValue(typeof(string), "Name")
+                                                </div>
+
+                            }-->
+
+                        </button>
+                        <div class="dropdown-menu navbar-dropdownmenu company-opt" aria-labelledby="sidebarDropdownCompany">
+                            @foreach (var company in Model.UserCompanies)
+                            {
+
+                                <a class="dropdown-item text-truncate"
+                                   asp-controller="Company"
+                                   asp-action="ChangeCurrent"
+                                   asp-route-companyId="@company.Id">
+                                    @company.Name
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <!-- Enterprise dropdown end -->
+
+                </div>
+
+
+                <div class="d-inline-flex w-25 w-md-35 justify-content-end">
+
+                    @if (HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "AllowChangeLanguage").ToString()) == "true")
+                    {
+                        <form method="post" action="">
+
+                            <div class="dropdown d-none d-sm-flex">
+                                <button class="btn dropdown-toggle nav-button text-light" type="button" id="dropdownMenuButtonCulture" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <b>
+                                        <i class="fas fa-flag mr-2" aria-hidden="true"></i>
+                                        @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToUpper()
+                                    </b>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @*@foreach (var company in Model.UserCompanies)
+                            {*@
+                                    <a class="dropdown-item">
+
+                                    </a>
+                                    <a class="dropdown-item"
+                                       asp-controller="Culture"
+                                       asp-action="ChangeCurrent"
+                                       asp-route-culture="es">
+                                        Espa&ntilde;ol
+                                    </a>
+                                    <a class="dropdown-item"
+                                       asp-controller="Culture"
+                                       asp-action="ChangeCurrent"
+                                       asp-route-culture="en">
+                                        English
+                                    </a>
+                                    @*}  *@
+                                </div>
+                            </div>
+
+                        </form>
+                    }
+
+                    <!-- Notifications Mobile -->
+                    @*<div class="nav-item d-flex mr-3 d-none d-sm-flex">
+                <button class="btn nav-button text-light">
+                <i class="fas fa-bell"></i>
+                </button>
+                </div>*@
+                    @*<div class="nav-item d-flex mr-3 d-sm-flex dropdown" id="notification">
+                <div class="nav-item d-flex mr-3 notification mobile">
+                <button class="btn nav-button text-light dropdown-toggle notification-icon mr-2" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-bell"></i>
+                <span class="icon-badge mobile">3</span>
+                </button>
+                <div class="dropdown-menu notification-list mobile" aria-labelledby="dropdownMenu2">
+                <div class="col justify-content-between d-flex">
+                <div><button class="dropdown-item disabled" type="button">Notificaciones</button></div>
+                <div><button class="dropdown-item disabled">3</button></div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="#">
+                <div class="dropdown-item notification-list-item d-flex justify-content-between align-content-center">
+                <span class="notification-text">Administración acaba de anunciar un descuento de 30% </span>
+                <small class="me-5 notification-small">Hace 15 minutos</small>
+                <span class="icon-badge"></span>
+                </div>
+                </a>
+                <a href="#">
+                <div class="dropdown-item notification-list-item d-flex justify-content-between align-content-center">
+                <span class="notification-text ">Administración acaba de anunciar un descuento de 30%</span>
+                <small class="me-5 notification-small">Ayer</small>
+                <span class="icon-badge"></span>
+                </div>
+                </a>
+                <a href="#">
+                <div class="dropdown-item notification-list-item d-flex align-content-center d-flex flex-column">
+                <div style="display: block;" class="d-flex justify-content-between">
+                <span class="notification-text2">Administración acaba de anunciar un descuento de 30%</span>
+                <small class="me-5 notification-small">Hace 3 días</small>
+                <span class="icon-badge"></span>
+                </div>
+
+                <div class="my-2">
+                <button type="button" class="btn btn-primary btn-sm">Primario</button>
+                <button type="button" class="btn btn-link btn-sm">Secundario</button>
+                </div>
+                </div>
+                </a>
+                </div>
+                </div>
+                </div>*@
+                    <!-- Notifications Mobile -->
+
+                    <form asp-area="Security" asp-controller="Login" asp-action="LogOut" method="post">
+
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-button text-light" type="button" id="dropdownMenuButtonUser" data-bs-toggle="dropdown" aria-expanded="false">
+                                <b>
+                                    <i class="fas fa-user-circle mr-2" aria-hidden="true"></i>
+                                    <span class="d-none user-dropdown-text">@User.Identity.Name</span>
+                                </b>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end user-opt" aria-labelledby="dropdownMenuButton">
+                                <li class="dropdown-item text-truncate"><span class="fw-bold">@SharedLocalizer["Usuario"]: </span>@Model.UserName</li>
+                                <li class="dropdown-item text-truncate"><span class="fw-bold">@SharedLocalizer["Grupo de Usuario"]: </span>@Model.UserGroup</li>
+                                <div class="dropdown-divider"></div>
+                                @*<li>
+                            <a class="dropdown-item"
+                            asp-area="Security"
+                            asp-page="/PasswordChange">@SharedLocalizer["Cambiar contraseña"]</a>
+                            </li>*@
+                                <grant grant-name="config.changepassword">
+                                    <li>
+                                        <a class="dropdown-item text-truncate"
+                                           asp-area="Security"
+                                           asp-page="/PasswordChange">@SharedLocalizer["Cambiar contraseña"]</a>
+                                    </li>
+                                </grant>
+                                <li>
+                                    <a class="dropdown-item text-truncate"
+                                       asp-area="Security"
+                                       asp-page="/Login"
+                                       asp-page-handler="Logout">
+                                        @SharedLocalizer["Cerrar sesión"]
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+            </div>
+        </nav>
+    </div>
+
+
+    <nav id="navbar" class="navbar header d-xl-inline-flex d-none d-lg-none d-sm-none d-md-none ">
+
+        <div class="d-inline-flex align-items-center">
+            <button id="ham-button" class="ham-button btn px-0 ms-1">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a class="navbar-brand" onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0);" href="~/index">
+                <p class="h2 text-light m-0">
+                    @* @HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "Name").ToString()) *@
+                    Backend
+                </p>
+            </a>
+        </div>
+
+        <div class="flex-fill">
+
+            <!-- Enterprise dropdown -->
+            <div class="dropdown logo-dropdown">
+                <button class="btn dropdown-toggle nav-button text-light enterprise-dropdown" type="button" id="sidebarDropdownCompany" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-building mr-2" aria-hidden="true"></i>
+                    <b>@Model.CurrentCompany.BusinessName - <em>@Model.CurrentCompany.OrganizationName</em></b>
+
+                    <!-- si estoy autenticado y hay una imagen -->
+                    <!--@if (User.Identity.IsAuthenticated && @String.IsNullOrWhiteSpace(User.FindFirst("logo").Value) == false)
+                    {
+                                        <img src="~/img/logo/@User.FindFirst("logo").Value" alt="logo_empresa"
+                                     class="img img-responsive img-fluid"
+                                     style="max-width: 240px;" />
+                    }
+                    else
+                    {
+                                        <div class="empresa">
+                            @Configuration.GetSection("Application").GetValue(typeof(string), "Name")
+                                        </div>
+
+                    }-->
+
+                </button>
+                <div class="dropdown-menu company-opt" aria-labelledby="sidebarDropdownCompany">
+                    @foreach (var company in Model.UserCompanies)
+                    {
+
+                        <a class="dropdown-item text-truncate"
+                           asp-controller="Company"
+                           asp-action="ChangeCurrent"
+                           asp-route-companyId="@company.Id"
+                           onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0);">
+                            @company.Name - <b><em>@company.OrganizationName</em></b>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="d-flex">
+
+            @if (!String.IsNullOrWhiteSpace(@User.Identity.Name))
+            {
+
+                @if (HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "AllowChangeLanguage").ToString()) == "true")
+                {
+
+                    <form method="post" action="">
+
+
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle nav-button text-light" type="button" id="headerDropdownLanguage" data-bs-toggle="dropdown" aria-expanded="false">
+                                <b>
+                                    <i class="fas fa-flag mr-2" aria-hidden="true"></i>
+                                    @System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToUpper()
+                                </b>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="headerDropdownLanguage">
+                                <a class="dropdown-item"
+                                   asp-controller="Culture"
+                                   asp-action="ChangeCurrent"
+                                   asp-route-culture="es">
+                                    Espa&ntilde;ol
+                                </a>
+
+                                <a class="dropdown-item"
+                                   asp-controller="Culture"
+                                   asp-action="ChangeCurrent"
+                                   asp-route-culture="en">
+                                    English
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                }
+            }
+
+            <!-- Notifications Desktop -->
+            @*<div class="nav-item d-flex mr-3 dropdown" id="notification">
+        <div class="nav-item d-flex mr-3 notification">
+        <button class="btn nav-button text-light dropdown-toggle notification-icon mr-2" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-bell"></i>
+        <span class="icon-badge">3</span>
+        </button>
+        <div class="dropdown-menu notification-list" aria-labelledby="dropdownMenu2">
+        <div class="col justify-content-between d-flex">
+        <div><button class="dropdown-item disabled" type="button">Notificaciones</button></div>
+        <div><button class="dropdown-item disabled">3</button></div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <a href="#">
+        <div class="dropdown-item notification-list-item d-flex justify-content-between align-content-center">
+        <span class="notification-text">Administración acaba de anunciar un descuento de 30% </span>
+        <small class="me-5 notification-small">Hace 15 minutos</small>
+        <span class="icon-badge"></span>
+        </div>
+        </a>
+        <a href="#">
+        <div class="dropdown-item notification-list-item d-flex justify-content-between align-content-center">
+        <span class="notification-text ">Administración acaba de anunciar un descuento de 30%</span>
+        <small class="me-5 notification-small">Ayer</small>
+        <span class="icon-badge"></span>
+        </div>
+        </a>
+        <a href="#">
+        <div class="dropdown-item notification-list-item d-flex align-content-center d-flex flex-column">
+        <div style="display: block;" class="d-flex justify-content-between">
+        <span class="notification-text2">Administración acaba de anunciar un descuento de 30%</span>
+        <small class="me-5 notification-small">Hace 3 días</small>
+        <span class="icon-badge"></span>
+        </div>
+
+        <div class="my-2">
+        <button type="button" class="btn btn-primary btn-sm">Primario</button>
+        <button type="button" class="btn btn-link btn-sm">Secundario</button>
+        </div>
+        </div>
+        </a>
+        </div>
+        </div>
+        </div>*@
+            @*<div class="nav-item d-flex mr-3 dropdown" id="notification">
+        <div class="nav-item d-flex mr-3 notification">
+
+        <div id="cart-test-app">
+        <cart-comp></cart-comp>
+        </div>
+        </div>
+        </div>*@
+            <form asp-area="Security" asp-controller="Login" asp-action="LogOut" method="post">
+
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle nav-button text-light" type="button" id="headerDropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                        <b>
+                            <i class="fas fa-user-circle mr-2" aria-hidden="true"></i>
+                            @User.Identity.Name
+                        </b>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-md-end user-dropdown" aria-labelledby="headerDropdownUser">
+                        <li class="dropdown-item-text text-truncate" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@Model.UserName"><span class="fw-bold">@SharedLocalizer["Usuario"]: </span>@Model.UserName</li>
+                        <li class="dropdown-item-text text-truncate" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@Model.UserGroup"><span class="fw-bold">@SharedLocalizer["Grupo de Usuario"]: </span>@Model.UserGroup</li>
+                        <div class="dropdown-divider"></div>
+                        @*<li>
+                    <a class="dropdown-item"
+                    asp-area="Security"
+                    asp-page="/PasswordChange">@SharedLocalizer["Cambiar contraseña"]</a>
+                    </li>*@
+                        <grant grant-name="config.changepassword">
+                            <li>
+                                <a class="dropdown-item text-truncate"
+                                   asp-area="Security"
+                                   asp-page="/PasswordChange">@SharedLocalizer["Cambiar contraseña"]</a>
+                            </li>
+                        </grant>
+                        <li>
+                            <a class="dropdown-item text-truncate"
+                               asp-area="Security"
+                               asp-page="/Login"
+                               asp-page-handler="Logout">
+                                @SharedLocalizer["Cerrar sesión"]
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </form>
+
+
+
+        </div>
+
+    </nav>
+    <style>
+        #navbar {
+            position: fixed;
+            z-index: 10000;
+        }
+    </style>
+}

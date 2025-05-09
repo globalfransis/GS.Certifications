@@ -1,0 +1,467 @@
+﻿@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
+@model SideBarViewComponent
+@using Microsoft.Extensions.Localization
+@using System.Web
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> loc
+@inject IConfiguration Configuration
+<!-- Mobile Menu -->
+<div id="drawer-mobile" class="main-side-menu-mobile border-end d-block d-xl-none is-closed">
+
+    @if (Model != null)
+    {
+
+        if (Model.Options != null)
+        {
+
+            ViewData["optionLevel"] = 1;
+            <div class="bg-light">
+
+                <div class="list-group panel home-button collapsable-item bg-light border-0 accordion-header" indent="@ViewData["optionLevel"]">
+                    <a href="~/index" class="border-0" onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0)">
+                        <div class="ms-1">
+                            <i class="fas fa-home"></i>
+                            <span class="">
+                                Inicio
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="list-group panel ml-5">
+
+                    @foreach (var option in Model.Options.Options)
+                    {
+
+                        <div>
+                            @{
+                                ViewData["parentOptionId"] = "0";
+                            }
+
+                            @if (option.Options != null && option.Options.Any())
+                            {
+
+                                <div class="accordion-item" indent="@ViewData["optionLevel"]">
+
+                                    <h2 class="accordion-header menu-accordion-header" id="headingOne">
+
+
+                                        <button class="accordion-button menu-accordion-button border-0 collapsable-item collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target=@string.Format("{0}{1}", "#collapseOption", option.Id)
+                                                aria-expanded="true" aria-controls="collapseOne">
+                                            <a class="" href="#"><i class="@option.Icon"></i><span>@option.Name</span></a>
+                                        </button>
+                                    </h2>
+
+                                    <div id=@string.Format("{0}{1}", "collapseOption", option.Id)
+                                         class="accordion-collapse menu-accordion-collapse border-0 collapse" aria-labelledby="headingOne">
+                                        @{
+                                            ViewData["parentOptionId"] = option.Id;
+                                        }
+
+                                        @{
+                                            ViewData["optionLevel"] = (int)ViewData["optionLevel"] + 1;
+                                        }
+
+                                        @foreach (var childOption in option.Options)
+                                        {
+                                            @await Html.PartialAsync("_sideBarOption", childOption, ViewData)
+                                            ;
+                                        }
+
+                                        @{
+                                            ViewData["optionLevel"] = (int)ViewData["optionLevel"] - 1;
+                                        }
+
+                                    </div>
+
+                                </div>
+                            }
+                            else
+                            {
+
+                                <a class="accordion-body menu-accordion-body list-group-item border-0" optionId="@option.Id" href="javascript:RedirectToOption(@option.Id, @(option.ParentId != null ? option.ParentId : option.Id), '@option.Url');"
+                                   indent="@ViewData["optionLevel"]">
+                                    <i class="@option.Icon"></i><span>@option.Name</span>
+                                </a>
+
+                            }
+
+
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        }
+
+    }
+
+</div>
+<!-- Mobile Menu End-->
+<!-- Main side-menu -->
+<div id="drawer" class="main-side-menu border-end d-none d-lg-none d-xl-block d-sm-none d-md-none is-closed">
+
+    <!-- Main Navigation CLOSED -->
+    <div id="slim-drawer" class="d-flex justify-content-center" style="opacity: 1">
+
+        @if (Model != null)
+        {
+            if (Model.Options != null)
+            {
+                <div class="collapsable" style="margin-left: -2vh !important">
+
+                    <div class="home-button border-0 collapsable-item" optionId="0" type="button" data-bs-toggle="collapse" @*onclick="ExpandMenu(true)"*@
+                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        @*<a href="#">*@
+                        <a href="~/index" class="border-0" onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0)">
+                            <i style="width: 16px !important;height: 16px !important; margin-left: 2vh !important" class="fas fa-home"></i><span></span>
+                        </a>
+                    </div>
+                    <div>
+                        @foreach (var option in Model.Options.Options)
+                        {
+                            <div class="collapsable-item home-button" optionId="@option.Id" onclick="PressMenuOptionCollapsed(true, @option.Id)">
+                                <a href="#">
+                                    <i style="width: 16px !important;height: 16px !important; margin-left: 2vh !important" class="@option.Icon"
+                                       optionId="@option.Id" href="javascript:PressMenuOptionCollapsed(true, @option.Id)"></i>
+                                    <span></span>
+                                </a>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+            }
+
+        }
+
+    </div>
+    <!-- Main Navigation CLOSED end -->
+
+    <div id="big-drawer" style="margin-top: 0px; display: none">
+
+        <!-- Main Navigation -->
+        <!-- si estoy autenticado y hay una imagen -->
+        @* <div class="list-group panel ml-5">
+            @if (User.Identity.IsAuthenticated && @String.IsNullOrWhiteSpace(User.FindFirst("logo").Value) == false)
+            {
+                <img src="~/img/logo/@User.FindFirst("logo").Value" alt="logo_empresa"
+                     class="img img-responsive img-fluid logo-empresa"
+                     style="max-width: 220px; align-self: center;" />
+            }
+        </div> *@
+
+        <div class="accordion collapsable">
+
+            @if (Model != null)
+            {
+                <div id="mainMenu" @(Model.HasContextMenu ? "style=display:none;" : "")>
+                    @if (Model.Options != null)
+                    {
+                        ViewData["optionLevel"] = 1;
+
+                        @if (Model.HasContextMenu)
+                        {
+                            <a id="goToContextMenu" class="accordion-body menu-accordion-body list-group-item border-0">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        }
+                        <div class="home-button collapsable-item border-0 mt-0" indent="@ViewData["optionLevel"]">
+                            <a href="~/index" class="border-0 d-block" onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0);">
+                                <i style="width: 16px !important; min-width: 16px !important;height: 16px !important;" class="ms-2 fas fa-home"></i>
+                                <span class="ms-2">
+                                    Inicio
+                                </span>
+                            </a>
+                        </div>
+
+                        <div id="optionRoot" class="list-group panel ml-5">
+
+                            @foreach (var option in Model.Options.Options)
+                            {
+
+                                <div>
+                                    @{
+                                        ViewData["parentOptionId"] = "0";
+                                    }
+
+                                    @if (option.Options != null && option.Options.Any())
+                                    {
+
+                                        <div class="accordion-item" indent="@ViewData["optionLevel"]">
+
+                                            <h2 class="accordion-header menu-accordion-header" id="headingOne">
+                                                <button class="accordion-button menu-accordion-button border-0 collapsable-item collapsed" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target=@string.Format("{0}{1}", "#collapseOption", option.Id) optionIdBig="@option.Id"
+                                                        aria-expanded="true" aria-controls="collapseOne">
+                                                    <i style="width: 16px !important; min-width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span class="ms-3">@option.Name</span>
+                                                </button>
+                                            </h2>
+
+                                            <div id=@string.Format("{0}{1}", "collapseOption", option.Id)
+                                                 class="accordion-collapse menu-accordion-collapse border-0 px-0 collapse" aria-labelledby="headingOne">
+                                                @{
+                                                    ViewData["parentOptionId"] = option.Id;
+                                                }
+
+                                                @{
+                                                    ViewData["optionLevel"] = (int)ViewData["optionLevel"] + 1;
+                                                }
+
+                                                @foreach (var childOption in option.Options)
+                                                {
+                                                    @await Html.PartialAsync("_sideBarOption", childOption, ViewData)
+                                                    ;
+                                                }
+
+                                                @{
+                                                    ViewData["optionLevel"] = (int)ViewData["optionLevel"] - 1;
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+
+                                        <a class="accordion-body menu-accordion-body list-group-item border-0" optionId="@option.Id" href="javascript:RedirectToOption(@option.Id, @(option.ParentId != null ? @option.ParentId : @option.Id), '@option.Url');"
+                                           indent="@ViewData["optionLevel"]">
+                                            <i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@option.Name</span>
+                                        </a>
+
+                                    }
+
+
+                                </div>
+                            }
+
+                        </div>
+
+                    }
+                </div>
+                <div id="contextMenu">
+                    @if (Model.HasContextMenu)
+                    {
+                        <a id="backToMainMenu" class="accordion-body menu-accordion-body list-group-item border-0">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+
+                        <div id="contextOptionsRoot" class="list-group panel ml-5">
+
+                            @foreach (var option in Model.ContextOptions.Options)
+                            {
+
+                                <div>
+                                    @{
+                                        ViewData["parentOptionId"] = "0";
+                                    }
+
+                                    @if (option.Options != null && option.Options.Any())
+                                    {
+
+                                        <div class="accordion-item" indent="@ViewData["optionLevel"]">
+
+                                            <h2 class="accordion-header menu-accordion-header" id="headingOne">
+
+
+                                                <button class="accordion-button menu-accordion-button border-0 collapsable-item collapsed" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target=@string.Format("{0}{1}", "#collapseOption", option.Id)
+                                                        aria-expanded="true" aria-controls="collapseOne">
+                                                    <a class="" href="#"><i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@option.Name</span></a>
+                                                </button>
+                                            </h2>
+
+                                            <div id=@string.Format("{0}{1}", "collapseOption", option.Id)
+                                                 class="accordion-collapse menu-accordion-collapse border-0 collapse" aria-labelledby="headingOne">
+                                                @{
+                                                    ViewData["parentOptionId"] = option.Id;
+                                                }
+
+                                                @{
+                                                    ViewData["optionLevel"] = (int)ViewData["optionLevel"] + 1;
+                                                }
+
+                                                @foreach (var childOption in option.Options)
+                                                {
+                                                    @await Html.PartialAsync("_sideBarOption", childOption, ViewData)
+                                                    ;
+                                                }
+
+                                                @{
+                                                    ViewData["optionLevel"] = (int)ViewData["optionLevel"] - 1;
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+
+                                        <a class="accordion-body menu-accordion-body list-group-item border-0" optionId="@option.Id" href="javascript:RedirectToOption(@option.Id, @option.ParentId, '@option.Url');"
+                                           indent="@ViewData["optionLevel"]">
+                                            <i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@option.Name</span>
+                                        </a>
+
+                                    }
+
+
+                                </div>
+                            }
+
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+</div><!-- Main side-menu end-->
+
+<script>
+
+    var cooldown = 0;
+
+
+    function expandirMenu() {
+        drawer.classList.remove("is-closed");
+        slimDrawer.style.opacity = "0"
+        bigDrawer.style.opacity = "1"
+        bigDrawer.style.display = "block"
+    }
+
+    function colapsarMenu() {
+        drawer.classList.add("is-closed");
+        slimDrawer.style.opacity = "1"
+        bigDrawer.style.opacity = "0"
+        bigDrawer.style.display = "none"
+    }
+
+    drawer.addEventListener("mouseenter", function () {
+        clearTimeout(cooldown);
+
+        if (!drawer.classList.contains('pinned')) {
+            cooldown = setTimeout(function () {
+                expandirMenu();
+            }, 750);
+        }
+    });
+
+    drawer.addEventListener("mouseleave", function () {
+        clearTimeout(cooldown);
+        cooldown = setTimeout(function () {
+            if (!drawer.classList.contains('pinned')) {
+                colapsarMenu();
+            }
+        }, 500);
+    });
+
+    document.getElementById('ham-button').addEventListener("mouseenter", function () {
+        clearTimeout(cooldown);
+
+        if (!drawer.classList.contains('pinned')) {
+            cooldown = setTimeout(function () {
+                expandirMenu();
+            }, 750);
+        }
+    });
+
+    document.getElementById('ham-button').addEventListener("mouseleave", function () {
+        clearTimeout(cooldown);
+        cooldown = setTimeout(function () {
+            if (!drawer.classList.contains('pinned')) {
+                colapsarMenu();
+            }
+        }, 500);
+    });
+</script>
+
+<style>
+    #drawer {
+        margin-top: 64px;
+        position: fixed;
+        height: auto !important;
+        min-height: 100vh !important;
+        z-index: 1000;
+        opacity: 1;
+        background-color: #EEEEEE !important
+    }
+
+    #drawer-mobile {
+        margin-top: 70px;
+        position: fixed;
+        z-index: 1000;
+        background-color: #EEEEEE !important;
+        height: 90% !important;
+        overflow-x: visible !important;
+        overflow-y: auto !important;
+    }
+
+    #big-drawer {
+        height: 90% !important;
+        overflow-x: clip !important;
+        overflow-y: auto !important;
+    }
+
+    .menu-accordion-button {
+        background-color: #EEEEEE !important;
+    }
+
+    .menu-accordion-header {
+        background-color: #EEEEEE !important;
+        display: display-box;
+        white-space: nowrap;
+    }
+
+    .menu-accordion-body {
+        background-color: #EEEEEE !important;
+        margin-left: 7% !important;
+    }
+
+        .menu-accordion-body:hover {
+            background-color: #E3E3E3 !important;
+        }
+
+
+    .home-button {
+        background-color: #EEEEEE !important;
+    }
+
+        .home-button:hover {
+            background-color: #E3E3E3 !important;
+        }
+
+    .menu-accordion-collapse {
+        background-color: #EEEEEE !important;
+    }
+
+
+    #pagecontent {
+        margin-top: 65px;
+        overflow: auto !important;
+    }
+
+    .menu-active {
+        color: white !important;
+        background-color:  #0d8b8b !important;
+    }
+
+    .selected {
+        background-color: lightgray !important;
+    }
+
+    .menu-active:hover {
+        color: white !important;
+        background-color: #33CCCC !important;
+    }
+
+    .pinned {
+        position: relative !important;
+    }
+</style>

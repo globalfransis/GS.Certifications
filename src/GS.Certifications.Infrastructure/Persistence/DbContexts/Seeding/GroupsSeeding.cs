@@ -3,7 +3,7 @@ using GSF.Domain.Entities.Security;
 using GSF.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Supplier.Infrastructure.Persistence.DbContexts.Seeding;
+namespace GS.Certifications.Infrastructure.Persistence.DbContexts.Seeding;
 
 public class GroupsSeeding : BaseWithIdEntityConfiguration<Group>
 {

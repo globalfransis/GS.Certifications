@@ -2,6 +2,6 @@
 
 public static class DomainFIdmConstants
 {
-    public const int CentrosNavegacion = 1;
+    public const int Backoffice = 1;
     public const int Socios = 1001;
 }

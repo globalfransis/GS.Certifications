@@ -1,0 +1,28 @@
+﻿@page
+@using GS.Certifications.Web.Areas.Security.Pages.Roles
+@model DetailRoleModel
+
+<div class="container">
+
+    <form ref="form" method="post" action="" v-on:submit.prevent="saveChanges">
+        <partial name="_CreateOrEdit" model="Model" view-data="ViewData" />
+    </form>
+</div>
+
+@section Scripts {
+    <link href="~/lib/vue-treeselect/dist/vue-treeselect.min.css" rel="stylesheet" />
+    <script src="~/lib/vue/dist/vue.min.js" asp-append-version="true"></script>
+    <script src="~/lib/vue-treeselect/dist/vue-treeselect.umd.min.js" asp-append-version="true"></script>
+    <script src="~/js/Options/OptionsTree.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            deactivateControls();
+            var mode = '@Model.Mode';
+            var pageTitle = "@loc["Listado de Roles"]";
+            var backUrl = '../Roles/Index';
+
+            replaceWindowsHistory(mode, pageTitle, backUrl);
+        });
+    </script>
+}

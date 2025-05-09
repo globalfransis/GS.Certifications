@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextAccessor
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> loc
+
+<script>
+    var baseUrl = '@($"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}{httpContextAccessor.HttpContext.Request.PathBase}")';
+    var defaultMaxFileSize = @System.Environment.GetEnvironmentVariable("DefaultMaxFileSize");
+
+    //http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json
+    //https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json
+
+    //cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js
+    //cdn.datatables.net/plug-ins/1.13.1/sorting/datetime-moment.js
+
+    var languagesDataTable = {
+        "decimal": ",",
+        "emptyTable": "@loc["No se encontraron datos"]",
+        "info": "@loc["Mostrando página _PAGE_ de _PAGES_"]",
+        "infoEmpty": "@loc["Sin registros disponibles"]",
+        "infoFiltered": "@loc["(filtrados de _MAX_ registros totales)"]",
+        "lengthMenu": "@loc["Se muestran _MENU_ registros por página"]",
+        "thousands": ".",
+        "loadingRecords": "@loc["Cargando..."]",
+        "processing": "@loc["Procesando..."]",
+        "search": "@loc["Búsqueda:"]",
+        "zeroRecords": "@loc["No se encontraron resultados"]",
+        "paginate": {
+            "first": "@loc["Primera"]",
+            "last": "@loc["Última"]",
+            "next": "@loc["Siguiente"]",
+            "previous": "@loc["Anterior"]"
+        },
+        "aria": {
+            "sortAscending": "@loc[": Activar para ordenar columna de forma ascendente."]",
+            "sortDescending": "@loc[": Activar para ordenar columna de forma descendente."]",
+        }
+    };
+
+    var defaultLengthMenuOptDataTable = [[10, 25, 50, -1], [10, 25, 50, "@loc["Todos"]"]];
+    var onlyAllLengthMenuOptDataTable = [[-1], ["@loc["Todos"]"]];
+</script>
+

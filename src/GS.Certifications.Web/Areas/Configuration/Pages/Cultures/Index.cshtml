@@ -1,0 +1,120 @@
+﻿@page "{handler?}"
+@using Microsoft.Extensions.Localization
+@model IndexModel
+@inject IStringLocalizer<CulturesResources> cultureLoc
+@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
+@using System.Web;
+@using GS.Certifications.Web.Areas.Configuration.Pages.Cultures;
+@using GS.Certifications.Web.Common.Resources;
+
+<!-- Title -->
+<div class="col-12 mt-4">
+    <p class="h5">@loc["Filtro de Búsqueda"]</p>
+</div>
+<!-- Title end -->
+
+<div class="col-12">
+
+    <!-- Filters card -->
+    <div class="card">
+        <div class="card-body">
+            <form method="get" action="">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <label asp-for="FilterCode"></label>
+                        <input type="search" class="form-control" asp-for="FilterCode" maxlength="5" />
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <label asp-for="FilterName"></label>
+                        <input type="search" class="form-control" asp-for="FilterName" maxlength="100" />
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <label asp-for="FilterLanguage"></label>
+                        <select class="form-select" asp-for="FilterLanguage" asp-items="Model.CulturesOptions">
+                            <option value="">@loc[HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "UnspecifiedOptionsText").ToString())]</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-center">
+                    <button onclick="showSpinner(true)" asp-page-handler="Search" type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-search"></i>
+                        <span style="font-weight:500;">@loc["Buscar"]</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- Filters card end -->
+    <!-- Title / action -->
+    <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-3">
+        <p class="h5 m-0">@cultureLoc["Listado de Configuraciones Regionales"]</p>
+        <grant grant-name="cultures.create">
+            <a asp-area="Configuration" class="btn btn-outline-primary btn-sm" asp-page="/Cultures/Create"><b><i class="fas fa-plus"></i> @cultureLoc["Agregar"]</b></a>
+        </grant>
+    </div>
+    <!-- Title / action end -->
+    <!-- Table -->
+    <div class="col-12 table-responsive">
+        <table convert-to-datatable class="table table-bordered table-striped table-hover">
+            <thead class="table-top">
+                <tr>
+                    <th class="text-center align-middle d-sm-none w-10 d-md-table-cell" scope="col">@cultureLoc["Código"]</th>
+                    <th class="text-center align-middle d-sm-none w-30 d-md-table-cell" scope="col">@cultureLoc["Nombre"]</th>
+                    <th class="text-center align-middle d-sm-none w-20 d-md-table-cell" scope="col">@cultureLoc["Lenguaje"]</th>
+                    <th class="text-center w-5 align-middle col-1" no-sort-datatable>@loc["Acciones"]</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Cultures.Any())
+                {
+                    <tr class="no-data">
+                        <td colspan="5" class="text-center">@loc["No se encontraron datos"]</td>
+                    </tr>
+                }
+
+                @foreach (var culture in Model.Cultures)
+                {
+                    <tr>
+                        <td scope="row">
+                            <a class="table-a" asp-page="/Cultures/Detail" asp-area="Configuration" asp-route-id="@culture.Id">@culture.Code</a>
+                        </td>
+                        <td class="d-sm-none d-md-table-cell" scope="row">@culture.Name</td>
+                        <td class="d-sm-none d-md-table-cell" scope="row">@culture.Language</td>
+                        <td>
+                            <div class="d-flex justify-content-center flex-wrap">
+                                <grant grant-name="cultures.update">
+                                    <a asp-page="/Cultures/Edit" asp-route-id="@culture.Id" class="btn btn-link text-body"
+                                       title="@loc["Editar"]">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </grant>
+
+                                <grant grant-name="cultures.delete">
+                                    <form method="post" title="@loc["Delegar"]">
+                                        <button type="submit" class="btn btn-link text-danger" id="@("btnDelete" + culture.Id)"
+                                                confirm-delete="¿Está usted seguro que desea eliminar la cultura @culture.Name?"
+                                                asp-page="/Cultures/Detail"
+                                                asp-page-handler="Delete"
+                                                asp-route-id="@culture.Id"
+                                                asp-route-name="@culture.Name"
+                                                asp-route-rowVersion="@Convert.ToBase64String(culture.RowVersion)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </grant>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
