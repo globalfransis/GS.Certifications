@@ -57,6 +57,10 @@ public class EmpresaPortal : BaseIntEntity
     public List<EmpresaModoLectura> ModosLecturas { get; set; }
     public List<EmpresaOrdenCompraTipo> OrdenesComprasTipos { get; set; }
     public List<EmpresaConceptoGastoTipo> ConceptosGastosTipos { get; set; }
+
+    public short? TipoId { get; set; }
+    public TipoEmpresaPortal Tipo { get; set; }
+
     public EmpresaPortal()
     {
         Guid = Guid.NewGuid();

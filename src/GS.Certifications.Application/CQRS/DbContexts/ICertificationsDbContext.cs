@@ -16,6 +16,8 @@ using GS.Certifications.Domain.Entities.OrdenesCompras;
 using GS.Certifications.Domain.Entities.Percepciones;
 using GS.Certifications.Domain.Entities.Periodos;
 using GS.Certifications.Domain.Entities.Seguridad;
+using GS.Certifications.Domain.Entities.Certificaciones;
+using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 
 namespace GS.Certifications.Application.CQRS.DbContexts;
 
@@ -68,4 +70,14 @@ public interface ICertificationsDbContext : IApplicationDbContext
     DbSet<ConceptoGastoTipo> ConceptosGastosTipos { get; set; }
     DbSet<GrupoOrdenCompraTipo> GrupoOrdenesComprasTipos { get; set; }
     DbSet<EmpresaConceptoGastoTipo> EmpresasConceptosGastosTipos { get; set; }
+
+    DbSet<Certificacion> Certificaciones { get; set; }
+    DbSet<SolicitudCertificacion> SolicitudCertificaciones { get; set; }
+    DbSet<SolicitudCertificacionEstado> SolicitudCertificacionEstados { get; set; }
+    DbSet<DocumentoCargado> DocumentoCargados { get; set; }
+    DbSet<DocumentoRequerido> DocumentoRequeridos { get; set; }
+    DbSet<DocumentoEstado> DocumentoEstados { get; set; }
+    DbSet<TipoDocumento> TipoDocumentos { get; set; }
+    DbSet<TipoEmpresaPortal> TipoEmpresaPortales { get; set; }
+
 }

@@ -18,6 +18,8 @@ using GS.Certifications.Domain.Entities.OrdenesCompras;
 using GS.Certifications.Domain.Entities.Percepciones;
 using GS.Certifications.Domain.Entities.Periodos;
 using GS.Certifications.Domain.Entities.Seguridad;
+using GS.Certifications.Domain.Entities.Certificaciones;
+using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 
 namespace GS.Certifications.Infrastructure.Persistence.DbContexts;
 
@@ -71,6 +73,15 @@ public class CertificationsDbContext : ApplicationDbContext, ICertificationsDbCo
     public DbSet<EmpresaConceptoGastoTipo> EmpresasConceptosGastosTipos { get; set; }
 
     public DbSet<ConceptoGastoTipo> ConceptosGastosTipos { get; set; }
+    public DbSet<Certificacion> Certificaciones { get; set; }
+    public DbSet<SolicitudCertificacion> SolicitudCertificaciones { get; set; }
+    public DbSet<SolicitudCertificacionEstado> SolicitudCertificacionEstados { get; set; }
+    public DbSet<DocumentoCargado> DocumentoCargados { get; set; }
+    public DbSet<DocumentoRequerido> DocumentoRequeridos { get; set; }
+    public DbSet<DocumentoEstado> DocumentoEstados { get; set; }
+    public DbSet<TipoDocumento> TipoDocumentos { get; set; }
+    public DbSet<TipoEmpresaPortal> TipoEmpresaPortales { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

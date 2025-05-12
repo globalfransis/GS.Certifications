@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using GS.Certifications.Domain.Entities.Empresas;
+using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 
 namespace GS.Certifications.Infrastructure.Persistence.Configurations.Empresas
 {
@@ -54,6 +55,20 @@ namespace GS.Certifications.Infrastructure.Persistence.Configurations.Empresas
             builder.Property(i => i.CuentaBancaria).HasMaxLength(50);
             builder.Property(i => i.IdMoneda).HasMaxLength(10);
             builder.Property(i => i.IdentificadorTributario).IsRequired().HasMaxLength(30);
+        }
+    }
+
+    public class TipoEmpresaPortalConfiguration : BaseFixedEntityInt16Configuration<TipoEmpresaPortal>
+    {
+        protected override void ConfigureEntity(EntityTypeBuilder<TipoEmpresaPortal> builder)
+        {
+            builder.ToTable("com_TipoEmpresasPortales");
+
+            builder.Property(i => i.Descripcion).IsRequired().HasMaxLength(500);
+        }
+
+        protected override void LoadSeedingData()
+        {
         }
     }
 
