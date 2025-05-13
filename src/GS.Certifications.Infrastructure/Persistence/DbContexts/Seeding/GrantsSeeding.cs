@@ -10,15 +10,15 @@ namespace GS.Certifications.Infrastructure.Persistence.DbContexts.Seeding;
 
 public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
 {
-    public const long ProveedoresComprobanteCreate = GrantConfiguration.frameworkReserved + 1;
-    public const long ProveedoresComprobanteDelete = ProveedoresComprobanteCreate + 1;
-    public const long ProveedoresComprobanteUpdate = ProveedoresComprobanteDelete + 1;
+    public const long SociosSolicitudCertificacionCreate = GrantConfiguration.frameworkReserved + 1;
+    public const long SociosSolicitudCertificacionDelete = SociosSolicitudCertificacionCreate + 1;
+    public const long SocioSolicitudCertificacionUpdate = SociosSolicitudCertificacionDelete + 1;
 
-    public const long BackendComprobanteCreate = ProveedoresComprobanteUpdate + 1;
-    public const long BackendComprobanteUpdate = BackendComprobanteCreate + 1;
-    public const long BackendComprobanteDelete = BackendComprobanteUpdate + 1;
+    public const long BackendSolicitudCertificacionCreate = SocioSolicitudCertificacionUpdate + 1;
+    public const long BackendSolicitudCertificacionUpdate = BackendSolicitudCertificacionCreate + 1;
+    public const long BackendSolicitudCertificacionDelete = BackendSolicitudCertificacionUpdate + 1;
 
-    public const long BackendAdministracionCreate = BackendComprobanteDelete + 1;
+    public const long BackendAdministracionCreate = BackendSolicitudCertificacionDelete + 1;
     public const long BackendAdministracionUpdate = BackendAdministracionCreate + 1;
     public const long BackendAdministracionDelete = BackendAdministracionUpdate + 1;
 
@@ -64,28 +64,28 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
         SeedingData.AddRange(
             new Grant()
             {
-                Id = BackendComprobanteCreate,
-                Name = "comprobantes.create",
-                Description = "Alta de Comprobantes",
-                OptionId = OptionSeeding.ComprobantesBackendOptionId,
+                Id = BackendSolicitudCertificacionCreate,
+                Name = "solicitudcertificacion.create",
+                Description = "Alta de Solicitud de Certificación",
+                OptionId = OptionSeeding.CertificacionesBackendOptionId,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
-                Id = BackendComprobanteDelete,
-                Name = "comprobantes.delete",
-                Description = "Baja de Comprobantes",
-                OptionId = OptionSeeding.ComprobantesBackendOptionId,
+                Id = BackendSolicitudCertificacionDelete,
+                Name = "solicitudcertificacion.delete",
+                Description = "Baja de Solicitud de Certificacion",
+                OptionId = OptionSeeding.CertificacionesBackendOptionId,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Grant()
             {
-                Id = BackendComprobanteUpdate,
-                Name = "comprobantes.update",
+                Id = BackendSolicitudCertificacionUpdate,
+                Name = "solicitudcertificacion.update",
                 Description = "Modificación de Comprobantes",
-                OptionId = OptionSeeding.ComprobantesBackendOptionId,
+                OptionId = OptionSeeding.CertificacionesBackendOptionId,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Backoffice
             },
@@ -321,28 +321,28 @@ public class GrantsSeeding : BaseWithIdEntityConfiguration<Grant>
         SeedingData.AddRange(
             new Grant()
             {
-                Id = ProveedoresComprobanteCreate,
-                Name = "comprobantes.create",
-                Description = "Alta de Comprobantes",
-                OptionId = OptionSeeding.ComprobantesOptionId,
+                Id = SociosSolicitudCertificacionCreate,
+                Name = "solicitudcertificacion.create",
+                Description = "Alta de Solicitud de Certificación",
+                OptionId = OptionSeeding.SolicitudesCertificacionOptionId,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Socios
             },
             new Grant()
             {
-                Id = ProveedoresComprobanteDelete,
-                Name = "comprobantes.delete",
-                Description = "Baja de Comprobantes",
-                OptionId = OptionSeeding.ComprobantesOptionId,
+                Id = SociosSolicitudCertificacionDelete,
+                Name = "solicitudcertificacion.delete",
+                Description = "Baja de Solicitud de Certificación",
+                OptionId = OptionSeeding.SolicitudesCertificacionOptionId,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Socios
             },
             new Grant()
             {
-                Id = ProveedoresComprobanteUpdate,
-                Name = "comprobantes.update",
-                Description = "Modificación de Comprobantes",
-                OptionId = OptionSeeding.ComprobantesOptionId,
+                Id = SocioSolicitudCertificacionUpdate,
+                Name = "solicitudcertificacion.update",
+                Description = "Modificación de Solicitud de Certificación",
+                OptionId = OptionSeeding.SolicitudesCertificacionOptionId,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Socios
             }

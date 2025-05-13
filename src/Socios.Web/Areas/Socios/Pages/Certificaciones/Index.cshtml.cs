@@ -1,14 +1,14 @@
 using GSFSharedResources;
 using Microsoft.Extensions.Localization;
-using GS.Certifications.Web.Pages;
+using Socios.Web.Pages;
 
-namespace GS.Certifications.Web.Areas.Proveedores.Pages.Comprobantes;
+namespace Socios.Web.Areas.Socios.Pages.Certificaciones;
 
 public class IndexModel : BasePageModel
 {
     public IndexModel(IStringLocalizer<Shared> loc)
     {
-        Title = loc["Comprobantes"];
+        //Title = loc["Comprobantes"];
     }
     public void OnGet()
     {

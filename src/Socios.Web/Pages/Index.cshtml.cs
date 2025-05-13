@@ -17,7 +17,7 @@ public class IndexModel : BasePageModel
     private readonly IStringLocalizer<Common.Resources.Shared> _loc;
     private readonly ICertificationsDbContext _dbContext;
     private readonly IUsuarioEmpresaPortalService _usuarioEmpresaPortalService;
-    private readonly ICurrentEmpresaPortalService _currentEmpresaPortalService;
+    private readonly ICurrentSocioService _currentEmpresaPortalService;
     private readonly ICurrentEmpresaPortalRepository _currentEmpresaPortalRepository;
     private readonly IModulesService _modulesService;
 
@@ -32,7 +32,7 @@ public class IndexModel : BasePageModel
         IStringLocalizer<Common.Resources.Shared> sharedLocalizer,
         ICertificationsDbContext dbContext,
         IUsuarioEmpresaPortalService usuarioEmpresaPortalService,
-        ICurrentEmpresaPortalService currentEmpresaPortalService,
+        ICurrentSocioService currentEmpresaPortalService,
         ICurrentEmpresaPortalRepository currentEmpresaPortalRepository,
         IModulesService modulesService)
     {

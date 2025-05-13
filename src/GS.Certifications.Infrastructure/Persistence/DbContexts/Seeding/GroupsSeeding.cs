@@ -18,9 +18,9 @@ public class GroupsSeeding : BaseWithIdEntityConfiguration<Group>
             new Group
             {
                 Id = 1000, // HACER CONSTANTE
-                Name = "AdminSupplier",
-                Description = "AdminSupplier",
-                InternalCode = "AdminSupplier",
+                Name = "AdminSocios",
+                Description = "AdminSocios",
+                InternalCode = "AdminSocios",
                 DomainFIdm = DomainFIdmConstants.Socios,
                 SystemUse = true,
                 GroupOwnerId = 1,

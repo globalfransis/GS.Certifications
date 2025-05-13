@@ -4,14 +4,14 @@ using GS.Certifications.Domain.Entities.Seguridad;
 
 namespace Socios.Web.Common.Services.Empresa;
 
-public class CurrentEmpresaPortalService : ICurrentEmpresaPortalService
+public class CurrentSocioService : ICurrentSocioService
 {
     private readonly ICurrentEmpresaPortalRepository _repository;
 
     private UsuarioEmpresaPortal UsuarioEmpresaPortal { get; set; }
     private EmpresaPortal EmpresaPortal { get; set; }
     private RolTipo RolTipo { get; set; }
-    public CurrentEmpresaPortalService(ICurrentEmpresaPortalRepository repository)
+    public CurrentSocioService(ICurrentEmpresaPortalRepository repository)
     {
         _repository = repository;
     }

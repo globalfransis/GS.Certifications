@@ -12406,12 +12406,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100001L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Alta de Comprobantes",
+                            Description = "Alta de Solicitud de Certificación",
                             DomainFIdm = 1001L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.create",
+                            Name = "solicitudcertificacion.create",
                             OptionId = 100002L,
                             Transferable = true
                         },
@@ -12420,12 +12420,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100002L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Baja de Comprobantes",
+                            Description = "Baja de Solicitud de Certificación",
                             DomainFIdm = 1001L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.delete",
+                            Name = "solicitudcertificacion.delete",
                             OptionId = 100002L,
                             Transferable = true
                         },
@@ -12434,12 +12434,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100003L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Modificación de Comprobantes",
+                            Description = "Modificación de Solicitud de Certificación",
                             DomainFIdm = 1001L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.update",
+                            Name = "solicitudcertificacion.update",
                             OptionId = 100002L,
                             Transferable = true
                         },
@@ -12448,12 +12448,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100004L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Alta de Comprobantes",
+                            Description = "Alta de Solicitud de Certificación",
                             DomainFIdm = 1L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.create",
+                            Name = "solicitudcertificacion.create",
                             OptionId = 100004L,
                             Transferable = true
                         },
@@ -12462,12 +12462,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100006L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Baja de Comprobantes",
+                            Description = "Baja de Solicitud de Certificacion",
                             DomainFIdm = 1L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.delete",
+                            Name = "solicitudcertificacion.delete",
                             OptionId = 100004L,
                             Transferable = true
                         },
@@ -12481,7 +12481,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.update",
+                            Name = "solicitudcertificacion.update",
                             OptionId = 100004L,
                             Transferable = true
                         },
@@ -12941,14 +12941,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 1000L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "AdminSupplier",
+                            Description = "AdminSocios",
                             DomainFIdm = 1001L,
                             GroupOwnerId = 1L,
-                            InternalCode = "AdminSupplier",
+                            InternalCode = "AdminSocios",
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "AdminSupplier",
+                            Name = "AdminSocios",
                             SystemUse = true
                         });
                 });
@@ -13576,16 +13576,16 @@ namespace GS.Certifications.Infrastructure.Migrations
                         new
                         {
                             Id = 100001L,
-                            Code = "PRO",
+                            Code = "SOC",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Modulo de Proveedores",
+                            Description = "Módulo de Socios",
                             DomainFIdm = 1001L,
                             Icon = "fas fa-users",
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "Proveedores",
+                            Name = "Socios",
                             OrderNo = 50,
                             TargetPath = "",
                             Transferable = true
@@ -13593,18 +13593,18 @@ namespace GS.Certifications.Infrastructure.Migrations
                         new
                         {
                             Id = 100002L,
-                            Code = "PRO-COM",
+                            Code = "SOC-CER",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Carga de Comprobantes",
+                            Description = "Gestión de Solicitudes de Certificación",
                             DomainFIdm = 1001L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "Comprobantes",
+                            Name = "Certificaciones",
                             OrderNo = 1,
                             ParentId = 100001L,
-                            TargetPath = "Proveedores/Comprobantes/Index",
+                            TargetPath = "Socios/Certificaciones/Index",
                             Transferable = true
                         },
                         new
@@ -13613,7 +13613,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Code = "PRO",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Modulo de Socios",
+                            Description = "Módulo de Socios",
                             DomainFIdm = 1L,
                             Icon = "fas fa-users",
                             IsDeleted = false,
@@ -13627,18 +13627,18 @@ namespace GS.Certifications.Infrastructure.Migrations
                         new
                         {
                             Id = 100004L,
-                            Code = "PRO-COM",
+                            Code = "SOC-CER",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Carga de Comprobantes",
+                            Description = "Gestión de Solicitudes de Certificación",
                             DomainFIdm = 1L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "Comprobantes",
+                            Name = "Certificaciones",
                             OrderNo = 1,
                             ParentId = 100003L,
-                            TargetPath = "Proveedores/Comprobantes/Index",
+                            TargetPath = "Socios/Certificaciones/Index",
                             Transferable = true
                         },
                         new
@@ -17392,7 +17392,7 @@ namespace GS.Certifications.Infrastructure.Migrations
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacion", b =>
                 {
                     b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", "Certificacion")
-                        .WithMany()
+                        .WithMany("Solicitudes")
                         .HasForeignKey("CertificacionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -18783,6 +18783,11 @@ namespace GS.Certifications.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("EmpresaPortal");
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", b =>
+                {
+                    b.Navigation("Solicitudes");
                 });
 
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Comprobantes.Comprobante", b =>

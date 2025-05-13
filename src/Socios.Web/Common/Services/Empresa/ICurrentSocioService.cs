@@ -1,6 +1,6 @@
 ﻿namespace Socios.Web.Common.Services.Empresa;
 
-public interface ICurrentEmpresaPortalService
+public interface ICurrentSocioService
 {
     public long? GetCurrentUsuarioEmpresaPortalId();
     public int? GetCurrentEmpresaPortalId();

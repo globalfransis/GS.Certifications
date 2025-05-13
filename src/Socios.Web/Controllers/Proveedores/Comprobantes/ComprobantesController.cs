@@ -18,11 +18,11 @@ namespace Socios.Web.Controllers.Proveedores.Comprobantes;
 public class ComprobantesController : Controller
 {
     private readonly IMediator _mediator;
-    private readonly ICurrentEmpresaPortalService _currentEmpresaPortalService;
+    private readonly ICurrentSocioService _currentEmpresaPortalService;
     private readonly ICurrentCompanyService _currentCompanyService;
     private readonly IEmpresaPortalService _empresaPortalService;
 
-    public ComprobantesController(IMediator mediator, ICurrentEmpresaPortalService currentEmpresaPortalService, ICurrentCompanyService currentCompanyService, IEmpresaPortalService empresaPortalService)
+    public ComprobantesController(IMediator mediator, ICurrentSocioService currentEmpresaPortalService, ICurrentCompanyService currentCompanyService, IEmpresaPortalService empresaPortalService)
     {
         _mediator = mediator;
         _currentEmpresaPortalService = currentEmpresaPortalService;

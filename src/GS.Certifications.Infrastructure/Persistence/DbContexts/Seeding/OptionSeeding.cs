@@ -11,11 +11,11 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
 {
     public const long ParametrizationRootOptionId = 10; // opcion padre de paraetrizacion
 
-    public const long ProveedoresOptionId = OptionConfiguration.frameworkReserved + 1;
-    public const long ComprobantesOptionId = ProveedoresOptionId + 1;
-    public const long ProveedoresBackendOptionId = ComprobantesOptionId + 1;
-    public const long ComprobantesBackendOptionId = ProveedoresBackendOptionId + 1;
-    public const long AdministracionOptionId = ComprobantesBackendOptionId + 1;
+    public const long SociosOptionId = OptionConfiguration.frameworkReserved + 1;
+    public const long SolicitudesCertificacionOptionId = SociosOptionId + 1;
+    public const long SociosBackendOptionId = SolicitudesCertificacionOptionId + 1;
+    public const long CertificacionesBackendOptionId = SociosBackendOptionId + 1;
+    public const long AdministracionOptionId = CertificacionesBackendOptionId + 1;
     public const long ImpuestosOptionId = AdministracionOptionId + 1;
     public const long PercepcionesOptionId = ImpuestosOptionId + 1;
 
@@ -42,25 +42,25 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
         SeedingData.AddRange(
             new Option()
             {
-                Id = ProveedoresOptionId,
-                Name = "Proveedores",
+                Id = SociosOptionId,
+                Name = "Socios",
                 OrderNo = 50,
                 Icon = "fas fa-users",
-                Code = "PRO",
-                Description = "Modulo de Proveedores",
+                Code = "SOC",
+                Description = "Módulo de Socios",
                 TargetPath = string.Empty,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Socios
             },
             new Option()
             {
-                Id = ComprobantesOptionId,
-                Name = "Comprobantes",
+                Id = SolicitudesCertificacionOptionId,
+                Name = "Certificaciones",
                 OrderNo = 1,
-                ParentId = ProveedoresOptionId,
-                Code = "PRO-COM",
-                Description = "Carga de Comprobantes",
-                TargetPath = "Proveedores/Comprobantes/Index",
+                ParentId = SociosOptionId,
+                Code = "SOC-CER",
+                Description = "Gestión de Solicitudes de Certificación",
+                TargetPath = "Socios/Certificaciones/Index",
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Socios
             }
@@ -72,25 +72,25 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
         SeedingData.AddRange(
             new Option()
             {
-                Id = ProveedoresBackendOptionId,
+                Id = SociosBackendOptionId,
                 Name = "Socios",
                 OrderNo = 50,
                 Icon = "fas fa-users",
                 Code = "PRO",
-                Description = "Modulo de Socios",
+                Description = "Módulo de Socios",
                 TargetPath = string.Empty,
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Backoffice
             },
             new Option()
             {
-                Id = ComprobantesBackendOptionId,
-                Name = "Comprobantes",
+                Id = CertificacionesBackendOptionId,
+                Name = "Certificaciones",
                 OrderNo = 1,
-                ParentId = ProveedoresBackendOptionId,
-                Code = "PRO-COM",
-                Description = "Carga de Comprobantes",
-                TargetPath = "Proveedores/Comprobantes/Index",
+                ParentId = SociosBackendOptionId,
+                Code = "SOC-CER",
+                Description = "Gestión de Solicitudes de Certificación",
+                TargetPath = "Socios/Certificaciones/Index",
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Backoffice
             },
@@ -104,7 +104,7 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Transferable = true,
                 DomainFIdm = DomainFConfiguration.GsfBackOfficeIdm,
                 TargetPath = "/Proveedores/Empresas/Index",
-                ParentId = ProveedoresBackendOptionId
+                ParentId = SociosBackendOptionId
             },
             new Option
             {
@@ -152,7 +152,7 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Transferable = true,
                 DomainFIdm = DomainFConfiguration.GsfBackOfficeIdm,
                 TargetPath = "/Proveedores/OrdenesCompras/Index",
-                ParentId = ProveedoresBackendOptionId
+                ParentId = SociosBackendOptionId
             },
             new Option
             {

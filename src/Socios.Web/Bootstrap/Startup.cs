@@ -163,7 +163,7 @@ public class Startup
         services.AddReadOnlyQueryService(Configuration, Environment);
 
         services.AddTransient<ICurrentEmpresaPortalRepository, SessionEmpresaRepository>();
-        services.AddTransient<ICurrentEmpresaPortalService, CurrentEmpresaPortalService>();
+        services.AddTransient<ICurrentSocioService, CurrentSocioService>();
 
 
     }

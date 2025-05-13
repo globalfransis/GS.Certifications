@@ -16,7 +16,7 @@ public class PortalModel : BasePageModel
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly ICurrentCompanyService _currentCompanyService;
-    private readonly ICurrentEmpresaPortalService _currentEmpresaPortalService;
+    private readonly ICurrentSocioService _currentEmpresaPortalService;
     private readonly IModulesService _modulesService;
     private readonly IHandshakeService _handshakeService;
     private readonly IEncriptionService _encriptionService;
@@ -24,7 +24,7 @@ public class PortalModel : BasePageModel
     public PortalModel(
         ICurrentUserService currentUserService,
         ICurrentCompanyService currentCompanyService,
-        ICurrentEmpresaPortalService currentEmpresaPortalService,
+        ICurrentSocioService currentEmpresaPortalService,
         IModulesService modulesService,
         IHandshakeService handshakeService,
         IEncriptionService encriptionService)

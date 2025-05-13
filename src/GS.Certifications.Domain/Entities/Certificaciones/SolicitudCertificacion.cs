@@ -1,6 +1,5 @@
 ﻿using GS.Certifications.Domain.Entities.Empresas;
 using GSF.Domain.Common;
-using GSF.Domain.Entities.Security;
 
 namespace GS.Certifications.Domain.Entities.Certificaciones;
 
@@ -19,7 +18,7 @@ public class SolicitudCertificacion : BaseIntEntity
 public class SolicitudCertificacionEstado : BaseFixedShortEntity
 {
     public const short PENDIENTE = 1;
-    public const short EN_PROCESO = 2;
+    public const short PRESENTADA = 2;
     public const short APROBADA = 3;
     public const short RECHAZADA = 4;
 

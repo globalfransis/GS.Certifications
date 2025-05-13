@@ -14,7 +14,7 @@ public class HeaderViewComponent : ViewComponent
     private readonly IHostEnvironment _hostEnvironment;
     private readonly IStringLocalizer<Common.Resources.Shared> _loc;
     private readonly ICurrentUserService _currentUserService;
-    private readonly ICurrentEmpresaPortalService _currentEmpresaPortalService;
+    private readonly ICurrentSocioService _currentEmpresaPortalService;
     private readonly IUsuarioEmpresaPortalService _usuarioEmpresaPortalService;
 
     public string CurrentEnvironment { get; set; }
@@ -29,7 +29,7 @@ public class HeaderViewComponent : ViewComponent
         IHostEnvironment hostEnvironment,
         IStringLocalizer<Common.Resources.Shared> sharedLocalizer,
         ICurrentUserService currentUserService,
-        ICurrentEmpresaPortalService currentEmpresaPortalService,
+        ICurrentSocioService currentEmpresaPortalService,
         IUsuarioEmpresaPortalService usuarioEmpresaPortalService
         )
     {
