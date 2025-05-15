@@ -9,4 +9,12 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptio
         {
         }
     }
+
+    [Serializable]
+    public class SolicitudCertificacionInexistenteException : Exception
+    {
+        public SolicitudCertificacionInexistenteException() : base("La solicitud de certificación no existe.")
+        {
+        }
+    }
 }

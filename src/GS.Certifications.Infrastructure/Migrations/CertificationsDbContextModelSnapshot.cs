@@ -248,19 +248,16 @@ namespace GS.Certifications.Infrastructure.Migrations
                     b.Property<int>("DocumentoRequeridoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EstadoId")
-                        .HasColumnType("int");
-
-                    b.Property<short>("EstadoIdm")
+                    b.Property<short>("EstadoId")
                         .HasColumnType("smallint");
 
-                    b.Property<DateTime>("FechaDesde")
+                    b.Property<DateTime?>("FechaDesde")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("FechaHasta")
+                    b.Property<DateTime?>("FechaHasta")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("FechaSubida")
+                    b.Property<DateTime?>("FechaSubida")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -288,7 +285,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     b.Property<long?>("ValidadoPorId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Version")
+                    b.Property<int?>("Version")
                         .HasColumnType("int");
 
                     b.Property<string>("__MigCode")
@@ -302,7 +299,7 @@ namespace GS.Certifications.Infrastructure.Migrations
 
                     b.HasIndex("DocumentoRequeridoId");
 
-                    b.HasIndex("EstadoIdm");
+                    b.HasIndex("EstadoId");
 
                     b.HasIndex("Session");
 
@@ -732,6 +729,16 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
                             Descripcion = "Rechazada",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        },
+                        new
+                        {
+                            Idm = (short)5,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Borrador",
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process"
@@ -17347,12 +17354,12 @@ namespace GS.Certifications.Infrastructure.Migrations
 
                     b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoEstado", "Estado")
                         .WithMany()
-                        .HasForeignKey("EstadoIdm")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacion", "Solicitud")
-                        .WithMany()
+                        .WithMany("DocumentosCargados")
                         .HasForeignKey("SolicitudId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -17373,7 +17380,7 @@ namespace GS.Certifications.Infrastructure.Migrations
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoRequerido", b =>
                 {
                     b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", "Certificacion")
-                        .WithMany()
+                        .WithMany("DocumentosRequeridos")
                         .HasForeignKey("CertificacionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -18787,7 +18794,14 @@ namespace GS.Certifications.Infrastructure.Migrations
 
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", b =>
                 {
+                    b.Navigation("DocumentosRequeridos");
+
                     b.Navigation("Solicitudes");
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacion", b =>
+                {
+                    b.Navigation("DocumentosCargados");
                 });
 
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Comprobantes.Comprobante", b =>

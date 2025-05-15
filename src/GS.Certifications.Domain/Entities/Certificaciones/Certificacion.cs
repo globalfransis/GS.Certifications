@@ -1,4 +1,5 @@
-﻿using GS.Certifications.Domain.Entities.Empresas;
+﻿using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
+using GS.Certifications.Domain.Entities.Empresas;
 using GSF.Domain.Common;
 using System.Collections.Generic;
 
@@ -12,4 +13,5 @@ public class Certificacion : BaseIntEntity
     public string Descripcion { get; set; }
     public bool Activa { get; set; }
     public List<SolicitudCertificacion> Solicitudes { get; set; }
+    public List<DocumentoRequerido> DocumentosRequeridos { get; set; }
 }

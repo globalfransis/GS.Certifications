@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GS.Certifications.Infrastructure.Migrations
 {
     [DbContext(typeof(CertificationsDbContext))]
-    [Migration("20250509192501_rename options")]
-    partial class renameoptions
+    [Migration("20250515134726_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -153,6 +153,597 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
                             Valor = 2.50m
+                        });
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("Activa")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Session")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<short>("TipoEmpresaPortalId")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("__MigCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("__MigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Session");
+
+                    b.HasIndex("TipoEmpresaPortalId");
+
+                    b.HasIndex("__MigCode");
+
+                    b.HasIndex("__MigId");
+
+                    b.HasIndex("Created", "Modified");
+
+                    b.HasIndex("CreatedBy", "ModifiedBy");
+
+                    b.ToTable("cer_Certificaciones", (string)null);
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoCargado", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ArchivoURL")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("DocumentoRequeridoId")
+                        .HasColumnType("int");
+
+                    b.Property<short>("EstadoId")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime?>("FechaDesde")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaHasta")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaSubida")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Session")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<int>("SolicitudId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("ValidadoPorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Version")
+                        .HasColumnType("int");
+
+                    b.Property<string>("__MigCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("__MigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentoRequeridoId");
+
+                    b.HasIndex("EstadoId");
+
+                    b.HasIndex("Session");
+
+                    b.HasIndex("SolicitudId");
+
+                    b.HasIndex("ValidadoPorId");
+
+                    b.HasIndex("__MigCode");
+
+                    b.HasIndex("__MigId");
+
+                    b.HasIndex("Created", "Modified");
+
+                    b.HasIndex("CreatedBy", "ModifiedBy");
+
+                    b.ToTable("doc_DocumentosCargados", (string)null);
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoEstado", b =>
+                {
+                    b.Property<short>("Idm")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Session")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("__MigCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("__MigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Idm");
+
+                    b.HasIndex("Session");
+
+                    b.HasIndex("__MigCode");
+
+                    b.HasIndex("__MigId");
+
+                    b.HasIndex("Created", "Modified");
+
+                    b.HasIndex("CreatedBy", "ModifiedBy");
+
+                    b.ToTable("doc_DocumentoEstados", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Idm = (short)1,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Pendiente",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        },
+                        new
+                        {
+                            Idm = (short)2,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Validado",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        },
+                        new
+                        {
+                            Idm = (short)3,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Rechazado",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        },
+                        new
+                        {
+                            Idm = (short)4,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Vencido",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        });
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoRequerido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CertificacionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("Obligatorio")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Session")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<bool>("SobreescribeVigencia")
+                        .HasColumnType("bit");
+
+                    b.Property<short>("TipoId")
+                        .HasColumnType("smallint");
+
+                    b.Property<int?>("VigenciaDiasCustom")
+                        .HasColumnType("int");
+
+                    b.Property<string>("__MigCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("__MigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CertificacionId");
+
+                    b.HasIndex("Session");
+
+                    b.HasIndex("TipoId");
+
+                    b.HasIndex("__MigCode");
+
+                    b.HasIndex("__MigId");
+
+                    b.HasIndex("Created", "Modified");
+
+                    b.HasIndex("CreatedBy", "ModifiedBy");
+
+                    b.ToTable("doc_DocumentosRequeridos", (string)null);
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Documentos.TipoDocumento", b =>
+                {
+                    b.Property<short>("Idm")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("RequiereValidacion")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("RequiereVigencia")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Session")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("__MigCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("__MigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Idm");
+
+                    b.HasIndex("Session");
+
+                    b.HasIndex("__MigCode");
+
+                    b.HasIndex("__MigId");
+
+                    b.HasIndex("Created", "Modified");
+
+                    b.HasIndex("CreatedBy", "ModifiedBy");
+
+                    b.ToTable("doc_TipoDocumentos", (string)null);
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<short>("CantidadAprobaciones")
+                        .HasColumnType("smallint");
+
+                    b.Property<int>("CertificacionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<short>("EstadoId")
+                        .HasColumnType("smallint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Session")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<int>("SocioId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("__MigCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("__MigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CertificacionId");
+
+                    b.HasIndex("EstadoId");
+
+                    b.HasIndex("Session");
+
+                    b.HasIndex("SocioId");
+
+                    b.HasIndex("__MigCode");
+
+                    b.HasIndex("__MigId");
+
+                    b.HasIndex("Created", "Modified");
+
+                    b.HasIndex("CreatedBy", "ModifiedBy");
+
+                    b.ToTable("cer_SolicitudCertificaciones", (string)null);
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacionEstado", b =>
+                {
+                    b.Property<short>("Idm")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Session")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("__MigCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("__MigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Idm");
+
+                    b.HasIndex("Session");
+
+                    b.HasIndex("__MigCode");
+
+                    b.HasIndex("__MigId");
+
+                    b.HasIndex("Created", "Modified");
+
+                    b.HasIndex("CreatedBy", "ModifiedBy");
+
+                    b.ToTable("cer_SolicitudCertificacionEstados", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Idm = (short)1,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Pendiente",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        },
+                        new
+                        {
+                            Idm = (short)2,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "En proceso",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        },
+                        new
+                        {
+                            Idm = (short)3,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Aprobada",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        },
+                        new
+                        {
+                            Idm = (short)4,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Rechazada",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
+                        },
+                        new
+                        {
+                            Idm = (short)5,
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Descripcion = "Borrador",
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process"
                         });
                 });
 
@@ -3374,6 +3965,9 @@ namespace GS.Certifications.Infrastructure.Migrations
                     b.Property<short?>("TipoCuentaId")
                         .HasColumnType("smallint");
 
+                    b.Property<short?>("TipoId")
+                        .HasColumnType("smallint");
+
                     b.Property<short>("TipoResponsableId")
                         .HasColumnType("smallint");
 
@@ -3399,6 +3993,8 @@ namespace GS.Certifications.Infrastructure.Migrations
                     b.HasIndex("Session");
 
                     b.HasIndex("TipoCuentaId");
+
+                    b.HasIndex("TipoId");
 
                     b.HasIndex("TipoResponsableId");
 
@@ -3809,6 +4405,70 @@ namespace GS.Certifications.Infrastructure.Migrations
                             ModifiedBy = "Seed Process",
                             Nombre = "Cuenta Especial"
                         });
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Empresas.TipoEmpresaPortal", b =>
+                {
+                    b.Property<short>("Idm")
+                        .HasColumnType("smallint");
+
+                    b.Property<bool>("Activa")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Session")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("__MigCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("__MigId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Idm");
+
+                    b.HasIndex("Session");
+
+                    b.HasIndex("__MigCode");
+
+                    b.HasIndex("__MigId");
+
+                    b.HasIndex("Created", "Modified");
+
+                    b.HasIndex("CreatedBy", "ModifiedBy");
+
+                    b.ToTable("com_TipoEmpresasPortales", (string)null);
                 });
 
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Impuestos.Impuesto", b =>
@@ -11755,12 +12415,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100001L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Alta de Comprobantes",
+                            Description = "Alta de Solicitud de Certificación",
                             DomainFIdm = 1001L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.create",
+                            Name = "solicitudcertificacion.create",
                             OptionId = 100002L,
                             Transferable = true
                         },
@@ -11769,12 +12429,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100002L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Baja de Comprobantes",
+                            Description = "Baja de Solicitud de Certificación",
                             DomainFIdm = 1001L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.delete",
+                            Name = "solicitudcertificacion.delete",
                             OptionId = 100002L,
                             Transferable = true
                         },
@@ -11783,12 +12443,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100003L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Modificación de Comprobantes",
+                            Description = "Modificación de Solicitud de Certificación",
                             DomainFIdm = 1001L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.update",
+                            Name = "solicitudcertificacion.update",
                             OptionId = 100002L,
                             Transferable = true
                         },
@@ -11797,12 +12457,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100004L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Alta de Comprobantes",
+                            Description = "Alta de Solicitud de Certificación",
                             DomainFIdm = 1L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.create",
+                            Name = "solicitudcertificacion.create",
                             OptionId = 100004L,
                             Transferable = true
                         },
@@ -11811,12 +12471,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 100006L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Baja de Comprobantes",
+                            Description = "Baja de Solicitud de Certificacion",
                             DomainFIdm = 1L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.delete",
+                            Name = "solicitudcertificacion.delete",
                             OptionId = 100004L,
                             Transferable = true
                         },
@@ -11830,7 +12490,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "comprobantes.update",
+                            Name = "solicitudcertificacion.update",
                             OptionId = 100004L,
                             Transferable = true
                         },
@@ -12290,14 +12950,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Id = 1000L,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "AdminSupplier",
+                            Description = "AdminSocios",
                             DomainFIdm = 1001L,
                             GroupOwnerId = 1L,
-                            InternalCode = "AdminSupplier",
+                            InternalCode = "AdminSocios",
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "AdminSupplier",
+                            Name = "AdminSocios",
                             SystemUse = true
                         });
                 });
@@ -12925,16 +13585,16 @@ namespace GS.Certifications.Infrastructure.Migrations
                         new
                         {
                             Id = 100001L,
-                            Code = "PRO",
+                            Code = "SOC",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Modulo de Proveedores",
+                            Description = "Módulo de Socios",
                             DomainFIdm = 1001L,
                             Icon = "fas fa-users",
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "Proveedores",
+                            Name = "Socios",
                             OrderNo = 50,
                             TargetPath = "",
                             Transferable = true
@@ -12942,18 +13602,18 @@ namespace GS.Certifications.Infrastructure.Migrations
                         new
                         {
                             Id = 100002L,
-                            Code = "PRO-COM",
+                            Code = "SOC-CER",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Carga de Comprobantes",
+                            Description = "Gestión de Solicitudes de Certificación",
                             DomainFIdm = 1001L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "Comprobantes",
+                            Name = "Certificaciones",
                             OrderNo = 1,
                             ParentId = 100001L,
-                            TargetPath = "Proveedores/Comprobantes/Index",
+                            TargetPath = "Socios/Certificaciones/Index",
                             Transferable = true
                         },
                         new
@@ -12962,7 +13622,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Code = "PRO",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Modulo de Socios",
+                            Description = "Módulo de Socios",
                             DomainFIdm = 1L,
                             Icon = "fas fa-users",
                             IsDeleted = false,
@@ -12976,18 +13636,18 @@ namespace GS.Certifications.Infrastructure.Migrations
                         new
                         {
                             Id = 100004L,
-                            Code = "PRO-COM",
+                            Code = "SOC-CER",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Description = "Carga de Comprobantes",
+                            Description = "Gestión de Solicitudes de Certificación",
                             DomainFIdm = 1L,
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process",
-                            Name = "Comprobantes",
+                            Name = "Certificaciones",
                             OrderNo = 1,
                             ParentId = 100003L,
-                            TargetPath = "Proveedores/Comprobantes/Index",
+                            TargetPath = "Socios/Certificaciones/Index",
                             Transferable = true
                         },
                         new
@@ -16675,6 +17335,96 @@ namespace GS.Certifications.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("NotificacionAlerta");
                 });
 
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", b =>
+                {
+                    b.HasOne("GS.Certifications.Domain.Entities.Empresas.TipoEmpresaPortal", "TipoEmpresaPortal")
+                        .WithMany()
+                        .HasForeignKey("TipoEmpresaPortalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoEmpresaPortal");
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoCargado", b =>
+                {
+                    b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoRequerido", "DocumentoRequerido")
+                        .WithMany()
+                        .HasForeignKey("DocumentoRequeridoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoEstado", "Estado")
+                        .WithMany()
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacion", "Solicitud")
+                        .WithMany("DocumentosCargados")
+                        .HasForeignKey("SolicitudId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GSF.Domain.Entities.Security.User", "ValidadoPor")
+                        .WithMany()
+                        .HasForeignKey("ValidadoPorId");
+
+                    b.Navigation("DocumentoRequerido");
+
+                    b.Navigation("Estado");
+
+                    b.Navigation("Solicitud");
+
+                    b.Navigation("ValidadoPor");
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Documentos.DocumentoRequerido", b =>
+                {
+                    b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", "Certificacion")
+                        .WithMany("DocumentosRequeridos")
+                        .HasForeignKey("CertificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.Documentos.TipoDocumento", "Tipo")
+                        .WithMany()
+                        .HasForeignKey("TipoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Certificacion");
+
+                    b.Navigation("Tipo");
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacion", b =>
+                {
+                    b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", "Certificacion")
+                        .WithMany("Solicitudes")
+                        .HasForeignKey("CertificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacionEstado", "Estado")
+                        .WithMany()
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GS.Certifications.Domain.Entities.Empresas.EmpresaPortal", "Socio")
+                        .WithMany()
+                        .HasForeignKey("SocioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Certificacion");
+
+                    b.Navigation("Estado");
+
+                    b.Navigation("Socio");
+                });
+
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Comprobantes.Comprobante", b =>
                 {
                     b.HasOne("GS.Certifications.Domain.Entities.Comprobantes.CategoriaTipo", "CategoriaTipoEmisor")
@@ -16922,6 +17672,10 @@ namespace GS.Certifications.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("TipoCuentaId");
 
+                    b.HasOne("GS.Certifications.Domain.Entities.Empresas.TipoEmpresaPortal", "Tipo")
+                        .WithMany()
+                        .HasForeignKey("TipoId");
+
                     b.HasOne("GS.Certifications.Domain.Entities.Comprobantes.CategoriaTipo", "TipoResponsable")
                         .WithMany()
                         .HasForeignKey("TipoResponsableId")
@@ -16937,6 +17691,8 @@ namespace GS.Certifications.Infrastructure.Migrations
                     b.Navigation("Pais");
 
                     b.Navigation("Provincia");
+
+                    b.Navigation("Tipo");
 
                     b.Navigation("TipoCuenta");
 
@@ -18036,6 +18792,18 @@ namespace GS.Certifications.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("EmpresaPortal");
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.Certificacion", b =>
+                {
+                    b.Navigation("DocumentosRequeridos");
+
+                    b.Navigation("Solicitudes");
+                });
+
+            modelBuilder.Entity("GS.Certifications.Domain.Entities.Certificaciones.SolicitudCertificacion", b =>
+                {
+                    b.Navigation("DocumentosCargados");
                 });
 
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Comprobantes.Comprobante", b =>

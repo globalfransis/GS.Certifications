@@ -2,17 +2,68 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">Titulo</p> <!-- Agregar título, por ejemplo: Modificación del Usuario {userId} -->
+                <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p>
+                <!-- Agregar título, por ejemplo: Modificación del Usuario {userId} -->
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <!-- Agregar campos del formulario de edición -->
-                        <!-- Este es un ejemplo -->
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Descripción</label>
-                            <input type="text" class="form-control" v-model="solicitudCertificacion.descripcion">
-                        </div>
+                        <div class="col-12 d-flex justify-content-between align-items-center mt-4 mb-4">
+                                <div>
+                                    <p class="h5 m-0">Documentos requeridos</p>
+                                </div>
+                                <!-- <button type="button" class="btn btn-outline-primary btn-sm" @click="addNewRow()">
+                                    <b><i class="fas fa-plus"></i>Agregar</b>
+                                </button> -->
+                            </div>
+                        <table :id="`${idTable}`" class="table table-bordered table-hover">
+                            <thead class="table-top">
+                                <tr class="text-center align-middle">
+                                    <th class="w-10" scope="col">Tipo</th>
+                                    <th class="w-2" scope="col">Versión</th>
+                                    <th class="w-10" scope="col">Fecha Desde</th>
+                                    <th class="w-10" scope="col">Fecha Hasta</th>
+                                    <th class="w-10" scope="col">Estado</th>
+                                    <th class="w-10" scope="col">Validado Por</th>
+                                    <th class="w-10" scope="col">Fecha Subida</th>
+                                    <th class="w-10" scope="col">Archivo</th>
+                                    <th class="w-2" scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="solicitudCertificacion.documentosCargados.length === 0" class="no-data">
+                                    <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
+                                </tr>
+                                <template v-for="(cd, index) in solicitudCertificacion.documentosCargados">
+                                    <tr :key="index">
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.tipo ? cd.tipo : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.version ? cd.version : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.fechaDesde ? (cd.fechaDesde | uiDate) : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.fechaHasta ? (cd.fechaHasta | uiDate) : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.estado ? cd.estado : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.validadoPor ? cd.validadoPor : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.fechaSubida ? (cd.fechaSubida | uiDate) : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.archivo ? cd.archivo : "-" }}</td>
+                                        <td class="text-center align-middle">
+                                            <div class="d-inline-flex">
+                                                <inlineEdit @click="update(cd.id)" />
+                                                <inlineDelete @click="remove(cd)" />
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -32,10 +83,15 @@ import UiService from "@/common/uiService";
 import SolicitudCertificacion from './SolicitudCertificacion' // Modificar por la clase dto que corresponda
 import commonMixin from '@/Common/Mixins/commonMixin';
 
+import inlineEdit from "@/components/forms/inline-edit-button.vue";
+import inlineDelete from "@/components/forms/inline-delete-button.vue";
+
 export default {
     components: {
         AcceptButton,
-        CancelButton
+        CancelButton,
+        inlineEdit,
+        inlineDelete
     },
     mixins: [commonMixin],
     name: "solicitudCertificacion-edit",

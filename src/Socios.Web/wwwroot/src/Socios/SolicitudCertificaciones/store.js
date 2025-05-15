@@ -127,7 +127,7 @@ const formModule = {
             ctx.getters.getErrorBag.clear();
             return await new ajax()
                 .post(
-                    API_URL,
+                    API_URL+`/${solicitudCertificacion.certificacionId}/Solicitudes`,
                     solicitudCertificacion,
                     {
                         errorBag: ctx.getters.getErrorBag,
@@ -161,7 +161,7 @@ const formModule = {
         },
         async getAsync(ctx, id) {
             return await new ajax()
-                .get(`${API_URL}/${id}`)
+                .get(`${API_URL}/Solicitudes/${id}`)
                 .then((res) => {
                     // Agregar alguna lógica de ser necesario
                     return res;

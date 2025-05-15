@@ -132,6 +132,27 @@ namespace GS.Certifications.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "cer_SolicitudCertificacionEstados",
+                columns: table => new
+                {
+                    Idm = table.Column<short>(type: "smallint", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    __MigId = table.Column<int>(type: "int", nullable: true),
+                    __MigCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cer_SolicitudCertificacionEstados", x => x.Idm);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "cny_Organization",
                 columns: table => new
                 {
@@ -336,6 +357,29 @@ namespace GS.Certifications.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "com_TipoEmpresasPortales",
+                columns: table => new
+                {
+                    Idm = table.Column<short>(type: "smallint", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Activa = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    __MigId = table.Column<int>(type: "int", nullable: true),
+                    __MigCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_com_TipoEmpresasPortales", x => x.Idm);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "com_UnidadMedidas",
                 columns: table => new
                 {
@@ -356,6 +400,50 @@ namespace GS.Certifications.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_com_UnidadMedidas", x => x.Idm);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "doc_DocumentoEstados",
+                columns: table => new
+                {
+                    Idm = table.Column<short>(type: "smallint", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    __MigId = table.Column<int>(type: "int", nullable: true),
+                    __MigCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_doc_DocumentoEstados", x => x.Idm);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "doc_TipoDocumentos",
+                columns: table => new
+                {
+                    Idm = table.Column<short>(type: "smallint", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    RequiereVigencia = table.Column<bool>(type: "bit", nullable: false),
+                    RequiereValidacion = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    __MigId = table.Column<int>(type: "int", nullable: true),
+                    __MigCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_doc_TipoDocumentos", x => x.Idm);
                 });
 
             migrationBuilder.CreateTable(
@@ -1098,6 +1186,37 @@ namespace GS.Certifications.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "cer_Certificaciones",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TipoEmpresaPortalId = table.Column<short>(type: "smallint", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    Activa = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    __MigId = table.Column<int>(type: "int", nullable: true),
+                    __MigCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cer_Certificaciones", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_cer_Certificaciones_com_TipoEmpresasPortales_TipoEmpresaPortalId",
+                        column: x => x.TipoEmpresaPortalId,
+                        principalTable: "com_TipoEmpresasPortales",
+                        principalColumn: "Idm",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "gbl_CulturesOrganization",
                 columns: table => new
                 {
@@ -1532,6 +1651,44 @@ namespace GS.Certifications.Infrastructure.Migrations
                         column: x => x.EstadoIdm,
                         principalTable: "prd_EstadoPeriodos",
                         principalColumn: "Idm");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "doc_DocumentosRequeridos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CertificacionId = table.Column<int>(type: "int", nullable: false),
+                    TipoId = table.Column<short>(type: "smallint", nullable: false),
+                    Obligatorio = table.Column<bool>(type: "bit", nullable: false),
+                    SobreescribeVigencia = table.Column<bool>(type: "bit", nullable: false),
+                    VigenciaDiasCustom = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    __MigId = table.Column<int>(type: "int", nullable: true),
+                    __MigCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_doc_DocumentosRequeridos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_doc_DocumentosRequeridos_cer_Certificaciones_CertificacionId",
+                        column: x => x.CertificacionId,
+                        principalTable: "cer_Certificaciones",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_doc_DocumentosRequeridos_doc_TipoDocumentos_TipoId",
+                        column: x => x.TipoId,
+                        principalTable: "doc_TipoDocumentos",
+                        principalColumn: "Idm",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -2031,6 +2188,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     ProductosServiciosOfrecidos = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     ReferenciasComerciales = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Confirmado = table.Column<bool>(type: "bit", nullable: false),
+                    TipoId = table.Column<short>(type: "smallint", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -2062,6 +2220,11 @@ namespace GS.Certifications.Infrastructure.Migrations
                         principalTable: "com_CategoriaTipos",
                         principalColumn: "Idm",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_emp_EmpresasPortales_com_TipoEmpresasPortales_TipoId",
+                        column: x => x.TipoId,
+                        principalTable: "com_TipoEmpresasPortales",
+                        principalColumn: "Idm");
                     table.ForeignKey(
                         name: "FK_emp_EmpresasPortales_emp_TipoCuentas_TipoCuentaId",
                         column: x => x.TipoCuentaId,
@@ -2502,6 +2665,50 @@ namespace GS.Certifications.Infrastructure.Migrations
                         column: x => x.EstadoIdm,
                         principalTable: "int_InterfazEstados",
                         principalColumn: "Idm",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "cer_SolicitudCertificaciones",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SocioId = table.Column<int>(type: "int", nullable: false),
+                    CertificacionId = table.Column<int>(type: "int", nullable: false),
+                    EstadoId = table.Column<short>(type: "smallint", nullable: false),
+                    CantidadAprobaciones = table.Column<short>(type: "smallint", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    __MigId = table.Column<int>(type: "int", nullable: true),
+                    __MigCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cer_SolicitudCertificaciones", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_cer_SolicitudCertificaciones_cer_Certificaciones_CertificacionId",
+                        column: x => x.CertificacionId,
+                        principalTable: "cer_Certificaciones",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_cer_SolicitudCertificaciones_cer_SolicitudCertificacionEstados_EstadoId",
+                        column: x => x.EstadoId,
+                        principalTable: "cer_SolicitudCertificacionEstados",
+                        principalColumn: "Idm",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_cer_SolicitudCertificaciones_emp_EmpresasPortales_SocioId",
+                        column: x => x.SocioId,
+                        principalTable: "emp_EmpresasPortales",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -3563,6 +3770,59 @@ namespace GS.Certifications.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "doc_DocumentosCargados",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SolicitudId = table.Column<int>(type: "int", nullable: false),
+                    DocumentoRequeridoId = table.Column<int>(type: "int", nullable: false),
+                    ArchivoURL = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    Version = table.Column<int>(type: "int", nullable: true),
+                    FechaDesde = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FechaHasta = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EstadoId = table.Column<short>(type: "smallint", nullable: false),
+                    ValidadoPorId = table.Column<long>(type: "bigint", nullable: true),
+                    FechaSubida = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Session = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: true),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Modified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    __MigId = table.Column<int>(type: "int", nullable: true),
+                    __MigCode = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_doc_DocumentosCargados", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_doc_DocumentosCargados_cer_SolicitudCertificaciones_SolicitudId",
+                        column: x => x.SolicitudId,
+                        principalTable: "cer_SolicitudCertificaciones",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_doc_DocumentosCargados_doc_DocumentoEstados_EstadoId",
+                        column: x => x.EstadoId,
+                        principalTable: "doc_DocumentoEstados",
+                        principalColumn: "Idm",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_doc_DocumentosCargados_doc_DocumentosRequeridos_DocumentoRequeridoId",
+                        column: x => x.DocumentoRequeridoId,
+                        principalTable: "doc_DocumentosRequeridos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_doc_DocumentosCargados_sec_Users_ValidadoPorId",
+                        column: x => x.ValidadoPorId,
+                        principalTable: "sec_Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "com_ComprobanteDetalles",
                 columns: table => new
                 {
@@ -3796,6 +4056,18 @@ namespace GS.Certifications.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "cer_SolicitudCertificacionEstados",
+                columns: new[] { "Idm", "Created", "CreatedBy", "Descripcion", "IsDeleted", "Modified", "ModifiedBy", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
+                    { (short)1, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Pendiente", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
+                    { (short)2, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "En proceso", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
+                    { (short)3, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Aprobada", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
+                    { (short)4, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Rechazada", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
+                    { (short)5, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Borrador", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "cny_Organization",
                 columns: new[] { "Id", "Created", "CreatedBy", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
                 values: new object[] { 39L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Globalsis", null, null, null });
@@ -3855,12 +4127,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { (short)4, "4", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "RC-A", "Recibo A", false, "A", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
                     { (short)5, "5", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NV-A", "Nota de venta al contado A", false, "A", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
                     { (short)6, "6", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "FC-B", "Factura B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)7, "7", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "ND-B", "Nota de Débito B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)8, "8", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NC-B", "Nota de Crédito B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)-1, null, null },
-                    { (short)9, "9", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "RC-B", "Recibo B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)10, "10", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NV-B", "Nota de venta al contado B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)11, "39", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Comprobante A que cumple con la R.G. N° 3419", false, "A", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)12, "40", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Comprobante B que cumple con la R.G. N° 3419", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null }
+                    { (short)7, "7", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "ND-B", "Nota de Débito B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -3868,6 +4135,11 @@ namespace GS.Certifications.Infrastructure.Migrations
                 columns: new[] { "Idm", "CodigoArca", "CodigoExterno", "Created", "CreatedBy", "DescAbreviada", "Descripcion", "IsDeleted", "Letra", "Modified", "ModifiedBy", "NombreComprobante", "Session", "TipoOperacion", "__MigCode", "__MigId" },
                 values: new object[,]
                 {
+                    { (short)8, "8", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NC-B", "Nota de Crédito B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)-1, null, null },
+                    { (short)9, "9", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "RC-B", "Recibo B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
+                    { (short)10, "10", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NV-B", "Nota de venta al contado B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
+                    { (short)11, "39", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Comprobante A que cumple con la R.G. N° 3419", false, "A", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
+                    { (short)12, "40", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Comprobante B que cumple con la R.G. N° 3419", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
                     { (short)13, "60", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Cuenta de venta y líquido producto A", false, "A", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
                     { (short)14, "61", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Cuenta de venta y líquido producto B", false, "B", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
                     { (short)15, "63", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "LG-A", "Liquidación A", false, "A", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
@@ -3904,12 +4176,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { (short)46, "81", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "TF-A", "Tique-Factura A", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
                     { (short)47, "82", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "TF-B", "Tique-Factura B", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
                     { (short)48, "83", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "T", "Tique", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)49, "84", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Comprobante/Factura de servicios públicos", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)50, "85", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Nota de Crédito - servicios públicos", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)-1, null, null },
-                    { (short)51, "86", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Nota de Débito - servicios públicos", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)52, "87", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Otros comp - servicios del exterior", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)53, "89", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Otros comp - doc exceptuados - Nota de Débito", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
-                    { (short)54, "90", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Otros comp - doc exceptuados - Nota de Crédito", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)-1, null, null }
+                    { (short)49, "84", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Comprobante/Factura de servicios públicos", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -3917,6 +4184,11 @@ namespace GS.Certifications.Infrastructure.Migrations
                 columns: new[] { "Idm", "CodigoArca", "CodigoExterno", "Created", "CreatedBy", "DescAbreviada", "Descripcion", "IsDeleted", "Letra", "Modified", "ModifiedBy", "NombreComprobante", "Session", "TipoOperacion", "__MigCode", "__MigId" },
                 values: new object[,]
                 {
+                    { (short)50, "85", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Nota de Crédito - servicios públicos", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)-1, null, null },
+                    { (short)51, "86", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Nota de Débito - servicios públicos", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
+                    { (short)52, "87", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Otros comp - servicios del exterior", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
+                    { (short)53, "89", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Otros comp - doc exceptuados - Nota de Débito", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
+                    { (short)54, "90", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Otros comp - doc exceptuados - Nota de Crédito", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)-1, null, null },
                     { (short)55, "92", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Aj contables que incrementan el débito fiscal", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
                     { (short)56, "93", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Aj contables que disminuyen el débito fiscal", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)-1, null, null },
                     { (short)57, "94", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, "Aj contables que incrementan el crédito fiscal", false, null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, (short)1, null, null },
@@ -3967,7 +4239,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { (short)1, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Validada", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
-                    { (short)2, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Rechazada", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
+                    { (short)2, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Rechazada", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "com_EstadosValidacionARCA",
+                columns: new[] { "Idm", "Created", "CreatedBy", "Descripcion", "IsDeleted", "Modified", "ModifiedBy", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
                     { (short)3, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Error validación", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
                     { (short)4, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "No validada", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null }
                 });
@@ -4020,6 +4299,17 @@ namespace GS.Certifications.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "doc_DocumentoEstados",
+                columns: new[] { "Idm", "Created", "CreatedBy", "Descripcion", "IsDeleted", "Modified", "ModifiedBy", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
+                    { (short)1, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Pendiente", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
+                    { (short)2, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Validado", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
+                    { (short)3, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Rechazado", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
+                    { (short)4, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Vencido", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "emp_RolTipos",
                 columns: new[] { "Idm", "Codigo", "Created", "CreatedBy", "Descripcion", "IsDeleted", "Modified", "ModifiedBy", "Session", "__MigCode", "__MigId" },
                 values: new object[,]
@@ -4047,9 +4337,13 @@ namespace GS.Certifications.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1L, "es-AR", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", false, "es", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Español", null, null, null },
-                    { 2L, "en-US", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", false, "en", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Inglés", null, null, null },
-                    { 3L, "pt-BR", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", false, "pt", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Portugués", null, null, null }
+                    { 2L, "en-US", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", false, "en", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Inglés", null, null, null }
                 });
+
+            migrationBuilder.InsertData(
+                table: "gbl_Cultures",
+                columns: new[] { "Id", "Code", "Created", "CreatedBy", "IsDeleted", "Language", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
+                values: new object[] { 3L, "pt-BR", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", false, "pt", new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Portugués", null, null, null });
 
             migrationBuilder.InsertData(
                 table: "gbl_Currencies",
@@ -4110,7 +4404,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 30L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "BO", "BOL", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Bolivia", null, null, null },
                     { 31L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "BA", "BIH", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Bosnia y Herzegovina", null, null, null },
                     { 32L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "BW", "BWA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Botsuana", null, null, null },
-                    { 33L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "BN", "BRN", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Brunei", null, null, null },
+                    { 33L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "BN", "BRN", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Brunei", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "geo_Countries",
+                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
                     { 34L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "BG", "BGR", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Bulgaria", null, null, null },
                     { 35L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "BF", "BFA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Burkina Faso", null, null, null },
                     { 36L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "BI", "BDI", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Burundi", null, null, null },
@@ -4119,14 +4420,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 39L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "CM", "CMR", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Camerún", null, null, null },
                     { 40L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "CA", "CAN", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Canadá", null, null, null },
                     { 41L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "TD", "TCD", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Chad", null, null, null },
-                    { 42L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "CL", "CHL", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Chile", null, null, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "geo_Countries",
-                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
-                values: new object[,]
-                {
+                    { 42L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "CL", "CHL", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Chile", null, null, null },
                     { 43L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "CN", "CHN", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "China", null, null, null },
                     { 44L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "CY", "CYP", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Chipre", null, null, null },
                     { 45L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "VA", "VAT", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Ciudad del Vaticano", null, null, null },
@@ -4159,7 +4453,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 72L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "FR", "FRA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Francia", null, null, null },
                     { 73L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GA", "GAB", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Gabón", null, null, null },
                     { 74L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GM", "GMB", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Gambia", null, null, null },
-                    { 75L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GE", "GEO", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Georgia", null, null, null },
+                    { 75L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GE", "GEO", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Georgia", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "geo_Countries",
+                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
                     { 76L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GH", "GHA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Ghana", null, null, null },
                     { 77L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GI", "GIB", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Gibraltar", null, null, null },
                     { 78L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GD", "GRD", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Granada", null, null, null },
@@ -4168,14 +4469,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 81L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GP", "GLP", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Guadalupe", null, null, null },
                     { 82L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GU", "GUM", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Guam", null, null, null },
                     { 83L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GT", "GTM", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Guatemala", null, null, null },
-                    { 84L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GF", "GUF", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Guayana Francesa", null, null, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "geo_Countries",
-                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
-                values: new object[,]
-                {
+                    { 84L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GF", "GUF", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Guayana Francesa", null, null, null },
                     { 85L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GG", "GGY", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Guernsey", null, null, null },
                     { 86L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GN", "GIN", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Guinea", null, null, null },
                     { 87L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "GQ", "GNQ", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Guinea Ecuatorial", null, null, null },
@@ -4208,7 +4502,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 114L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "MP", "MNP", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Islas Marianas del Norte", null, null, null },
                     { 115L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "MH", "MHL", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Islas Marshall", null, null, null },
                     { 116L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "PN", "PCN", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Islas Pitcairn", null, null, null },
-                    { 117L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "SB", "SLB", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Islas Salomón", null, null, null },
+                    { 117L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "SB", "SLB", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Islas Salomón", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "geo_Countries",
+                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
                     { 118L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "TC", "TCA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Islas Turcas y Caicos", null, null, null },
                     { 119L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "UM", "UMI", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Islas Ultramarinas Menores de Estados Unidos", null, null, null },
                     { 120L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "VG", "VGB", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Islas Vírgenes Británicas", null, null, null },
@@ -4217,14 +4518,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 123L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "IT", "ITA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Italia", null, null, null },
                     { 124L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "JM", "JAM", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Jamaica", null, null, null },
                     { 125L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "JP", "JPN", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Japón", null, null, null },
-                    { 126L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "JE", "JEY", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Jersey", null, null, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "geo_Countries",
-                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
-                values: new object[,]
-                {
+                    { 126L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "JE", "JEY", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Jersey", null, null, null },
                     { 127L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "JO", "JOR", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Jordania", null, null, null },
                     { 128L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "KZ", "KAZ", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Kazajistán", null, null, null },
                     { 129L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "KE", "KEN", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Kenia", null, null, null },
@@ -4257,7 +4551,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 156L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "MD", "MDA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Moldavia", null, null, null },
                     { 157L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "MC", "MCO", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Mónaco", null, null, null },
                     { 158L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "MN", "MNG", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Mongolia", null, null, null },
-                    { 159L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "ME", "MNE", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Montenegro", null, null, null },
+                    { 159L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "ME", "MNE", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Montenegro", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "geo_Countries",
+                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
                     { 160L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "MS", "MSR", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Montserrat", null, null, null },
                     { 161L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "MZ", "MOZ", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Mozambique", null, null, null },
                     { 162L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NA", "NAM", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Namibia", null, null, null },
@@ -4266,14 +4567,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 165L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NI", "NIC", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Nicaragua", null, null, null },
                     { 166L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NE", "NER", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Níger", null, null, null },
                     { 167L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NG", "NGA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Nigeria", null, null, null },
-                    { 168L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NU", "NIU", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Niue", null, null, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "geo_Countries",
-                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
-                values: new object[,]
-                {
+                    { 168L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NU", "NIU", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Niue", null, null, null },
                     { 169L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NO", "NOR", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Noruega", null, null, null },
                     { 170L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NC", "NCL", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Nueva Caledonia", null, null, null },
                     { 171L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "NZ", "NZL", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Nueva Zelanda", null, null, null },
@@ -4306,7 +4600,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 198L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "KN", "KNA", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "San Cristóbal y Nieves", null, null, null },
                     { 199L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "SM", "SMR", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "San Marino", null, null, null },
                     { 200L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "San Martín (Francia)", null, null, null },
-                    { 201L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "San Pedro y Miquelón", null, null, null },
+                    { 201L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "San Pedro y Miquelón", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "geo_Countries",
+                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
                     { 202L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "San Vicente y las Granadinas", null, null, null },
                     { 203L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Santa Elena", null, null, null },
                     { 204L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Santa Lucía", null, null, null },
@@ -4315,14 +4616,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 207L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Serbia", null, null, null },
                     { 208L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Seychelles", null, null, null },
                     { 209L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Sierra Leona", null, null, null },
-                    { 210L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Singapur", null, null, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "geo_Countries",
-                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
-                values: new object[,]
-                {
+                    { 210L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Singapur", null, null, null },
                     { 211L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Siria", null, null, null },
                     { 212L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Somalia", null, null, null },
                     { 213L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Sri Lanka", null, null, null },
@@ -4355,7 +4649,14 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 240L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Vanuatu", null, null, null },
                     { 241L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Venezuela", null, null, null },
                     { 242L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Vietnam", null, null, null },
-                    { 243L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Wallis y Futuna", null, null, null },
+                    { 243L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Wallis y Futuna", null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "geo_Countries",
+                columns: new[] { "Idm", "Created", "CreatedBy", "ISOCode2", "ISOCode3", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "__MigCode", "__MigId" },
+                values: new object[,]
+                {
                     { 244L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Yemen", null, null, null },
                     { 245L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Yibuti", null, null, null },
                     { 246L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "", "", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Zambia", null, null, null },
@@ -4458,9 +4759,13 @@ namespace GS.Certifications.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "pro_EstadoProcesos",
                 columns: new[] { "Idm", "Created", "CreatedBy", "Descripcion", "IsDeleted", "Modified", "ModifiedBy", "Session", "__MigCode", "__MigId" },
+                values: new object[] { 1L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "PENDIENTE", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null });
+
+            migrationBuilder.InsertData(
+                table: "pro_EstadoProcesos",
+                columns: new[] { "Idm", "Created", "CreatedBy", "Descripcion", "IsDeleted", "Modified", "ModifiedBy", "Session", "__MigCode", "__MigId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "PENDIENTE", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
                     { 2L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "COMPLETADO", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null },
                     { 3L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "ERROR", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", null, null, null }
                 });
@@ -4585,8 +4890,8 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 27L, "NTF", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Notificaciones", 1L, "fas fas fa-bell", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Notificaciones", 500, null, null, null, "", true, null, null },
                     { 29L, "CFG", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Configuración", 1L, "fas fa-sliders-h", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Configuración", 500, null, null, null, "", true, null, null },
                     { 32L, "INT", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Módulo de Interfaces", 1L, "fas fa-file", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Interfaces", 500, null, null, null, "", true, null, null },
-                    { 100001L, "PRO", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Modulo de Proveedores", 1001L, "fas fa-users", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Proveedores", 50, null, null, null, "", true, null, null },
-                    { 100003L, "PRO", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Modulo de Proveedores", 1L, "fas fa-users", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Proveedores", 50, null, null, null, "", true, null, null }
+                    { 100001L, "SOC", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Módulo de Socios", 1001L, "fas fa-users", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Socios", 50, null, null, null, "", true, null, null },
+                    { 100003L, "PRO", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Módulo de Socios", 1L, "fas fa-users", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Socios", 50, null, null, null, "", true, null, null }
                 });
 
             migrationBuilder.InsertData(
@@ -4601,7 +4906,11 @@ namespace GS.Certifications.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "sec_Groups",
                 columns: new[] { "Id", "Created", "CreatedBy", "Description", "DomainFIdm", "GroupOwnerId", "InternalCode", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "SystemUse", "__MigCode", "__MigId" },
-                values: new object[] { 2L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Grupo de Módulo de Seguridad", 1L, 1L, "MainSeguridad", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Grupo Seguridad", null, false, null, null });
+                values: new object[,]
+                {
+                    { 2L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Grupo de Módulo de Seguridad", 1L, 1L, "MainSeguridad", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Grupo Seguridad", null, false, null, null },
+                    { 1000L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "AdminSocios", 1001L, 1L, "AdminSocios", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "AdminSocios", null, true, null, null }
+                });
 
             migrationBuilder.InsertData(
                 table: "sec_GroupsOrganizations",
@@ -4627,8 +4936,8 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 34L, "INT-DEF", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Definición de Interfaces", 1L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Definiciones", 10, null, 32L, null, "/Interfaces/Definiciones/Index", true, null, null },
                     { 35L, "INT-REG", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Definición de Reglas de Interfaces", 1L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Reglas - Definiciones", 10, null, 32L, null, "/Interfaces/ReglasDefiniciones/Index", true, null, null },
                     { 36L, "SEG-ACT", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Modulo de Actividad de Usuarios", 1L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Actividad Usuarios", 15, null, 20L, null, "/security/Usuarios/Actividades/index", false, null, null },
-                    { 100002L, "PRO-COM", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Carga de Comprobantes", 1001L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Comprobantes", 1, null, 100001L, null, "Proveedores/Comprobantes/Index", true, null, null },
-                    { 100004L, "PRO-COM", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Carga de Comprobantes", 1L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Comprobantes", 1, null, 100003L, null, "Proveedores/Comprobantes/Index", true, null, null },
+                    { 100002L, "SOC-CER", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Gestión de Solicitudes de Certificación", 1001L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Certificaciones", 1, null, 100001L, null, "Socios/Certificaciones/Index", true, null, null },
+                    { 100004L, "SOC-CER", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Gestión de Solicitudes de Certificación", 1L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Certificaciones", 1, null, 100003L, null, "Socios/Certificaciones/Index", true, null, null },
                     { 100005L, "PRO-ADM", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Administracion", 1L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Administracion", 50, null, 100003L, null, "/Proveedores/Empresas/Index", true, null, null },
                     { 100006L, "PRO-IMP", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Impuestos", 1L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Impuestos", 50, null, 10L, null, "/Proveedores/Impuestos/Index", true, null, null },
                     { 100007L, "PRO-PER", null, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Percepciones", 1L, null, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Percepciones", 50, null, 10L, null, "/Proveedores/Percepciones/Index", true, null, null },
@@ -4688,12 +4997,12 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 24L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "notifications.delete", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "notifications.delete", 12L, null, true, null, null },
                     { 25L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "companies.create", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "config.changepassword", 26L, null, true, null, null },
                     { 26L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "ntfManagement.create", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "ntfManagement.create", 28L, null, true, null, null },
-                    { 100001L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Alta de Comprobantes", 1001L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "comprobantes.create", 100002L, null, true, null, null },
-                    { 100002L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Baja de Comprobantes", 1001L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "comprobantes.delete", 100002L, null, true, null, null },
-                    { 100003L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Modificación de Comprobantes", 1001L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "comprobantes.update", 100002L, null, true, null, null },
-                    { 100004L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Alta de Comprobantes", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "comprobantes.create", 100004L, null, true, null, null },
-                    { 100005L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Modificación de Comprobantes", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "comprobantes.update", 100004L, null, true, null, null },
-                    { 100006L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Baja de Comprobantes", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "comprobantes.delete", 100004L, null, true, null, null },
+                    { 100001L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Alta de Solicitud de Certificación", 1001L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "solicitudcertificacion.create", 100002L, null, true, null, null },
+                    { 100002L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Baja de Solicitud de Certificación", 1001L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "solicitudcertificacion.delete", 100002L, null, true, null, null },
+                    { 100003L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Modificación de Solicitud de Certificación", 1001L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "solicitudcertificacion.update", 100002L, null, true, null, null },
+                    { 100004L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Alta de Solicitud de Certificación", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "solicitudcertificacion.create", 100004L, null, true, null, null },
+                    { 100005L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Modificación de Comprobantes", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "solicitudcertificacion.update", 100004L, null, true, null, null },
+                    { 100006L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Baja de Solicitud de Certificacion", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "solicitudcertificacion.delete", 100004L, null, true, null, null },
                     { 100007L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Alta de Empresas Portales", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "empresasportales.create", 100005L, null, true, null, null },
                     { 100008L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Modificación de Empresas Portales", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "empresasportales.update", 100005L, null, true, null, null },
                     { 100009L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Baja de Empresas Portales", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "empresasportales.delete", 100005L, null, true, null, null },
@@ -4740,6 +5049,11 @@ namespace GS.Certifications.Infrastructure.Migrations
                     { 1L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", 1L, null, null, null },
                     { 2L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", 1L, false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", 2L, null, null, null }
                 });
+
+            migrationBuilder.InsertData(
+                table: "sec_Roles",
+                columns: new[] { "Id", "Created", "CreatedBy", "Description", "DomainFIdm", "GroupOwnerId", "InternalCode", "IsDeleted", "Modified", "ModifiedBy", "Name", "Session", "SystemUse", "__MigCode", "__MigId" },
+                values: new object[] { 1001L, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Administrador del Portal de Socios", 1001L, 1000L, "Socios_Admin", false, new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Process", "Admin", null, true, null, null });
 
             migrationBuilder.InsertData(
                 table: "sec_RolesOptions",
@@ -5151,6 +5465,101 @@ namespace GS.Certifications.Infrastructure.Migrations
                 name: "IX_aud_Sessions_UserLogin",
                 table: "aud_Sessions",
                 column: "UserLogin");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_Certificaciones___MigCode",
+                table: "cer_Certificaciones",
+                column: "__MigCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_Certificaciones___MigId",
+                table: "cer_Certificaciones",
+                column: "__MigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_Certificaciones_Created_Modified",
+                table: "cer_Certificaciones",
+                columns: new[] { "Created", "Modified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_Certificaciones_CreatedBy_ModifiedBy",
+                table: "cer_Certificaciones",
+                columns: new[] { "CreatedBy", "ModifiedBy" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_Certificaciones_Session",
+                table: "cer_Certificaciones",
+                column: "Session");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_Certificaciones_TipoEmpresaPortalId",
+                table: "cer_Certificaciones",
+                column: "TipoEmpresaPortalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificaciones___MigCode",
+                table: "cer_SolicitudCertificaciones",
+                column: "__MigCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificaciones___MigId",
+                table: "cer_SolicitudCertificaciones",
+                column: "__MigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificaciones_CertificacionId",
+                table: "cer_SolicitudCertificaciones",
+                column: "CertificacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificaciones_Created_Modified",
+                table: "cer_SolicitudCertificaciones",
+                columns: new[] { "Created", "Modified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificaciones_CreatedBy_ModifiedBy",
+                table: "cer_SolicitudCertificaciones",
+                columns: new[] { "CreatedBy", "ModifiedBy" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificaciones_EstadoId",
+                table: "cer_SolicitudCertificaciones",
+                column: "EstadoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificaciones_Session",
+                table: "cer_SolicitudCertificaciones",
+                column: "Session");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificaciones_SocioId",
+                table: "cer_SolicitudCertificaciones",
+                column: "SocioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificacionEstados___MigCode",
+                table: "cer_SolicitudCertificacionEstados",
+                column: "__MigCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificacionEstados___MigId",
+                table: "cer_SolicitudCertificacionEstados",
+                column: "__MigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificacionEstados_Created_Modified",
+                table: "cer_SolicitudCertificacionEstados",
+                columns: new[] { "Created", "Modified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificacionEstados_CreatedBy_ModifiedBy",
+                table: "cer_SolicitudCertificacionEstados",
+                columns: new[] { "CreatedBy", "ModifiedBy" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cer_SolicitudCertificacionEstados_Session",
+                table: "cer_SolicitudCertificacionEstados",
+                column: "Session");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cny_Company___MigCode",
@@ -5758,6 +6167,31 @@ namespace GS.Certifications.Infrastructure.Migrations
                 column: "Session");
 
             migrationBuilder.CreateIndex(
+                name: "IX_com_TipoEmpresasPortales___MigCode",
+                table: "com_TipoEmpresasPortales",
+                column: "__MigCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_com_TipoEmpresasPortales___MigId",
+                table: "com_TipoEmpresasPortales",
+                column: "__MigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_com_TipoEmpresasPortales_Created_Modified",
+                table: "com_TipoEmpresasPortales",
+                columns: new[] { "Created", "Modified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_com_TipoEmpresasPortales_CreatedBy_ModifiedBy",
+                table: "com_TipoEmpresasPortales",
+                columns: new[] { "CreatedBy", "ModifiedBy" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_com_TipoEmpresasPortales_Session",
+                table: "com_TipoEmpresasPortales",
+                column: "Session");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_com_UnidadMedidas___MigCode",
                 table: "com_UnidadMedidas",
                 column: "__MigCode");
@@ -5780,6 +6214,136 @@ namespace GS.Certifications.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_com_UnidadMedidas_Session",
                 table: "com_UnidadMedidas",
+                column: "Session");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentoEstados___MigCode",
+                table: "doc_DocumentoEstados",
+                column: "__MigCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentoEstados___MigId",
+                table: "doc_DocumentoEstados",
+                column: "__MigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentoEstados_Created_Modified",
+                table: "doc_DocumentoEstados",
+                columns: new[] { "Created", "Modified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentoEstados_CreatedBy_ModifiedBy",
+                table: "doc_DocumentoEstados",
+                columns: new[] { "CreatedBy", "ModifiedBy" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentoEstados_Session",
+                table: "doc_DocumentoEstados",
+                column: "Session");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados___MigCode",
+                table: "doc_DocumentosCargados",
+                column: "__MigCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados___MigId",
+                table: "doc_DocumentosCargados",
+                column: "__MigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados_Created_Modified",
+                table: "doc_DocumentosCargados",
+                columns: new[] { "Created", "Modified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados_CreatedBy_ModifiedBy",
+                table: "doc_DocumentosCargados",
+                columns: new[] { "CreatedBy", "ModifiedBy" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados_DocumentoRequeridoId",
+                table: "doc_DocumentosCargados",
+                column: "DocumentoRequeridoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados_EstadoId",
+                table: "doc_DocumentosCargados",
+                column: "EstadoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados_Session",
+                table: "doc_DocumentosCargados",
+                column: "Session");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados_SolicitudId",
+                table: "doc_DocumentosCargados",
+                column: "SolicitudId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosCargados_ValidadoPorId",
+                table: "doc_DocumentosCargados",
+                column: "ValidadoPorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosRequeridos___MigCode",
+                table: "doc_DocumentosRequeridos",
+                column: "__MigCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosRequeridos___MigId",
+                table: "doc_DocumentosRequeridos",
+                column: "__MigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosRequeridos_CertificacionId",
+                table: "doc_DocumentosRequeridos",
+                column: "CertificacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosRequeridos_Created_Modified",
+                table: "doc_DocumentosRequeridos",
+                columns: new[] { "Created", "Modified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosRequeridos_CreatedBy_ModifiedBy",
+                table: "doc_DocumentosRequeridos",
+                columns: new[] { "CreatedBy", "ModifiedBy" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosRequeridos_Session",
+                table: "doc_DocumentosRequeridos",
+                column: "Session");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_DocumentosRequeridos_TipoId",
+                table: "doc_DocumentosRequeridos",
+                column: "TipoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_TipoDocumentos___MigCode",
+                table: "doc_TipoDocumentos",
+                column: "__MigCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_TipoDocumentos___MigId",
+                table: "doc_TipoDocumentos",
+                column: "__MigId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_TipoDocumentos_Created_Modified",
+                table: "doc_TipoDocumentos",
+                columns: new[] { "Created", "Modified" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_TipoDocumentos_CreatedBy_ModifiedBy",
+                table: "doc_TipoDocumentos",
+                columns: new[] { "CreatedBy", "ModifiedBy" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_doc_TipoDocumentos_Session",
+                table: "doc_TipoDocumentos",
                 column: "Session");
 
             migrationBuilder.CreateIndex(
@@ -5961,6 +6525,11 @@ namespace GS.Certifications.Infrastructure.Migrations
                 name: "IX_emp_EmpresasPortales_TipoCuentaId",
                 table: "emp_EmpresasPortales",
                 column: "TipoCuentaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_emp_EmpresasPortales_TipoId",
+                table: "emp_EmpresasPortales",
+                column: "TipoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_emp_EmpresasPortales_TipoResponsableId",
@@ -8404,6 +8973,9 @@ namespace GS.Certifications.Infrastructure.Migrations
                 name: "com_PercepcionDetalles");
 
             migrationBuilder.DropTable(
+                name: "doc_DocumentosCargados");
+
+            migrationBuilder.DropTable(
                 name: "emp_CompanyExtras");
 
             migrationBuilder.DropTable(
@@ -8530,6 +9102,15 @@ namespace GS.Certifications.Infrastructure.Migrations
                 name: "per_Percepciones");
 
             migrationBuilder.DropTable(
+                name: "cer_SolicitudCertificaciones");
+
+            migrationBuilder.DropTable(
+                name: "doc_DocumentoEstados");
+
+            migrationBuilder.DropTable(
+                name: "doc_DocumentosRequeridos");
+
+            migrationBuilder.DropTable(
                 name: "com_ConceptosGastosTipos");
 
             migrationBuilder.DropTable(
@@ -8626,6 +9207,15 @@ namespace GS.Certifications.Infrastructure.Migrations
                 name: "per_PercepcionTipos");
 
             migrationBuilder.DropTable(
+                name: "cer_SolicitudCertificacionEstados");
+
+            migrationBuilder.DropTable(
+                name: "cer_Certificaciones");
+
+            migrationBuilder.DropTable(
+                name: "doc_TipoDocumentos");
+
+            migrationBuilder.DropTable(
                 name: "int_InterfazCampos");
 
             migrationBuilder.DropTable(
@@ -8675,6 +9265,9 @@ namespace GS.Certifications.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "com_CategoriaTipos");
+
+            migrationBuilder.DropTable(
+                name: "com_TipoEmpresasPortales");
 
             migrationBuilder.DropTable(
                 name: "emp_TipoCuentas");

@@ -11,9 +11,11 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
     public interface ICertificacionService
     {
         Task<Certificacion> GetAsync(int id);
+        Task<SolicitudCertificacion> GetSolicitudAsync(int id);
         Task<IPaginatedQueryResult<Certificacion>> GetCertificacionesAsync(ICertificacionQueryParameter request);
         Task<IPaginatedQueryResult<SolicitudCertificacion>> GetSolicitudesAsync(ISolicitudCertificacionQueryParameter request);
         Task<Certificacion> CreateAsync(ICertificacionCreate t);
+        Task<SolicitudCertificacion> CreateSolicitudAsync(ISolicitudCertificacionCreate c);
         Task UpdateAsync(ICertificacionUpdate p);
         Task DeleteAsync(int id);
     }
@@ -49,6 +51,18 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
     public interface ICertificacionCreate
     {
         // Agregar propiedades de creación
+    }
+
+    /// <summary>
+    /// Define un contrato para crear un Certificacion.
+    /// </summary>
+    public interface ISolicitudCertificacionCreate
+    {
+        int SocioId { get; set; }
+        int CertificacionId { get; set; }
+        short? EstadoId { get; set; }
+        short CantidadAprobaciones { get; set; }
+        string Observaciones { get; set; }
     }
 
     /// <summary>

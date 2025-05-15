@@ -6,8 +6,9 @@
         <br />
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
-            <p class="h5 m-0">Listado</p>
-            <button :disabled="!grants.create" type="button" class="btn btn-outline-primary btn-sm" @click="create">
+            <p class="h5 m-0">Listado de Solicitudes</p>
+            <button :disabled="!grants.create || !parameters.certificacionId" type="button"
+                class="btn btn-outline-primary btn-sm" @click="createAsync">
                 <b><i class="fas fa-plus"></i>Agregar</b>
             </button>
         </div>
@@ -19,11 +20,10 @@
                 class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th data-column="Id" class="text-center">Id</th>
-                        <!-- Agregar los headers necesarios -->
-                        <!-- Descripción es un ejemplo -->
-                        <th data-column="Descripcion" class="text-center">Descripción</th>
-                        <th class="text-center" no-sort-datatable>Acciones</th>
+                        <th data-column="Certificacion.Nombre" class="text-center">Certificación</th>
+                        <th data-column="Estado.Descripcion" class="text-center">Estado</th>
+                        <th data-column="CantidadAprobaciones" class="text-center w-5">Cant. Aprobaciones</th>
+                        <th class="text-center" colspan="w-10" no-sort-datatable>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,14 +32,9 @@
                     </tr>
                     <template v-for="item in list">
                         <tr :key="item.id">
-                            <td class="text-right align-middle">
-                                <a type="button" class="btn-link" @click="seeDetail(item.id)">
-                                    {{ item.id }}
-                                </a>
-                            </td>
-                            <!-- Agregar los tds necesarios -->
-                            <!-- item.descripcion es un ejemplo -->
-                            <td>{{ item.descripcion }}</td>
+                            <td class="text-start">{{ item.certificacion }}</td>
+                            <td class="text-start">{{ item.estado }}</td>
+                            <td class="text-end">{{ item.cantidadAprobaciones }}</td>
                             <td class="text-center align-middle">
                                 <div class="d-inline-flex">
                                     <inlineEdit :enabled="grants.update" @click="update(item.id)" />
@@ -68,6 +63,8 @@ import datatableRecordsLength from "@/components/pagination/datatableRecordsLeng
 import Parameters from "./Parameters";
 import columnSortedMixin from '@/Common/Mixins/columnSortedMixin';
 import solicitudCertificacionFilter from './solicitudCertificacion-filter.vue';
+
+import SolicitudCertificacion from "./SolicitudCertificacion";
 
 const NO_DATA_MESSAGE = "No hay datos";
 const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
@@ -127,7 +124,7 @@ export default {
             // Al obtener los parámetros guardados en sesión, actualizamos currentPage y recordsLength
             this.currentPage = this.parameters.start;
             this.recordsLength = this.parameters.length;
-            
+
             if (this.$route.query.fromDetail) {
                 await this.getAsync();
             }
@@ -200,10 +197,39 @@ export default {
                     this.uiService.showSpinner(false);
                 });
         },
-        create() {
-            // Limpiamos la lista antes de navegar
-            this.$store.dispatch("clearList");
-            this.$router.push({ name: "create" });
+        async createAsync() {
+
+            if (
+                await this.uiService.confirmActionModal(
+                    "¿Está usted seguro que desea iniciar una nueva solicitud de certificación?",
+                    "Aceptar",
+                    "Cancelar"
+                )
+            ) {
+
+                // Limpiamos la lista antes de navegar
+                this.$store.dispatch("clearList");
+
+                var nueva = new SolicitudCertificacion();
+
+                nueva.certificacionId = this.parameters.certificacionId;
+
+                this.uiService.showSpinner(true)
+                await this.$store.dispatch("postAsync", nueva)
+                    .then((id) => {
+                        if (!this.errorBag.hasErrors()) {
+                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.update(id);
+                        } else {
+                            this.uiService.showMessageError("Operación rechazada")
+                        }
+                    })
+                    .finally(() => {
+                        this.uiService.showSpinner(false);
+                    });
+
+            }
+
         },
         seeDetail(id) {
             // Limpiamos la lista antes de navegar

@@ -1,6 +1,7 @@
 using GS.Certifications.Application.CQRS.DbContexts;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptions;
 using GS.Certifications.Domain.Entities.Certificaciones;
+using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 using GSF.Application.Helpers.Pagination.Interfaces;
 using GSF.Application.Services;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,12 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         public CertificacionService(ICertificationsDbContext context)
         {
             this.context = context;
+        }
+
+        public async Task<SolicitudCertificacion> GetSolicitudAsync(int id)
+        {
+            var queryable = getSolicitudesQueryable();
+            return await queryable.FirstOrDefaultAsync(c => c.Id == id) ?? throw new SolicitudCertificacionInexistenteException(); ;
         }
 
         public async Task<Certificacion> GetAsync(int id)
@@ -98,6 +105,34 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         {
             throw new NotImplementedException();
         }
+        
+        public async Task<SolicitudCertificacion> CreateSolicitudAsync(ISolicitudCertificacionCreate c)
+        {
+            var nueva = new SolicitudCertificacion()
+            {
+                SocioId = c.SocioId,
+                CertificacionId = c.CertificacionId,
+                EstadoId = c.EstadoId ?? SolicitudCertificacionEstado.BORRADOR,
+                CantidadAprobaciones = c.CantidadAprobaciones,
+                Observaciones = c.Observaciones,
+            };
+
+            var certificacion = await GetAsync(c.CertificacionId);
+
+            nueva.DocumentosCargados = certificacion.DocumentosRequeridos
+                .Select(
+                d => new DocumentoCargado()
+                    {
+                        Solicitud = nueva,
+                        DocumentoRequerido = d,
+                        ArchivoURL = string.Empty,
+                        EstadoId = DocumentoEstado.PENDIENTE,
+                        DocumentoRequeridoId = d.Id
+                    })
+                .ToList();
+
+            return nueva;
+        }
 
         public async Task UpdateAsync(ICertificacionUpdate e)
         {
@@ -120,6 +155,8 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                     .ThenInclude(s => s.Estado)
                 .Include(c => c.Solicitudes)
                     .ThenInclude(s => s.Socio)
+                .Include(c => c.DocumentosRequeridos)
+                    .ThenInclude(s => s.Tipo)
                 .AsQueryable();
             return queryable;
         }
@@ -131,6 +168,13 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                 .Include(c => c.Certificacion)
                     .ThenInclude(s => s.TipoEmpresaPortal)
                 .Include(c => c.Estado)
+                .Include(c => c.DocumentosCargados)
+                    .ThenInclude(s => s.DocumentoRequerido)
+                        .ThenInclude(s => s.Tipo)
+                .Include(c => c.DocumentosCargados)
+                    .ThenInclude(s => s.Estado)
+                .Include(c => c.DocumentosCargados)
+                    .ThenInclude(s => s.ValidadoPor)
                 .AsQueryable();
             return queryable;
         }

@@ -1,4 +1,7 @@
-﻿using GS.Certifications.Application.UseCases.Socios.Certificaciones.Dto;
+﻿using GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Commands;
+using GS.Certifications.Application.UseCases.Proveedores.SolicitudCertificacions.Commands;
+using GS.Certifications.Application.UseCases.Proveedores.SolicitudCertificacions.Queries;
+using GS.Certifications.Application.UseCases.Socios.Certificaciones.Dto;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Queries;
 using GSF.Application.Helpers.Pagination.Interfaces;
 using MediatR;
@@ -22,11 +25,12 @@ namespace Socios.Web.Controllers.Certificaciones
             _currentSocioService = currentSocioService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<object>> GetOneAsync([FromRoute] int id)
+        [HttpGet("Solicitudes/{solicitudId}")]
+        public async Task<ActionResult<SolicitudCertificacionDto>> GetOneAsync([FromRoute] int solicitudId)
         {
-            // Replace 'object' with the specific response type
-            throw new NotImplementedException();
+            var query = new GetSolicitudCertificacionQuery() { Id = solicitudId };
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
         [HttpGet("{id}/Solicitudes")]
@@ -55,11 +59,17 @@ namespace Socios.Web.Controllers.Certificaciones
             throw new NotImplementedException();
         }
 
-        [HttpPost]
-        public async Task<ActionResult<int>> PostAsync([FromBody] IRequest command)
+        [HttpPost("{id}/Solicitudes")]
+        public async Task<ActionResult<int>> PostAsync([FromBody] CreateSolicitudCertificacionCommand command, [FromRoute] int id)
         {
-            // Replace 'IRequest' with the specific command type and 'int' with the return value
-            throw new NotImplementedException();
+            var currentSocioId = _currentSocioService.GetCurrentEmpresaPortalId();
+
+            command.SocioId = (int)currentSocioId;
+            command.CertificacionId = id;
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]

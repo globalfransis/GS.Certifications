@@ -10,9 +10,12 @@
                         <!-- Agregar campos del detalle -->
                         <!-- Este es un ejemplo -->
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Descripción</label>
+                            <label class="control-label">Certificación</label>
                             <input type="text" class="form-control" v-model="solicitudCertificacion.descripcion">
                         </div>
+
+
+                        
                     </div>
                 </div>
             </div>
@@ -25,6 +28,7 @@
 </template>
 
 <script>
+import AcceptButton from "@/components/forms/accept-button.vue";
 import CancelButton from "@/components/forms/cancel-button.vue";
 import UiService from "@/common/uiService";
 
@@ -35,6 +39,7 @@ import detailMixin from '@/Common/Mixins/detailMixin';
 
 export default {
     components: {
+        AcceptButton,
         CancelButton
     },
     mixins: [commonMixin, detailMixin],
