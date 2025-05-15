@@ -232,7 +232,7 @@ _pkginfo.txt
 !?*.[Cc]ache/
 
 # VueJS bundles
-wwwroot/bundle/
+wwwroot/bundle/*
 
 # Libman
 wwwroot/lib/
