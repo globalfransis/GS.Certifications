@@ -60,52 +60,67 @@
 /******/ 	__webpack_require__.p = "../bundle/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 552);
+/******/ 	return __webpack_require__(__webpack_require__.s = 555);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 10:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var __vue_exports__, __vue_options__
-var __vue_styles__ = {}
+"use strict";
+const stringLocalizerList = {};
 
-/* script */
-__vue_exports__ = __webpack_require__(26)
+class Loc {
 
-/* template */
-var __vue_template__ = __webpack_require__(27)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
+    constructor() {
+    }
+
+    loadResources(resourceGroup) {
+        let groupsArray = [...resourceGroup, "sharedfront"];
+        //each group is a resource file in the server
+        //TODO: programatically get the resources for each group, this handlings can have 3 steps:
+        //1. get the resources from localstorage
+        //2. get the resources from js objects loaded in the page in the server side
+        //3. get the resources from the server vía Ajax
+        //Keep in mind you have to include a way to invalidate localStorage when the resources are updated, (maybe in the login page)?
+    }
+
+    /** Legacy method to get the resource from the page
+     * @param {array} strings - The strings to be translated
+     */
+    loadLocList(strings) {
+        let locArray = [];
+
+        for (let i = 0; i < strings.length; i++) {
+            locArray.push(window[strings[i]]);
+        }
+
+        for (let i = 0; i < locArray.length; i++) {
+            Object.assign(stringLocalizerList, locArray[i], locArray[i + 1]);
+        }
+    }
+    returnDefault(text) {
+        console.warn(`"${text}" could not be translated.`)
+        return text.toString()
+    }
 }
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\GS.Certifications.Web\\wwwroot\\src\\components\\forms\\cancel-button.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c4dd7992", __vue_options__)
-  } else {
-    hotAPI.reload("data-v-c4dd7992", __vue_options__)
-  }
-})()}
-if (__vue_options__.functional) {console.error("[vue-loader] cancel-button.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+/**
+ * Proxy to handle non-translated strings, returns the original string
+ * @param {string} text - The text to be translated
+ */
+let defaultLocValueHandler = {
+    get: (target, text) => {
+        if (["Symbol(Symbol.toStringTag)", "_isVue"].includes(text.toString())) return target[text]
+        return target.hasOwnProperty(text) ? target[text] : target.returnDefault(text.toString())
+    },
+};
 
-module.exports = __vue_exports__
+let loc = new Loc();
+
+
+/* harmony default export */ __webpack_exports__["a"] = (loc = new Proxy(loc, defaultLocValueHandler));
 
 
 /***/ }),
@@ -156,19 +171,6 @@ module.exports = __vue_exports__
 /***/ }),
 
 /***/ 12:
-/***/ (function(module, exports) {
-
-﻿String.prototype.toPascalCase = function () {
-    return this.substr(0, 1).toUpperCase() + this.substr(1);
-}
-
-String.prototype.toCamelCase = function () {
-    return this.substr(0, 1).toLowerCase() + this.substr(1);
-}
-
-/***/ }),
-
-/***/ 13:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -195,6 +197,19 @@ String.prototype.toCamelCase = function () {
 
     },
 });
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, exports) {
+
+﻿String.prototype.toPascalCase = function () {
+    return this.substr(0, 1).toUpperCase() + this.substr(1);
+}
+
+String.prototype.toCamelCase = function () {
+    return this.substr(0, 1).toLowerCase() + this.substr(1);
+}
 
 /***/ }),
 
@@ -756,7 +771,7 @@ module.exports = __vue_exports__
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_ui_extensions__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_ui_extensions__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_ui_extensions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__common_ui_extensions__);
 ﻿
 
@@ -4656,7 +4671,7 @@ exports.push([module.i, "\n.custom-pagination[data-v-1b45806d] {\r\n  display: f
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__ = __webpack_require__(10);
 //
 //
 //
@@ -4965,7 +4980,7 @@ exports.push([module.i, "\n.gsf-records-length[data-v-30a59945] {\r\n  position:
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__ = __webpack_require__(10);
 //
 //
 //
@@ -5090,20 +5105,20 @@ if (false) {
 
 /***/ }),
 
-/***/ 393:
+/***/ 394:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* styles */
-__webpack_require__(555)
+__webpack_require__(558)
 
 /* script */
-__vue_exports__ = __webpack_require__(557)
+__vue_exports__ = __webpack_require__(560)
 
 /* template */
-var __vue_template__ = __webpack_require__(561)
+var __vue_template__ = __webpack_require__(564)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -5138,7 +5153,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 394:
+/***/ 395:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5167,7 +5182,7 @@ class Parameters extends __WEBPACK_IMPORTED_MODULE_0__Common_BaseParameters__["a
 
 /***/ }),
 
-/***/ 395:
+/***/ 396:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7093,7 +7108,7 @@ var index = {
 
 /***/ }),
 
-/***/ 53:
+/***/ 52:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7115,18 +7130,18 @@ var index = {
 
 /***/ }),
 
-/***/ 552:
+/***/ 555:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tiposOrdenesCompras_crud_vue__ = __webpack_require__(553);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tiposOrdenesCompras_crud_vue__ = __webpack_require__(556);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tiposOrdenesCompras_crud_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__tiposOrdenesCompras_crud_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store__ = __webpack_require__(563);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(564);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store__ = __webpack_require__(566);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(567);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_common_filters__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ui_extensions__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ui_extensions__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ui_extensions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__common_ui_extensions__);
 
 
@@ -7146,17 +7161,17 @@ new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 
 /***/ }),
 
-/***/ 553:
+/***/ 556:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(554)
+__vue_exports__ = __webpack_require__(557)
 
 /* template */
-var __vue_template__ = __webpack_require__(562)
+var __vue_template__ = __webpack_require__(565)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -7191,12 +7206,12 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 554:
+/***/ 557:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tiposOrdenesCompras_list_vue__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tiposOrdenesCompras_list_vue__ = __webpack_require__(394);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tiposOrdenesCompras_list_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__tiposOrdenesCompras_list_vue__);
 //
 //
@@ -7229,13 +7244,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 555:
+/***/ 558:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(556);
+var content = __webpack_require__(559);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(3)(content, {});
@@ -7256,7 +7271,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 556:
+/***/ 559:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
@@ -7271,7 +7286,7 @@ exports.push([module.i, "\n.wrap-text {\r\n    word-break: break-word; /* Rompe 
 
 /***/ }),
 
-/***/ 557:
+/***/ 560:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7286,9 +7301,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_pagination_datatablePagination_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_pagination_datatablePagination_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pagination_datatableRecordsLength_vue__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_pagination_datatableRecordsLength_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_pagination_datatableRecordsLength_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Parameters__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Parameters__ = __webpack_require__(395);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Common_Mixins_columnSortedMixin__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tiposOrdenesCompras_filter_vue__ = __webpack_require__(558);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tiposOrdenesCompras_filter_vue__ = __webpack_require__(561);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__tiposOrdenesCompras_filter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__tiposOrdenesCompras_filter_vue__);
 //
 //
@@ -7543,17 +7558,17 @@ const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
 
 /***/ }),
 
-/***/ 558:
+/***/ 561:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(559)
+__vue_exports__ = __webpack_require__(562)
 
 /* template */
-var __vue_template__ = __webpack_require__(560)
+var __vue_template__ = __webpack_require__(563)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -7588,12 +7603,12 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 559:
+/***/ 562:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Parameters_js__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Parameters_js__ = __webpack_require__(395);
 //
 //
 //
@@ -7692,7 +7707,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 560:
+/***/ 563:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -7810,7 +7825,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 561:
+/***/ 564:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -8000,7 +8015,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 562:
+/***/ 565:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -8017,7 +8032,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 563:
+/***/ 566:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8027,9 +8042,9 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_ErrorBag__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_sercurityService__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_uiService__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_commonLoc__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_commonLoc__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_CrudMode__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__TipoOrdenCompraDto__ = __webpack_require__(395);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__TipoOrdenCompraDto__ = __webpack_require__(396);
 
 
 
@@ -8282,19 +8297,19 @@ const formModule = {
 
 /***/ }),
 
-/***/ 564:
+/***/ 567:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tiposOrdenesCompras_detail_vue__ = __webpack_require__(565);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tiposOrdenesCompras_detail_vue__ = __webpack_require__(568);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tiposOrdenesCompras_detail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__tiposOrdenesCompras_detail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tiposOrdenesCompras_edit_vue__ = __webpack_require__(568);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tiposOrdenesCompras_edit_vue__ = __webpack_require__(571);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tiposOrdenesCompras_edit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__tiposOrdenesCompras_edit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tiposOrdenesCompras_create_vue__ = __webpack_require__(572);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tiposOrdenesCompras_create_vue__ = __webpack_require__(575);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tiposOrdenesCompras_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__tiposOrdenesCompras_create_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tiposOrdenesCompras_list_vue__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tiposOrdenesCompras_list_vue__ = __webpack_require__(394);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tiposOrdenesCompras_list_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__tiposOrdenesCompras_list_vue__);
 
 
@@ -8319,17 +8334,17 @@ const routes = [
 
 /***/ }),
 
-/***/ 565:
+/***/ 568:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(566)
+__vue_exports__ = __webpack_require__(569)
 
 /* template */
-var __vue_template__ = __webpack_require__(567)
+var __vue_template__ = __webpack_require__(570)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -8364,17 +8379,17 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 566:
+/***/ 569:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_cancel_button_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_cancel_button_vue__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_cancel_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_forms_cancel_button_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__common_uiService__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TipoOrdenCompraDto__ = __webpack_require__(395);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Common_Mixins_commonMixin__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Common_Mixins_detailMixin__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TipoOrdenCompraDto__ = __webpack_require__(396);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Common_Mixins_commonMixin__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Common_Mixins_detailMixin__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__ = __webpack_require__(5);
 //
 //
@@ -8631,7 +8646,7 @@ const API_GRUPOS_URL = baseUrl + "/api/Groups/ListadoGrupos";
 
 /***/ }),
 
-/***/ 567:
+/***/ 570:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -8905,17 +8920,17 @@ if (false) {
 
 /***/ }),
 
-/***/ 568:
+/***/ 571:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(569)
+__vue_exports__ = __webpack_require__(572)
 
 /* template */
-var __vue_template__ = __webpack_require__(571)
+var __vue_template__ = __webpack_require__(574)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -8950,18 +8965,18 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 569:
+/***/ 572:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_uiService__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TipoOrdenCompraEditDto__ = __webpack_require__(570);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Common_Mixins_commonMixin__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TipoOrdenCompraEditDto__ = __webpack_require__(573);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Common_Mixins_commonMixin__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue__);
@@ -9303,7 +9318,7 @@ const API_GRUPOS_URL = baseUrl + "/api/Groups/ListadoGrupos";
 
 /***/ }),
 
-/***/ 570:
+/***/ 573:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9325,7 +9340,7 @@ class TipoOrdenCompraEditDto {
 
 /***/ }),
 
-/***/ 571:
+/***/ 574:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -9700,17 +9715,17 @@ if (false) {
 
 /***/ }),
 
-/***/ 572:
+/***/ 575:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(573)
+__vue_exports__ = __webpack_require__(576)
 
 /* template */
-var __vue_template__ = __webpack_require__(575)
+var __vue_template__ = __webpack_require__(578)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -9745,18 +9760,18 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 573:
+/***/ 576:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_uiService__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TipoOrdenCompraCreateDto__ = __webpack_require__(574);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Common_Mixins_commonMixin__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TipoOrdenCompraCreateDto__ = __webpack_require__(577);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Common_Mixins_commonMixin__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue__);
@@ -10062,7 +10077,7 @@ const API_GRUPOS_URL = baseUrl + "/api/Groups/ListadoGrupos";
 
 /***/ }),
 
-/***/ 574:
+/***/ 577:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10084,7 +10099,7 @@ class TipoOrdenCompraCreateDto {
 
 /***/ }),
 
-/***/ 575:
+/***/ 578:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -22766,61 +22781,46 @@ Vue.compile = compileToFunctions;
 /***/ }),
 
 /***/ 9:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-const stringLocalizerList = {};
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
 
-class Loc {
+/* script */
+__vue_exports__ = __webpack_require__(26)
 
-    constructor() {
-    }
-
-    loadResources(resourceGroup) {
-        let groupsArray = [...resourceGroup, "sharedfront"];
-        //each group is a resource file in the server
-        //TODO: programatically get the resources for each group, this handlings can have 3 steps:
-        //1. get the resources from localstorage
-        //2. get the resources from js objects loaded in the page in the server side
-        //3. get the resources from the server vía Ajax
-        //Keep in mind you have to include a way to invalidate localStorage when the resources are updated, (maybe in the login page)?
-    }
-
-    /** Legacy method to get the resource from the page
-     * @param {array} strings - The strings to be translated
-     */
-    loadLocList(strings) {
-        let locArray = [];
-
-        for (let i = 0; i < strings.length; i++) {
-            locArray.push(window[strings[i]]);
-        }
-
-        for (let i = 0; i < locArray.length; i++) {
-            Object.assign(stringLocalizerList, locArray[i], locArray[i + 1]);
-        }
-    }
-    returnDefault(text) {
-        console.warn(`"${text}" could not be translated.`)
-        return text.toString()
-    }
+/* template */
+var __vue_template__ = __webpack_require__(27)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
 }
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\GS.Certifications.Web\\wwwroot\\src\\components\\forms\\cancel-button.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 
-/**
- * Proxy to handle non-translated strings, returns the original string
- * @param {string} text - The text to be translated
- */
-let defaultLocValueHandler = {
-    get: (target, text) => {
-        if (["Symbol(Symbol.toStringTag)", "_isVue"].includes(text.toString())) return target[text]
-        return target.hasOwnProperty(text) ? target[text] : target.returnDefault(text.toString())
-    },
-};
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c4dd7992", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-c4dd7992", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] cancel-button.vue: functional components are not supported and should be defined in plain js files using render functions.")}
 
-let loc = new Loc();
-
-
-/* harmony default export */ __webpack_exports__["a"] = (loc = new Proxy(loc, defaultLocValueHandler));
+module.exports = __vue_exports__
 
 
 /***/ })

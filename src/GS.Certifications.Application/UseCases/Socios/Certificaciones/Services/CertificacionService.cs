@@ -167,7 +167,6 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                 SocioId = c.SocioId,
                 CertificacionId = c.CertificacionId,
                 EstadoId = c.EstadoId ?? SolicitudCertificacionEstado.BORRADOR,
-                CantidadAprobaciones = c.CantidadAprobaciones,
                 Observaciones = c.Observaciones,
             };
 

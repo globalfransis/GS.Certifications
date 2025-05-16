@@ -20,7 +20,7 @@
 
         <div class="row col-8">
             <div class="col-6 ms-0 me-0" v-if="showDetail">
-                <input class="form-control form-control-sm col-12 w-100" v-model="archivosImportadosDetalle" readonly />
+                <input class="form-control form-control-sm col-12 w-100" :value="archivoNombre ? archivoNombre : archivosImportadosDetalle" readonly />
             </div>
             <label class="col-auto ms-3 px-1 py-0 me-0 btn btn-outline-primary btn-sm" style="float:right">
                 <i class="mt-2 fas fa-file-import"></i>
@@ -76,6 +76,11 @@ export default {
         target: String,
         targetId: Number,
         title: String,
+        archivoNombre: {
+            type: String,
+            required: false,
+            default: () => null
+        },
         disabled: false,
         mostrarAcciones: Boolean,
         acceptedExtensions: String,

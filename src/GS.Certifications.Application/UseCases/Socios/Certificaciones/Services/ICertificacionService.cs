@@ -77,7 +77,6 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         int SocioId { get; set; }
         int CertificacionId { get; set; }
         short? EstadoId { get; set; }
-        short CantidadAprobaciones { get; set; }
         string Observaciones { get; set; }
     }
 

@@ -60,52 +60,67 @@
 /******/ 	__webpack_require__.p = "../bundle/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 474);
+/******/ 	return __webpack_require__(__webpack_require__.s = 477);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 10:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var __vue_exports__, __vue_options__
-var __vue_styles__ = {}
+"use strict";
+const stringLocalizerList = {};
 
-/* script */
-__vue_exports__ = __webpack_require__(26)
+class Loc {
 
-/* template */
-var __vue_template__ = __webpack_require__(27)
-__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-if (
-  typeof __vue_exports__.default === "object" ||
-  typeof __vue_exports__.default === "function"
-) {
-if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
-__vue_options__ = __vue_exports__ = __vue_exports__.default
+    constructor() {
+    }
+
+    loadResources(resourceGroup) {
+        let groupsArray = [...resourceGroup, "sharedfront"];
+        //each group is a resource file in the server
+        //TODO: programatically get the resources for each group, this handlings can have 3 steps:
+        //1. get the resources from localstorage
+        //2. get the resources from js objects loaded in the page in the server side
+        //3. get the resources from the server vía Ajax
+        //Keep in mind you have to include a way to invalidate localStorage when the resources are updated, (maybe in the login page)?
+    }
+
+    /** Legacy method to get the resource from the page
+     * @param {array} strings - The strings to be translated
+     */
+    loadLocList(strings) {
+        let locArray = [];
+
+        for (let i = 0; i < strings.length; i++) {
+            locArray.push(window[strings[i]]);
+        }
+
+        for (let i = 0; i < locArray.length; i++) {
+            Object.assign(stringLocalizerList, locArray[i], locArray[i + 1]);
+        }
+    }
+    returnDefault(text) {
+        console.warn(`"${text}" could not be translated.`)
+        return text.toString()
+    }
 }
-if (typeof __vue_options__ === "function") {
-  __vue_options__ = __vue_options__.options
-}
-__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\GS.Certifications.Web\\wwwroot\\src\\components\\forms\\cancel-button.vue"
-__vue_options__.render = __vue_template__.render
-__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-c4dd7992", __vue_options__)
-  } else {
-    hotAPI.reload("data-v-c4dd7992", __vue_options__)
-  }
-})()}
-if (__vue_options__.functional) {console.error("[vue-loader] cancel-button.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+/**
+ * Proxy to handle non-translated strings, returns the original string
+ * @param {string} text - The text to be translated
+ */
+let defaultLocValueHandler = {
+    get: (target, text) => {
+        if (["Symbol(Symbol.toStringTag)", "_isVue"].includes(text.toString())) return target[text]
+        return target.hasOwnProperty(text) ? target[text] : target.returnDefault(text.toString())
+    },
+};
 
-module.exports = __vue_exports__
+let loc = new Loc();
+
+
+/* harmony default export */ __webpack_exports__["a"] = (loc = new Proxy(loc, defaultLocValueHandler));
 
 
 /***/ }),
@@ -174,10 +189,10 @@ var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(191)
+__vue_exports__ = __webpack_require__(196)
 
 /* template */
-var __vue_template__ = __webpack_require__(192)
+var __vue_template__ = __webpack_require__(197)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -257,7 +272,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /***/ (function(module, exports) {
 
 ﻿String.prototype.toPascalCase = function () {
@@ -828,7 +843,7 @@ module.exports = __vue_exports__
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_ui_extensions__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_ui_extensions__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_ui_extensions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__common_ui_extensions__);
 ﻿
 
@@ -915,7 +930,7 @@ class ErrorBag {
 
 /***/ }),
 
-/***/ 191:
+/***/ 196:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -993,7 +1008,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 192:
+/***/ 197:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4755,17 +4770,17 @@ function applyToTag(styleElement, obj) {
 
 /***/ }),
 
-/***/ 386:
+/***/ 387:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(476)
+__vue_exports__ = __webpack_require__(479)
 
 /* template */
-var __vue_template__ = __webpack_require__(480)
+var __vue_template__ = __webpack_require__(483)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -4947,18 +4962,18 @@ exports.push([module.i, "\nbutton[data-v-34a7fd04] {\r\n  transition: 0.1s;\n}\n
 
 /***/ }),
 
-/***/ 474:
+/***/ 477:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router__ = __webpack_require__(475);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store__ = __webpack_require__(487);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__companies_crud__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router__ = __webpack_require__(478);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store__ = __webpack_require__(490);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__companies_crud__ = __webpack_require__(491);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__companies_crud___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__companies_crud__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_common_filters__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ui_extensions__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ui_extensions__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ui_extensions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__common_ui_extensions__);
 
 
@@ -4977,15 +4992,15 @@ new __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */]({
 
 /***/ }),
 
-/***/ 475:
+/***/ 478:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__companies_form_vue__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__companies_form_vue__ = __webpack_require__(387);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__companies_form_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__companies_form_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__companies_list_vue__ = __webpack_require__(481);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__companies_list_vue__ = __webpack_require__(484);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__companies_list_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__companies_list_vue__);
 
 
@@ -5008,18 +5023,18 @@ const routes = [
 
 /***/ }),
 
-/***/ 476:
+/***/ 479:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_forms_edit_button_vue__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_forms_edit_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_forms_edit_button_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_forms_delete_button_vue__ = __webpack_require__(477);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_forms_delete_button_vue__ = __webpack_require__(480);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_forms_delete_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_forms_delete_button_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__common_uiService__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Selects_currency_select_vue__ = __webpack_require__(102);
@@ -5385,17 +5400,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 477:
+/***/ 48:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  inheritAttrs: false,
+  name: "inline-delete",
+  props: {
+    enabled: {
+      type: Boolean,
+      default: true,
+    }
+  },
+  methods: {
+    onClick(e) {
+      this.$emit("click");
+    },
+  },
+});
+
+
+/***/ }),
+
+/***/ 480:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(478)
+__vue_exports__ = __webpack_require__(481)
 
 /* template */
-var __vue_template__ = __webpack_require__(479)
+var __vue_template__ = __webpack_require__(482)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -5430,7 +5476,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 478:
+/***/ 481:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5461,7 +5507,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 479:
+/***/ 482:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -5486,38 +5532,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 48:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  inheritAttrs: false,
-  name: "inline-delete",
-  props: {
-    enabled: {
-      type: Boolean,
-      default: true,
-    }
-  },
-  methods: {
-    onClick(e) {
-      this.$emit("click");
-    },
-  },
-});
-
-
-/***/ }),
-
-/***/ 480:
+/***/ 483:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -5875,17 +5890,17 @@ if (false) {
 
 /***/ }),
 
-/***/ 481:
+/***/ 484:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(482)
+__vue_exports__ = __webpack_require__(485)
 
 /* template */
-var __vue_template__ = __webpack_require__(486)
+var __vue_template__ = __webpack_require__(489)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -5920,7 +5935,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 482:
+/***/ 485:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5929,10 +5944,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_inline_edit_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_forms_inline_edit_button_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_inline_delete_button_vue__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_inline_delete_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_forms_inline_delete_button_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__companies_filter_vue__ = __webpack_require__(483);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__companies_filter_vue__ = __webpack_require__(486);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__companies_filter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__companies_filter_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_commonLoc__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__companies_form_vue__ = __webpack_require__(386);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_commonLoc__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__companies_form_vue__ = __webpack_require__(387);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__companies_form_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__companies_form_vue__);
 //
 //
@@ -6086,17 +6101,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 483:
+/***/ 486:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(484)
+__vue_exports__ = __webpack_require__(487)
 
 /* template */
-var __vue_template__ = __webpack_require__(485)
+var __vue_template__ = __webpack_require__(488)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -6131,12 +6146,12 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 484:
+/***/ 487:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__ = __webpack_require__(10);
 //
 //
 //
@@ -6237,7 +6252,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 485:
+/***/ 488:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -6368,7 +6383,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 486:
+/***/ 489:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -6465,7 +6480,34 @@ if (false) {
 
 /***/ }),
 
-/***/ 487:
+/***/ 49:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-link text-danger",
+    attrs: {
+      "disabled": !_vm.enabled,
+      "type": "button",
+      "title": "Eliminar"
+    },
+    on: {
+      "click": _vm.onClick
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-trash"
+  })])
+},staticRenderFns: []}
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-34a7fd04", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 490:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6876,17 +6918,17 @@ const formModule = {
 
 /***/ }),
 
-/***/ 488:
+/***/ 491:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __vue_exports__, __vue_options__
 var __vue_styles__ = {}
 
 /* script */
-__vue_exports__ = __webpack_require__(489)
+__vue_exports__ = __webpack_require__(492)
 
 /* template */
-var __vue_template__ = __webpack_require__(490)
+var __vue_template__ = __webpack_require__(493)
 __vue_options__ = __vue_exports__ = __vue_exports__ || {}
 if (
   typeof __vue_exports__.default === "object" ||
@@ -6921,7 +6963,7 @@ module.exports = __vue_exports__
 
 /***/ }),
 
-/***/ 489:
+/***/ 492:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6947,34 +6989,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 49:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "btn btn-link text-danger",
-    attrs: {
-      "disabled": !_vm.enabled,
-      "type": "button",
-      "title": "Eliminar"
-    },
-    on: {
-      "click": _vm.onClick
-    }
-  }, [_c('i', {
-    staticClass: "fas fa-trash"
-  })])
-},staticRenderFns: []}
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-34a7fd04", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 490:
+/***/ 493:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -20886,61 +20901,46 @@ Vue.compile = compileToFunctions;
 /***/ }),
 
 /***/ 9:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-const stringLocalizerList = {};
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
 
-class Loc {
+/* script */
+__vue_exports__ = __webpack_require__(26)
 
-    constructor() {
-    }
-
-    loadResources(resourceGroup) {
-        let groupsArray = [...resourceGroup, "sharedfront"];
-        //each group is a resource file in the server
-        //TODO: programatically get the resources for each group, this handlings can have 3 steps:
-        //1. get the resources from localstorage
-        //2. get the resources from js objects loaded in the page in the server side
-        //3. get the resources from the server vía Ajax
-        //Keep in mind you have to include a way to invalidate localStorage when the resources are updated, (maybe in the login page)?
-    }
-
-    /** Legacy method to get the resource from the page
-     * @param {array} strings - The strings to be translated
-     */
-    loadLocList(strings) {
-        let locArray = [];
-
-        for (let i = 0; i < strings.length; i++) {
-            locArray.push(window[strings[i]]);
-        }
-
-        for (let i = 0; i < locArray.length; i++) {
-            Object.assign(stringLocalizerList, locArray[i], locArray[i + 1]);
-        }
-    }
-    returnDefault(text) {
-        console.warn(`"${text}" could not be translated.`)
-        return text.toString()
-    }
+/* template */
+var __vue_template__ = __webpack_require__(27)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
 }
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\GS.Certifications.Web\\wwwroot\\src\\components\\forms\\cancel-button.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
 
-/**
- * Proxy to handle non-translated strings, returns the original string
- * @param {string} text - The text to be translated
- */
-let defaultLocValueHandler = {
-    get: (target, text) => {
-        if (["Symbol(Symbol.toStringTag)", "_isVue"].includes(text.toString())) return target[text]
-        return target.hasOwnProperty(text) ? target[text] : target.returnDefault(text.toString())
-    },
-};
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c4dd7992", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-c4dd7992", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] cancel-button.vue: functional components are not supported and should be defined in plain js files using render functions.")}
 
-let loc = new Loc();
-
-
-/* harmony default export */ __webpack_exports__["a"] = (loc = new Proxy(loc, defaultLocValueHandler));
+module.exports = __vue_exports__
 
 
 /***/ }),

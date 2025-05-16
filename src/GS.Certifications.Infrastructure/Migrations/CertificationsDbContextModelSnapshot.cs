@@ -165,6 +165,9 @@ namespace GS.Certifications.Infrastructure.Migrations
                     b.Property<bool>("Activa")
                         .HasColumnType("bit");
 
+                    b.Property<short>("CantidadAprobaciones")
+                        .HasColumnType("smallint");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -580,9 +583,6 @@ namespace GS.Certifications.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<short>("CantidadAprobaciones")
-                        .HasColumnType("smallint");
 
                     b.Property<int>("CertificacionId")
                         .HasColumnType("int");

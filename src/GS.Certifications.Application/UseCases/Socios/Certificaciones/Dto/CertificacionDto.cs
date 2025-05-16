@@ -50,6 +50,7 @@ public class SolicitudCertificacionDto : IMapFrom<SolicitudCertificacion>
             .ForMember(dst => dst.Socio, opt => opt.MapFrom(src => src.Socio.RazonSocial))
             .ForMember(dst => dst.Certificacion, opt => opt.MapFrom(src => src.Certificacion.Nombre))
             .ForMember(dst => dst.Estado, opt => opt.MapFrom(src => src.Estado.Descripcion))
+            .ForMember(dst => dst.CantidadAprobaciones, opt => opt.MapFrom(src => src.Certificacion.CantidadAprobaciones))
             .ForMember(dst => dst.CantDocsPendientes, opt => opt.MapFrom(src => src.DocumentosCargados.Where(d => d.EstadoId != DocumentoEstado.VALIDADO).ToList().Count))
             .ForMember(dst => dst.CantDocsAprobados, opt => opt.MapFrom(src => src.DocumentosCargados.Where(d => d.EstadoId == DocumentoEstado.VALIDADO).ToList().Count))
             ;

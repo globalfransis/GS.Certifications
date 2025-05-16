@@ -19,7 +19,6 @@ public class SolicitudCertificacion : BaseIntEntity
     public Certificacion Certificacion { get; set; }
     public short EstadoId { get; set; }
     public SolicitudCertificacionEstado Estado { get; set; }
-    public short CantidadAprobaciones { get; set; } = 0;
     public string Observaciones { get; set; }
     public List<DocumentoCargado> DocumentosCargados { get; set; }
 }

@@ -12,6 +12,7 @@ public class Certificacion : BaseIntEntity
     public string Nombre { get; set; }
     public string Descripcion { get; set; }
     public bool Activa { get; set; }
+    public short CantidadAprobaciones { get; set; } = 0;
     public List<SolicitudCertificacion> Solicitudes { get; set; }
     public List<DocumentoRequerido> DocumentosRequeridos { get; set; }
 }

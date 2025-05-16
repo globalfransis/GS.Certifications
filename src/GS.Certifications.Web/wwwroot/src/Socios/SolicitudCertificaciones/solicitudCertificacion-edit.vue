@@ -1,0 +1,172 @@
+<template>
+    <div ref="top">
+        <div class="col-12">
+            <div class="col-12 mt-4">
+                <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p>
+                <!-- Agregar título, por ejemplo: Modificación del Usuario {userId} -->
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-between align-items-center mt-4 mb-4">
+                                <div>
+                                    <p class="h5 m-0">Documentos requeridos</p>
+                                </div>
+                                <!-- <button type="button" class="btn btn-outline-primary btn-sm" @click="addNewRow()">
+                                    <b><i class="fas fa-plus"></i>Agregar</b>
+                                </button> -->
+                            </div>
+                        <table :id="`${idTable}`" class="table table-bordered table-hover">
+                            <thead class="table-top">
+                                <tr class="text-center align-middle">
+                                    <th class="w-10" scope="col">Tipo</th>
+                                    <th class="w-2" scope="col">Versión</th>
+                                    <th class="w-10" scope="col">Vigencia</th>
+                                    <th class="w-10" scope="col">Estado</th>
+                                    <th class="w-10" scope="col">Validado Por</th>
+                                    <th class="w-10" scope="col">Fecha Subida</th>
+                                    <th class="w-10" scope="col">Archivo</th>
+                                    <th class="w-2" scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="solicitudCertificacion.documentosCargados.length === 0" class="no-data">
+                                    <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
+                                </tr>
+                                <template v-for="(cd, index) in solicitudCertificacion.documentosCargados">
+                                    <tr :key="index">
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.tipo ? cd.tipo : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.version ? cd.version : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.fechaDesde | uidate }} - {{ cd.fechaHasta | uidate }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.estado ? cd.estado : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.validadoPor ? cd.validadoPor : "-" }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.fechaSubida | uidate }}</td>
+                                        <td data-toggle="tooltip" class="align-middle">
+                                            {{ cd.archivoURL ? cd.archivoURL : "-" }}</td>
+                                        <td class="text-center align-middle">
+                                            <div class="d-inline-flex">
+                                                <inlineEdit @click="update(cd.id)" />
+                                                <inlineDelete @click="remove(cd)" />
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3">
+            <accept-button :disabled="!grants.update" @click="updateAsync">
+                Aceptar</accept-button>
+            <cancel-button @click="cancel">Cancelar</cancel-button>
+        </div>
+    </div>
+</template>
+
+<script>
+import AcceptButton from "@/components/forms/accept-button.vue";
+import CancelButton from "@/components/forms/cancel-button.vue";
+import UiService from "@/common/uiService";
+import SolicitudCertificacion from './SolicitudCertificacion' // Modificar por la clase dto que corresponda
+import commonMixin from '@/Common/Mixins/commonMixin';
+
+import inlineEdit from "@/components/forms/inline-edit-button.vue";
+import inlineDelete from "@/components/forms/inline-delete-button.vue";
+
+export default {
+    components: {
+        AcceptButton,
+        CancelButton,
+        inlineEdit,
+        inlineDelete
+    },
+    mixins: [commonMixin],
+    name: "solicitudCertificacion-edit",
+    data: function () {
+        return {
+            solicitudCertificacion: new SolicitudCertificacion(),
+            uiService: new UiService()
+        };
+    },
+    computed: {
+        grants() {
+            return this.$store.getters.getGrants;
+        },
+        errorBag() {
+            return this.$store.getters.getErrorBag;
+        }
+    },
+    async mounted() {
+        await this.init();
+    },
+    methods: {
+        async remove(dto) {
+            this.uiService.showSpinner(true)
+            await this.$store.dispatch("deleteDocumentoAsync", dto)
+                .then(async () => {
+                    if (!this.errorBag.hasErrors()) {
+                        this.uiService.showMessageSuccess("Operación confirmada")
+                        await this.getAsync(this.solicitudCertificacion.id);
+                    } else {
+                        this.uiService.showMessageError("Operación rechazada")
+                    }
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        update(id) {
+            this.$router.push({ name: "document", params: { id: id } });
+        },
+        async init() {
+            // Si no hay permisos de modificación, volvemos a la lista
+            if (!this.grants.update) this.$router.push({ name: "home" });
+            else {
+                if (this.$route.params.id) await this.getAsync(this.$route.params.id);
+                else this.cancel();
+            }
+        },
+        async getAsync(id) {
+            this.uiService.showSpinner(true)
+            await this.$store.dispatch("getAsync", id)
+                .then((res) => {
+                    this.solicitudCertificacion = new SolicitudCertificacion(res);
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        goDetail() {
+            this.$router.push({ name: "detail", params: { id: this.solicitudCertificacion.id } });
+        },
+        cancel() {
+            this.$router.push({ name: "home" });
+        },
+        async updateAsync() {
+            this.uiService.showSpinner(true)
+            await this.$store.dispatch("putAsync", this.solicitudCertificacion)
+                .then(() => {
+                    if (!this.errorBag.hasErrors()) {
+                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.goDetail();
+                    } else {
+                        this.uiService.showMessageError("Operación rechazada")
+                    }
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        }
+    },
+};
+</script>
