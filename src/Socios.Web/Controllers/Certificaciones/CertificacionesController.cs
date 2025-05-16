@@ -33,16 +33,41 @@ namespace Socios.Web.Controllers.Certificaciones
             return Ok(result);
         }
 
+
+        [HttpGet("Solicitudes/Documentos/{documentoId}")]
+        public async Task<ActionResult<SolicitudCertificacionDto>> GetDocumentoAsync([FromRoute] int documentoId)
+        {
+            var query = new GetSolicitudCertificacionDocumentoQuery() { Id = documentoId };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
         [HttpGet("{id}/Solicitudes")]
         public async Task<ActionResult<IPaginatedQueryResult<object>>> GetAllAsync([FromQuery] GetSolicitudCertificacionesQuery query, [FromRoute] int id)
         {
             var currentSocioId = _currentSocioService.GetCurrentEmpresaPortalId();
             query.SocioId = currentSocioId;
-            
+
             query.CertificacionId = id;
 
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+        [HttpPost("Solicitudes/{solicitudId}/Documentos/{id}/Analisis")]
+        public async Task<ActionResult<int>> AnalyzeAsync([FromRoute] int solicitudId, [FromRoute] int id)
+        {
+            if (HttpContext.Request.Form.Files.Count == 0) return BadRequest("Se debe enviar un archivo.");
+            var currentSociolId = _currentSocioService.GetCurrentEmpresaPortalId();
+            var cmd = new AnalyzeDocumentoSolicitudCertificacionCommand
+            {
+                Id = id,
+                SolicitudId = solicitudId,
+                SocioId = (int)currentSociolId,
+                FormFile = HttpContext.Request.Form.Files[0]
+            };
+
+            return Ok(await _mediator.Send(cmd));
         }
 
         [HttpGet("Solicitudes/Estados")]
@@ -52,11 +77,20 @@ namespace Socios.Web.Controllers.Certificaciones
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Unit>> UpdateAsync([FromRoute] int id)
+        [HttpPut("Solicitudes/Documentos/{id}/Borrador")]
+        public async Task<ActionResult<Unit>> UpdateDocumentoDraftAsync([FromRoute] int id, [FromBody] UpdateDocumentoSolicitudCertificacionDraftCommand command)
         {
-            // Replace 'Unit' with the specific result type for the command
-            throw new NotImplementedException();
+            command.Id = id;
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPut("Solicitudes/Documentos/{id}")]
+        public async Task<ActionResult<Unit>> UpdateAsync([FromRoute] int id, [FromBody] UpdateDocumentoSolicitudCertificacionCommand command)
+        {
+            command.Id = id;
+            await _mediator.Send(command);
+            return Ok();
         }
 
         [HttpPost("{id}/Solicitudes")]
@@ -78,5 +112,23 @@ namespace Socios.Web.Controllers.Certificaciones
             // Replace 'Unit' with the specific result type for the command
             throw new NotImplementedException();
         }
+
+
+        [HttpDelete("Solicitudes/{id}")]
+        public async Task<ActionResult<Unit>> DeleteAsync([FromRoute] int id, [FromQuery] byte[] rowVersion)
+        {
+            var cmd = new DeleteSolicitudCertificacionCommand() { Id = id, RowVersion = rowVersion };
+            return await _mediator.Send(cmd);
+        }
+
+
+        [HttpDelete("Solicitudes/Documentos/{id}")]
+        public async Task<ActionResult<Unit>> DeleteDocumentoAsync([FromRoute] int id, [FromQuery] byte[] rowVersion)
+        {
+            var cmd = new DeleteDocumentoSolicitudCertificacionCommand() { Id = id, RowVersion = rowVersion };
+            return await _mediator.Send(cmd);
+        }
+
+
     }
 }

@@ -139,8 +139,32 @@ const formModule = {
             ctx.getters.getErrorBag.clear();
             return await new ajax()
                 .put(
-                    `${API_URL}/${solicitudCertificacion.id}`,
+                    `${API_URL}/Solicitudes/${solicitudCertificacion.id}`,
                     solicitudCertificacion,
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
+        async updateDocumentoDraftAsync(ctx, documento) {
+            ctx.getters.getErrorBag.clear();
+            return await new ajax()
+                .put(
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}/Borrador`,
+                    documento,
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
+        async putDocumentoAsync(ctx, documento) {
+            ctx.getters.getErrorBag.clear();
+            return await new ajax()
+                .put(
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}`,
+                    documento,
                     {
                         errorBag: ctx.getters.getErrorBag,
                     })
@@ -151,8 +175,20 @@ const formModule = {
             ctx.getters.getErrorBag.clear();
             return await new ajax()
                 .delete(
-                    `${API_URL}/${solicitudCertificacion.id}`,
+                    `${API_URL}/Solicitudes/${solicitudCertificacion.id}?RowVersion=${solicitudCertificacion.rowVersion}`,
                     { rowVersion: solicitudCertificacion.rowVersion },
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
+        async deleteDocumentoAsync(ctx, documento) {
+            ctx.getters.getErrorBag.clear();
+            return await new ajax()
+                .delete(
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}?RowVersion=${documento.rowVersion}`,
+                    { rowVersion: documento.rowVersion },
                     {
                         errorBag: ctx.getters.getErrorBag,
                     })
@@ -162,6 +198,17 @@ const formModule = {
         async getAsync(ctx, id) {
             return await new ajax()
                 .get(`${API_URL}/Solicitudes/${id}`)
+                .then((res) => {
+                    // Agregar alguna lógica de ser necesario
+                    return res;
+                })
+                .finally(() => {
+                    // Agregar alguna lógica de ser necesario
+                });
+        },
+        async getDocumentoAsync(ctx, id) {
+            return await new ajax()
+                .get(`${API_URL}/Solicitudes/Documentos/${id}`)
                 .then((res) => {
                     // Agregar alguna lógica de ser necesario
                     return res;

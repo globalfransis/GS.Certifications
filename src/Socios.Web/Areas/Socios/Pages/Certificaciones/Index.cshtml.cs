@@ -8,7 +8,8 @@ public class IndexModel : BasePageModel
 {
     public IndexModel(IStringLocalizer<Shared> loc)
     {
-        //Title = loc["Comprobantes"];
+        Title = loc["Solicitudes"];
+        ShowTitle = false;
     }
     public void OnGet()
     {

@@ -18530,6 +18530,11 @@ const ARCHIVO_IMPORTADO_DETALLE = "Seleccione el archivo que desea importar";
         target: String,
         targetId: Number,
         title: String,
+        archivoNombre: {
+            type: String,
+            required: false,
+            default: () => null
+        },
         disabled: false,
         mostrarAcciones: Boolean,
         acceptedExtensions: String,
@@ -18875,24 +18880,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.showDetail) ? _c('div', {
     staticClass: "col-6 ms-0 me-0"
   }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.archivosImportadosDetalle),
-      expression: "archivosImportadosDetalle"
-    }],
     staticClass: "form-control form-control-sm col-12 w-100",
     attrs: {
       "readonly": ""
     },
     domProps: {
-      "value": (_vm.archivosImportadosDetalle)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.archivosImportadosDetalle = $event.target.value
-      }
+      "value": _vm.archivoNombre ? _vm.archivoNombre : _vm.archivosImportadosDetalle
     }
   })]) : _vm._e(), _vm._v(" "), _c('label', {
     staticClass: "col-auto ms-3 px-1 py-0 me-0 btn btn-outline-primary btn-sm",

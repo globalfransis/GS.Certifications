@@ -23,13 +23,20 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         public async Task<SolicitudCertificacion> GetSolicitudAsync(int id)
         {
             var queryable = getSolicitudesQueryable();
-            return await queryable.FirstOrDefaultAsync(c => c.Id == id) ?? throw new SolicitudCertificacionInexistenteException(); ;
+            return await queryable.FirstOrDefaultAsync(c => c.Id == id) ?? throw new SolicitudCertificacionInexistenteException();
+        }
+
+
+        public async Task<DocumentoCargado> GetDocumentoAsync(int id)
+        {
+            var queryable = getDocumentosCargadosQueryable();
+            return await queryable.FirstOrDefaultAsync(c => c.Id == id) ?? throw new SolicitudCertificacionInexistenteException();
         }
 
         public async Task<Certificacion> GetAsync(int id)
         {
             var queryable = getCertificacionesQueryable();
-            return await queryable.FirstOrDefaultAsync(c => c.Id == id) ?? throw new CertificacionInexistenteException(); ;
+            return await queryable.FirstOrDefaultAsync(c => c.Id == id) ?? throw new CertificacionInexistenteException();
         }
 
         public async Task<IPaginatedQueryResult<Certificacion>> GetCertificacionesAsync(ICertificacionQueryParameter parameters)
@@ -105,7 +112,54 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         {
             throw new NotImplementedException();
         }
-        
+
+        public async Task DeleteSolicitudAsync(int id, byte[] rowVersion)
+        {
+            var solicitud = await GetSolicitudAsync(id);
+            solicitud.RowVersion = rowVersion;
+
+            foreach (var item in solicitud.DocumentosCargados)
+            {
+                context.DocumentoCargados.Remove(item);
+            }
+
+            context.SolicitudCertificaciones.Remove(solicitud);
+        }
+
+
+        public async Task DeleteDocumentoSolicitudAsync(int id, byte[] rowVersion)
+        {
+            var documento = await GetDocumentoAsync(id);
+            documento.RowVersion = rowVersion;
+
+            context.DocumentoCargados.Remove(documento);
+        }
+
+        public async Task UpdateDocumentoAsync(int id, ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate)
+        {
+            var documento = await GetDocumentoAsync(id);
+
+            documento.ArchivoURL = solicitudCertificacionDocumentoUpdate.ArchivoURL;
+            documento.Observaciones = solicitudCertificacionDocumentoUpdate.Observaciones;
+            documento.Version = solicitudCertificacionDocumentoUpdate.Version;
+            documento.FechaDesde = solicitudCertificacionDocumentoUpdate.FechaDesde;
+            documento.FechaHasta = solicitudCertificacionDocumentoUpdate.FechaHasta;
+            documento.RowVersion = solicitudCertificacionDocumentoUpdate.RowVersion;
+        }
+
+
+        public async Task UpdateDocumentoDraftAsync(int id, ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate)
+        {
+            var documento = await GetDocumentoAsync(id);
+
+            documento.ArchivoURL = solicitudCertificacionDocumentoUpdate.ArchivoURL;
+            documento.Observaciones = solicitudCertificacionDocumentoUpdate.Observaciones;
+            documento.Version = solicitudCertificacionDocumentoUpdate.Version;
+            documento.FechaDesde = solicitudCertificacionDocumentoUpdate.FechaDesde;
+            documento.FechaHasta = solicitudCertificacionDocumentoUpdate.FechaHasta;
+            documento.RowVersion = solicitudCertificacionDocumentoUpdate.RowVersion;
+        }
+
         public async Task<SolicitudCertificacion> CreateSolicitudAsync(ISolicitudCertificacionCreate c)
         {
             var nueva = new SolicitudCertificacion()
@@ -122,13 +176,13 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             nueva.DocumentosCargados = certificacion.DocumentosRequeridos
                 .Select(
                 d => new DocumentoCargado()
-                    {
-                        Solicitud = nueva,
-                        DocumentoRequerido = d,
-                        ArchivoURL = string.Empty,
-                        EstadoId = DocumentoEstado.PENDIENTE,
-                        DocumentoRequeridoId = d.Id
-                    })
+                {
+                    Solicitud = nueva,
+                    DocumentoRequerido = d,
+                    ArchivoURL = string.Empty,
+                    EstadoId = DocumentoEstado.PENDIENTE,
+                    DocumentoRequeridoId = d.Id
+                })
                 .ToList();
 
             return nueva;
@@ -175,6 +229,26 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                     .ThenInclude(s => s.Estado)
                 .Include(c => c.DocumentosCargados)
                     .ThenInclude(s => s.ValidadoPor)
+                .AsQueryable();
+            return queryable;
+        }
+
+        private IQueryable<DocumentoCargado> getDocumentosCargadosQueryable()
+        {
+            var queryable = context.DocumentoCargados
+                .Include(c => c.Solicitud)
+                    .ThenInclude(s => s.Certificacion)
+                        .ThenInclude(s => s.TipoEmpresaPortal)
+                .Include(c => c.Solicitud)
+                    .ThenInclude(s => s.Estado)
+                .Include(c => c.Solicitud)
+                    .ThenInclude(s => s.Socio)
+                .Include(c => c.DocumentoRequerido)
+                    .ThenInclude(s => s.Certificacion)
+                .Include(c => c.DocumentoRequerido)
+                    .ThenInclude(s => s.Tipo)
+                .Include(c => c.Estado)
+                .Include(c => c.ValidadoPor)
                 .AsQueryable();
             return queryable;
         }

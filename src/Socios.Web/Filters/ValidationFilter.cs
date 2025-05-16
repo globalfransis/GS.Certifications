@@ -24,6 +24,7 @@ public class ValidationFilter : IExceptionFilter
     /// <param name="context">ExceptionContext to retrieve errors.</param>
     public void OnException(ExceptionContext context)
     {
+        
         bool isAjaxCall = context.HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest"
         || context.HttpContext.Request.Path.Value.Contains("/api/");
 

@@ -803,6 +803,7 @@ class SolicitudCertificacion {
         this.observaciones = dto ? dto.observaciones : null;
         this.rowVersion = dto ? dto.rowVersion : null;
         this.descripcion = dto ? dto.descripcion : null;
+        this.guid = dto ? dto.guid : null;
 
         this.documentosCargados = dto ? dto.documentosCargados : []
 
@@ -883,6 +884,548 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].directive('uppercase', {
     },
 })
 
+
+/***/ }),
+
+/***/ 180:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
+
+/* script */
+__vue_exports__ = __webpack_require__(181)
+
+/* template */
+var __vue_template__ = __webpack_require__(182)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\Socios.Web\\wwwroot\\src\\Components\\ImportadorArchivos\\importador-archivos.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4870d169", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-4870d169", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] importador-archivos.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_accept_button_vue__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_accept_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_forms_accept_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_uiService__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__common_CrudMode__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_forms_inline_delete_button_vue__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_forms_inline_delete_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_forms_inline_delete_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_ErrorBag__ = __webpack_require__(15);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+const downloadTargetArchivoURL =
+    baseUrl + "/api/archivos/DownloadTargetArchivos";
+const deleteTargetArchivoURL =
+    baseUrl + "/api/archivos/DeleteTargetArchivoFromTemp";
+const saveTargetArchivosURL = baseUrl + "/api/archivos/SaveTargetArchivos";
+const getTargetArchivosURL = baseUrl + "/api/archivos/GetTargetArchivos";
+const discardTargetArchivosURL =
+    baseUrl + "/api/archivos/discardTargetArchivos";
+const importarTargetArchivosURL =
+    baseUrl + "/api/archivos/ImportarTargetArchivos";
+const defaultFileSizeLimit = 2;
+const FILESIZEERROR = "Error al importar archivo. El o los archivos que se intentan importar superan el limite permitido.";
+const ARCHIVOS_IMPORTADOS_DETALLE = "Seleccione los archivos que desea importar";
+const ARCHIVO_IMPORTADO_DETALLE = "Seleccione el archivo que desea importar";
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "importador-archivos",
+
+    components: {
+        AcceptButton: __WEBPACK_IMPORTED_MODULE_1__components_forms_accept_button_vue___default.a,
+        inlineDelete: __WEBPACK_IMPORTED_MODULE_4__components_forms_inline_delete_button_vue___default.a,
+    },
+    props: {
+        idModal: String,
+        target: String,
+        targetId: Number,
+        title: String,
+        archivoNombre: {
+            type: String,
+            required: false,
+            default: () => null
+        },
+        disabled: false,
+        mostrarAcciones: Boolean,
+        acceptedExtensions: String,
+        maxFileSize: Number,
+        importarMultiplesArchivos: {
+            type: Boolean,
+            required: false,
+            default: () => true
+        },
+        eb: {
+            type: Object,
+            required: false,
+            default: () => null
+        },
+        analyzeFile: {
+            type: Boolean,
+            required: false,
+            default: () => false
+        },
+        showMessage: {
+            type: Boolean,
+            required: false,
+            default: () => true,
+        },
+        showDetail: {
+            type: Boolean,
+            required: false,
+            default: () => false,
+        },
+        infoTextProp: {
+            type: String,
+            required: false,
+            default: () => null,
+        },
+        targetURL: {
+            type: String,
+            required: false,
+            default: () => "target",
+        },
+        apiURL: {
+            type: String,
+            required: false,
+            default: () => "",
+        },
+        toolTipVisible: {
+            type:Boolean,
+            required: false,
+            default: () => true,
+        }
+    },
+    data: function () {
+        return {
+            uiService: new __WEBPACK_IMPORTED_MODULE_2__common_uiService__["a" /* default */](),
+            loc: __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__["a" /* default */],
+            mode: new __WEBPACK_IMPORTED_MODULE_3__common_CrudMode__["a" /* default */](),
+            archivos: [],
+            currentArchivos: [],
+            errorBag: new __WEBPACK_IMPORTED_MODULE_6__common_ErrorBag__["a" /* default */](),
+            baseUrl,
+            extensionsTypes: this.acceptedExtensions == null ? "*" : this.acceptedExtensions,
+            showMessageAfterUpload: false,
+            showMessageAfterAction: false,
+            MESSAGE_AFTER_UPLOAD: "Para confirmar la subida del archivo agregado, debes presionar Aceptar",
+            MESSAGE_AFTER_ACTION: "Para confirmar la subida o eliminación del archivo, debes presionar Aceptar",
+            fileSizeLimit: this.maxFileSize == null ? defaultFileSizeLimit : this.maxFileSize,
+            archivosImportadosDetalle: this.importarMultiplesArchivos ? ARCHIVOS_IMPORTADOS_DETALLE : ARCHIVO_IMPORTADO_DETALLE,
+        };
+    },
+    computed: {
+        fileInput() {
+            return document.getElementById(`formFile-${this.target}`);
+        },
+        infoText() {
+            return this.infoTextProp ? this.infoTextProp : __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__["a" /* default */][`Las extensiones soportadas son ${this.extensionsTypes} con un máximo de ${this.fileSizeLimit} megabytes`]
+        },
+        urlImportarArchivos() {
+            if (this.apiURL) return this.apiURL
+            return baseUrl + `/api/archivos/Importar${this.targetURL}Archivos`;
+        }
+    },
+    watch: {
+        async targetId() {
+            if (this.targetId) {
+                await this.clearTempFolder();
+                await this.loadArchivos();
+            }
+        },
+        archivos() {
+            if (this.archivos) {
+                if (this.archivos.filter(a => a.id == 0 && !a.eliminado).length > 0) {
+                    this.showMessageAfterUpload = true;
+                } else {
+                    this.showMessageAfterUpload = false;
+                }
+
+                if (this.archivos.filter(a => a.id == 0 || a.eliminado).length > 0) {
+                    this.showMessageAfterAction = true;
+                } else {
+                    this.showMessageAfterAction = false;
+                }
+
+                if (JSON.stringify(this.archivos) === JSON.stringify(this.currentArchivos)) this.$emit('editing', false)
+                else this.$emit('editing', true)
+            }
+        }
+    },
+    async mounted() {
+        window.addEventListener("beforeunload", async () => {
+            await this.clearTempFolder();
+        });
+        if (this.targetId) {
+            await this.loadArchivos()
+        }
+    },
+    async destroyed() {
+        await this.clearTempFolder();
+    },
+    methods: {
+        mostrarTooltip(tooltipId) {
+            mostrarTooltip(tooltipId)
+        },
+        async clearTempFolder() {
+            if (this.targetId)
+                return new __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__["a" /* default */]()
+                    .delete(discardTargetArchivosURL, {
+                        TargetId: this.targetId,
+                        TargetPath: this.target,
+                    })
+        },
+        async validateFileSize() {
+            //Esta promise existe solo para que se espere la promesa, haciendo que los eventos como @change sucedan.
+            //Sin esto el evento @change y el computed se no corren en el orden adecuado.
+            await new Promise(r => setTimeout(r, 0));
+            for (let i = 0; i < document.getElementById(`formFile-${this.target}`).files.length; i++) {
+                if (Math.round((document.getElementById(`formFile-${this.target}`).files[i].size / 1024 / 1000)).toFixed(2) > this.fileSizeLimit)
+                    throw new Error(FILESIZEERROR);
+            }
+        },
+        mapArchivos() {
+            if (this.archivos)
+                this.archivosImportadosDetalle = this.archivos.filter(archivo => !archivo.eliminado)
+                    .map(archivo => archivo.fileName)
+                    .join(", ");
+        },
+
+        async submitFile() {
+            await this.validateFileSize()
+                .then(async () => {
+                    if (this.eb) {
+                        this.eb.clear();
+                    } else {
+                        this.errorBag.clear();
+                    }
+                    var form = new FormData();
+                    for (let i = 0; i < document.getElementById(`formFile-${this.target}`).files.length; i++) {
+                        form.append("formFile", document.getElementById(`formFile-${this.target}`).files[i]);
+                    }
+                    form.append("targetId", this.targetId);
+                    form.append("targetPath", this.target);
+                    this.uiService.showSpinner(true);
+                    return await new __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__["a" /* default */]()
+                        .postFile(this.urlImportarArchivos, form, { errorBag: this.eb ? this.eb : this.errorBag })
+                        .then((res) => {
+                            if (!this.errorBag.hasErrors()) {
+                                this.agregarArchivos(res);
+                                this.$emit("updateArchivos", this.archivos);
+                                this.mapArchivos();
+                            }
+                        })
+                        .catch(error => {
+                            this.uiService.showMessageError(__WEBPACK_IMPORTED_MODULE_0__common_commonLoc__["a" /* default */][error.message]);
+                        })
+                        .finally(() => {
+                            this.uiService.showSpinner(false);
+                            this.clearFiles();
+                        });
+                })
+                .catch(error => {
+                    this.uiService.showMessageError(__WEBPACK_IMPORTED_MODULE_0__common_commonLoc__["a" /* default */][error.message]);
+                    this.clearFiles();
+                })
+        },
+        clearFiles() {
+            this.fileInput.value = null;
+            this.fileInput.removeAttribute("disabled");
+        },
+        resetDetalleArchivos() {
+            this.archivos = []
+            this.archivosImportadosDetalle = this.importarMultiplesArchivos ? ARCHIVOS_IMPORTADOS_DETALLE : ARCHIVO_IMPORTADO_DETALLE
+        },
+        fileSelected() {
+            this.fileInput.setAttribute("disabled", true);
+        },
+        cancel() {
+            this.uiService.showSpinner(true);
+            this.errorBag.clear();
+            return new __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__["a" /* default */]()
+                .delete(discardTargetArchivosURL, {
+                    TargetId: this.targetId,
+                    TargetPath: this.target,
+                })
+                .then(() => {
+                    this.loadArchivos();
+                    this.mode.setDetail();
+                    this.resetDetalleArchivos();
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        agregarArchivos(files) {
+            if (this.analyzeFile) {
+                this.archivos = [files];
+                return;
+            }
+            if (!this.importarMultiplesArchivos) this.archivos = files;
+            else this.archivos = this.archivos.concat(files);
+        },
+        async downloadFile(a) {
+            this.uiService.showSpinner(true);
+            return new __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__["a" /* default */]()
+                .getFile(downloadTargetArchivoURL, {
+                    path: a.url,
+                    fileName: a.fileName,
+                }, { responseType: 'blob', observe: 'response' })
+                .then(async (res) => {
+                    let valorHeaderContentDisposition = res.headers.get('content-disposition').split(";")[1]
+                    let nombreArchivo = valorHeaderContentDisposition.split("=")[1]
+                    nombreArchivo = nombreArchivo.replaceAll("\"", '');
+                    let body = res.body;
+
+                    var blob = await res.blob();
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = nombreArchivo;
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                })
+                .catch(error => {
+                    this.uiService.showMessageError(__WEBPACK_IMPORTED_MODULE_0__common_commonLoc__["a" /* default */][error.message]);
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        async deleteArchivo(a) {
+            this.uiService.showSpinner(true);
+            return await new __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__["a" /* default */]()
+                .delete(deleteTargetArchivoURL, {
+                    ArchivoEliminar: a,
+                    Archivos: this.archivos,
+                    TargetPath: this.target,
+                })
+                .then((res) => {
+                    // res es la lista de archivos con a.eliminado = true
+                    // no se borra nada del file system
+                    this.archivos = res;
+                    this.$emit("updateArchivos", this.archivos);
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        async saveArchivos() {
+            this.uiService.showSpinner(true);
+            return await new __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__["a" /* default */]()
+                .post(saveTargetArchivosURL, {
+                    TargetId: this.targetId,
+                    TargetPath: this.target,
+                    Archivos: this.archivos,
+                }, { errorBag: this.eb ? this.eb : this.errorBag })
+                .then(async () => {
+                    if (this.errorBag.hasErrors()) {
+                        if (this.errorBag.get("FORMULARIO_DIGITAL")) {
+                            this.uiService.showMessageErrorAndFocus(this.errorBag.get("FORMULARIO_DIGITAL"));
+                        } else {
+                            this.uiService.showMessageErrorAndFocus("Operación rechazada.");
+                        }
+                    } else {
+                        this.uiService.showMessageSuccess(`Operación confirmada`);
+                        this.$emit('created');
+                        await this.loadArchivos();
+                    }
+                })
+                .catch(error => {
+                    this.uiService.showMessageError(__WEBPACK_IMPORTED_MODULE_0__common_commonLoc__["a" /* default */][error.message]);
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        async loadArchivos() {
+            this.uiService.showSpinner(true);
+            return new __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__["a" /* default */]()
+                .get(getTargetArchivosURL, {
+                    TargetId: this.targetId,
+                    TargetPath: this.target,
+                })
+                .then((res) => {
+                    this.archivos = res;
+                    this.currentArchivos = res;
+                    this.$emit("updateArchivos", this.archivos);
+                    this.mode.setDetail();
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        clearArchivosList() {
+            this.archivos = [];
+        },
+        limpiar(){
+            this.clearArchivosList();
+            this.resetDetalleArchivos();
+        }
+    },
+});
+
+
+/***/ }),
+
+/***/ 182:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [(_vm.title != null) ? _c('div', [_c('p', {
+    staticClass: "h6"
+  }, [_vm._v(_vm._s(_vm.loc[_vm.title]))]), _vm._v(" "), _c('hr')]) : _vm._e(), _vm._v(" "), (_vm.errorBag.hasGSFWebFileTransferServiceException()) ? _c('span', {
+    staticClass: "text-danger field-validation-error",
+    attrs: {
+      "data-valmsg-for": ("formFile-" + _vm.target),
+      "data-valmsg-replace": "true"
+    }
+  }, [_vm._v("\n        " + _vm._s(_vm.errorBag.getGSFWebFileTransferServiceException()) + "\n    ")]) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.showMessageAfterAction && _vm.showMessage) ? _c('span', {
+    staticClass: "text-danger field-validation-error",
+    attrs: {
+      "data-valmsg-for": ("formFile-" + _vm.target),
+      "data-valmsg-replace": "true"
+    }
+  }, [_vm._v("\n        " + _vm._s(_vm.MESSAGE_AFTER_ACTION) + "\n    ")]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "row col-8"
+  }, [(_vm.showDetail) ? _c('div', {
+    staticClass: "col-6 ms-0 me-0"
+  }, [_c('input', {
+    staticClass: "form-control form-control-sm col-12 w-100",
+    attrs: {
+      "readonly": ""
+    },
+    domProps: {
+      "value": _vm.archivoNombre ? _vm.archivoNombre : _vm.archivosImportadosDetalle
+    }
+  })]) : _vm._e(), _vm._v(" "), _c('label', {
+    staticClass: "col-auto ms-3 px-1 py-0 me-0 btn btn-outline-primary btn-sm",
+    staticStyle: {
+      "float": "right"
+    }
+  }, [_c('i', {
+    staticClass: "mt-2 fas fa-file-import"
+  }), _vm._v(" "), _c('input', {
+    staticStyle: {
+      "display": "none"
+    },
+    attrs: {
+      "type": "file",
+      "accept": _vm.extensionsTypes,
+      "multiple": _vm.importarMultiplesArchivos,
+      "name": ("formFile-" + _vm.target),
+      "id": ("formFile-" + _vm.target)
+    },
+    on: {
+      "input": _vm.submitFile,
+      "change": _vm.fileSelected
+    }
+  }), _vm._v("\n            " + _vm._s(_vm.loc["Importar"]) + "\n        ")]), _vm._v(" "), (_vm.toolTipVisible) ? _c('div', {
+    staticClass: "col-1 mt-1 ms-1 me-0",
+    attrs: {
+      "data-toggle": "tooltip",
+      "id": "archivosTooltip",
+      "title": _vm.infoText
+    },
+    on: {
+      "touchstart": function($event) {
+        return _vm.mostrarTooltip('archivosTooltip')
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-lg fa-info-circle"
+  })]) : _vm._e()])])
+},staticRenderFns: []}
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-4870d169", module.exports)
+  }
+}
 
 /***/ }),
 
@@ -5887,6 +6430,114 @@ class Ajax {
 
 /***/ }),
 
+/***/ 600:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(601);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(4)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../../node_modules/css-loader/index.js?sourceMap!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-08aa4008&scoped=true!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./inline-cancel-button.vue", function() {
+			var newContent = require("!!../../../../node_modules/css-loader/index.js?sourceMap!../../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-08aa4008&scoped=true!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./inline-cancel-button.vue");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 601:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+// imports
+
+
+// module
+exports.push([module.i, "\nbutton[data-v-08aa4008] {\r\n  transition: 0.1s;\n}\nbutton[data-v-08aa4008]:hover {\r\n  transform: scale(1.2);\r\n  color: #dc3545 !important;\r\n  transition: 0.1s;\n}\nbutton[data-v-08aa4008]:active {\r\n  transform: scale(0.9);\r\n  box-shadow: 3px 2px 2px 1px rgba(0, 0, 0, 0.24);\r\n  transition: 0.1s;\n}\r\n", "", {"version":3,"sources":["/./wwwroot/src/components/forms/inline-cancel-button.vue?57f33b38"],"names":[],"mappings":";AA+BA;EACA,iBAAA;CACA;AAEA;EACA,sBAAA;EACA,0BAAA;EACA,iBAAA;CACA;AAEA;EACA,sBAAA;EACA,gDAAA;EACA,iBAAA;CACA","file":"inline-cancel-button.vue","sourcesContent":["<template>\r\n  <button\r\n    type=\"button\"\r\n    :disabled=\"!enabled\"\r\n    title=\"Cancelar\"\r\n    class=\"btn btn-link text-body\"\r\n    v-on:click=\"onClick()\"\r\n  >\r\n    <i class=\"fas fa-times\"></i>\r\n  </button>\r\n</template>\r\n\r\n<script>\r\nexport default {\r\n  inheritAttrs: false,\r\n  name: \"inline-cancel-button\",\r\n  props: {\r\n    enabled: {\r\n      type: Boolean,\r\n      default: true,\r\n    },\r\n  },\r\n  methods: {\r\n    onClick(e) {\r\n      this.$emit(\"click\");\r\n    },\r\n  },\r\n};\r\n</script>\r\n\r\n<style scoped>\r\nbutton {\r\n  transition: 0.1s;\r\n}\r\n\r\nbutton:hover {\r\n  transform: scale(1.2);\r\n  color: #dc3545 !important;\r\n  transition: 0.1s;\r\n}\r\n\r\nbutton:active {\r\n  transform: scale(0.9);\r\n  box-shadow: 3px 2px 2px 1px rgba(0, 0, 0, 0.24);\r\n  transition: 0.1s;\r\n}\r\n</style>"],"sourceRoot":"webpack://"}]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 602:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  inheritAttrs: false,
+  name: "inline-cancel-button",
+  props: {
+    enabled: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  methods: {
+    onClick(e) {
+      this.$emit("click");
+    },
+  },
+});
+
+
+/***/ }),
+
+/***/ 603:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-link text-body",
+    attrs: {
+      "type": "button",
+      "disabled": !_vm.enabled,
+      "title": "Cancelar"
+    },
+    on: {
+      "click": function($event) {
+        return _vm.onClick()
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-times"
+  })])
+},staticRenderFns: []}
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-08aa4008", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ 644:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6076,6 +6727,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -6139,6 +6792,9 @@ const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
         await this.init();
     },
     methods: {
+        update(id) {
+            this.$router.push({ name: "edit", params: { id: id } });
+        },
         async init() {
             this.$store.dispatch("setSearched", false);
 
@@ -6221,7 +6877,6 @@ const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
                 });
         },
         async createAsync() {
-
             if (
                 await this.uiService.confirmActionModal(
                     "¿Está usted seguro que desea iniciar una nueva solicitud de certificación?",
@@ -6229,7 +6884,6 @@ const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
                     "Cancelar"
                 )
             ) {
-
                 // Limpiamos la lista antes de navegar
                 this.$store.dispatch("clearList");
 
@@ -7994,12 +8648,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return [_c('tr', {
       key: item.id
     }, [_c('td', {
-      staticClass: "text-start"
+      staticClass: "text-start align-middle"
     }, [_vm._v(_vm._s(item.certificacion))]), _vm._v(" "), _c('td', {
-      staticClass: "text-start"
+      staticClass: "text-start align-middle"
     }, [_vm._v(_vm._s(item.estado))]), _vm._v(" "), _c('td', {
-      staticClass: "text-end"
-    }, [_vm._v(_vm._s(item.cantidadAprobaciones))]), _vm._v(" "), _c('td', {
+      staticClass: "text-end align-middle"
+    }, [_vm._v(_vm._s(item.cantDocsAprobados))]), _vm._v(" "), _c('td', {
+      staticClass: "text-end align-middle"
+    }, [_vm._v(_vm._s(item.cantDocsPendientes))]), _vm._v(" "), _c('td', {
       staticClass: "text-center align-middle"
     }, [_c('div', {
       staticClass: "d-inline-flex"
@@ -8062,12 +8718,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Estado")]), _vm._v(" "), _c('th', {
     staticClass: "text-center w-5",
     attrs: {
-      "data-column": "CantidadAprobaciones"
+      "no-sort-datatable": ""
     }
-  }, [_vm._v("Cant. Aprobaciones")]), _vm._v(" "), _c('th', {
-    staticClass: "text-center",
+  }, [_vm._v("Docs. Aprobados")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center w-5",
     attrs: {
-      "colspan": "w-10",
+      "no-sort-datatable": ""
+    }
+  }, [_vm._v("Docs. Pendientes")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center w-5",
+    attrs: {
       "no-sort-datatable": ""
     }
   }, [_vm._v("Acciones")])])])
@@ -8252,8 +8912,32 @@ const formModule = {
             ctx.getters.getErrorBag.clear();
             return await new __WEBPACK_IMPORTED_MODULE_2__common_ajaxWrapper__["a" /* default */]()
                 .put(
-                    `${API_URL}/${solicitudCertificacion.id}`,
+                    `${API_URL}/Solicitudes/${solicitudCertificacion.id}`,
                     solicitudCertificacion,
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
+        async updateDocumentoDraftAsync(ctx, documento) {
+            ctx.getters.getErrorBag.clear();
+            return await new __WEBPACK_IMPORTED_MODULE_2__common_ajaxWrapper__["a" /* default */]()
+                .put(
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}/Borrador`,
+                    documento,
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
+        async putDocumentoAsync(ctx, documento) {
+            ctx.getters.getErrorBag.clear();
+            return await new __WEBPACK_IMPORTED_MODULE_2__common_ajaxWrapper__["a" /* default */]()
+                .put(
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}`,
+                    documento,
                     {
                         errorBag: ctx.getters.getErrorBag,
                     })
@@ -8264,8 +8948,20 @@ const formModule = {
             ctx.getters.getErrorBag.clear();
             return await new __WEBPACK_IMPORTED_MODULE_2__common_ajaxWrapper__["a" /* default */]()
                 .delete(
-                    `${API_URL}/${solicitudCertificacion.id}`,
+                    `${API_URL}/Solicitudes/${solicitudCertificacion.id}?RowVersion=${solicitudCertificacion.rowVersion}`,
                     { rowVersion: solicitudCertificacion.rowVersion },
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
+        async deleteDocumentoAsync(ctx, documento) {
+            ctx.getters.getErrorBag.clear();
+            return await new __WEBPACK_IMPORTED_MODULE_2__common_ajaxWrapper__["a" /* default */]()
+                .delete(
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}?RowVersion=${documento.rowVersion}`,
+                    { rowVersion: documento.rowVersion },
                     {
                         errorBag: ctx.getters.getErrorBag,
                     })
@@ -8275,6 +8971,17 @@ const formModule = {
         async getAsync(ctx, id) {
             return await new __WEBPACK_IMPORTED_MODULE_2__common_ajaxWrapper__["a" /* default */]()
                 .get(`${API_URL}/Solicitudes/${id}`)
+                .then((res) => {
+                    // Agregar alguna lógica de ser necesario
+                    return res;
+                })
+                .finally(() => {
+                    // Agregar alguna lógica de ser necesario
+                });
+        },
+        async getDocumentoAsync(ctx, id) {
+            return await new __WEBPACK_IMPORTED_MODULE_2__common_ajaxWrapper__["a" /* default */]()
+                .get(`${API_URL}/Solicitudes/Documentos/${id}`)
                 .then((res) => {
                     // Agregar alguna lógica de ser necesario
                     return res;
@@ -8374,10 +9081,13 @@ const formModule = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__solicitudCertificacion_detail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__solicitudCertificacion_detail_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__solicitudCertificacion_edit_vue__ = __webpack_require__(661);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__solicitudCertificacion_edit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__solicitudCertificacion_edit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__solicitudCertificacion_create_vue__ = __webpack_require__(664);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__solicitudCertificacion_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__solicitudCertificacion_create_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__solicitudCertificacion_list_vue__ = __webpack_require__(374);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__solicitudCertificacion_list_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__solicitudCertificacion_list_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__documento_edit_vue__ = __webpack_require__(687);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__documento_edit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__documento_edit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__solicitudCertificacion_create_vue__ = __webpack_require__(664);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__solicitudCertificacion_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__solicitudCertificacion_create_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__solicitudCertificacion_list_vue__ = __webpack_require__(374);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__solicitudCertificacion_list_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__solicitudCertificacion_list_vue__);
+
 
 
 
@@ -8389,10 +9099,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["a" /* default */].use(__WEBPACK_IMPORTED_MODU
 
 const routes = [
     { name: 'home', path: '/', redirect: '/list' },
-    { name: 'list', path: '/list', component: __WEBPACK_IMPORTED_MODULE_5__solicitudCertificacion_list_vue___default.a },
+    { name: 'list', path: '/list', component: __WEBPACK_IMPORTED_MODULE_6__solicitudCertificacion_list_vue___default.a },
     { name: 'detail', path: '/detail/:id', component: __WEBPACK_IMPORTED_MODULE_2__solicitudCertificacion_detail_vue___default.a, props: true },
     { name: 'edit', path: '/edit/:id', component: __WEBPACK_IMPORTED_MODULE_3__solicitudCertificacion_edit_vue___default.a, props: true },
-    { name: 'create', path: '/create', component: __WEBPACK_IMPORTED_MODULE_4__solicitudCertificacion_create_vue___default.a }
+    { name: 'document', path: '/document/:id', component: __WEBPACK_IMPORTED_MODULE_4__documento_edit_vue___default.a, props: true },
+    { name: 'create', path: '/create', component: __WEBPACK_IMPORTED_MODULE_5__solicitudCertificacion_create_vue___default.a }
 ]
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
@@ -8751,9 +9462,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -8791,6 +9499,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         await this.init();
     },
     methods: {
+        async remove(dto) {
+            this.uiService.showSpinner(true)
+            await this.$store.dispatch("deleteDocumentoAsync", dto)
+                .then(async () => {
+                    if (!this.errorBag.hasErrors()) {
+                        this.uiService.showMessageSuccess("Operación confirmada")
+                        await this.getAsync(this.solicitudCertificacion.id);
+                    } else {
+                        this.uiService.showMessageError("Operación rechazada")
+                    }
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        update(id) {
+            this.$router.push({ name: "document", params: { id: id } });
+        },
         async init() {
             // Si no hay permisos de modificación, volvemos a la lista
             if (!this.grants.update) this.$router.push({ name: "home" });
@@ -8813,7 +9539,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$router.push({ name: "detail", params: { id: this.solicitudCertificacion.id } });
         },
         cancel() {
-            this.$router.push({ name: "detail", params: { id: this.solicitudCertificacion.id } });
+            this.$router.push({ name: "home" });
         },
         async updateAsync() {
             this.uiService.showSpinner(true)
@@ -8884,12 +9610,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "data-toggle": "tooltip"
       }
-    }, [_vm._v("\n                                        " + _vm._s(cd.fechaDesde ? (cd.fechaDesde | _vm.uiDate) : "-"))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle",
-      attrs: {
-        "data-toggle": "tooltip"
-      }
-    }, [_vm._v("\n                                        " + _vm._s(cd.fechaHasta ? (cd.fechaHasta | _vm.uiDate) : "-"))]), _vm._v(" "), _c('td', {
+    }, [_vm._v("\n                                        " + _vm._s(_vm._f("uidate")(cd.fechaDesde)) + " - " + _vm._s(_vm._f("uidate")(cd.fechaHasta)))]), _vm._v(" "), _c('td', {
       staticClass: "align-middle",
       attrs: {
         "data-toggle": "tooltip"
@@ -8904,12 +9625,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "data-toggle": "tooltip"
       }
-    }, [_vm._v("\n                                        " + _vm._s(cd.fechaSubida ? (cd.fechaSubida | _vm.uiDate) : "-"))]), _vm._v(" "), _c('td', {
+    }, [_vm._v("\n                                        " + _vm._s(_vm._f("uidate")(cd.fechaSubida)))]), _vm._v(" "), _c('td', {
       staticClass: "align-middle",
       attrs: {
         "data-toggle": "tooltip"
       }
-    }, [_vm._v("\n                                        " + _vm._s(cd.archivo ? cd.archivo : "-"))]), _vm._v(" "), _c('td', {
+    }, [_vm._v("\n                                        " + _vm._s(cd.archivoURL ? cd.archivoURL : "-"))]), _vm._v(" "), _c('td', {
       staticClass: "text-center align-middle"
     }, [_c('div', {
       staticClass: "d-inline-flex"
@@ -8966,12 +9687,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "scope": "col"
     }
-  }, [_vm._v("Fecha Desde")]), _vm._v(" "), _c('th', {
-    staticClass: "w-10",
-    attrs: {
-      "scope": "col"
-    }
-  }, [_vm._v("Fecha Hasta")]), _vm._v(" "), _c('th', {
+  }, [_vm._v("Vigencia")]), _vm._v(" "), _c('th', {
     staticClass: "w-10",
     attrs: {
       "scope": "col"
@@ -9220,6 +9936,924 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-03428c15", module.exports)
   }
 }
+
+/***/ }),
+
+/***/ 687:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
+
+/* script */
+__vue_exports__ = __webpack_require__(688)
+
+/* template */
+var __vue_template__ = __webpack_require__(695)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\Socios.Web\\wwwroot\\src\\Socios\\SolicitudCertificaciones\\documento-edit.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-185c3640", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-185c3640", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] documento-edit.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+
+/***/ 688:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_uiService__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Common_Mixins_commonMixin__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Components_ImportadorArchivos_Importadores_importar_documento__ = __webpack_require__(689);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Components_ImportadorArchivos_Importadores_importar_documento___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__Components_ImportadorArchivos_Importadores_importar_documento__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_forms_inline_edit_button_vue__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_forms_inline_edit_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_forms_inline_edit_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_forms_inline_cancel_button_vue__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_forms_inline_cancel_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_forms_inline_cancel_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Selects_documentoEstado_label_vue__ = __webpack_require__(692);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Selects_documentoEstado_label_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__Selects_documentoEstado_label_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__LayoutMode__ = __webpack_require__(696);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Documento__ = __webpack_require__(697);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const NO_DATA_MESSAGE = "No hay datos";
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        AcceptButton: __WEBPACK_IMPORTED_MODULE_0__components_forms_accept_button_vue___default.a,
+        CancelButton: __WEBPACK_IMPORTED_MODULE_1__components_forms_cancel_button_vue___default.a,
+        importarDocumento: __WEBPACK_IMPORTED_MODULE_4__Components_ImportadorArchivos_Importadores_importar_documento___default.a,
+        inlineEdit: __WEBPACK_IMPORTED_MODULE_5__components_forms_inline_edit_button_vue___default.a,
+        inlineDelete: __WEBPACK_IMPORTED_MODULE_6__components_forms_inline_delete_button_vue___default.a,
+        inlineCancel: __WEBPACK_IMPORTED_MODULE_7__components_forms_inline_cancel_button_vue___default.a,
+        documentoEstadoLabel: __WEBPACK_IMPORTED_MODULE_8__Selects_documentoEstado_label_vue___default.a
+    },
+    mixins: [__WEBPACK_IMPORTED_MODULE_3__Common_Mixins_commonMixin__["a" /* default */]],
+    name: "documento-edit",
+    data: function () {
+        return {
+            documento: new __WEBPACK_IMPORTED_MODULE_10__Documento__["a" /* default */](),
+            uiService: new __WEBPACK_IMPORTED_MODULE_2__common_uiService__["a" /* default */](),
+            tipoDoc: '',
+            NO_DATA_MESSAGE,
+            documentoArchivoDivId: "__documentoArchivo",
+            documentoFormularioDivId: "__documentoFormulario",
+            LayoutMode: __WEBPACK_IMPORTED_MODULE_9__LayoutMode__["a" /* default */],
+            currentLayoutMode: __WEBPACK_IMPORTED_MODULE_9__LayoutMode__["a" /* default */].Split,
+
+        };
+    },
+    computed: {
+        currentLocation() {
+            return window.location.origin;
+        },
+        grants() {
+            return this.$store.getters.getGrants;
+        },
+        errorBag() {
+            return this.$store.getters.getErrorBag;
+        }
+    },
+    async mounted() {
+        await this.init();
+    },
+    methods: {
+        onDocumentoAnalyzed(e) {
+            if (!this.errorBag.hasErrors()) {
+                this.getAsync(e[0]);
+            }
+        },
+        setLayout(mode) {
+            this.currentLayoutMode = mode;
+            this.currentLayoutMode.apply(this.documentoArchivoDivId, this.documentoFormularioDivId);
+        },
+        async init() {
+            // Si no hay permisos de modificación, volvemos a la lista
+            if (!this.grants.update) this.$router.push({ name: "home" });
+            else {
+                if (this.$route.params.id) await this.getAsync(this.$route.params.id);
+                else this.cancel();
+
+                if (this.$route.query.fromAnalysis) {
+                    await this.updateAsync().then(() => {
+                        const query = Object.assign({}, this.$route.query);
+                        delete query.fromAnalysis;
+                        this.$router.replace({ query });
+                    });
+                }
+            }
+        },
+        async getAsync(id) {
+            this.uiService.showSpinner(true)
+            await this.$store.dispatch("getDocumentoAsync", id)
+                .then((res) => {
+                    this.documento = new __WEBPACK_IMPORTED_MODULE_10__Documento__["a" /* default */](res);
+                    this.tipoDoc = this.documento.tipo;
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        // completarFormularioDocumento(e) {
+        //     this.errorBag.clear();
+
+        //     this.documento = new Documento(e[0]);
+
+        // },
+        // goDetail() {
+        //     this.$router.push({ name: "detail", params: { id: this.comprobante.id } });
+        // },
+        cancel() {
+            this.$router.push({ name: "edit", params: { id: this.documento.solicitudId } });
+        },
+        goSolicitudEdit() {
+            this.$router.push({ name: "edit", params: { id: this.documento.solicitudId } });
+        },
+        async updateAsync() {
+            this.errorBag.clear();
+            this.uiService.showSpinner(true)
+            return await this.$store.dispatch("putDocumentoAsync", this.documento)
+                .then(() => {
+                    if (!this.errorBag.hasErrors()) {
+                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.goSolicitudEdit();
+                    } else {
+                        this.uiService.showMessageError("Operación rechazada")
+                    }
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        async saveAsync() {
+            this.errorBag.clear();
+            this.uiService.showSpinner(true);
+            await this.$store.dispatch("updateDocumentoDraftAsync", this.documento)
+                .then(() => {
+                    if (!this.errorBag.hasErrors()) {
+                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.goSolicitudEdit();
+                    } else {
+                        this.uiService.showMessageError("Operación rechazada")
+                    }
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        }
+    }
+});
+
+
+/***/ }),
+
+/***/ 689:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
+
+/* script */
+__vue_exports__ = __webpack_require__(690)
+
+/* template */
+var __vue_template__ = __webpack_require__(691)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\Socios.Web\\wwwroot\\src\\Components\\ImportadorArchivos\\Importadores\\importar-documento.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-55e46c20", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-55e46c20", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] importar-documento.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+
+/***/ 690:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_accept_button_vue__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_forms_accept_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_forms_accept_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__common_CrudMode__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Components_ImportadorArchivos_importador_archivos_vue__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Components_ImportadorArchivos_importador_archivos_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__Components_ImportadorArchivos_importador_archivos_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_forms_inline_delete_button_vue__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_forms_inline_delete_button_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_forms_inline_delete_button_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__ = __webpack_require__(6);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+const API_URL = `${baseUrl}/api/Certificaciones/Solicitudes/Documentos/Analisis/`;
+const ACCEPTED_EXTENSIONS = ".png, .jpg, .jpeg, image/png, image/jpeg, .pdf, application/pdf";
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "importar-documento",
+
+    components: {
+        AcceptButton: __WEBPACK_IMPORTED_MODULE_1__components_forms_accept_button_vue___default.a,
+        importadorArchivos: __WEBPACK_IMPORTED_MODULE_3__Components_ImportadorArchivos_importador_archivos_vue___default.a,
+        inlineDelete: __WEBPACK_IMPORTED_MODULE_4__components_forms_inline_delete_button_vue___default.a,
+    },
+    computed: {
+        errorBag() {
+            return this.$store.getters.getErrorBag;
+        },
+        apiURL() {
+            return `${baseUrl}/api/Certificaciones/Solicitudes/${this.solicitudId}/Documentos/${this.documentoId}/Analisis/`
+        }
+    },
+    props: {
+        documentoId: Number,
+        solicitudId: Number,
+        fileName: String
+    },
+    data: function () {
+        return {
+            loc: __WEBPACK_IMPORTED_MODULE_0__common_commonLoc__["a" /* default */],
+            // errorBag: new ErrorBag(),
+            mode: new __WEBPACK_IMPORTED_MODULE_2__common_CrudMode__["a" /* default */](),
+            target: "Documento",
+            baseUrl,
+            acceptedExtensions: ACCEPTED_EXTENSIONS,
+            archivos: [],
+            showMessageImportFile: false,
+            API_URL
+        };
+    },
+    watch: {
+    },
+    async mounted() {
+        window.addEventListener("beforeunload", async () => {
+            await this.clearTempFolder();
+        });
+    },
+    methods: {
+        onUpdateArchivos(listaArchivos) {
+            this.archivos = listaArchivos;
+            this.$emit("archivosUpdated", this.archivos);
+        },
+
+        async clearTempFolder() {
+            if (this.archivos.length) {
+                return await new __WEBPACK_IMPORTED_MODULE_5__common_ajaxWrapper__["a" /* default */]()
+                    .delete(API_URL, {
+                        TargetPath: this.archivos[0].folderPath
+                    })
+            }
+        },
+
+        clearFiles() {
+            this.$refs.importadorArchivos.resetDetalleArchivos();
+        },
+
+        async cancel() {
+            await this.$refs.importadorArchivos.cancel();
+        },
+
+        loadArchivo(archivos) {
+            this.archivos = archivos;
+            this.$refs.importadorArchivos.archivos = this.archivos
+            if (this.archivos.length > 0) this.$refs.importadorArchivos.mapArchivos();
+        }
+    },
+});
+
+
+/***/ }),
+
+/***/ 691:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('importador-archivos', {
+    ref: "importadorArchivos",
+    attrs: {
+      "showDetail": true,
+      "acceptedExtensions": _vm.acceptedExtensions,
+      "idModal": "__modal_documentos",
+      "archivoNombre": _vm.fileName,
+      "target": _vm.target,
+      "showMessage": _vm.showMessageImportFile,
+      "maxFileSize": 2,
+      "targetURL": _vm.target,
+      "analyzeFile": true,
+      "apiURL": _vm.apiURL,
+      "eb": _vm.errorBag,
+      "importarMultiplesArchivos": false
+    },
+    on: {
+      "updateArchivos": function($event) {
+        return _vm.onUpdateArchivos($event)
+      }
+    }
+  })], 1)
+},staticRenderFns: []}
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-55e46c20", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 692:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
+
+/* script */
+__vue_exports__ = __webpack_require__(693)
+
+/* template */
+var __vue_template__ = __webpack_require__(694)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\Socios.Web\\wwwroot\\src\\Selects\\documentoEstado-label.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f0c10cc0", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-f0c10cc0", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] documentoEstado-label.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+
+/***/ 693:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "DocumentoEstadoLabel",
+    props: {
+        value: Number, // ID del estado
+    },
+    computed: {
+        estado() {
+            const estados = [
+                { idm: 1, descripcion: "Pendiente", color: "text-secondary", icono: "fas fa-circle" }, 
+                { idm: 2, descripcion: "Validado", color: "text-success", icono: "fas fa-check-double" },
+                { idm: 3, descripcion: "Rechazado", color: "text-danger", icono: "fas fa-times-circle" },
+                { idm: 4, descripcion: "Vencido", color: "text-warning", icono: "fas fa-check-circle" }, 
+                { idm: 5, descripcion: "Presentado", color: "text-success", icono: "fas fa-circle" } 
+            ];
+            return estados.find(e => e.idm === this.value) || estados[0];
+        },
+        estadoDescripcion() {
+            return this.estado.descripcion;
+        },
+        estadoClase() {
+            return this.estado.color;
+        },
+        estadoIcono() {
+            return this.estado.icono;
+        }
+    },
+    async mounted() {
+        // await this.getEstados();
+    },
+    methods: {
+    }
+});
+
+
+/***/ }),
+
+/***/ 694:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "d-flex align-items-center",
+    class: _vm.estadoClase
+  }, [_c('i', {
+    staticClass: "me-1",
+    class: _vm.estadoIcono
+  }), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.estadoDescripcion))])])
+},staticRenderFns: []}
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-f0c10cc0", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 695:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    ref: "top"
+  }, [_c('div', {
+    staticClass: "col-12"
+  }, [_c('div', {
+    staticClass: "col-12 d-flex justify-content-between sticky-header mt-4"
+  }, [_c('div', {
+    staticClass: "row col-12 d-flex"
+  }, [_c('p', {
+    staticClass: "h5 col-6"
+  }, [_vm._v("Modificación Documento " + _vm._s(_vm.tipoDoc) + " - Solicitud nro " + _vm._s(_vm.documento.solicitudId) + "\n                ")]), _vm._v(" "), _c('div', {
+    staticClass: "col-6 gap-4 d-flex justify-content-end"
+  }, [_c('documentoEstado-label', {
+    attrs: {
+      "value": _vm.documento.estadoId
+    }
+  }), _vm._v(" "), _c('cancel-button', {
+    staticClass: "ms-2",
+    on: {
+      "click": _vm.cancel
+    }
+  }, [_vm._v("Volver")])], 1), _vm._v(" "), _c('div', [_c('a', {
+    staticClass: "ms-2 btn btn-primary px-2 py-1",
+    attrs: {
+      "id": "splitLayoutButton",
+      "title": "Mostrar vista dividida",
+      "data-toggle": "tooltip"
+    },
+    on: {
+      "click": function($event) {
+        return _vm.setLayout(_vm.LayoutMode.Split)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-columns",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-primary px-2 py-1",
+    attrs: {
+      "id": "fileLayoutButton",
+      "title": "Mostrar solo el documento",
+      "data-toggle": "tooltip"
+    },
+    on: {
+      "click": function($event) {
+        return _vm.setLayout(_vm.LayoutMode.File)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-file-pdf",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-primary px-2 py-1",
+    attrs: {
+      "id": "formLayoutButton",
+      "title": "Mostrar solo el formulario",
+      "data-toggle": "tooltip"
+    },
+    on: {
+      "click": function($event) {
+        return _vm.setLayout(_vm.LayoutMode.Form)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-file",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])])])]), _vm._v(" "), _c('div', {
+    staticClass: "card mt-2"
+  }, [_c('div', {
+    staticClass: "card-body"
+  }, [_c('div', {
+    staticClass: "form-group col-sm-12 mb-4 row"
+  }, [_c('div', {
+    staticClass: "col-8"
+  }, [_c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Importar Documento")]), _vm._v(" "), _c('importar-documento', {
+    ref: "importarDocumento",
+    attrs: {
+      "idModal": "__modal_DocumentoArchivo",
+      "title": "Documento",
+      "disabled": !_vm.updateGrant,
+      "documentoId": _vm.documento.id,
+      "solicitudId": _vm.documento.solicitudId,
+      "fileName": _vm.documento.archivoURL
+    },
+    on: {
+      "archivosUpdated": function($event) {
+        return _vm.onDocumentoAnalyzed($event)
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "text-danger field-validation-error"
+  }, [_vm._v("\n                            " + _vm._s(_vm.errorBag.get("documentoError")) + "\n                        ")])], 1)]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-6",
+    staticStyle: {
+      "height": "150vh"
+    },
+    attrs: {
+      "id": _vm.documentoArchivoDivId
+    }
+  }, [(_vm.documento.archivoURL) ? _c('iframe', {
+    staticStyle: {
+      "width": "100%",
+      "height": "100%",
+      "border": "none"
+    },
+    attrs: {
+      "src": (_vm.currentLocation + "/CertificacionesWebRepository/Uploads/Solicitudes/Solicitud_" + (_vm.documento.solicitudGuid) + "/Doc_" + (_vm.documento.guid) + "/" + (_vm.documento.archivoURL))
+    }
+  }) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "col-6",
+    attrs: {
+      "id": _vm.documentoFormularioDivId
+    }
+  }, [_c('div', {
+    staticClass: "form-group col-lg-6 col-sm-12 mb-2 required"
+  }, [_c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Fecha Desde")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.documento.fechaDesde),
+      expression: "documento.fechaDesde"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "date"
+    },
+    domProps: {
+      "value": (_vm.documento.fechaDesde)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.documento, "fechaDesde", $event.target.value)
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "text-danger field-validation-error"
+  }, [_vm._v("\n                                " + _vm._s(_vm.errorBag.get("fechaDesde")) + "\n                            ")])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group col-lg-6 col-sm-12 mb-2 required"
+  }, [_c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Fecha Hasta")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.documento.fechaHasta),
+      expression: "documento.fechaHasta"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "date"
+    },
+    domProps: {
+      "value": (_vm.documento.fechaHasta)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.documento, "fechaHasta", $event.target.value)
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "text-danger field-validation-error"
+  }, [_vm._v("\n                                " + _vm._s(_vm.errorBag.get("fechaHasta")) + "\n                            ")])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group col-lg-12 col-sm-12 mb-2"
+  }, [_c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("Observaciones")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.documento.observaciones),
+      expression: "documento.observaciones"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "cols": "50",
+      "rows": "25"
+    },
+    domProps: {
+      "value": (_vm.documento.observaciones)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.documento, "observaciones", $event.target.value)
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "text-danger field-validation-error"
+  }, [_vm._v("\n                                " + _vm._s(_vm.errorBag.get("observaciones")) + "\n                            ")])])])])])]), _vm._v(" "), (_vm.currentLayoutMode != _vm.LayoutMode.File) ? _c('div', {
+    staticClass: "col-12 d-flex justify-content-end gap-2 mb-3 mt-3"
+  }, [_c('button', {
+    staticClass: "btn btn-secondary btn-sm",
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        return _vm.saveAsync.apply(null, arguments)
+      }
+    }
+  }, [_c('i', {
+    staticClass: "fas fa-save"
+  }), _vm._v("\n                Guardar\n            ")]), _vm._v(" "), _c('accept-button', {
+    on: {
+      "click": _vm.updateAsync
+    }
+  }, [_vm._v("\n                Validar")]), _vm._v(" "), _c('cancel-button', {
+    on: {
+      "click": _vm.cancel
+    }
+  }, [_vm._v("Cancelar")])], 1) : _vm._e()])])
+},staticRenderFns: []}
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-185c3640", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 696:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const LayoutMode = {
+    Split: {
+        apply: function (fileElemId, formElemId) {
+            document.getElementById(fileElemId).classList.add("col-6");
+            document.getElementById(fileElemId).classList.remove("col-12");
+            document.getElementById(fileElemId).removeAttribute("hidden");
+            document.getElementById(formElemId).classList.add("col-6");
+            document.getElementById(formElemId).classList.remove("col-12");
+            document.getElementById(formElemId).removeAttribute("hidden");
+        }
+    },
+    File: {
+        apply: function (fileElemId, formElemId) {
+            document.getElementById(fileElemId).classList.remove("col-6");
+            document.getElementById(fileElemId).classList.add("col-12");
+            document.getElementById(fileElemId).removeAttribute("hidden");
+            document.getElementById(formElemId).setAttribute("hidden", "true");
+
+        }
+    },
+    Form: {
+        apply: function (fileElemId, formElemId) {
+            document.getElementById(formElemId).classList.remove("col-6");
+            document.getElementById(formElemId).classList.add("col-12");
+            document.getElementById(formElemId).removeAttribute("hidden");
+            document.getElementById(fileElemId).setAttribute("hidden", "true");
+        }
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (LayoutMode);
+
+/***/ }),
+
+/***/ 697:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Documento {
+    constructor(dto) {
+        this.id = dto ? dto.id : null;
+        this.rowVersion = dto ? dto.rowVersion : null;
+        this.fechaDesde = dto ? dto.fechaDesde ? new Date(dto.fechaDesde).toISOString().split('T')[0] : null : null;
+        this.fechaHasta = dto ? dto.fechaHasta ? new Date(dto.fechaHasta).toISOString().split('T')[0] : null : null;
+        this.solicitudId = dto ? dto.solicitudId : null;
+        this.documentoRequeridoId = dto ? dto.documentoRequeridoId : null;
+        this.archivoURL = dto ? dto.archivoURL : null;
+        this.version = dto ? dto.version : null;
+        this.estadoId = dto ? dto.estadoId : null;
+        this.validadoPorId = dto ? dto.validadoPorId : null;
+        this.validadoPor = dto ? dto.validadoPor : null;
+        this.fechaSubida = dto ? dto.fechaSubida : null;
+        this.guid = dto ? dto.guid : null;
+        this.solicitudGuid = dto ? dto.solicitudGuid : null;
+        this.observaciones = dto ? dto.observaciones : null;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Documento;
+
 
 /***/ }),
 
@@ -21555,6 +23189,55 @@ let loc = new Loc();
 
 
 /* harmony default export */ __webpack_exports__["a"] = (loc = new Proxy(loc, defaultLocValueHandler));
+
+
+/***/ }),
+
+/***/ 93:
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = {}
+
+/* styles */
+__webpack_require__(600)
+
+/* script */
+__vue_exports__ = __webpack_require__(602)
+
+/* template */
+var __vue_template__ = __webpack_require__(603)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "C:\\GitRepos\\GS.Certifications\\src\\Socios.Web\\wwwroot\\src\\components\\forms\\inline-cancel-button.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-08aa4008"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-08aa4008", __vue_options__)
+  } else {
+    hotAPI.reload("data-v-08aa4008", __vue_options__)
+  }
+})()}
+if (__vue_options__.functional) {console.error("[vue-loader] inline-cancel-button.vue: functional components are not supported and should be defined in plain js files using render functions.")}
+
+module.exports = __vue_exports__
 
 
 /***/ })

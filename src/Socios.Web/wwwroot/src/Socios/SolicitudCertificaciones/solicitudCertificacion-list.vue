@@ -22,8 +22,9 @@
                     <tr class="text-center align-middle">
                         <th data-column="Certificacion.Nombre" class="text-center">Certificación</th>
                         <th data-column="Estado.Descripcion" class="text-center">Estado</th>
-                        <th data-column="CantidadAprobaciones" class="text-center w-5">Cant. Aprobaciones</th>
-                        <th class="text-center" colspan="w-10" no-sort-datatable>Acciones</th>
+                        <th class="text-center w-5" no-sort-datatable>Docs. Aprobados</th>
+                        <th class="text-center w-5" no-sort-datatable>Docs. Pendientes</th>
+                        <th class="text-center w-5" no-sort-datatable>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,9 +33,10 @@
                     </tr>
                     <template v-for="item in list">
                         <tr :key="item.id">
-                            <td class="text-start">{{ item.certificacion }}</td>
-                            <td class="text-start">{{ item.estado }}</td>
-                            <td class="text-end">{{ item.cantidadAprobaciones }}</td>
+                            <td class="text-start align-middle">{{ item.certificacion }}</td>
+                            <td class="text-start align-middle">{{ item.estado }}</td>
+                            <td class="text-end align-middle">{{ item.cantDocsAprobados }}</td>
+                            <td class="text-end align-middle">{{ item.cantDocsPendientes }}</td>
                             <td class="text-center align-middle">
                                 <div class="d-inline-flex">
                                     <inlineEdit :enabled="grants.update" @click="update(item.id)" />
@@ -116,6 +118,9 @@ export default {
         await this.init();
     },
     methods: {
+        update(id) {
+            this.$router.push({ name: "edit", params: { id: id } });
+        },
         async init() {
             this.$store.dispatch("setSearched", false);
 
@@ -198,7 +203,6 @@ export default {
                 });
         },
         async createAsync() {
-
             if (
                 await this.uiService.confirmActionModal(
                     "¿Está usted seguro que desea iniciar una nueva solicitud de certificación?",
@@ -206,7 +210,6 @@ export default {
                     "Cancelar"
                 )
             ) {
-
                 // Limpiamos la lista antes de navegar
                 this.$store.dispatch("clearList");
 

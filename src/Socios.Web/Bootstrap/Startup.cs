@@ -70,7 +70,7 @@ public class Startup
             //options.IdleTimeout = TimeSpan.FromSeconds(10);
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
-            options.Cookie.Name = "Socios.Web.Session";
+            options.Cookie.Name = "Socios_Web_Session";
 
         });
 
@@ -78,7 +78,7 @@ public class Startup
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config =>
             {
                 config.ExpireTimeSpan = TimeSpan.FromHours(3);
-                config.Cookie.Name = "Socios.Web.Auth";
+                config.Cookie.Name = "Socios_Web_Auth";
                 config.LoginPath = "/Security/Login";
 
             });

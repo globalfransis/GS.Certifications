@@ -37,7 +37,8 @@ namespace GS.Certifications.Infrastructure.Persistence.Configurations.Certificac
                 new DocumentoEstado() { Idm = DocumentoEstado.PENDIENTE, Descripcion = "Pendiente" },
                 new DocumentoEstado() { Idm = DocumentoEstado.VALIDADO, Descripcion = "Validado" },
                 new DocumentoEstado() { Idm = DocumentoEstado.RECHAZADO, Descripcion = "Rechazado" },
-                new DocumentoEstado() { Idm = DocumentoEstado.VENCIDO, Descripcion = "Vencido" }
+                new DocumentoEstado() { Idm = DocumentoEstado.VENCIDO, Descripcion = "Vencido" },
+                new DocumentoEstado() { Idm = DocumentoEstado.PRESENTADO, Descripcion = "Presentado" }
             );
         }
     }

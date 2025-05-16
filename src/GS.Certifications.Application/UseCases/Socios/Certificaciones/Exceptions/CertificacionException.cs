@@ -17,4 +17,12 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptio
         {
         }
     }
+
+    [Serializable]
+    public class DocumentoInexistenteException : Exception
+    {
+        public DocumentoInexistenteException() : base("El documento no existe.")
+        {
+        }
+    }
 }

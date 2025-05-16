@@ -21,8 +21,7 @@
                                 <tr class="text-center align-middle">
                                     <th class="w-10" scope="col">Tipo</th>
                                     <th class="w-2" scope="col">Versión</th>
-                                    <th class="w-10" scope="col">Fecha Desde</th>
-                                    <th class="w-10" scope="col">Fecha Hasta</th>
+                                    <th class="w-10" scope="col">Vigencia</th>
                                     <th class="w-10" scope="col">Estado</th>
                                     <th class="w-10" scope="col">Validado Por</th>
                                     <th class="w-10" scope="col">Fecha Subida</th>
@@ -41,17 +40,15 @@
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.version ? cd.version : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.fechaDesde ? (cd.fechaDesde | uiDate) : "-" }}</td>
-                                        <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.fechaHasta ? (cd.fechaHasta | uiDate) : "-" }}</td>
+                                            {{ cd.fechaDesde | uidate }} - {{ cd.fechaHasta | uidate }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.estado ? cd.estado : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.validadoPor ? cd.validadoPor : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.fechaSubida ? (cd.fechaSubida | uiDate) : "-" }}</td>
+                                            {{ cd.fechaSubida | uidate }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.archivo ? cd.archivo : "-" }}</td>
+                                            {{ cd.archivoURL ? cd.archivoURL : "-" }}</td>
                                         <td class="text-center align-middle">
                                             <div class="d-inline-flex">
                                                 <inlineEdit @click="update(cd.id)" />
@@ -113,6 +110,24 @@ export default {
         await this.init();
     },
     methods: {
+        async remove(dto) {
+            this.uiService.showSpinner(true)
+            await this.$store.dispatch("deleteDocumentoAsync", dto)
+                .then(async () => {
+                    if (!this.errorBag.hasErrors()) {
+                        this.uiService.showMessageSuccess("Operación confirmada")
+                        await this.getAsync(this.solicitudCertificacion.id);
+                    } else {
+                        this.uiService.showMessageError("Operación rechazada")
+                    }
+                })
+                .finally(() => {
+                    this.uiService.showSpinner(false);
+                });
+        },
+        update(id) {
+            this.$router.push({ name: "document", params: { id: id } });
+        },
         async init() {
             // Si no hay permisos de modificación, volvemos a la lista
             if (!this.grants.update) this.$router.push({ name: "home" });
@@ -135,7 +150,7 @@ export default {
             this.$router.push({ name: "detail", params: { id: this.solicitudCertificacion.id } });
         },
         cancel() {
-            this.$router.push({ name: "detail", params: { id: this.solicitudCertificacion.id } });
+            this.$router.push({ name: "home" });
         },
         async updateAsync() {
             this.uiService.showSpinner(true)

@@ -1,12 +1,18 @@
 ﻿using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 using GS.Certifications.Domain.Entities.Empresas;
 using GSF.Domain.Common;
+using System;
 using System.Collections.Generic;
 
 namespace GS.Certifications.Domain.Entities.Certificaciones;
 
 public class SolicitudCertificacion : BaseIntEntity
 {
+    public SolicitudCertificacion()
+    {
+        Guid = Guid.NewGuid();
+    }
+    public Guid Guid { get; set; } = Guid.NewGuid();
     public int SocioId { get; set; }
     public EmpresaPortal Socio { get; set; }
     public int CertificacionId { get; set; }
@@ -15,7 +21,6 @@ public class SolicitudCertificacion : BaseIntEntity
     public SolicitudCertificacionEstado Estado { get; set; }
     public short CantidadAprobaciones { get; set; } = 0;
     public string Observaciones { get; set; }
-
     public List<DocumentoCargado> DocumentosCargados { get; set; }
 }
 

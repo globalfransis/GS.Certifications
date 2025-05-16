@@ -6,6 +6,11 @@ namespace GS.Certifications.Domain.Entities.Certificaciones.Documentos
 {
     public class DocumentoCargado : BaseIntEntity
     {
+        public DocumentoCargado()
+        {
+            Guid = Guid.NewGuid();
+        }
+        public Guid Guid { get; set; } = Guid.NewGuid();
         public int SolicitudId { get; set; }
         public SolicitudCertificacion Solicitud { get; set; }
         public int DocumentoRequeridoId { get; set; }
@@ -19,6 +24,7 @@ namespace GS.Certifications.Domain.Entities.Certificaciones.Documentos
         public long? ValidadoPorId { get; set; }
         public User ValidadoPor { get; set; }
         public DateTime? FechaSubida { get; set; }
+        public string Observaciones { get; set; }
     }
 
     public class DocumentoEstado : BaseFixedShortEntity
@@ -26,7 +32,8 @@ namespace GS.Certifications.Domain.Entities.Certificaciones.Documentos
         public const short PENDIENTE = 1; 
         public const short VALIDADO = 2; 
         public const short RECHAZADO = 3; 
-        public const short VENCIDO = 4; 
+        public const short VENCIDO = 4;
+        public const short PRESENTADO = 5;
 
         public string Descripcion { get; set; }
     }

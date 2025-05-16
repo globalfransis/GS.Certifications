@@ -72,7 +72,7 @@ public class Startup
             //options.IdleTimeout = TimeSpan.FromSeconds(10);
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
-            options.Cookie.Name = "Boarding.Session";
+            options.Cookie.Name = "Certificaciones_Session";
         });
 
         services.AddTransient<IAlertaCRUDService, AlertaCRUDService>();
@@ -82,7 +82,7 @@ public class Startup
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config =>
             {
                 config.ExpireTimeSpan = TimeSpan.FromHours(3);
-                config.Cookie.Name = "Boarding.Auth";
+                config.Cookie.Name = "Certificaciones_Auth";
                 config.LoginPath = "/Security/Login";
 
             });
