@@ -52,7 +52,7 @@ public class ComprobantesController : Controller
             CompanyId = currentCompanyId,
             EmpresaId = (int)currentEmpresaPortalId,
             FormFile = HttpContext.Request.Form.Files[0],
-            OrigenId = Origen.PROVEEDOR
+            OrigenId = Origen.SOCIOS
         };
 
         return Ok(await _mediator.Send(cmd));

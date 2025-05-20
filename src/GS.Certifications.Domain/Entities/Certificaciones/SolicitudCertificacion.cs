@@ -1,4 +1,5 @@
 ﻿using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
+using GS.Certifications.Domain.Entities.Comprobantes;
 using GS.Certifications.Domain.Entities.Empresas;
 using GSF.Domain.Common;
 using System;
@@ -25,6 +26,10 @@ public class SolicitudCertificacion : BaseIntEntity
     public DateTime? UltimaModificacionEstado { get; set; }
     public DateTime? VigenciaDesde { get; set; }
     public DateTime? VigenciaHasta { get; set; }
+    public short? OrigenId { get; set; }
+    public Origen Origen { get; set; }
+    public short? PropietarioActualId { get; set; }
+    public Origen PropietarioActual { get; set; }
 }
 
 public class SolicitudCertificacionEstado : BaseFixedShortEntity

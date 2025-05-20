@@ -368,7 +368,7 @@ public class ComprobanteService : BaseGSFService, IComprobanteService
             fechaEmision = DateTime.MinValue;
         }
 
-        short propietarioActualId = empresaPortal.Confirmado && ep_wihtUsers ? Origen.PROVEEDOR : Origen.BACKOFFICE;
+        short propietarioActualId = empresaPortal.Confirmado && ep_wihtUsers ? Origen.SOCIOS : Origen.BACKOFFICE;
 
         var saveArgs = new ComprobanteCreate
         {

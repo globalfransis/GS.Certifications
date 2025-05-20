@@ -3,6 +3,7 @@ using GS.Certifications.Application.UseCases.Proveedores.SolicitudCertificacions
 using GS.Certifications.Application.UseCases.Proveedores.SolicitudCertificacions.Queries;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Dto;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Queries;
+using GS.Certifications.Domain.Entities.Comprobantes;
 using GSF.Application.Helpers.Pagination.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -108,6 +109,8 @@ namespace Socios.Web.Controllers.Certificaciones
 
             command.SocioId = (int)currentSocioId;
             command.CertificacionId = id;
+            command.OrigenId = Origen.SOCIOS;
+            command.PropietarioId = Origen.SOCIOS;
 
             var result = await _mediator.Send(command);
 

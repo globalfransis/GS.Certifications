@@ -18,6 +18,8 @@ public class CreateSolicitudCertificacionCommand : IRequest<int>
     public short? EstadoId { get; set; }
     public short? CantidadAprobaciones { get; set; } = 0;
     public string Observaciones { get; set; }
+    public short OrigenId { get; set; }
+    public short PropietarioId { get; set; }
 }
 
 public class SolicitudCreationParams : ISolicitudCertificacionCreate
@@ -27,6 +29,8 @@ public class SolicitudCreationParams : ISolicitudCertificacionCreate
     public short? EstadoId { get; set; }
     public short CantidadAprobaciones { get; set; } = 0;
     public string Observaciones { get; set; }
+    public short OrigenId { get; set; }
+    public short PropietarioId { get; set; }
 }
 
 public class CreateSolicitudCertificacionCommandHandler : BaseRequestHandler<int, CreateSolicitudCertificacionCommand, int>
@@ -50,7 +54,9 @@ public class CreateSolicitudCertificacionCommandHandler : BaseRequestHandler<int
                 CertificacionId = (int)request.CertificacionId,
                 EstadoId = request.EstadoId ?? SolicitudCertificacionEstado.BORRADOR,
                 CantidadAprobaciones = request.CantidadAprobaciones ?? 0,
-                Observaciones = request.Observaciones
+                Observaciones = request.Observaciones,
+                OrigenId = request.OrigenId,
+                PropietarioId = request.PropietarioId,
             };
 
             var nuevo = await certificacionService.CreateSolicitudAsync(creationParams);

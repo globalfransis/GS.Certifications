@@ -81,6 +81,8 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         int CertificacionId { get; set; }
         short? EstadoId { get; set; }
         string Observaciones { get; set; }
+        short OrigenId { get; set; }
+        short PropietarioId { get; set; }
     }
 
     /// <summary>
@@ -99,6 +101,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         DateTime? UltimaModificacionEstado { get; set; }
         DateTime? VigenciaDesde { get; set; }
         DateTime? VigenciaHasta { get; set; }
+        short? PropietarioId { get; set; }
     }
 
     public interface ISolicitudCertificacionDocumentoUpdate

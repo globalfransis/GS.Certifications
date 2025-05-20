@@ -17,6 +17,8 @@ export default class SolicitudCertificacion {
         this.ultimaModificacionEstado = dto ? dto.ultimaModificacionEstado : null;
         this.vigenciaDesde = dto ? dto.vigenciaDesde : null;
         this.vigenciaHasta = dto ? dto.vigenciaHasta : null;
+        this.propietarioActualId = dto ? dto.propietarioActualId : null;
+        this.origenId = dto ? dto.origenId : null;
 
         this.documentosCargados = dto ? dto.documentosCargados : []
 

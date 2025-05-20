@@ -2,6 +2,7 @@
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptions;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Services;
 using GS.Certifications.Domain.Entities.Certificaciones;
+using GS.Certifications.Domain.Entities.Comprobantes;
 using GSF.Application.Common.Exceptions;
 using GSF.Application.Extensions.GSFMediatR;
 using MediatR;
@@ -47,6 +48,7 @@ public class PresentarSolicitudCertificacionCommandHandler : BaseRequestHandler<
                 Observaciones = request.Observaciones,
                 FechaSolicitud = fechaSolicitud,
                 UltimaModificacionEstado = fechaSolicitud,
+                PropietarioId = Origen.BACKOFFICE
             };
 
             await certificacionService.UpdateSolicitudAsync(request.Id, solicitudUpdateParameters);

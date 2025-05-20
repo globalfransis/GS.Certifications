@@ -55,8 +55,8 @@
                                             {{ cd.archivoURL ? cd.archivoURL : "-" }}</td>
                                         <td class="text-center align-middle">
                                             <div class="d-inline-flex">
-                                                <inlineEdit @click="update(cd.id)" />
-                                                <inlineDelete @click="remove(cd)" />
+                                                <inlineEdit :disabled="!grants.update && solicitudCertificacion.propietarioActualId != SOCIOS" @click="update(cd.id)" />
+                                                <inlineDelete :disabled="!grants.update && solicitudCertificacion.propietarioActualId != SOCIOS" @click="remove(cd)" />
                                             </div>
                                         </td>
 
@@ -82,7 +82,7 @@
             </div>
         </div>
         <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3">
-            <accept-button :disabled="!grants.update" @click="updateAsync">
+            <accept-button :disabled="!grants.update && solicitudCertificacion.propietarioActualId != SOCIOS" v-if="solicitudCertificacion.propietarioActualId == SOCIOS && solicitudCertificacion.estadoId != PRESENTADA" @click="updateAsync">
                 Presentar</accept-button>
             <cancel-button @click="cancel">Cancelar</cancel-button>
         </div>
@@ -93,11 +93,23 @@
 import AcceptButton from "@/components/forms/accept-button.vue";
 import CancelButton from "@/components/forms/cancel-button.vue";
 import UiService from "@/common/uiService";
-import SolicitudCertificacion from './SolicitudCertificacion' // Modificar por la clase dto que corresponda
+import SolicitudCertificacion from './SolicitudCertificacion'
 import commonMixin from '@/Common/Mixins/commonMixin';
 
 import inlineEdit from "@/components/forms/inline-edit-button.vue";
 import inlineDelete from "@/components/forms/inline-delete-button.vue";
+
+// Origen de la solicitud
+const SOCIOS = 1;
+const BACKOFFICE = 2;
+const CORREO = 3;
+
+// Estados de la solicitud
+const PENDIENTE = 1;
+const PRESENTADA = 2;
+const APROBADA = 3;
+const RECHAZADA = 4;
+const BORRADOR = 5;
 
 export default {
     components: {
@@ -110,8 +122,19 @@ export default {
     name: "solicitudCertificacion-edit",
     data: function () {
         return {
+            // --- Origen de la solicitud ---
+            SOCIOS,
+            BACKOFFICE,
+            CORREO,
+            // --- Estados de la solicitud ---
+            PENDIENTE,
+            PRESENTADA,
+            APROBADA,
+            RECHAZADA,
+            BORRADOR,
+            // ---
             solicitudCertificacion: new SolicitudCertificacion(),
-            uiService: new UiService()
+            uiService: new UiService(),
         };
     },
     computed: {

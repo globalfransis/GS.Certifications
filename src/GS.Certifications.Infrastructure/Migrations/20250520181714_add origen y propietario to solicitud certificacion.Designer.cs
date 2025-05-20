@@ -4,6 +4,7 @@ using GS.Certifications.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GS.Certifications.Infrastructure.Migrations
 {
     [DbContext(typeof(CertificationsDbContext))]
-    partial class CertificationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250520181714_add origen y propietario to solicitud certificacion")]
+    partial class addorigenypropietariotosolicitudcertificacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3054,7 +3056,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Idm = (short)1,
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Process",
-                            Descripcion = "SOCIOS",
+                            Descripcion = "PROVEEDOR",
                             IsDeleted = false,
                             Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Process"

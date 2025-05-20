@@ -176,7 +176,9 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                 CertificacionId = c.CertificacionId,
                 EstadoId = c.EstadoId ?? SolicitudCertificacionEstado.BORRADOR,
                 Observaciones = c.Observaciones,
-                FechaSolicitud = DateTime.Now
+                FechaSolicitud = DateTime.Now,
+                OrigenId = c.OrigenId,
+                PropietarioActualId = c.PropietarioId
             };
 
             var certificacion = await GetAsync(c.CertificacionId);
@@ -210,6 +212,11 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             {
                 ValidarCambioEstado(solicitud, solicitudToUpdate);
                 solicitudToUpdate.EstadoId = (short)solicitud.EstadoId;
+            }
+
+            if (solicitud.PropietarioId is not null)
+            {
+                solicitudToUpdate.PropietarioActualId = (short)solicitud.PropietarioId;
             }
 
             if (!string.IsNullOrEmpty(solicitud.Observaciones))
@@ -317,6 +324,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             public DateTime? UltimaModificacionEstado { get; set; }
             public DateTime? VigenciaDesde { get; set; }
             public DateTime? VigenciaHasta { get; set; }
+            public short? PropietarioId { get; set; }
         }
         #endregion
 

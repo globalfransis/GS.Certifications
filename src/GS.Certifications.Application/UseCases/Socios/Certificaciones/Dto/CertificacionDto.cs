@@ -41,10 +41,12 @@ public class SolicitudCertificacionDto : IMapFrom<SolicitudCertificacion>
     public DateTime? FechaSolicitud { get; set; }
     public DateTime? UltimaModificacionEstado { get; set; }
     public DateTime? VigenciaDesde { get; set; }
+    public short OrigenId { get; set; }
+    public short PropietarioActualId { get; set; }
     public DateTime? VigenciaHasta { get; set; }
     public string Observaciones { get; set; }
-    public byte[] RowVersion { get; set; }
     public Guid Guid { get; set; }
+    public byte[] RowVersion { get; set; }
 
     public List<DocumentoCargadoDto> DocumentosCargados { get; set; }
 

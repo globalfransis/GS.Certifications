@@ -17,7 +17,7 @@ public class OrigenConfiguration : BaseFixedEntityInt16Configuration<Origen>
     protected override void LoadSeedingData()
     {
         SeedingData.AddRange(
-            new Origen() { Idm = Origen.PROVEEDOR, Descripcion = nameof(Origen.PROVEEDOR) },
+            new Origen() { Idm = Origen.SOCIOS, Descripcion = nameof(Origen.SOCIOS) },
             new Origen() { Idm = Origen.BACKOFFICE, Descripcion = nameof(Origen.BACKOFFICE) },
             new Origen() { Idm = Origen.CORREO, Descripcion = nameof(Origen.CORREO) }
         );
