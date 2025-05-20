@@ -64,6 +64,10 @@ public class CreateSolicitudCertificacionCommandHandler : BaseRequestHandler<int
         {
             throw new ValidationErrorException("CertificacionId", ex.Message);
         }
+        catch (YaExisteSolicitudCertificacionException ex)
+        {
+            throw new ValidationErrorException("CertificacionId", ex.Message);
+        }
         catch (Exception)
         {
             throw;

@@ -233,7 +233,8 @@ _pkginfo.txt
 wwwroot/lib/
 
 # Bundle
-wwwroot/bundle/
+/src/GS.Certifications.Web/wwwroot/bundle/
+/src/Socios.Web/wwwroot/bundle/
 
 # Others
 ClientBin/
@@ -402,5 +403,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/src/CentroNavegacion.Web/appsettings.Development.json
+
+# local appsettings
+/src/GS.Certifications.Web/appsettings.Development.json
 /src/Socios.Web/appsettings.Development.json

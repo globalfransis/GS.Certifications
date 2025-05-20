@@ -6,10 +6,12 @@ using GS.Certifications.Application.UseCases.Socios.Certificaciones.Queries;
 using GSF.Application.Helpers.Pagination.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Socios.Web.Common.Services.Empresa;
-using Socios.Web.Controllers.Common.Attributes;
+using GS.Certifications.Web.Controllers.Common.Attributes;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System;
 
-namespace Socios.Web.Controllers.Certificaciones
+namespace GS.Certifications.Web.Controllers.Certificaciones
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,12 +19,10 @@ namespace Socios.Web.Controllers.Certificaciones
     public class CertificacionesController : Controller
     {
         private readonly IMediator _mediator;
-        private ICurrentSocioService _currentSocioService;
 
-        public CertificacionesController(IMediator mediator, ICurrentSocioService currentSocioService)
+        public CertificacionesController(IMediator mediator)
         {
             _mediator = mediator;
-            _currentSocioService = currentSocioService;
         }
 
         [HttpGet("Solicitudes/{solicitudId}")]
@@ -45,8 +45,7 @@ namespace Socios.Web.Controllers.Certificaciones
         [HttpGet("{id}/Solicitudes")]
         public async Task<ActionResult<IPaginatedQueryResult<object>>> GetAllAsync([FromQuery] GetSolicitudCertificacionesQuery query, [FromRoute] int id)
         {
-            var currentSocioId = _currentSocioService.GetCurrentEmpresaPortalId();
-            query.SocioId = currentSocioId;
+            // TODO: el id del socio es un parametro del querystring
 
             query.CertificacionId = id;
 
@@ -58,12 +57,15 @@ namespace Socios.Web.Controllers.Certificaciones
         public async Task<ActionResult<int>> AnalyzeAsync([FromRoute] int solicitudId, [FromRoute] int id)
         {
             if (HttpContext.Request.Form.Files.Count == 0) return BadRequest("Se debe enviar un archivo.");
-            var currentSociolId = _currentSocioService.GetCurrentEmpresaPortalId();
+
+            // TODO: el id del socio es un parametro del querystring
+            //var currentSociolId = _currentSocioService.GetCurrentEmpresaPortalId();
+
             var cmd = new AnalyzeDocumentoSolicitudCertificacionCommand
             {
                 Id = id,
                 SolicitudId = solicitudId,
-                SocioId = (int)currentSociolId,
+                //SocioId = (int)currentSociolId,
                 FormFile = HttpContext.Request.Form.Files[0]
             };
 
@@ -93,20 +95,13 @@ namespace Socios.Web.Controllers.Certificaciones
             return Ok();
         }
 
-        [HttpPut("Solicitudes/{id}")]
-        public async Task<ActionResult<Unit>> UpdateSolicitudAsync([FromRoute] int id, [FromBody] PresentarSolicitudCertificacionCommand command)
-        {
-            command.Id = id;
-            await _mediator.Send(command);
-            return Ok();
-        }
-
         [HttpPost("{id}/Solicitudes")]
         public async Task<ActionResult<int>> PostAsync([FromBody] CreateSolicitudCertificacionCommand command, [FromRoute] int id)
         {
-            var currentSocioId = _currentSocioService.GetCurrentEmpresaPortalId();
+            // TODO: el id del socio es un parametro del querystring
+            //var currentSocioId = _currentSocioService.GetCurrentEmpresaPortalId();
 
-            command.SocioId = (int)currentSocioId;
+            //command.SocioId = (int)currentSocioId;
             command.CertificacionId = id;
 
             var result = await _mediator.Send(command);

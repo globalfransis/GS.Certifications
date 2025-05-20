@@ -13,6 +13,11 @@ export default class SolicitudCertificacion {
         this.descripcion = dto ? dto.descripcion : null;
         this.guid = dto ? dto.guid : null;
 
+        this.fechaSolicitud = dto ? dto.fechaSolicitud : null;
+        this.ultimaModificacionEstado = dto ? dto.ultimaModificacionEstado : null;
+        this.vigenciaDesde = dto ? dto.vigenciaDesde : null;
+        this.vigenciaHasta = dto ? dto.vigenciaHasta : null;
+
         this.documentosCargados = dto ? dto.documentosCargados : []
 
     }

@@ -21,9 +21,14 @@
                 <thead class="table-top">
                     <tr class="text-center align-middle">
                         <th data-column="Certificacion.Nombre" class="text-center">Certificación</th>
+                        <th data-column="FechaSolicitud" datatable-datetime class="text-center">Fecha Solicitud</th>
+                        <th no-sort-datatable class="text-center">Vigencia</th>
                         <th data-column="Estado.Descripcion" class="text-center">Estado</th>
-                        <th class="text-center w-5" no-sort-datatable>Docs. Aprobados</th>
+                        <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center">Última Modif.
+                            Estado</th>
                         <th class="text-center w-5" no-sort-datatable>Docs. Pendientes</th>
+                        <th class="text-center w-5" no-sort-datatable>Docs. Cargados</th>
+                        <th class="text-center w-5" no-sort-datatable>Docs. Aprobados</th>
                         <th class="text-center w-5" no-sort-datatable>Acciones</th>
                     </tr>
                 </thead>
@@ -34,9 +39,14 @@
                     <template v-for="item in list">
                         <tr :key="item.id">
                             <td class="text-start align-middle">{{ item.certificacion }}</td>
+                            <td class="text-start align-middle">{{ item.fechaSolicitud | uidate }}</td>
+                            <td class="text-start align-middle">{{ item.vigenciaDesde | uidate }} - {{
+            item.vigenciaHasta | uidate }}</td>
                             <td class="text-start align-middle">{{ item.estado }}</td>
-                            <td class="text-end align-middle">{{ item.cantDocsAprobados }}</td>
+                            <td class="text-start align-middle">{{ item.ultimaModificacionEstado | uidate }}</td>
                             <td class="text-end align-middle">{{ item.cantDocsPendientes }}</td>
+                            <td class="text-end align-middle">{{ item.cantDocsCargados }}</td>
+                            <td class="text-end align-middle">{{ item.cantDocsAprobados }}</td>
                             <td class="text-center align-middle">
                                 <div class="d-inline-flex">
                                     <inlineEdit :enabled="grants.update" @click="update(item.id)" />
@@ -210,11 +220,7 @@ export default {
                     "Cancelar"
                 )
             ) {
-                // Limpiamos la lista antes de navegar
-                this.$store.dispatch("clearList");
-
                 var nueva = new SolicitudCertificacion();
-
                 nueva.certificacionId = this.parameters.certificacionId;
 
                 this.uiService.showSpinner(true)
@@ -222,9 +228,13 @@ export default {
                     .then((id) => {
                         if (!this.errorBag.hasErrors()) {
                             this.uiService.showMessageSuccess("Operación confirmada")
+
+                            // Limpiamos la lista antes de navegar
+                            this.$store.dispatch("clearList");
+
                             this.update(id);
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(`Operación rechazada: ${this.errorBag.get("certificacionId") }`)
                         }
                     })
                     .finally(() => {

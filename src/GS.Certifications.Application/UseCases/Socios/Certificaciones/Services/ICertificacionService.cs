@@ -1,9 +1,11 @@
 using GS.Certifications.Domain.Entities.Certificaciones;
 using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
+using GS.Certifications.Domain.Entities.Empresas;
 using GSF.Application.Helpers.Pagination.Interfaces;
 using GSF.Application.Services;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
@@ -23,6 +25,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         Task<Certificacion> CreateAsync(ICertificacionCreate t);
         Task<SolicitudCertificacion> CreateSolicitudAsync(ISolicitudCertificacionCreate c);
         Task UpdateAsync(ICertificacionUpdate p);
+        Task UpdateSolicitudAsync(int id, ISolicitudCertificacionUpdate solicitud);
         Task DeleteAsync(int id);
         Task DeleteSolicitudAsync(int id, byte[] rowVersion);
         Task DeleteDocumentoSolicitudAsync(int id, byte[] rowVersion);
@@ -86,6 +89,16 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
     public interface ICertificacionUpdate
     {
         // Agregar propiedades de modificación
+    }
+
+    public interface ISolicitudCertificacionUpdate
+    {
+        short? EstadoId { get; set; }
+        string Observaciones { get; set; }
+        DateTime? FechaSolicitud { get; set; }
+        DateTime? UltimaModificacionEstado { get; set; }
+        DateTime? VigenciaDesde { get; set; }
+        DateTime? VigenciaHasta { get; set; }
     }
 
     public interface ISolicitudCertificacionDocumentoUpdate

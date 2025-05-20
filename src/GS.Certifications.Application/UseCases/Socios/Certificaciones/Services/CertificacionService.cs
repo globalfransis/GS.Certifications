@@ -162,12 +162,21 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
 
         public async Task<SolicitudCertificacion> CreateSolicitudAsync(ISolicitudCertificacionCreate c)
         {
+
+            var yaExisteSolicitud = await getSolicitudesQueryable().Where(s => s.CertificacionId == c.CertificacionId && s.SocioId == c.SocioId).AnyAsync();
+
+            if (yaExisteSolicitud)
+            {
+                throw new YaExisteSolicitudCertificacionException();
+            }
+
             var nueva = new SolicitudCertificacion()
             {
                 SocioId = c.SocioId,
                 CertificacionId = c.CertificacionId,
                 EstadoId = c.EstadoId ?? SolicitudCertificacionEstado.BORRADOR,
                 Observaciones = c.Observaciones,
+                FechaSolicitud = DateTime.Now
             };
 
             var certificacion = await GetAsync(c.CertificacionId);
@@ -190,6 +199,44 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         public async Task UpdateAsync(ICertificacionUpdate e)
         {
             throw new NotImplementedException();
+        }
+
+
+        public async Task UpdateSolicitudAsync(int id, ISolicitudCertificacionUpdate solicitud)
+        {
+            var solicitudToUpdate = await GetSolicitudAsync(id);
+
+            if (solicitud.EstadoId is not null)
+            {
+                ValidarCambioEstado(solicitud, solicitudToUpdate);
+                solicitudToUpdate.EstadoId = (short)solicitud.EstadoId;
+            }
+
+            if (!string.IsNullOrEmpty(solicitud.Observaciones))
+            {
+                solicitudToUpdate.Observaciones = solicitud.Observaciones;
+            }
+
+            if (solicitud.FechaSolicitud is not null)
+            {
+                solicitudToUpdate.FechaSolicitud = solicitud.FechaSolicitud;
+            }
+
+            if (solicitud.UltimaModificacionEstado is not null)
+            {
+                solicitudToUpdate.UltimaModificacionEstado = solicitud.UltimaModificacionEstado;
+            }
+
+            if (solicitud.VigenciaDesde is not null)
+            {
+                solicitudToUpdate.VigenciaDesde = solicitud.VigenciaDesde;
+            }
+
+            if (solicitud.VigenciaHasta is not null)
+            {
+                solicitudToUpdate.VigenciaHasta = solicitud.VigenciaHasta;
+            }
+
         }
 
         public async Task DeleteAsync(int id)
@@ -251,6 +298,27 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                 .AsQueryable();
             return queryable;
         }
+
+        private static void ValidarCambioEstado(ISolicitudCertificacionUpdate solicitud, SolicitudCertificacion solicitudToUpdate)
+        {
+            if (solicitud.EstadoId == SolicitudCertificacionEstado.PRESENTADA)
+            {
+                if (solicitudToUpdate.DocumentosCargados.Any(d => d.EstadoId != DocumentoEstado.PRESENTADO)) throw new PresentacionSolicitudDocumentosInvalidosException();
+            }
+        }
         #endregion
+
+        #region Classes
+        public class SolicitudCertificacionUpdate : ISolicitudCertificacionUpdate
+        {
+            public short? EstadoId { get; set; }
+            public string Observaciones { get; set; }
+            public DateTime? FechaSolicitud { get; set; }
+            public DateTime? UltimaModificacionEstado { get; set; }
+            public DateTime? VigenciaDesde { get; set; }
+            public DateTime? VigenciaHasta { get; set; }
+        }
+        #endregion
+
     }
 }

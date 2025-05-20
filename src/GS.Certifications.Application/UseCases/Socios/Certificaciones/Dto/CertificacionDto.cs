@@ -10,6 +10,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Dto;
 
 public class CertificacionDto : IMapFrom<Certificacion>
 {
+    public long CompanyId { get; set; }
     public short TipoEmpresaPortalId { get; set; }
     public string TipoEmpresaPortal { get; set; }
     public string Nombre { get; set; }
@@ -36,6 +37,11 @@ public class SolicitudCertificacionDto : IMapFrom<SolicitudCertificacion>
     public short CantidadAprobaciones { get; set; } = default;
     public short CantDocsPendientes { get; set; } = default;
     public short CantDocsAprobados { get; set; } = default;
+    public short CantDocsCargados { get; set; } = default;
+    public DateTime? FechaSolicitud { get; set; }
+    public DateTime? UltimaModificacionEstado { get; set; }
+    public DateTime? VigenciaDesde { get; set; }
+    public DateTime? VigenciaHasta { get; set; }
     public string Observaciones { get; set; }
     public byte[] RowVersion { get; set; }
     public Guid Guid { get; set; }
@@ -51,7 +57,8 @@ public class SolicitudCertificacionDto : IMapFrom<SolicitudCertificacion>
             .ForMember(dst => dst.Certificacion, opt => opt.MapFrom(src => src.Certificacion.Nombre))
             .ForMember(dst => dst.Estado, opt => opt.MapFrom(src => src.Estado.Descripcion))
             .ForMember(dst => dst.CantidadAprobaciones, opt => opt.MapFrom(src => src.Certificacion.CantidadAprobaciones))
-            .ForMember(dst => dst.CantDocsPendientes, opt => opt.MapFrom(src => src.DocumentosCargados.Where(d => d.EstadoId != DocumentoEstado.VALIDADO).ToList().Count))
+            .ForMember(dst => dst.CantDocsPendientes, opt => opt.MapFrom(src => src.DocumentosCargados.Where(d => d.EstadoId == DocumentoEstado.PENDIENTE).ToList().Count))
+            .ForMember(dst => dst.CantDocsCargados, opt => opt.MapFrom(src => src.DocumentosCargados.Where(d => d.EstadoId != DocumentoEstado.PENDIENTE).ToList().Count))
             .ForMember(dst => dst.CantDocsAprobados, opt => opt.MapFrom(src => src.DocumentosCargados.Where(d => d.EstadoId == DocumentoEstado.VALIDADO).ToList().Count))
             ;
         }
@@ -62,7 +69,6 @@ public class SolicitudCertificacionEstadoDto : IMapFrom<SolicitudCertificacionEs
 {
     public short Idm { get; set; }
     public string Descripcion { get; set; }
-
 
     public class MappingProfile : Profile
     {

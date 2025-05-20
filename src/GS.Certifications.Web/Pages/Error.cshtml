@@ -1,7 +1,7 @@
 ﻿@page "{handler?}"
 @using GS.Certifications.Web.Pages
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> loc
+@inject IStringLocalizer<GSFSharedResources.Shared> loc
 @model ErrorModel
 @{
     Layout = null;
@@ -17,7 +17,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Boarding - Error</title>
+    <title>Portal de Certificaciones - Error</title>
 
     @* css *@
     <link rel="icon" type="image/x-icon" href="~/favicon.png" />
@@ -25,24 +25,27 @@
     <link rel="stylesheet" href="~/css/main.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
 </head>
-<body class="align-middle" style="background-image: url('@Url.Content("~/img/Oops.png")'); background-position: 120px 120px;">
+<body class="align-middle">
+    <div style="position:fixed;top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;background-image: url('@Url.Content("~/img/login-background1.png")');background-size:cover;background-repeat: norepeat;filter: blur(5px) sepia(80%)"></div>
     @if (!Model.IsReportDispatched)
     {
-        <div class="d-flex justify-content-center" style="margin-top: 5%;">
-            <div class="card p-4" style="border:30px solid #333; border-radius: 12px;">
+        <div class="d-flex justify-content-center" style="margin-top: 5%; opacity:1 !important">
+            <div class="card p-4" style="border:30px #004494; border-radius: 12px;box-shadow: 0px 0px 0px 8px rgba(0,68,148,0.3)">
                 <div class="card-body">
-                    <div class="d-flex justify-content-center">
-                        <h3 class="text-danger ">@loc["Se produjo un error inesperado"]</h3>
+                    <div class="d-flex justify-content-center mb-4">
+                        <img src="~/img/oops100.png" class="img-fluid w-50" width="1000" height="1000" alt="Oops" />
                     </div>
                     <div class="d-flex justify-content-center mb-4">
-                        <img src="~/img/Oops100.png" class="img-fluid w-50" alt="Oops" />
+                        <h3 class="text-danger ">@loc["Ocurrió un error inesperado"]</h3>
                     </div>
                     <form asp-page="error" method="post">
                         <div class="mb-3">
                             <h5>
-                                @loc["Ya tenemos los datos del error ocurrido:"]
+                                @loc["Ya tenemos los datos del error ocurrido"]
                             </h5>
-                            <p>@Model.ErrorMessage</p>
                             <label for="errordescription" class="form-label">@loc["Opcionalmente, para ayudarnos a solucionar el error, envianos una breve descripción de la tarea que estabas realizando."]</label>
                             <textarea asp-for="UserDescription" class="form-control" id="errordescription" rows="3"></textarea>
                             <div class="mb-3">
@@ -50,7 +53,7 @@
                             </div>
                             <input type="hidden" asp-for="FirstLoad" />
                             <div class="mb-3 fa-pull-right">
-                                <button type="submit" class="btn btn-sm btn-primary">@loc["Enviar"]</button>
+                                <button type="submit" class="btn btn-primary">@loc["Enviar"]</button>
                             </div>
                         </div>
                     </form>
@@ -64,11 +67,11 @@
     else
     {
         <div class="d-flex justify-content-center align-middle" style="margin-top: 5%;">
-            <div class="card p-4" style="border:30px solid #0094ff; border-radius: 12px;">
+            <div class="card p-4" style="border:30px #004494; border-radius: 12px;box-shadow: 0px 0px 0px 8px rgba(0,68,148,0.3)">
                 <div class="card-body">
                     <div class="d-flex justify-content-center align-middle">
 
-                        <h3 class="text-success">@loc["¡Muchas gracias por reportar este problema!, esperamos solucionarlo pronto."]</h3>
+                        <h3 class="text-success">@loc["¡Muchas gracias por reportar este problema! Lo estaremos solucionando a la brevedad."]</h3>
                     </div>
                 </div>
                 <div class="card-body">

@@ -4,6 +4,7 @@ using GS.Certifications.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GS.Certifications.Infrastructure.Migrations
 {
     [DbContext(typeof(CertificationsDbContext))]
-    partial class CertificationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250520151732_add fecha solicitud y ultima modif estado en SolicitudCertificacion")]
+    partial class addfechasolicitudyultimamodifestadoenSolicitudCertificacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -635,12 +637,6 @@ namespace GS.Certifications.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UltimaModificacionEstado")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("VigenciaDesde")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("VigenciaHasta")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("__MigCode")

@@ -3,19 +3,23 @@
         <div class="col-12">
             <div class="col-12 mt-4">
                 <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p>
-                <!-- Agregar título, por ejemplo: Modificación del Usuario {userId} -->
+                <p class="h6">Certificación {{ solicitudCertificacion.certificacion }}</p>
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 d-flex justify-content-between align-items-center mt-4 mb-4">
-                                <div>
-                                    <p class="h5 m-0">Documentos requeridos</p>
-                                </div>
-                                <!-- <button type="button" class="btn btn-outline-primary btn-sm" @click="addNewRow()">
+                        
+                        <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <p class="h5 m-0">Documentos requeridos</p>
+                                <span class="text-danger field-validation-error">
+                                        {{ errorBag.get("documentos") }}
+                                </span>
+                            </div>
+                            <!-- <button type="button" class="btn btn-outline-primary btn-sm" @click="addNewRow()">
                                     <b><i class="fas fa-plus"></i>Agregar</b>
                                 </button> -->
-                            </div>
+                        </div>
                         <table :id="`${idTable}`" class="table table-bordered table-hover">
                             <thead class="table-top">
                                 <tr class="text-center align-middle">
@@ -60,6 +64,18 @@
                                 </template>
                             </tbody>
                         </table>
+                        
+                        <hr>
+
+                        <div class="form-group col-lg-12 col-sm-12 mb-2">
+                            <label class="control-label">Observaciones</label>
+                            <textarea class="form-control" cols="20" rows="5"
+                                v-model="solicitudCertificacion.observaciones"></textarea>
+                            <span class="text-danger field-validation-error">
+                                {{ errorBag.get("observaciones") }}
+                            </span>
+                        </div>
+
 
                     </div>
                 </div>
@@ -67,7 +83,7 @@
         </div>
         <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3">
             <accept-button :disabled="!grants.update" @click="updateAsync">
-                Aceptar</accept-button>
+                Presentar</accept-button>
             <cancel-button @click="cancel">Cancelar</cancel-button>
         </div>
     </div>
@@ -149,6 +165,9 @@ export default {
         goDetail() {
             this.$router.push({ name: "detail", params: { id: this.solicitudCertificacion.id } });
         },
+        goHome() {
+            this.$router.push({ name: "home" });
+        },
         cancel() {
             this.$router.push({ name: "home" });
         },
@@ -158,7 +177,7 @@ export default {
                 .then(() => {
                     if (!this.errorBag.hasErrors()) {
                         this.uiService.showMessageSuccess("Operación confirmada")
-                        this.goDetail();
+                        this.goHome();
                     } else {
                         this.uiService.showMessageError("Operación rechazada")
                     }

@@ -25,4 +25,18 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptio
         {
         }
     }
+
+    public class YaExisteSolicitudCertificacionException : Exception
+    {
+        public YaExisteSolicitudCertificacionException() : base($"Ya existe una solicitud en curso para la certificación indicada.")
+        {
+        }
+    }
+
+    public class PresentacionSolicitudDocumentosInvalidosException : Exception
+    {
+        public PresentacionSolicitudDocumentosInvalidosException() : base($"Uno o más documentos de la solicitud no fueron presentados.")
+        {
+        }
+    }
 }
