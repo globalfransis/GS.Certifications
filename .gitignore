@@ -232,6 +232,9 @@ _pkginfo.txt
 # Libman
 wwwroot/lib/
 
+# Bundle
+wwwroot/bundle/
+
 # Others
 ClientBin/
 ~$*
