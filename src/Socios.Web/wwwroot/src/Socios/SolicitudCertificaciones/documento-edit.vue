@@ -2,14 +2,39 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 d-flex justify-content-between sticky-header mt-4">
-                <div class="row col-12 d-flex">
-                    <p class="h5 col-6">Modificación Documento {{ tipoDoc }} - Solicitud nro {{ documento.solicitudId }}
-                    </p>
-                    <div class="col-6 gap-4 d-flex justify-content-end">
-                        <documentoEstado-label :value="documento.estadoId" />
-
-                        <cancel-button class="ms-2" @click="cancel">Volver</cancel-button>
+                <div class="col-12 d-grid">
+                    <div class="row">
+                        <p class="h5 col-6">Modificación Documento {{ tipoDoc }} - Solicitud nro {{ documento.solicitudId }}
+                        </p>
+                        <div class="col-6 gap-4 d-flex justify-content-end">
+                            <documentoEstado-label :value="documento.estadoId" />
+                        
+                            <cancel-button class="ms-2" @click="cancel">Volver</cancel-button>
+                        </div>
                     </div>
+
+                    <div class="btn-group btn-group-sm col-1" role="group"
+                        aria-label="Controles de visualización del documento">
+                        <button type="button" class="btn btn-light"
+                            :class="{ 'active': currentLayoutMode === LayoutMode.Split }"
+                            @click="setLayout(LayoutMode.Split)" title="Mostrar vista dividida"
+                            aria-label="Mostrar vista dividida" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="fas fa-columns" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-light"
+                            :class="{ 'active': currentLayoutMode === LayoutMode.File }" @click="setLayout(LayoutMode.File)"
+                            title="Mostrar solo el documento" aria-label="Mostrar solo el documento"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="fas fa-file-alt" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-light"
+                            :class="{ 'active': currentLayoutMode === LayoutMode.Form }" @click="setLayout(LayoutMode.Form)"
+                            title="Mostrar solo el formulario" aria-label="Mostrar solo el formulario"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="fas fa-list-alt" aria-hidden="true"></i>
+                        </button>
+                    </div>
+<!-- 
                     <div>
                         <a id="splitLayoutButton" @click="setLayout(LayoutMode.Split)" title="Mostrar vista dividida"
                             data-toggle="tooltip" class="ms-2 btn btn-primary px-2 py-1">
@@ -17,13 +42,13 @@
                         </a>
                         <a id="fileLayoutButton" @click="setLayout(LayoutMode.File)" title="Mostrar solo el documento"
                             data-toggle="tooltip" class="btn btn-primary px-2 py-1">
-                            <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                            <i class="fas fa-file-alt" aria-hidden="true"></i>
                         </a>
                         <a id="formLayoutButton" @click="setLayout(LayoutMode.Form)" title="Mostrar solo el formulario"
                             data-toggle="tooltip" class="btn btn-primary px-2 py-1">
-                            <i class="fas fa-file" aria-hidden="true"></i>
+                            <i class="fas fa-list-alt" aria-hidden="true"></i>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="card mt-2">
@@ -68,7 +93,8 @@
                             </div>
                             <div class="form-group col-lg-12 col-sm-12 mb-2">
                                 <label class="control-label">Observaciones</label>
-                                <textarea class="form-control" cols="50" rows="25" v-model="documento.observaciones"></textarea>
+                                <textarea class="form-control" cols="50" rows="25"
+                                    v-model="documento.observaciones"></textarea>
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("observaciones") }}
                                 </span>
@@ -247,3 +273,19 @@ export default {
     border: 3px solid #dc3545 !important;
 }
 </style> -->
+
+<style>
+.btn-group .btn.btn-light.active {
+    background-color: #0d8b8b; 
+    color: white; 
+    border-color: #0d8b8b; 
+}
+
+.btn-group .btn.btn-light:not(.active):hover {
+    background-color: #e9ecef;
+}
+
+.btn-group .btn.btn-light:not(.active):focus {
+  box-shadow: 0 0 0 0.2rem rgba(#0d8b8b, 0.25);
+}
+</style>

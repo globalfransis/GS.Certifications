@@ -20,13 +20,14 @@
                 class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th data-column="Certificacion.Nombre" class="text-center">Certificación</th>
+                        <th data-column="Certificacion.Nombre" class="text-center w-10">Certificación</th>
                         <th data-column="FechaSolicitud" datatable-datetime class="text-center w-10">Fecha Solicitud
                         </th>
                         <th data-column="Estado.Descripcion" class="text-center w-10">Estado</th>
                         <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center w-10">Fecha
                             Estado</th>
                         <th no-sort-datatable class="text-center w-10">Vigencia</th>
+                        <th class="text-center w-10" no-sort-datatable>Estado Documentación</th>
                         <th class="text-center w-5" no-sort-datatable>Docs. Pendientes</th>
                         <th class="text-center w-5" no-sort-datatable>Docs. Cargados</th>
                         <th class="text-center w-5" no-sort-datatable>Docs. Aprobados</th>
@@ -41,10 +42,15 @@
                         <tr :key="item.id">
                             <td class="text-start align-middle">{{ item.certificacion }}</td>
                             <td class="text-start align-middle">{{ item.fechaSolicitud | uidate }}</td>
-                            <td class="text-start align-middle">{{ item.estado }}</td>
+                            <td class="text-start align-middle">
+                                <solicitudCertificacionEstado-label v-model="item.estadoId" />
+                            </td>
                             <td class="text-start align-middle">{{ item.ultimaModificacionEstado | uidate }}</td>
                             <td class="text-start align-middle">{{ item.vigenciaDesde | uidate }} - {{
             item.vigenciaHasta | uidate }}</td>
+                            <td class="align-middle">
+                                <solicitudCertificacionDocumentacionEstado-label :value="item" />
+                            </td>
                             <td class="text-end align-middle">{{ item.cantDocsPendientes }}</td>
                             <td class="text-end align-middle">{{ item.cantDocsCargados }}</td>
                             <td class="text-end align-middle">{{ item.cantDocsAprobados }}</td>
@@ -79,6 +85,10 @@ import solicitudCertificacionFilter from './solicitudCertificacion-filter.vue';
 
 import SolicitudCertificacion from "./SolicitudCertificacion";
 
+import solicitudCertificacionEstadoLabel from "@/Selects/solicitudCertificacionEstado-label.vue";
+import solicitudCertificacionDocumentacionEstadoLabel from "@/Selects/solicitudCertificacionDocumentacionEstado-label.vue";
+
+
 const NO_DATA_MESSAGE = "No hay datos";
 const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
 
@@ -90,7 +100,9 @@ export default {
         inlineDelete,
         solicitudCertificacionFilter,
         datatablePagination,
-        datatableRecordsLength
+        datatableRecordsLength,
+        solicitudCertificacionEstadoLabel,
+        solicitudCertificacionDocumentacionEstadoLabel
     },
     props: {
     },

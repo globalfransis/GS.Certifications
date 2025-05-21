@@ -104,13 +104,6 @@ const SOCIOS = 1;
 const BACKOFFICE = 2;
 const CORREO = 3;
 
-// Estados de la solicitud
-const PENDIENTE = 1;
-const PRESENTADA = 2;
-const APROBADA = 3;
-const RECHAZADA = 4;
-const BORRADOR = 5;
-
 export default {
     components: {
         AcceptButton,
@@ -127,11 +120,11 @@ export default {
             BACKOFFICE,
             CORREO,
             // --- Estados de la solicitud ---
-            PENDIENTE,
-            PRESENTADA,
-            APROBADA,
-            RECHAZADA,
-            BORRADOR,
+            PENDIENTE: SolicitudEstado.PENDIENTE,
+            PRESENTADA: SolicitudEstado.PRESENTADA,
+            APROBADA: SolicitudEstado.APROBADA,
+            RECHAZADA: SolicitudEstado.RECHAZADA,
+            BORRADOR: SolicitudEstado.BORRADOR,
             // ---
             solicitudCertificacion: new SolicitudCertificacion(),
             uiService: new UiService(),

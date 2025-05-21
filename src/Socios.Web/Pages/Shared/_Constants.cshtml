@@ -1,4 +1,6 @@
-﻿@using GSF.Application.Common.Interfaces;
+﻿@using GS.Certifications.Domain.Entities.Certificaciones
+@using GS.Certifications.Domain.Entities.Certificaciones.Documentos
+@using GSF.Application.Common.Interfaces;
 @using Microsoft.AspNetCore.Http
 @using Microsoft.Extensions.Configuration
 
@@ -10,5 +12,27 @@
 <script>
     // Datos de aplicación
     const appName = "@configuration.GetSection("Application:Name").Value";
+
+    // Estados de solicitud de certificación
+    const SolicitudEstado = Object.freeze( 
+    {
+        PENDIENTE: @SolicitudCertificacionEstado.PENDIENTE,
+        PRESENTADA: @SolicitudCertificacionEstado.PRESENTADA,
+        APROBADA: @SolicitudCertificacionEstado.APROBADA,
+        RECHAZADA: @SolicitudCertificacionEstado.RECHAZADA,
+        BORRADOR: @SolicitudCertificacionEstado.BORRADOR
+    });
+
+    // Estados de documento de solicitud de certificación
+    const DocumentoEstado = Object.freeze( 
+    {
+        PENDIENTE: @DocumentoEstado.PENDIENTE,
+        VALIDADO: @DocumentoEstado.VALIDADO,
+        RECHAZADO: @DocumentoEstado.RECHAZADO,
+        VENCIDO: @DocumentoEstado.VENCIDO,
+        PRESENTADO: @DocumentoEstado.PRESENTADO
+    });
+
+
 </script>
 

@@ -7,18 +7,18 @@
 
 <script>
 export default {
-    name: "DocumentoEstadoLabel",
+    name: "solicitudCertificacionEstado-label",
     props: {
         value: Number, // ID del estado
     },
     computed: {
         estado() {
             const estados = [
-                { idm: DocumentoEstado.PENDIENTE, descripcion: "Pendiente", color: "text-secondary", icono: "fas fa-circle" }, 
-                { idm: DocumentoEstado.VALIDADO, descripcion: "Validado", color: "text-success", icono: "fas fa-check-double" },
-                { idm: DocumentoEstado.RECHAZADO, descripcion: "Rechazado", color: "text-danger", icono: "fas fa-times-circle" },
-                { idm: DocumentoEstado.VENCIDO, descripcion: "Vencido", color: "text-warning", icono: "fas fa-check-circle" }, 
-                { idm: DocumentoEstado.PRESENTADO, descripcion: "Presentado", color: "text-success", icono: "fas fa-circle" } 
+                { idm: SolicitudEstado.PENDIENTE, descripcion: "Pendiente", color: "text-warning", icono: "fas fa-circle" }, 
+                { idm: SolicitudEstado.PRESENTADA, descripcion: "Presentada", color: "text-primary", icono: "fas fa-circle" },
+                { idm: SolicitudEstado.APROBADA, descripcion: "Aprobada", color: "text-success", icono: "fas fa-check-circle" },
+                { idm: SolicitudEstado.RECHAZADA, descripcion: "Rechazada", color: "text-danger", icono: "fas fa-times-circle" }, 
+                { idm: SolicitudEstado.BORRADOR, descripcion: "Borrador", color: "text-secondary", icono: "fas fa-circle" } 
             ];
             return estados.find(e => e.idm === this.value) || estados[0];
         },
