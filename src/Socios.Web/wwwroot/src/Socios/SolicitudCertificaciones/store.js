@@ -151,7 +151,7 @@ const formModule = {
             ctx.getters.getErrorBag.clear();
             return await new ajax()
                 .put(
-                    `${API_URL}/Solicitudes/Documentos/${documento.id}/Borrador`,
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}/Borradores`,
                     documento,
                     {
                         errorBag: ctx.getters.getErrorBag,

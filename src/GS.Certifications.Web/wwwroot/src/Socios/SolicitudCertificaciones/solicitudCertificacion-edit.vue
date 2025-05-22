@@ -3,19 +3,24 @@
         <div class="col-12">
             <div class="col-12 mt-4">
                 <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p>
-                <!-- Agregar título, por ejemplo: Modificación del Usuario {userId} -->
+                <p class="h6">Certificación {{ solicitudCertificacion.certificacion }}</p>
+                <p class="h6 col-12">{{ solicitudCertificacion.socio }}</p>
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 d-flex justify-content-between align-items-center mt-4 mb-4">
-                                <div>
-                                    <p class="h5 m-0">Documentos requeridos</p>
-                                </div>
-                                <!-- <button type="button" class="btn btn-outline-primary btn-sm" @click="addNewRow()">
+
+                        <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <p class="h5 m-0">Documentos requeridos</p>
+                                <span class="text-danger field-validation-error">
+                                    {{ errorBag.get("documentos") }}
+                                </span>
+                            </div>
+                            <!-- <button type="button" class="btn btn-outline-primary btn-sm" @click="addNewRow()">
                                     <b><i class="fas fa-plus"></i>Agregar</b>
                                 </button> -->
-                            </div>
+                        </div>
                         <table :id="`${idTable}`" class="table table-bordered table-hover">
                             <thead class="table-top">
                                 <tr class="text-center align-middle">
@@ -51,8 +56,12 @@
                                             {{ cd.archivoURL ? cd.archivoURL : "-" }}</td>
                                         <td class="text-center align-middle">
                                             <div class="d-inline-flex">
-                                                <inlineEdit @click="update(cd.id)" />
-                                                <inlineDelete @click="remove(cd)" />
+                                                <inlineEdit
+                                                    :disabled="!grants.update && solicitudCertificacion.propietarioActualId != BACKOFFICE"
+                                                    @click="update(cd.id)" />
+                                                <inlineDelete
+                                                    :disabled="!grants.update && solicitudCertificacion.propietarioActualId != BACKOFFICE"
+                                                    @click="remove(cd)" />
                                             </div>
                                         </td>
 
@@ -61,13 +70,36 @@
                             </tbody>
                         </table>
 
+                        <hr>
+
+                        <div class="form-group col-lg-12 col-sm-12 mb-2">
+                            <label class="control-label">Observaciones</label>
+                            <textarea class="form-control" cols="20" rows="5"
+                                v-model="solicitudCertificacion.observaciones"></textarea>
+                            <span class="text-danger field-validation-error">
+                                {{ errorBag.get("observaciones") }}
+                            </span>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3">
-            <accept-button :disabled="!grants.update" @click="updateAsync">
-                Aceptar</accept-button>
+            <accept-button
+                :disabled="!grants.update || solicitudCertificacion.propietarioActualId != BACKOFFICE || !solicitudCertificacion.documentosCargados.every(d => d.estadoId == DOCUMENTO_VALIDADO)"
+                v-if="solicitudCertificacion.propietarioActualId == BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
+                @click="updateAsync">
+                Aprobar</accept-button>
+
+            <button
+                :disabled="solicitudCertificacion.propietarioActualId != BACKOFFICE && solicitudCertificacion.estadoId != BORRADOR"
+                v-if="solicitudCertificacion.estadoId == PRESENTADA" class="btn btn-outline-danger btn-sm"
+                @click="rejectAsync" title="Rechazar solicitud">
+                Rechazar
+            </button>
+
             <cancel-button @click="cancel">Cancelar</cancel-button>
         </div>
     </div>
@@ -77,11 +109,16 @@
 import AcceptButton from "@/components/forms/accept-button.vue";
 import CancelButton from "@/components/forms/cancel-button.vue";
 import UiService from "@/common/uiService";
-import SolicitudCertificacion from './SolicitudCertificacion' // Modificar por la clase dto que corresponda
+import SolicitudCertificacion from './SolicitudCertificacion'
 import commonMixin from '@/Common/Mixins/commonMixin';
 
 import inlineEdit from "@/components/forms/inline-edit-button.vue";
 import inlineDelete from "@/components/forms/inline-delete-button.vue";
+
+// Origen de la solicitud
+const SOCIOS = 1;
+const BACKOFFICE = 2;
+const CORREO = 3;
 
 export default {
     components: {
@@ -94,8 +131,25 @@ export default {
     name: "solicitudCertificacion-edit",
     data: function () {
         return {
+            // --- Origen de la solicitud ---
+            SOCIOS,
+            BACKOFFICE,
+            CORREO,
+            // --- Estados de la solicitud ---
+            PENDIENTE: SolicitudEstado.PENDIENTE,
+            PRESENTADA: SolicitudEstado.PRESENTADA,
+            APROBADA: SolicitudEstado.APROBADA,
+            RECHAZADA: SolicitudEstado.RECHAZADA,
+            BORRADOR: SolicitudEstado.BORRADOR,
+            // --- Estados de los documentos de una solicitud
+            DOCUMENTO_PENDIENTE: DocumentoEstado.PENDIENTE,
+            DOCUMENTO_VALIDADO: DocumentoEstado.VALIDADO,
+            DOCUMENTO_RECHAZADO: DocumentoEstado.RECHAZADO,
+            DOCUMENTO_VENCIDO: DocumentoEstado.VENCIDO,
+            DOCUMENTO_PRESENTADO: DocumentoEstado.PRESENTADO,
+            // ---
             solicitudCertificacion: new SolicitudCertificacion(),
-            uiService: new UiService()
+            uiService: new UiService(),
         };
     },
     computed: {
@@ -149,6 +203,9 @@ export default {
         goDetail() {
             this.$router.push({ name: "detail", params: { id: this.solicitudCertificacion.id } });
         },
+        goHome() {
+            this.$router.push({ name: "home" });
+        },
         cancel() {
             this.$router.push({ name: "home" });
         },
@@ -158,7 +215,7 @@ export default {
                 .then(() => {
                     if (!this.errorBag.hasErrors()) {
                         this.uiService.showMessageSuccess("Operación confirmada")
-                        this.goDetail();
+                        this.goHome();
                     } else {
                         this.uiService.showMessageError("Operación rechazada")
                     }
@@ -166,6 +223,29 @@ export default {
                 .finally(() => {
                     this.uiService.showSpinner(false);
                 });
+        },
+        async rejectAsync() {
+            if (
+                await this.uiService.confirmActionModal(
+                    "¿Está usted seguro que desea rechazar esta solicitud?",
+                    "Aceptar",
+                    "Cancelar"
+                )
+            ) {
+                this.uiService.showSpinner(true)
+                await this.$store.dispatch("rejectAsync", this.solicitudCertificacion)
+                    .then(() => {
+                        if (!this.errorBag.hasErrors()) {
+                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.goHome();
+                        } else {
+                            this.uiService.showMessageError("Operación rechazada")
+                        }
+                    })
+                    .finally(() => {
+                        this.uiService.showSpinner(false);
+                    });
+            }
         }
     },
 };

@@ -7,7 +7,7 @@
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
             <p class="h5 m-0">Listado de Solicitudes</p>
-            <button :disabled="!grants.create || !parameters.certificacionId" type="button"
+            <button :disabled="!grants.create || !parameters.certificacionId || !parameters.socioId" type="button"
                 class="btn btn-outline-primary btn-sm" @click="createAsync">
                 <b><i class="fas fa-plus"></i>Agregar</b>
             </button>
@@ -20,10 +20,18 @@
                 class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th data-column="Certificacion.Nombre" class="text-center">Certificación</th>
-                        <th data-column="Estado.Descripcion" class="text-center">Estado</th>
-                        <th class="text-center w-5" no-sort-datatable>Docs. Aprobados</th>
+                        <th data-column="Certificacion.Nombre" class="text-center w-10">Certificación</th>
+                        <th data-column="Socio.RazonSocial" class="text-center w-10">Socio</th>
+                        <th data-column="FechaSolicitud" datatable-datetime class="text-center w-10">Fecha Solicitud
+                        </th>
+                        <th data-column="Estado.Descripcion" class="text-center w-10">Estado</th>
+                        <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center w-5">Fecha
+                            Estado</th>
+                        <th no-sort-datatable class="text-center w-10">Vigencia</th>
+                        <th class="text-center w-10" no-sort-datatable>Estado Documentación</th>
                         <th class="text-center w-5" no-sort-datatable>Docs. Pendientes</th>
+                        <th class="text-center w-5" no-sort-datatable>Docs. Cargados</th>
+                        <th class="text-center w-5" no-sort-datatable>Docs. Aprobados</th>
                         <th class="text-center w-5" no-sort-datatable>Acciones</th>
                     </tr>
                 </thead>
@@ -34,9 +42,20 @@
                     <template v-for="item in list">
                         <tr :key="item.id">
                             <td class="text-start align-middle">{{ item.certificacion }}</td>
-                            <td class="text-start align-middle">{{ item.estado }}</td>
-                            <td class="text-end align-middle">{{ item.cantDocsAprobados }}</td>
+                            <td class="text-start align-middle">{{ item.socio }}</td>
+                            <td class="text-start align-middle">{{ item.fechaSolicitud | uidate }}</td>
+                            <td class="text-start align-middle">
+                                <solicitudCertificacionEstado-label v-model="item.estadoId" />
+                            </td>
+                            <td class="text-start align-middle">{{ item.ultimaModificacionEstado | uidate }}</td>
+                            <td class="text-start align-middle">{{ item.vigenciaDesde | uidate }} - {{
+            item.vigenciaHasta | uidate }}</td>
+                            <td class="align-middle">
+                                <solicitudCertificacionDocumentacionEstado-label :value="item" />
+                            </td>
                             <td class="text-end align-middle">{{ item.cantDocsPendientes }}</td>
+                            <td class="text-end align-middle">{{ item.cantDocsCargados }}</td>
+                            <td class="text-end align-middle">{{ item.cantDocsAprobados }}</td>
                             <td class="text-center align-middle">
                                 <div class="d-inline-flex">
                                     <inlineEdit :enabled="grants.update" @click="update(item.id)" />
@@ -68,6 +87,10 @@ import solicitudCertificacionFilter from './solicitudCertificacion-filter.vue';
 
 import SolicitudCertificacion from "./SolicitudCertificacion";
 
+import solicitudCertificacionEstadoLabel from "@/Selects/solicitudCertificacionEstado-label.vue";
+import solicitudCertificacionDocumentacionEstadoLabel from "@/Selects/solicitudCertificacionDocumentacionEstado-label.vue";
+
+
 const NO_DATA_MESSAGE = "No hay datos";
 const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
 
@@ -79,7 +102,9 @@ export default {
         inlineDelete,
         solicitudCertificacionFilter,
         datatablePagination,
-        datatableRecordsLength
+        datatableRecordsLength,
+        solicitudCertificacionEstadoLabel,
+        solicitudCertificacionDocumentacionEstadoLabel
     },
     props: {
     },
@@ -147,19 +172,27 @@ export default {
             this.parameters = SessionParametersService.get() ? SessionParametersService.get() : new Parameters();
         },
         async remove(dto) {
-            this.uiService.showSpinner(true)
-            await this.$store.dispatch("deleteAsync", dto)
-                .then(async () => {
-                    if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
-                        await this.getAsync();
-                    } else {
-                        this.uiService.showMessageError("Operación rechazada")
-                    }
-                })
-                .finally(() => {
-                    this.uiService.showSpinner(false);
-                });
+            if (
+                await this.uiService.confirmActionModal(
+                    "¿Está usted seguro que desea eliminar esta solicitud?",
+                    "Aceptar",
+                    "Cancelar"
+                )
+            ) {
+                this.uiService.showSpinner(true)
+                await this.$store.dispatch("deleteAsync", dto)
+                    .then(async () => {
+                        if (!this.errorBag.hasErrors()) {
+                            this.uiService.showMessageSuccess("Operación confirmada")
+                            await this.getAsync();
+                        } else {
+                            this.uiService.showMessageError("Operación rechazada")
+                        }
+                    })
+                    .finally(() => {
+                        this.uiService.showSpinner(false);
+                    });
+            }
         },
         onClear() {
         },
@@ -210,21 +243,23 @@ export default {
                     "Cancelar"
                 )
             ) {
-                // Limpiamos la lista antes de navegar
-                this.$store.dispatch("clearList");
 
                 var nueva = new SolicitudCertificacion();
-
                 nueva.certificacionId = this.parameters.certificacionId;
+                nueva.socioId = this.parameters.socioId;
 
                 this.uiService.showSpinner(true)
                 await this.$store.dispatch("postAsync", nueva)
                     .then((id) => {
                         if (!this.errorBag.hasErrors()) {
                             this.uiService.showMessageSuccess("Operación confirmada")
+
+                            // Limpiamos la lista antes de navegar
+                            this.$store.dispatch("clearList");
+
                             this.update(id);
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(`Operación rechazada: ${this.errorBag.get("certificacionId")}`)
                         }
                     })
                     .finally(() => {

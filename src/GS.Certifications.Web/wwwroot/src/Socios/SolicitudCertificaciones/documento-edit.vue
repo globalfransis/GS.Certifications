@@ -2,14 +2,39 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 d-flex justify-content-between sticky-header mt-4">
-                <div class="row col-12 d-flex">
-                    <p class="h5 col-6">Modificación Documento {{ tipoDoc }} - Solicitud nro {{ documento.solicitudId }}
-                    </p>
-                    <div class="col-6 gap-4 d-flex justify-content-end">
-                        <documentoEstado-label :value="documento.estadoId" />
+                <div class="col-12 d-grid">
+                    <div class="row">
+                        <p class="h5 col-6">Modificación Documento {{ tipoDoc }} - Solicitud nro {{ documento.solicitudId }}
+                        </p>
+                        <div class="col-6 gap-4 d-flex justify-content-end">
+                            <documentoEstado-label :value="documento.estadoId" />
 
-                        <cancel-button class="ms-2" @click="cancel">Volver</cancel-button>
+                            <cancel-button class="ms-2" @click="cancel">Volver</cancel-button>
+                        </div>
                     </div>
+
+                    <div class="btn-group btn-group-sm col-1" role="group"
+                        aria-label="Controles de visualización del documento">
+                        <button type="button" class="btn btn-light"
+                            :class="{ 'active': currentLayoutMode === LayoutMode.Split }"
+                            @click="setLayout(LayoutMode.Split)" title="Mostrar vista dividida"
+                            aria-label="Mostrar vista dividida" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="fas fa-columns" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-light"
+                            :class="{ 'active': currentLayoutMode === LayoutMode.File }"
+                            @click="setLayout(LayoutMode.File)" title="Mostrar solo el documento"
+                            aria-label="Mostrar solo el documento" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="fas fa-file-alt" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-light"
+                            :class="{ 'active': currentLayoutMode === LayoutMode.Form }"
+                            @click="setLayout(LayoutMode.Form)" title="Mostrar solo el formulario"
+                            aria-label="Mostrar solo el formulario" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <i class="fas fa-list-alt" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <!-- 
                     <div>
                         <a id="splitLayoutButton" @click="setLayout(LayoutMode.Split)" title="Mostrar vista dividida"
                             data-toggle="tooltip" class="ms-2 btn btn-primary px-2 py-1">
@@ -17,13 +42,13 @@
                         </a>
                         <a id="fileLayoutButton" @click="setLayout(LayoutMode.File)" title="Mostrar solo el documento"
                             data-toggle="tooltip" class="btn btn-primary px-2 py-1">
-                            <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                            <i class="fas fa-file-alt" aria-hidden="true"></i>
                         </a>
                         <a id="formLayoutButton" @click="setLayout(LayoutMode.Form)" title="Mostrar solo el formulario"
                             data-toggle="tooltip" class="btn btn-primary px-2 py-1">
-                            <i class="fas fa-file" aria-hidden="true"></i>
+                            <i class="fas fa-list-alt" aria-hidden="true"></i>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="card mt-2">
@@ -56,7 +81,7 @@
                                 <label class="control-label">Fecha Desde</label>
                                 <input type="date" class="form-control" v-model="documento.fechaDesde">
                                 <span class="text-danger field-validation-error">
-                                    {{ errorBag.get("fechaDesde") }}
+                                    {{ errorBag.get("vigencia") }}
                                 </span>
                             </div>
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
@@ -68,7 +93,8 @@
                             </div>
                             <div class="form-group col-lg-12 col-sm-12 mb-2">
                                 <label class="control-label">Observaciones</label>
-                                <textarea class="form-control" cols="50" rows="25" v-model="documento.observaciones"></textarea>
+                                <textarea class="form-control" cols="50" rows="25"
+                                    v-model="documento.observaciones"></textarea>
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("observaciones") }}
                                 </span>
@@ -78,12 +104,25 @@
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3" v-if="currentLayoutMode != LayoutMode.File">
-                <button @click.prevent="saveAsync" class="btn btn-secondary btn-sm">
+                <button @click.prevent="saveAsync"
+                    :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
+                    class="btn btn-secondary btn-sm">
                     <i class="fas fa-save"></i>
                     Guardar
                 </button>
-                <accept-button @click="updateAsync">
+
+                <accept-button @click="updateAsync"
+                    :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PRESENTADO"
+                    v-if="documento.estadoId == DOCUMENTO_PRESENTADO">
                     Validar</accept-button>
+
+                <button
+                    :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
+                    v-if="documento.estadoId == DOCUMENTO_PRESENTADO" class="btn btn-outline-danger btn-sm"
+                    @click="rejectAsync" title="Rechazar solicitud">
+                    Rechazar
+                </button>
+
                 <cancel-button @click="cancel">Cancelar</cancel-button>
             </div>
         </div>
@@ -107,6 +146,11 @@ import Documento from "./Documento";
 
 const NO_DATA_MESSAGE = "No hay datos";
 
+// Origen de la solicitud
+const SOCIOS = 1;
+const BACKOFFICE = 2;
+const CORREO = 3;
+
 export default {
     components: {
         AcceptButton,
@@ -129,6 +173,23 @@ export default {
             documentoFormularioDivId: "__documentoFormulario",
             LayoutMode,
             currentLayoutMode: LayoutMode.Split,
+            // --- Origen de la solicitud ---
+            SOCIOS,
+            BACKOFFICE,
+            CORREO,
+            // --- Estados de la solicitud ---
+            PENDIENTE: SolicitudEstado.PENDIENTE,
+            PRESENTADA: SolicitudEstado.PRESENTADA,
+            APROBADA: SolicitudEstado.APROBADA,
+            RECHAZADA: SolicitudEstado.RECHAZADA,
+            BORRADOR: SolicitudEstado.BORRADOR,
+            // --- Estados de los documentos de una solicitud
+            DOCUMENTO_PENDIENTE: DocumentoEstado.PENDIENTE,
+            DOCUMENTO_VALIDADO: DocumentoEstado.VALIDADO,
+            DOCUMENTO_RECHAZADO: DocumentoEstado.RECHAZADO,
+            DOCUMENTO_VENCIDO: DocumentoEstado.VENCIDO,
+            DOCUMENTO_PRESENTADO: DocumentoEstado.PRESENTADO,
+            // ---
 
         };
     },
@@ -199,20 +260,52 @@ export default {
             this.$router.push({ name: "edit", params: { id: this.documento.solicitudId } });
         },
         async updateAsync() {
-            this.errorBag.clear();
-            this.uiService.showSpinner(true)
-            return await this.$store.dispatch("putDocumentoAsync", this.documento)
-                .then(() => {
-                    if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
-                        this.goSolicitudEdit();
-                    } else {
-                        this.uiService.showMessageError("Operación rechazada")
-                    }
-                })
-                .finally(() => {
-                    this.uiService.showSpinner(false);
-                });
+            if (
+                await this.uiService.confirmActionModal(
+                    "¿Está usted seguro que desea aprobar esta solicitud?",
+                    "Aceptar",
+                    "Cancelar"
+                )
+            ) {
+                this.errorBag.clear();
+                this.uiService.showSpinner(true)
+                return await this.$store.dispatch("putDocumentoAsync", this.documento)
+                    .then(() => {
+                        if (!this.errorBag.hasErrors()) {
+                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.goSolicitudEdit();
+                        } else {
+                            this.uiService.showMessageError("Operación rechazada")
+                        }
+                    })
+                    .finally(() => {
+                        this.uiService.showSpinner(false);
+                    });
+            }
+        },
+        async rejectAsync() {
+            if (
+                await this.uiService.confirmActionModal(
+                    "¿Está usted seguro que desea rechazar esta solicitud?",
+                    "Aceptar",
+                    "Cancelar"
+                )
+            ) {
+                this.errorBag.clear();
+                this.uiService.showSpinner(true)
+                return await this.$store.dispatch("rejectDocumentoAsync", this.documento)
+                    .then(() => {
+                        if (!this.errorBag.hasErrors()) {
+                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.goSolicitudEdit();
+                        } else {
+                            this.uiService.showMessageError("Operación rechazada")
+                        }
+                    })
+                    .finally(() => {
+                        this.uiService.showSpinner(false);
+                    });
+            }
         },
         async saveAsync() {
             this.errorBag.clear();
@@ -247,3 +340,19 @@ export default {
     border: 3px solid #dc3545 !important;
 }
 </style> -->
+
+<style>
+.btn-group .btn.btn-light.active {
+    background-color: #0d8b8b;
+    color: white;
+    border-color: #0d8b8b;
+}
+
+.btn-group .btn.btn-light:not(.active):hover {
+    background-color: #e9ecef;
+}
+
+.btn-group .btn.btn-light:not(.active):focus {
+    box-shadow: 0 0 0 0.2rem rgba(#0d8b8b, 0.25);
+}
+</style>

@@ -170,19 +170,27 @@ export default {
             this.parameters = SessionParametersService.get() ? SessionParametersService.get() : new Parameters();
         },
         async remove(dto) {
-            this.uiService.showSpinner(true)
-            await this.$store.dispatch("deleteAsync", dto)
-                .then(async () => {
-                    if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
-                        await this.getAsync();
-                    } else {
-                        this.uiService.showMessageError("Operación rechazada")
-                    }
-                })
-                .finally(() => {
-                    this.uiService.showSpinner(false);
-                });
+            if (
+                await this.uiService.confirmActionModal(
+                    "¿Está usted seguro que desea eliminar esta solicitud?",
+                    "Aceptar",
+                    "Cancelar"
+                )
+            ) {
+                this.uiService.showSpinner(true)
+                await this.$store.dispatch("deleteAsync", dto)
+                    .then(async () => {
+                        if (!this.errorBag.hasErrors()) {
+                            this.uiService.showMessageSuccess("Operación confirmada")
+                            await this.getAsync();
+                        } else {
+                            this.uiService.showMessageError("Operación rechazada")
+                        }
+                    })
+                    .finally(() => {
+                        this.uiService.showSpinner(false);
+                    });
+            }
         },
         onClear() {
         },

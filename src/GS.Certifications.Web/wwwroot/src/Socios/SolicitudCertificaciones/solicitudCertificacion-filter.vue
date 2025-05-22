@@ -16,10 +16,14 @@
                                 <label class="control-label">Certificación</label>
                                 <input type="text" disabled class="form-control" value="FONASBA">
                             </div>
-                            <!-- <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" v-model="parameters.nombre">
-                            </div> -->
+
+                            <div class="form-group col-lg-3 col-sm-12 mb-4">
+                                <label class="control-label">Socio</label>
+                                <empresaPortal-select v-model="parameters.socioId" />
+                                <span class="text-danger field-validation-error">
+                                    {{ errorBag.get("socioId") }}
+                                </span>
+                            </div>
 
                             <div class="form-group col-lg-3 col-sm-12 mb-4">
                                 <label class="control-label">Estado</label>
@@ -50,14 +54,13 @@
 <script>
 import Parameters from "./Parameters.js"
 import solicitudCertificacionEstadoSelect from "@/Selects/solicitudCertificacionEstado-select.vue";
+import empresaPortalSelect from "@/Selects/empresaPortal-select.vue";
 
 export default {
-    components: { solicitudCertificacionEstadoSelect },
+    components: { empresaPortalSelect, solicitudCertificacionEstadoSelect },
     name: "solicitudCertificacion-filter",
     props: {
         value: Object
-    },
-    computed: {
     },
     data: function () {
         return {
@@ -75,6 +78,9 @@ export default {
         }
     },
     computed: {
+        errorBag() {
+            return this.$store.getters.getErrorBag;
+        },
         parameters: {
             get: function () {
                 return this.value;

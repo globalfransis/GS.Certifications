@@ -18,6 +18,8 @@ public class UpdateDocumentoSolicitudCertificacionDraftCommand : IRequest<Unit>,
     public DateTime? FechaDesde { get; set; }
     public DateTime? FechaHasta { get; set; }
     public DateTime? FechaSubida { get; set; }
+    public short? EstadoId { get; set; }
+    public long? ValidadoPorId { get; set; }
 }
 
 public class UpdateDocumentoSolicitudCertificacionDraftCommandHandler : BaseRequestHandler<Unit, UpdateDocumentoSolicitudCertificacionDraftCommand, Unit> // Adjust TEntity and TResponse properly
