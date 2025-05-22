@@ -13708,7 +13708,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Name = "Administracion",
                             OrderNo = 50,
                             ParentId = 100003L,
-                            TargetPath = "/Proveedores/Empresas/Index",
+                            TargetPath = "/Socios/Empresas/Index",
                             Transferable = true
                         },
                         new
@@ -13725,7 +13725,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Name = "Impuestos",
                             OrderNo = 50,
                             ParentId = 10L,
-                            TargetPath = "/Proveedores/Impuestos/Index",
+                            TargetPath = "/Socios/Impuestos/Index",
                             Transferable = true
                         },
                         new
@@ -13742,7 +13742,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Name = "Percepciones",
                             OrderNo = 50,
                             ParentId = 10L,
-                            TargetPath = "/Proveedores/Percepciones/Index",
+                            TargetPath = "/Socios/Percepciones/Index",
                             Transferable = true
                         },
                         new
@@ -13776,7 +13776,7 @@ namespace GS.Certifications.Infrastructure.Migrations
                             Name = "Documentos de Compras",
                             OrderNo = 50,
                             ParentId = 100003L,
-                            TargetPath = "/Proveedores/OrdenesCompras/Index",
+                            TargetPath = "/Socios/OrdenesCompras/Index",
                             Transferable = true
                         },
                         new

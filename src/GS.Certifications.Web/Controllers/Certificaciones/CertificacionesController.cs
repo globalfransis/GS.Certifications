@@ -10,6 +10,8 @@ using GS.Certifications.Web.Controllers.Common.Attributes;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System;
+using GS.Certifications.Domain.Entities.Comprobantes;
+using GSF.Application.Common.Interfaces;
 
 namespace GS.Certifications.Web.Controllers.Certificaciones
 {
@@ -19,10 +21,12 @@ namespace GS.Certifications.Web.Controllers.Certificaciones
     public class CertificacionesController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly ICurrentUserService currentUserService;
 
-        public CertificacionesController(IMediator mediator)
+        public CertificacionesController(IMediator mediator, ICurrentUserService currentUserService)
         {
             _mediator = mediator;
+            this.currentUserService = currentUserService;
         }
 
         [HttpGet("Solicitudes/{solicitudId}")]
@@ -79,7 +83,41 @@ namespace GS.Certifications.Web.Controllers.Certificaciones
             return Ok(result);
         }
 
-        [HttpPut("Solicitudes/Documentos/{id}/Borrador")]
+        [HttpPut("Solicitudes/{id}")]
+        public async Task<ActionResult<Unit>> UpdateSolicitudAsync([FromRoute] int id, [FromBody] AprobarSolicitudCertificacionCommand command)
+        {
+            command.Id = id;
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+
+        [HttpPut("Solicitudes/{id}/Rechazos")]
+        public async Task<ActionResult<Unit>> RechazoSolicitudAsync([FromRoute] int id, [FromBody] RechazarSolicitudCertificacionCommand command)
+        {
+            command.Id = id;
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPut("Solicitudes/Documentos/{id}/Validaciones")]
+        public async Task<ActionResult<Unit>> ValidarDocumentoSolicitudAsync([FromRoute] int id, [FromBody] ValidarDocumentoSolicitudCertificacionCommand command)
+        {
+            command.Id = id;
+            command.ValidadoPorId = currentUserService.UserId;
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPut("Solicitudes/Documentos/{id}/Rechazos")]
+        public async Task<ActionResult<Unit>> RechazarDocumentoSolicitudAsync([FromRoute] int id, [FromBody] RechazarDocumentoSolicitudCertificacionCommand command)
+        {
+            command.Id = id;
+            await _mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPut("Solicitudes/Documentos/{id}/Borradores")]
         public async Task<ActionResult<Unit>> UpdateDocumentoDraftAsync([FromRoute] int id, [FromBody] UpdateDocumentoSolicitudCertificacionDraftCommand command)
         {
             command.Id = id;
@@ -103,6 +141,8 @@ namespace GS.Certifications.Web.Controllers.Certificaciones
 
             //command.SocioId = (int)currentSocioId;
             command.CertificacionId = id;
+            command.OrigenId = Origen.BACKOFFICE;
+            command.PropietarioId = Origen.BACKOFFICE;
 
             var result = await _mediator.Send(command);
 

@@ -147,11 +147,23 @@ const formModule = {
                 .finally(() => {
                 });
         },
+        async rejectAsync(ctx, solicitudCertificacion) {
+            ctx.getters.getErrorBag.clear();
+            return await new ajax()
+                .put(
+                    `${API_URL}/Solicitudes/${solicitudCertificacion.id}/Rechazos`,
+                    solicitudCertificacion,
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
         async updateDocumentoDraftAsync(ctx, documento) {
             ctx.getters.getErrorBag.clear();
             return await new ajax()
                 .put(
-                    `${API_URL}/Solicitudes/Documentos/${documento.id}/Borrador`,
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}/Borradores`,
                     documento,
                     {
                         errorBag: ctx.getters.getErrorBag,
@@ -163,7 +175,19 @@ const formModule = {
             ctx.getters.getErrorBag.clear();
             return await new ajax()
                 .put(
-                    `${API_URL}/Solicitudes/Documentos/${documento.id}`,
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}/Validaciones`,
+                    documento,
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
+        async rejectDocumentoAsync(ctx, documento) {
+            ctx.getters.getErrorBag.clear();
+            return await new ajax()
+                .put(
+                    `${API_URL}/Solicitudes/Documentos/${documento.id}/Rechazos`,
                     documento,
                     {
                         errorBag: ctx.getters.getErrorBag,

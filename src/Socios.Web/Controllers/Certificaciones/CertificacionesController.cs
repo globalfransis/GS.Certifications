@@ -78,7 +78,7 @@ namespace Socios.Web.Controllers.Certificaciones
             return Ok(result);
         }
 
-        [HttpPut("Solicitudes/Documentos/{id}/Borrador")]
+        [HttpPut("Solicitudes/Documentos/{id}/Borradores")]
         public async Task<ActionResult<Unit>> UpdateDocumentoDraftAsync([FromRoute] int id, [FromBody] UpdateDocumentoSolicitudCertificacionDraftCommand command)
         {
             command.Id = id;

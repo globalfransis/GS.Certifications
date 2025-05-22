@@ -39,4 +39,26 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptio
         {
         }
     }
+
+    public class AprobacionSolicitudDocumentosInvalidosException : Exception
+    {
+        public AprobacionSolicitudDocumentosInvalidosException() : base($"Uno o más documentos de la solicitud no son válidos.")
+        {
+        }
+    }
+
+
+    public class DocumentoVigenciaNulaException : Exception
+    {
+        public DocumentoVigenciaNulaException() : base($"La vigencia del documento es requerida.")
+        {
+        }
+    }
+
+    public class DocumentoVigenciaInvalidaException : Exception
+    {
+        public DocumentoVigenciaInvalidaException() : base($"La vigencia del documento es inválida.")
+        {
+        }
+    }
 }

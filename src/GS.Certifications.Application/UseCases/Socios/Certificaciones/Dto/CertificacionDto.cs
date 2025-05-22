@@ -101,6 +101,8 @@ public class DocumentoCargadoDto : IMapFrom<DocumentoCargado>
     public Guid Guid { get; set; }
     public Guid SolicitudGuid { get; set; }
 
+    public short? PropietarioActualId { get; set; }
+
     public string Observaciones { get; set; }
 
     public class MappingProfile : Profile
@@ -110,6 +112,7 @@ public class DocumentoCargadoDto : IMapFrom<DocumentoCargado>
             CreateMap<DocumentoCargado, DocumentoCargadoDto>()
                 .ForMember(dst => dst.Tipo, opt => opt.MapFrom(src => src.DocumentoRequerido.Tipo.Nombre))
                 .ForMember(dst => dst.ValidadoPor, opt => opt.MapFrom(src => src.ValidadoPor.Login))
+                .ForMember(dst => dst.PropietarioActualId, opt => opt.MapFrom(src => src.Solicitud.PropietarioActualId))
                 .ForMember(dst => dst.SolicitudGuid, opt => opt.MapFrom(src => src.Solicitud.Guid))
                 .ForMember(dst => dst.Estado, opt => opt.MapFrom(src => src.Estado.Descripcion));
         }

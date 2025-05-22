@@ -111,8 +111,8 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         int? Version { get; set; }
         DateTime? FechaDesde { get; set; }
         DateTime? FechaHasta { get; set; }
-        //short EstadoId { get; set; }
-        //long? ValidadoPorId { get; set; }
+        short? EstadoId { get; set; }
+        long? ValidadoPorId { get; set; }
         DateTime? FechaSubida { get; set; }
         byte[] RowVersion { get; set; }
     }

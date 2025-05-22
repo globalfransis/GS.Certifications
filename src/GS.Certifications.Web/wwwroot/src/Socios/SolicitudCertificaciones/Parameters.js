@@ -17,5 +17,6 @@ export default class Parameters extends BaseParameters {
         this.activa = null;
         this.estadoId = null;
         this.certificacionId = 1;
+        this.socioId = null;
     }
 }

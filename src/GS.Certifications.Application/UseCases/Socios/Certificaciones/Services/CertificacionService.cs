@@ -138,15 +138,56 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         public async Task UpdateDocumentoAsync(int id, ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate)
         {
             var documento = await GetDocumentoAsync(id);
+            var hasBeenUpdated = false;
 
-            documento.ArchivoURL = solicitudCertificacionDocumentoUpdate.ArchivoURL;
-            documento.Observaciones = solicitudCertificacionDocumentoUpdate.Observaciones;
-            documento.Version = solicitudCertificacionDocumentoUpdate.Version;
-            documento.FechaDesde = solicitudCertificacionDocumentoUpdate.FechaDesde;
-            documento.FechaHasta = solicitudCertificacionDocumentoUpdate.FechaHasta;
-            documento.RowVersion = solicitudCertificacionDocumentoUpdate.RowVersion;
+            if (!string.IsNullOrEmpty(solicitudCertificacionDocumentoUpdate.ArchivoURL))
+            {
+                documento.ArchivoURL = solicitudCertificacionDocumentoUpdate.ArchivoURL;
+                hasBeenUpdated = true;
+            }
+
+            if (!string.IsNullOrEmpty(solicitudCertificacionDocumentoUpdate.Observaciones))
+            {
+                documento.Observaciones = solicitudCertificacionDocumentoUpdate.Observaciones;
+                hasBeenUpdated = true;
+            }
+
+            if (solicitudCertificacionDocumentoUpdate.Version is not null)
+            {
+                documento.Version = solicitudCertificacionDocumentoUpdate.Version;
+                hasBeenUpdated = true;
+            }
+
+            if (solicitudCertificacionDocumentoUpdate.FechaDesde is not null)
+            {
+                documento.FechaDesde = solicitudCertificacionDocumentoUpdate.FechaDesde;
+                hasBeenUpdated = true;
+            }
+
+            if (solicitudCertificacionDocumentoUpdate.FechaHasta is not null)
+            {
+                documento.FechaHasta = solicitudCertificacionDocumentoUpdate.FechaHasta;
+                hasBeenUpdated = true;
+            }
+
+            if (solicitudCertificacionDocumentoUpdate.ValidadoPorId is not null)
+            {
+                documento.ValidadoPorId = solicitudCertificacionDocumentoUpdate.ValidadoPorId;
+                hasBeenUpdated = true;
+            }
+
+            if (solicitudCertificacionDocumentoUpdate.EstadoId is not null)
+            {
+                ValidarCambioEstadoDocumento(solicitudCertificacionDocumentoUpdate, documento);
+                documento.EstadoId = (short)solicitudCertificacionDocumentoUpdate.EstadoId;
+                hasBeenUpdated = true;
+            }
+
+            if (hasBeenUpdated)
+            {
+                documento.RowVersion = solicitudCertificacionDocumentoUpdate.RowVersion; 
+            }
         }
-
 
         public async Task UpdateDocumentoDraftAsync(int id, ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate)
         {
@@ -312,6 +353,27 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             {
                 if (solicitudToUpdate.DocumentosCargados.Any(d => d.EstadoId != DocumentoEstado.PRESENTADO)) throw new PresentacionSolicitudDocumentosInvalidosException();
             }
+            if (solicitud.EstadoId == SolicitudCertificacionEstado.RECHAZADA)
+            {
+                if (!solicitudToUpdate.DocumentosCargados.All(d => d.EstadoId == DocumentoEstado.VALIDADO)) throw new AprobacionSolicitudDocumentosInvalidosException();
+            }
+        }
+
+
+        private static void ValidarCambioEstadoDocumento(ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate, DocumentoCargado documento)
+        {
+            if (solicitudCertificacionDocumentoUpdate.EstadoId == DocumentoEstado.VALIDADO)
+            {
+                if (documento.FechaDesde is null || documento.FechaHasta is null)
+                {
+                    throw new DocumentoVigenciaNulaException();
+                }
+
+                if (documento.FechaDesde > documento.FechaHasta)
+                {
+                    throw new DocumentoVigenciaNulaException();
+                }
+            }
         }
         #endregion
 
@@ -325,6 +387,19 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             public DateTime? VigenciaDesde { get; set; }
             public DateTime? VigenciaHasta { get; set; }
             public short? PropietarioId { get; set; }
+        }
+
+        public class SolicitudCertificacionDocumentoUpdate : ISolicitudCertificacionDocumentoUpdate
+        {
+            public string ArchivoURL { get; set; }
+            public string Observaciones { get; set; }
+            public int? Version { get; set; }
+            public DateTime? FechaDesde { get; set; }
+            public DateTime? FechaHasta { get; set; }
+            public short? EstadoId { get; set; }
+            public long? ValidadoPorId { get; set; }
+            public DateTime? FechaSubida { get; set; }
+            public byte[] RowVersion { get; set; }
         }
         #endregion
 

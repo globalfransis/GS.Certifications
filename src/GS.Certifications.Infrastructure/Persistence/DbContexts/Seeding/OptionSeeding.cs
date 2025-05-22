@@ -33,11 +33,11 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
 
     protected override void LoadSeedingData()
     {
-        LoadProveedoresOptions();
+        LoadSociosOptions();
         LoadBackendOptions();
     }
 
-    private void LoadProveedoresOptions()
+    private void LoadSociosOptions()
     {
         SeedingData.AddRange(
             new Option()
@@ -103,7 +103,7 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Description = "Administracion",
                 Transferable = true,
                 DomainFIdm = DomainFConfiguration.GsfBackOfficeIdm,
-                TargetPath = "/Proveedores/Empresas/Index",
+                TargetPath = "/Socios/Empresas/Index",
                 ParentId = SociosBackendOptionId
             },
             new Option
@@ -115,7 +115,7 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Description = "Impuestos",
                 Transferable = true,
                 DomainFIdm = DomainFConfiguration.GsfBackOfficeIdm,
-                TargetPath = "/Proveedores/Impuestos/Index",
+                TargetPath = "/Socios/Impuestos/Index",
                 ParentId = ParametrizationRootOptionId
             },
             new Option
@@ -127,7 +127,7 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Description = "Percepciones",
                 Transferable = true,
                 DomainFIdm = DomainFConfiguration.GsfBackOfficeIdm,
-                TargetPath = "/Proveedores/Percepciones/Index",
+                TargetPath = "/Socios/Percepciones/Index",
                 ParentId = ParametrizationRootOptionId
             },
             new Option
@@ -151,7 +151,7 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Description = "Documentos de Compras",
                 Transferable = true,
                 DomainFIdm = DomainFConfiguration.GsfBackOfficeIdm,
-                TargetPath = "/Proveedores/OrdenesCompras/Index",
+                TargetPath = "/Socios/OrdenesCompras/Index",
                 ParentId = SociosBackendOptionId
             },
             new Option
