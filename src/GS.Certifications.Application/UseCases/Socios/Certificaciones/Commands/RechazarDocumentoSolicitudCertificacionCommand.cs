@@ -1,7 +1,6 @@
 ﻿using GS.Certifications.Application.CQRS.DbContexts;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Services;
 using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
-using GS.Certifications.Domain.Entities.Comprobantes;
 using GSF.Application.Extensions.GSFMediatR;
 using MediatR;
 using System;
@@ -41,6 +40,20 @@ public class RechazarDocumentoSolicitudCertificacionCommandHandler : BaseRequest
             };
 
             await certificacionService.UpdateDocumentoAsync(request.Id, documentoSolicitudUpdate);
+
+            var documentoRechazado = await certificacionService.GetDocumentoAsync(request.Id);
+
+            var nuevoDocCreate = new SolicitudCertificacionDocumentoCreate()
+            {
+                SolicitudId = documentoRechazado.SolicitudId,
+                Version = documentoRechazado.Version != null ? documentoRechazado.Version + 1 : 1,
+                DocumentoRequeridoId = documentoRechazado.DocumentoRequeridoId
+            };
+
+            var nuevoDocumentoPendiente = certificacionService.CreateDocumento(nuevoDocCreate);
+
+            Context.DocumentoCargados.Add(nuevoDocumentoPendiente);
+
             await Context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

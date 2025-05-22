@@ -60,6 +60,14 @@ public class AprobarSolicitudCertificacionCommandHandler : BaseRequestHandler<Un
         {
             throw new ValidationErrorException("Documentos", ex.Message);
         }
+        catch (SolicitudVigenciaNulaException ex)
+        {
+            throw new ValidationErrorException("Vigencia", ex.Message);
+        }
+        catch (SolicitudVigenciaInvalidaException ex)
+        {
+            throw new ValidationErrorException("Vigencia", ex.Message);
+        }
         catch (Exception)
         {
             throw;

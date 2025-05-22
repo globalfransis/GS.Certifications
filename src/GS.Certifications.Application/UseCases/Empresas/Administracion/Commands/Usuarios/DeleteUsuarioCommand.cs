@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using GS.Certifications.Domain.Commons.Constants;
 
 namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Commands.Usuarios
 {
@@ -42,19 +43,33 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Command
 
             _context.UsuarioEmpresaPortalRol.RemoveRange(roles);
 
-            //var rolesList = roles.ToList();
-
-            //foreach (var rol in rolesList)
-            //{
-            //    rol.IsDeleted = true;
-            //}
-
             _context.UsuarioEmpresasPortales.Remove(usuario);
 
-            //usuario.IsDeleted = true;
+            await ClearExternalUserData(usuario.UserId, request.Id);
 
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
+        }
+
+        private async Task ClearExternalUserData(long userId, long usuarioEmpresasPortalesRemovedId)
+        {
+            var user = await _context.Users
+                                    .Include(u => u.CompaniesUsersGroups).ThenInclude(cug => cug.Company)
+                                    .Where(u => u.Id == userId && u.UserTypeIdm == UserTypeIdmConstants.Socio)
+                                    .FirstOrDefaultAsync();
+
+            if (user is not null)
+            {
+                var ueps = await _context.UsuarioEmpresasPortales
+                                    .Include(uep => uep.EmpresaPortal).ThenInclude(ep => ep.Company)
+                                    .Where(uep => uep.User == user && uep.Id != usuarioEmpresasPortalesRemovedId).ToListAsync();
+
+                var cugsToRemove = user.CompaniesUsersGroups.Where(cug => !ueps.Any(uep => uep.EmpresaPortal.Company == cug.Company)).ToList();
+
+                _context.CompaniesUsersGroups.RemoveRange(cugsToRemove);
+            }
+
+
         }
     }
 }

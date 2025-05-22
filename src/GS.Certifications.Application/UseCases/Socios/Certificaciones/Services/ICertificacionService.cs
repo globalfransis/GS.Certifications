@@ -18,6 +18,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         Task<Certificacion> GetAsync(int id);
         Task<SolicitudCertificacion> GetSolicitudAsync(int id);
         Task<DocumentoCargado> GetDocumentoAsync(int id);
+        DocumentoCargado CreateDocumento(ISolicitudCertificacionDocumentoCreate d);
         Task UpdateDocumentoDraftAsync(int id, ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate);
         Task UpdateDocumentoAsync(int id, ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate);
         Task<IPaginatedQueryResult<Certificacion>> GetCertificacionesAsync(ICertificacionQueryParameter request);
@@ -102,6 +103,16 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         DateTime? VigenciaDesde { get; set; }
         DateTime? VigenciaHasta { get; set; }
         short? PropietarioId { get; set; }
+    }
+
+    public interface ISolicitudCertificacionDocumentoCreate
+    {
+        int SolicitudId { get; set; }
+        //string Observaciones { get; set; }
+        int? Version { get; set; }
+        DateTime? FechaDesde { get; set; }
+        DateTime? FechaHasta { get; set; }
+        int DocumentoRequeridoId { get; set; }
     }
 
     public interface ISolicitudCertificacionDocumentoUpdate

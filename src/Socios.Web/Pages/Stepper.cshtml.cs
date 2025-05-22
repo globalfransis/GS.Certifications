@@ -37,7 +37,13 @@ public class StepperModel : BasePageModel
     public List<SecurityUserCompaniesDto> Companies { get; set; }
 
     [BindProperty]
-    public long? UsuarioEmpresaPortalId { get; set; } // Vincula el ID seleccionado del dropdow  
+    public long? UsuarioEmpresaPortalId { get; set; } // Vincula el ID seleccionado del dropdow
+
+    [BindProperty]
+    public bool ShowCompanySelector { get; set; } = true;
+
+    [BindProperty]
+    public string CompanyAutoSelectedName { get; set; }
 
 
     public StepperModel(
@@ -62,11 +68,30 @@ public class StepperModel : BasePageModel
         Title = "Stepper";
     }
 
-    public async Task OnGet(string returnUrl)
+    public async Task<IActionResult> OnGet(string returnUrl)
     {
         await SetComboCompanies();
-    }
 
+        if (Companies.Count == 1)
+        {
+            var Company = Companies.First();
+            CompanyId = Company.Id;
+            CompanyAutoSelectedName = Company.Name;
+            ShowCompanySelector = false;
+            long userId = _currentUserService.UserId;
+            List<UsuarioEmpresaPortal> list = await GetEmpresasPortales((int)CompanyId, userId);
+
+            if (list.Count == 1)
+            {
+                UsuarioEmpresaPortalId = list.First().Id;
+                await SetupContext();
+                return RedirectToPage("/Index");
+            }
+
+        }
+
+        return Page();
+    }
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -80,17 +105,25 @@ public class StepperModel : BasePageModel
 
     private async Task SetComboCompanies()
     {
-        long userId = _currentUserService.UserId;
+
         Companies = await _securityTempStoreService.GetUserCompaniesAsync();
         Companies = Companies.OrderBy(c => c.BusinessName).ToList();
+
+
+    }
+
+    private async Task<List<UsuarioEmpresaPortal>> GetEmpresasPortales(int companyId, long userId)
+    {
+        IEnumerable<UsuarioEmpresaPortal> ueps = await _usuarioEmpresaPortalService.GetAllAsync(new GetAllRequestDto() { UserId = userId });
+        List<UsuarioEmpresaPortal> list = ueps.Where(uep => uep.EmpresaPortal.Company.Id == companyId && uep.Habilitado).ToList();
+        return list;
     }
     public async Task<IActionResult> OnGetEmpresasPortales(int companyId)
     {
         long userId = _currentUserService.UserId;
-        IEnumerable<GS.Certifications.Domain.Entities.Seguridad.UsuarioEmpresaPortal> ueps = await _usuarioEmpresaPortalService.GetAllAsync(new GetAllRequestDto() { UserId = userId });
+        List<UsuarioEmpresaPortal> list = await GetEmpresasPortales(companyId, userId);
 
-        var data = ueps
-                    .Where(uep => uep.EmpresaPortal.Company.Id == companyId && uep.Habilitado)
+        var data = list
                     .OrderBy(uep => uep.EmpresaPortal.CompanyId)
                     .ThenBy(uep => uep.EmpresaPortalId)
                     .Select(uep => new { Key = uep.Id, Value = uep.EmpresaPortal.RazonSocial })

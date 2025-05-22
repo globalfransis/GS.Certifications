@@ -135,6 +135,11 @@ import Documento from "./Documento";
 
 const NO_DATA_MESSAGE = "No hay datos";
 
+// Origen de la solicitud
+const SOCIOS = 1;
+const BACKOFFICE = 2;
+const CORREO = 3;
+
 export default {
     components: {
         AcceptButton,
@@ -157,7 +162,23 @@ export default {
             documentoFormularioDivId: "__documentoFormulario",
             LayoutMode,
             currentLayoutMode: LayoutMode.Split,
-
+            // --- Origen de la solicitud ---
+            SOCIOS,
+            BACKOFFICE,
+            CORREO,
+            // --- Estados de la solicitud ---
+            PENDIENTE: SolicitudEstado.PENDIENTE,
+            PRESENTADA: SolicitudEstado.PRESENTADA,
+            APROBADA: SolicitudEstado.APROBADA,
+            RECHAZADA: SolicitudEstado.RECHAZADA,
+            BORRADOR: SolicitudEstado.BORRADOR,
+            // --- Estados de los documentos de una solicitud
+            DOCUMENTO_PENDIENTE: DocumentoEstado.PENDIENTE,
+            DOCUMENTO_VALIDADO: DocumentoEstado.VALIDADO,
+            DOCUMENTO_RECHAZADO: DocumentoEstado.RECHAZADO,
+            DOCUMENTO_VENCIDO: DocumentoEstado.VENCIDO,
+            DOCUMENTO_PRESENTADO: DocumentoEstado.PRESENTADO,
+            // ---
         };
     },
     computed: {

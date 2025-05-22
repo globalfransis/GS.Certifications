@@ -48,6 +48,20 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptio
     }
 
 
+    public class SolicitudVigenciaNulaException : Exception
+    {
+        public SolicitudVigenciaNulaException() : base($"La vigencia de la solicitud es requerida.")
+        {
+        }
+    }
+
+    public class SolicitudVigenciaInvalidaException : Exception
+    {
+        public SolicitudVigenciaInvalidaException() : base($"La vigencia de la solicitud es inválida.")
+        {
+        }
+    }
+
     public class DocumentoVigenciaNulaException : Exception
     {
         public DocumentoVigenciaNulaException() : base($"La vigencia del documento es requerida.")

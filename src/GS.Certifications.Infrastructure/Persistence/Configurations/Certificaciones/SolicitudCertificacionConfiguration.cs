@@ -27,7 +27,7 @@ namespace GS.Certifications.Infrastructure.Persistence.Configurations.SolicitudC
         {
             SeedingData.AddRange(
                 new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.PENDIENTE, Descripcion = "Pendiente" },
-                new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.PRESENTADA, Descripcion = "En proceso" },
+                new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.PRESENTADA, Descripcion = "Presentada" },
                 new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.APROBADA, Descripcion = "Aprobada" },
                 new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.RECHAZADA, Descripcion = "Rechazada" },
                 new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.BORRADOR, Descripcion = "Borrador" }

@@ -275,7 +275,7 @@
                 background-size: contain;
                 /*Sin imagen*/
                 /*max-width: 0%;
-                                                                height: 0%;*/
+                                                                                height: 0%;*/
             }
 
                 .fondo div {
@@ -310,7 +310,7 @@
                         <div class="col-lg-12" style="position:relative">
                             <hr />
                             <h1 class="welcome-login">
-                                Portal de Socios
+                                Portal de Proveedores de @(Model.CompanyAutoSelectedName)
                             </h1>
                             <form method="post" action="" style="background-color: transparent;">
 
@@ -322,34 +322,26 @@
                                     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                                 </div>
 
-                                <div class="form-group col-12 d-flex justify-content-center">
-                                    <div class="col-12 mb-4">
-                                        <label class="col-form-label login-side-text" placeholder="Default input" asp-for="CompanyId">Empresa</label>
-                                        <div>
-                                            <select id="CompanyId" name="" class="form-control" placeholder="Seleccione el Socio" autofocus>
-                                                <option value="">Seleccione una Empresa</option>
-                                                @foreach (var uep in Model.Companies)
-                                                {
-                                                    <option value="@uep.Id">@uep.BusinessName </option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <span asp-validation-for="CompanyId" class="text-danger"></span>
-                                    </div>
-                                </div>
+
+                                @if (Model.ShowCompanySelector)
+                                {
+
+                                    <select asp-for="CompanyId" class="form-control" asp-items="@(new SelectList(Model.Companies, "Id", "BusinessName"))" autofocus>
+                                        <option value="">Seleccione un Socio</option>
+                                    </select>
+                                }
 
                                 <div class="form-group col-12 d-flex justify-content-center">
                                     <div class="col-12 mb-4">
                                         <label class="col-form-label login-side-text" placeholder="Default input" asp-for="UsuarioEmpresaPortalId">Socio</label>
                                         <div>
-                                            <select id="UsuarioEmpresaPortalId" name="UsuarioEmpresaPortalId" class="form-control" placeholder="Seleccione el Socio" autofocus>
+                                            <select id="UsuarioEmpresaPortalId" name="UsuarioEmpresaPortalId" class="form-control" placeholder="Seleccione Socio" autofocus>
                                                 <option value="">Seleccione un Socio</option>
                                             </select>
                                         </div>
                                         <span asp-validation-for="UsuarioEmpresaPortalId" class="text-danger"></span>
                                     </div>
                                 </div>
-
 
 
                                 <div class="form-group col-12 text-center">
@@ -391,36 +383,45 @@
                 showSpinner(true);
             });
 
-            $("#CompanyId").change(function () {
-                var CompanyId = $(this).val();
-                // Realizamos la llamada AJAX solo si se selecciona una categoría
-                if (CompanyId) {
+            function cargarEmpresasPortales(companyId) {
+                var $subcategory = $("#UsuarioEmpresaPortalId");
+
+                if (companyId) {
                     $.ajax({
                         url: '@Url.Page(null, new { handler = "EmpresasPortales" })',
                         type: 'GET',
-                        data: { CompanyId: CompanyId },
+                        data: { CompanyId: companyId },
                         success: function (data) {
-                            var $subcategory = $("#UsuarioEmpresaPortalId");
-                            $subcategory.empty(); // Limpiar opciones anteriores
+                            $subcategory.empty();
                             $subcategory.append('<option value="">Seleccione un Socio</option>');
-
-                            // Agregar cada opción retornada
                             $.each(data, function (i, item) {
                                 $subcategory.append('<option value="' + item.key + '">' + item.value + '</option>');
                             });
                         },
                         error: function () {
-                            console.error("Error al cargar las subcategorías.");
+                            console.error("Error al cargar los socios.");
                         }
                     });
                 } else {
-                    // Si no se selecciona ninguna categoría, limpiar el combo de subcategorías
-                    $("#UsuarioEmpresaPortalId").empty();
-                    $("#UsuarioEmpresaPortalId").append('<option value="">Seleccione un Socio</option>');
+                    $subcategory.empty();
+                    $subcategory.append('<option value="">Seleccione un Socio</option>');
                 }
+            }
+
+            // Al cambiar la empresa
+            $("#CompanyId").change(function () {
+                var companyId = $(this).val();
+                cargarEmpresasPortales(companyId);
             });
+
+            // Al cargar la página, si ya hay una empresa seleccionada
+            var initialCompanyId = '@Model.CompanyId';
+            if (initialCompanyId) {
+                cargarEmpresasPortales(initialCompanyId);
+            }
         });
     </script>
+
 </body>
 </html>
 

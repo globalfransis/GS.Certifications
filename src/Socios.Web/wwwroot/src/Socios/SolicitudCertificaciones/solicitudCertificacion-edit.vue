@@ -38,7 +38,7 @@
                                     <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
                                 </tr>
                                 <template v-for="(cd, index) in solicitudCertificacion.documentosCargados">
-                                    <tr :key="index">
+                                    <tr :class="cd.estadoId == DOCUMENTO_RECHAZADO ? 'table-danger' : ''" :key="index">
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.tipo ? cd.tipo : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">

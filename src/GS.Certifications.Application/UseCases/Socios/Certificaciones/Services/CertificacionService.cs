@@ -185,7 +185,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
 
             if (hasBeenUpdated)
             {
-                documento.RowVersion = solicitudCertificacionDocumentoUpdate.RowVersion; 
+                documento.RowVersion = solicitudCertificacionDocumentoUpdate.RowVersion;
             }
         }
 
@@ -232,7 +232,8 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                     DocumentoRequerido = d,
                     ArchivoURL = string.Empty,
                     EstadoId = DocumentoEstado.PENDIENTE,
-                    DocumentoRequeridoId = d.Id
+                    DocumentoRequeridoId = d.Id,
+                    Version = 1
                 })
                 .ToList();
 
@@ -242,6 +243,19 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         public async Task UpdateAsync(ICertificacionUpdate e)
         {
             throw new NotImplementedException();
+        }
+
+        public DocumentoCargado CreateDocumento(ISolicitudCertificacionDocumentoCreate d)
+        {
+            var nuevo = new DocumentoCargado()
+            {
+                SolicitudId = d.SolicitudId,
+                ArchivoURL = string.Empty,
+                EstadoId = DocumentoEstado.PENDIENTE,
+                DocumentoRequeridoId = d.DocumentoRequeridoId,
+                Version = d.Version ?? 1
+            };
+            return nuevo;
         }
 
 
@@ -351,11 +365,34 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         {
             if (solicitud.EstadoId == SolicitudCertificacionEstado.PRESENTADA)
             {
-                if (solicitudToUpdate.DocumentosCargados.Any(d => d.EstadoId != DocumentoEstado.PRESENTADO)) throw new PresentacionSolicitudDocumentosInvalidosException();
+                var documentosAgrupadosPorRequerido = solicitudToUpdate.DocumentosCargados
+                    .GroupBy(dc => dc.DocumentoRequeridoId);
+
+                foreach (var grupo in documentosAgrupadosPorRequerido)
+                {
+                    var ultimaVersionDocumentoCargado = grupo
+                        .OrderByDescending(dc => dc.Version)
+                        .FirstOrDefault();
+
+                    if (ultimaVersionDocumentoCargado != null && ultimaVersionDocumentoCargado.EstadoId != DocumentoEstado.PRESENTADO)
+                    {
+                        throw new PresentacionSolicitudDocumentosInvalidosException();
+                    }
+                }
             }
-            if (solicitud.EstadoId == SolicitudCertificacionEstado.RECHAZADA)
+            if (solicitud.EstadoId == SolicitudCertificacionEstado.APROBADA)
             {
                 if (!solicitudToUpdate.DocumentosCargados.All(d => d.EstadoId == DocumentoEstado.VALIDADO)) throw new AprobacionSolicitudDocumentosInvalidosException();
+
+                if (solicitud.VigenciaDesde is null || solicitud.VigenciaHasta is null)
+                {
+                    throw new SolicitudVigenciaNulaException();
+                }
+
+                if (solicitud.VigenciaDesde > solicitud.VigenciaHasta)
+                {
+                    throw new SolicitudVigenciaNulaException();
+                }
             }
         }
 
@@ -400,6 +437,16 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             public long? ValidadoPorId { get; set; }
             public DateTime? FechaSubida { get; set; }
             public byte[] RowVersion { get; set; }
+        }
+
+        public class SolicitudCertificacionDocumentoCreate : ISolicitudCertificacionDocumentoCreate
+        {
+            public int SolicitudId { get; set; }
+            //public string Observaciones { get; set; }
+            public int? Version { get; set; }
+            public DateTime? FechaDesde { get; set; }
+            public DateTime? FechaHasta { get; set; }
+            public int DocumentoRequeridoId { get; set; }
         }
         #endregion
 

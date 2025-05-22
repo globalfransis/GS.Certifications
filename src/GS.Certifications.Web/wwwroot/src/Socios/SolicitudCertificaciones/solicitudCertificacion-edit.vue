@@ -39,7 +39,7 @@
                                     <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
                                 </tr>
                                 <template v-for="(cd, index) in solicitudCertificacion.documentosCargados">
-                                    <tr :key="index">
+                                    <tr :class="cd.estadoId == DOCUMENTO_RECHAZADO ? 'table-danger' : ''" :key="index">
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.tipo ? cd.tipo : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
@@ -71,6 +71,21 @@
                         </table>
 
                         <hr>
+
+                        <div class="form-group col-lg-6 col-sm-12 mb-2 required">
+                            <label class="control-label">Fecha Desde</label>
+                            <input type="date" class="form-control" v-model="solicitudCertificacion.vigenciaDesde">
+                            <span class="text-danger field-validation-error">
+                                {{ errorBag.get("vigencia") }}
+                            </span>
+                        </div>
+                        <div class="form-group col-lg-6 col-sm-12 mb-2 required">
+                            <label class="control-label">Fecha Hasta</label>
+                            <input type="date" class="form-control" v-model="solicitudCertificacion.vigenciaHasta">
+                            <span class="text-danger field-validation-error">
+                                {{ errorBag.get("fechaHasta") }}
+                            </span>
+                        </div>
 
                         <div class="form-group col-lg-12 col-sm-12 mb-2">
                             <label class="control-label">Observaciones</label>
