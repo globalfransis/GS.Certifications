@@ -26,7 +26,7 @@ public class EmpresaPortal : BaseIntEntity
     public string CodigoPostal { get; set; }
     public long OrganizationId { get; set; }
     public Organization Organization { get; set; }
-    public long PaisId { get; set; }
+    public long? PaisId { get; set; }
     public Country Pais { get; set; }
     public long? ProvinciaId { get; set; }
     public Province Provincia { get; set; }

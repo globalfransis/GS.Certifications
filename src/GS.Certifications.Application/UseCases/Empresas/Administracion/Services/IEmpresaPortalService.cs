@@ -97,7 +97,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Service
         bool GranContribuyente { get; set; }
         string Direccion { get; set; }
         string CodigoPostal { get; set; }
-        long PaisId { get; set; }
+        long? PaisId { get; set; }
         long? ProvinciaId { get; set; }
         long? CiudadId { get; set; }
         string CiudadDescripcion { get; set; }
@@ -147,7 +147,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Service
         bool GranContribuyente { get; set; }
         string Direccion { get; set; }
         string CodigoPostal { get; set; }
-        long PaisId { get; set; }
+        long? PaisId { get; set; }
         long? ProvinciaId { get; set; }
         long? CiudadId { get; set; }
         string CiudadDescripcion { get; set; }

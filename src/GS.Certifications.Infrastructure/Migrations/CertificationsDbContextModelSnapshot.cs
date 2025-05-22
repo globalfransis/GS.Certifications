@@ -3578,7 +3578,7 @@ namespace GS.Certifications.Infrastructure.Migrations
 
                     b.HasIndex("EmpresaPortalId");
 
-                    b.ToTable("EmpresasAlicuotas");
+                    b.ToTable("EmpresasAlicuotas", (string)null);
                 });
 
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Empresas.CompanyExtra", b =>
@@ -4100,7 +4100,7 @@ namespace GS.Certifications.Infrastructure.Migrations
 
                     b.HasIndex("ModoLecturaIdm");
 
-                    b.ToTable("EmpresasModosLecturas");
+                    b.ToTable("EmpresasModosLecturas", (string)null);
                 });
 
             modelBuilder.Entity("GS.Certifications.Domain.Entities.Empresas.OrdenesCompras.EmpresaOrdenCompraTipo", b =>

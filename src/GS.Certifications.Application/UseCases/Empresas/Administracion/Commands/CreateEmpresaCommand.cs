@@ -26,7 +26,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Command
         public bool GranContribuyente { get; set; }
         public string Direccion { get; set; }
         public string CodigoPostal { get; set; }
-        public long PaisId { get; set; }
+        public long? PaisId { get; set; }
         public long? ProvinciaId { get; set; }
         public long? CiudadId { get; set; }
         public string CiudadDescripcion { get; set; }

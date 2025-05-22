@@ -41,7 +41,7 @@ public class Program
                 var context = services.GetRequiredService<CertificationsDbContext>();
                 //context.Database.Migrate();
                 //await ApplicationDbContextSeed.SeedAsync(context);
-                //await CertificationsDbContextSeed.SeedAsync(context);
+                //await GSCertificationsDbContextSeed.SeedAsync(context);
                 await host.RunAsync();
             }
             catch (Exception ex)

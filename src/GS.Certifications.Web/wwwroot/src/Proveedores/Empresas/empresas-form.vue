@@ -13,7 +13,7 @@
                     Usuarios Web
                 </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <!-- <li class="nav-item" role="presentation">
                 <button class="nav-link" :class="{ active: currentTab === 'usuariosInternosForm' }" 
                         @click="changeTab('usuariosInternosForm')">
                     Usuarios Backoffice
@@ -36,7 +36,7 @@
                         @click="changeTab('configuracionAnalisisForm')">
                     Configuracion / Analisis
                 </button>
-            </li>
+            </li> -->
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <empresa-detail v-if="currentTab === 'empresaDetail'" class="card-tab" ref="empresaDetalle"/>

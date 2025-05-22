@@ -24,7 +24,7 @@
                             </span>
                         </div>
 
-                        <div class="col-lg-3 col-sm-12 mb-4">
+                        <!-- <div class="col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">Alicuotas (IVA)</label>
                             <div>
                                 <multiselect @open="loadAlicuotas" v-model="listaAlicuotasAgregados" :options="listaAlicuotas"
@@ -37,10 +37,10 @@
                             <span class="text-danger field-validation-error" data-valmsg-for="AlicuotasIdm" data-valmsg-replace="true">
                                 {{ errorBag.get("AlicuotasIdm") }}
                             </span>
-                        </div>
+                        </div> -->
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Código Proveedor</label><span class="text-danger">*</span>
+                            <label class="control-label">Número de Socio</label><span class="text-danger">*</span>
                             <input maxlength="15" type="text" class="form-control" v-model="empresaDto.codigoProveedor">
                             <span class="text-danger field-validation-error" data-valmsg-for="CodigoProveedor" data-valmsg-replace="true">
                                 {{ errorBag.get("CodigoProveedor") }}
@@ -68,11 +68,11 @@
                             </span>
                         </div>
                         <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Gran Contribuyente</label><span class="text-danger">*</span>
+                            <label class="control-label">Tipo de Socio</label><span class="text-danger">*</span>
                             <select class="form-select" v-model="empresaDto.granContribuyente">
                                 <option :value="null">Sin Especificar</option>
-                                <option :value="AFIRMATIVO">Si</option>
-                                <option :value="NEGATIVO">No</option>
+                                <option :value="AFIRMATIVO">Adherente</option>
+                                <option :value="NEGATIVO">Pleno</option>
                             </select>
                             <span class="text-danger field-validation-error" data-valmsg-for="GranContribuyente" data-valmsg-replace="true">
                                 {{ errorBag.get("GranContribuyente") }}
@@ -93,7 +93,7 @@
                             </span>
                         </div>
                         <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">País</label><span class="text-danger">*</span>
+                            <label class="control-label">País</label><!--<span class="text-danger">*</span>-->
                             <country-select v-model.number="empresaDto.paisId" />
                             <span class="text-danger field-validation-error" data-valmsg-for="Pais" data-valmsg-replace="true">
                                 {{ errorBag.get("Pais") }}
@@ -167,13 +167,13 @@
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Tipo Responsable</label><span class="text-danger">*</span>
+                            <label class="control-label">Tipo Responsable</label><!--<span class="text-danger">*</span>-->
                             <categoriasTipos-select v-model.number="empresaDto.tipoResponsableId" />
                             <span class="text-danger field-validation-error" data-valmsg-for="TipoResponsable" data-valmsg-replace="true">
                                 {{ errorBag.get("TipoResponsable") }}
                             </span>
                         </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
+                        <!-- <div class="form-group col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">Número Ingresos Brutos</label>
                             <input maxlength="30" type="text" class="form-control" v-model="empresaDto.numeroIngresosBrutos">
                             <span class="text-danger field-validation-error" data-valmsg-for="NumeroIngresosBrutos" data-valmsg-replace="true">
@@ -229,7 +229,7 @@
                             <span class="text-danger field-validation-error" data-valmsg-for="ReferenciasComerciales" data-valmsg-replace="true">
                                 {{ errorBag.get("ReferenciasComerciales") }}
                             </span>
-                        </div>
+                        </div> -->
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">Confirmado</label>
                             <div>
@@ -239,7 +239,8 @@
                                 {{ errorBag.get("Confirmado") }}
                             </span>
                         </div>
-                        <hr>
+
+                        <!-- <hr>
 
                         <div class="col-12 d-flex justify-content-between align-items-center mt-4 mb-4">
                             <div>
@@ -294,7 +295,7 @@
                                     </template>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -609,10 +610,10 @@ export default {
                 validacion = false;
                 this.errorBag.addError("granContribuyente", ["El campo 'Gran Contribuyente' es obligatorio"]);
             }
-            if(this.empresaDto.paisId == null){
-                validacion = false;
-                this.errorBag.addError("Pais", ["El campo 'País' es obligatorio"]);
-            }
+            // if(this.empresaDto.paisId == null){
+            //     validacion = false;
+            //     this.errorBag.addError("Pais", ["El campo 'País' es obligatorio"]);
+            // }
             if(this.empresaDto.telefonoPrincipal == '' || this.empresaDto.telefonoPrincipal == "" || this.empresaDto.telefonoPrincipal == null){
                 validacion = false;
                 this.errorBag.addError("telefonoPrincipal", ["El campo 'Teléfono Principal' es obligatorio"]);
@@ -625,21 +626,21 @@ export default {
                 validacion = false;
                 this.errorBag.addError("contacto", ["El campo 'Contacto' es obligatorio"]);
             }
-            if(this.empresaDto.tipoResponsableId == null){
-                validacion = false;
-                this.errorBag.addError("tipoResponsable", ["El campo 'Tipo Responsable' es obligatorio"]);
-            }
+            // if(this.empresaDto.tipoResponsableId == null){
+            //     validacion = false;
+            //     this.errorBag.addError("tipoResponsable", ["El campo 'Tipo Responsable' es obligatorio"]);
+            // }
 
-            var listaNoEliminadas = this.empresaDto.monedas.filter(moneda => !moneda.deleted)
+            // var listaNoEliminadas = this.empresaDto.monedas.filter(moneda => !moneda.deleted)
 
-            if(listaNoEliminadas.length == 0){
-                validacion = false;
-                this.errorBag.addError("monedas", ["El campo 'Monedas' es obligatorio"]);
-            }
-            if(listaNoEliminadas.length != 0 && listaNoEliminadas.filter(moneda => moneda.monedaPorDefecto === true).length !== 1){
-                validacion = false;
-                this.errorBag.addError("monedas", ["Se debe marcar una unica moneda como predeterminada"]);
-            }
+            // if(listaNoEliminadas.length == 0){
+            //     validacion = false;
+            //     this.errorBag.addError("monedas", ["El campo 'Monedas' es obligatorio"]);
+            // }
+            // if(listaNoEliminadas.length != 0 && listaNoEliminadas.filter(moneda => moneda.monedaPorDefecto === true).length !== 1){
+            //     validacion = false;
+            //     this.errorBag.addError("monedas", ["Se debe marcar una unica moneda como predeterminada"]);
+            // }
             return validacion
         }
     },

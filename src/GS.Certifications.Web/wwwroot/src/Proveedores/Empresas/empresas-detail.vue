@@ -25,7 +25,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-sm-12 mb-4">
+                        <!-- <div class="col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">Alicuotas (IVA)</label>
                             <div>
                                 <multiselect @open="loadAlicuotas" v-model="listaAlicuotasAgregados" :options="listaAlicuotas"
@@ -39,10 +39,10 @@
                                     <template slot="noResult"> No se encontraron resultados</template>
                                 </multiselect>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Código Proveedor</label>
+                            <label class="control-label">Número de Socio</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.codigoProveedor ? empresaDto.codigoProveedor : null" readonly>
                         </div>
@@ -62,9 +62,9 @@
                             :value="empresaDto.identificadorTributario ? empresaDto.identificadorTributario : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Gran Contribuyente</label>
+                            <label class="control-label">Tipo de Socio</label>
                             <input type="text" class="form-control" 
-                            :value="empresaDto.granContribuyente ? 'Sí' : 'No'" readonly>
+                            :value="empresaDto.granContribuyente ? 'Adherente' : 'Pleno'" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">Dirección</label>
@@ -131,7 +131,7 @@
                             <input type="text" class="form-control" 
                             :value="empresaDto.tipoResponsable ? empresaDto.tipoResponsable.descripcion : null" readonly>
                         </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
+                        <!-- <div class="form-group col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">Número Ingresos Brutos</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.numeroIngresosBrutos ? empresaDto.numeroIngresosBrutos : null" readonly>
@@ -170,14 +170,15 @@
                             <label class="control-label">Referencias Comerciales</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.referenciasComerciales ? empresaDto.referenciasComerciales : null" readonly>
-                        </div>
+                        </div> -->
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">Confirmado</label>
                             <div>
                                 <input type="checkbox" class="form-check-input" v-model="empresaDto.confirmado" readonly>
                             </div>
                         </div>
-                        <hr>
+
+                        <!-- <hr>
 
                         <div class="col-12 d-flex justify-content-between align-items-center mt-4 mb-4">
                             <div>
@@ -206,10 +207,6 @@
                                                 <monedasEmpresa-select disabled v-model="i.currencyId"/>
                                             </td>
                                             <td data-toggle="tooltip" class="text-center align-middle">
-                                                <!-- <select disabled class="form-select" v-model="i.monedaPorDefecto">
-                                                    <option :value="AFIRMATIVO">Si</option>
-                                                    <option :value="NEGATIVO">No</option>
-                                                </select> -->
                                                 <input disabled placeholder="Moneda predeterminada"
                                                  id="monedaPorDefecto" type="checkbox"
                                                   class="form-check-input" v-model="i.monedaPorDefecto"/>
@@ -221,7 +218,7 @@
                                     </template>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
