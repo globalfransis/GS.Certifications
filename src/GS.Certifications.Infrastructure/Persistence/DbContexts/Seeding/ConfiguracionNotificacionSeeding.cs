@@ -30,7 +30,7 @@ namespace GS.Certifications.Infrastructure.Persistence.DbContexts.Seeding
                 {
                     Id = GSCertificationsConfiguracionNotificacion.WPR_UserActivationId,
                     Body = WPR_ActivacionUsuario,
-                    Subject = "Web Proveedores | Activación de usuario",
+                    Subject = "Portal Socios | Activación de usuario",
                     UltimoEnvio = default,
                     Prioridad = 1,
                     HoraInicio = TimeSpan.Parse("00:00:00"),
@@ -47,7 +47,7 @@ namespace GS.Certifications.Infrastructure.Persistence.DbContexts.Seeding
                 {
                     Id = GSCertificationsConfiguracionNotificacion.WPR_VinculacionEmpresaPortalId,
                     Body = WPR_VinculacionEmpresaTemplate,
-                    Subject = "Web Proveedores | Se vinculó tu usuario con la empresa {empresaPortalSubject}", //subject
+                    Subject = "Portal Socios | Se vinculó tu usuario con el socio {empresaPortalSubject}", //subject
                     UltimoEnvio = default,
                     Prioridad = 2,
                     HoraInicio = TimeSpan.Parse("00:00:00"),
@@ -64,7 +64,7 @@ namespace GS.Certifications.Infrastructure.Persistence.DbContexts.Seeding
                 {
                     Id = GSCertificationsConfiguracionNotificacion.WBO_VinculacionEmpresaPortalId,
                     Body = WBO_VinculacionEmpresaTemplate,
-                    Subject = "Web Empresas | Se vinculó tu usuario con la empresa {empresaPortalSubject}", //subject
+                    Subject = "Portal Certificaciones | Se vinculó tu usuario con el socio {empresaPortalSubject}", //subject
                     UltimoEnvio = default,
                     Prioridad = 1,
                     HoraInicio = TimeSpan.Parse("00:00:00"),
@@ -81,7 +81,7 @@ namespace GS.Certifications.Infrastructure.Persistence.DbContexts.Seeding
                 {
                     Id = GSCertificationsConfiguracionNotificacion.WPR_PasswordRecoveryId,
                     Body = PasswordRecoveryTemplate_WPR,
-                    Subject = "Web Proveedores | Recuperación de Contraseña", //subject
+                    Subject = "Portal Socios | Recuperación de Contraseña", //subject
                     UltimoEnvio = default,
                     Prioridad = 1,
                     HoraInicio = TimeSpan.Parse("00:00:00"),
