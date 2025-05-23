@@ -46,7 +46,7 @@ public class WebLoginService : IStandardLoginService
         {
             // TODO: obtener de la base de datos
             const string CSS_THEME = ""; // "red_theme";
-            const string LOGO_IMAGE = "ColoniaExpressLogo.png";
+            const string LOGO_IMAGE = "";
 
             var claims = new List<Claim>
             {

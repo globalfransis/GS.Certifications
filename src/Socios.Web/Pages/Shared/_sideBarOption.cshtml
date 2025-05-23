@@ -10,21 +10,16 @@
 else
 {
     <!-- Opción sin submenú (se muestra directamente) -->
-    <div class="menu-item">
-        <a class="border-0 d-flex justify-content-center"
-           optionId="@Model.Id"
-           href="javascript:RedirectToOption(@Model.Id, @Model.ParentId, '@Model.Url');"
-           indent="@ViewData["optionLevel"]">
-           @Model.Name
-        </a>
+    <div class="">
+        <div class="menu-item">
+            <a class="d-flex align-items-center"
+               optionId="@Model.Id"
+               href="javascript:RedirectToOption(@Model.Id, @Model.ParentId, '@Model.Url');"
+               indent="@ViewData["optionLevel"]">
+                <i class="@Model.Icon"></i> <span class="ms-1">@Model.Name</span>
+            </a>
+        </div>
     </div>
-    // Harcodeado para la demo
-    @* <div class="menu-item">
-        <a class="border-0 d-flex justify-content-center">
-            Pagos
-        </a>
-    </div> *@
-    // Harcodeado para la demo
 }
 
 <script>

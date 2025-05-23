@@ -4,7 +4,7 @@
             <div class="col-12 d-flex justify-content-between sticky-header mt-4">
                 <div class="col-12 d-grid">
                     <div class="row">
-                        <p class="h5 col-6">Modificación Documento {{ tipoDoc }} - Solicitud nro {{ documento.solicitudId }}
+                        <p class="h5 col-6">{{ tipoDoc }} - Solicitud nro {{ documento.solicitudId }}
                         </p>
                         <div class="col-6 gap-4 d-flex justify-content-end">
                             <documentoEstado-label :value="documento.estadoId" />
@@ -123,7 +123,7 @@
                     Rechazar
                 </button>
 
-                <cancel-button @click="cancel">Cancelar</cancel-button>
+                <cancel-button @click="cancel">Volver</cancel-button>
             </div>
         </div>
     </div>

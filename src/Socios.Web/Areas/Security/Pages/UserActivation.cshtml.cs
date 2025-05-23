@@ -16,7 +16,7 @@ public class UserActivation : BasePageModel
         try
         {
             var email = await Mediator.Send(new ValidateUserActivationTokenCommand() { Token = Token });
-            ViewData["UserActivationMessage"] = $"<div class='alert alert-success text-center'>Su cuenta de </br><span class='fw-bold'>rettorijulian@gmail.com</span></br>ha sido activada con <strong>¡Éxito!</strong>.</div>";
+            ViewData["UserActivationMessage"] = $"Se ha activado su cuenta de {email} con éxito.";
         }
         catch (NonExistentUserException)
         {

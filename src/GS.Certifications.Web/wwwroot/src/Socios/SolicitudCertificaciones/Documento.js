@@ -16,5 +16,6 @@ export default class Documento {
         this.solicitudGuid = dto ? dto.solicitudGuid : null;
         this.propietarioActualId = dto ? dto.propietarioActualId : null;
         this.observaciones = dto ? dto.observaciones : null;
+        this.tipo = dto ? dto.tipo : null;
     }
 }

@@ -84,7 +84,7 @@
         <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3">
             <accept-button :disabled="!grants.update && solicitudCertificacion.propietarioActualId != SOCIOS" v-if="solicitudCertificacion.propietarioActualId == SOCIOS && solicitudCertificacion.estadoId != PRESENTADA" @click="updateAsync">
                 Presentar</accept-button>
-            <cancel-button @click="cancel">Cancelar</cancel-button>
+            <cancel-button @click="cancel">Volver</cancel-button>
         </div>
     </div>
 </template>

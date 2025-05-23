@@ -115,7 +115,7 @@
                 Rechazar
             </button>
 
-            <cancel-button @click="cancel">Cancelar</cancel-button>
+            <cancel-button @click="cancel">Volver</cancel-button>
         </div>
     </div>
 </template>
