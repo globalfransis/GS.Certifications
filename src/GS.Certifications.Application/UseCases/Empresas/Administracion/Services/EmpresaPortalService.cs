@@ -710,7 +710,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Service
         public string EmailAlternativo { get; set; }
         public string Contacto { get; set; }
         public string ContactoAlternativo { get; set; }
-        public short TipoResponsableId { get; set; }
+        public short? TipoResponsableId { get; set; }
         public string NumeroIngresosBrutos { get; set; }
         public short? TipoCuentaId { get; set; }
         public string CuentaBancaria { get; set; }
@@ -757,7 +757,7 @@ namespace GS.Certifications.Application.UseCases.Empresas.Administracion.Service
         public string EmailAlternativo { get; set; }
         public string Contacto { get; set; }
         public string ContactoAlternativo { get; set; }
-        public short TipoResponsableId { get; set; }
+        public short? TipoResponsableId { get; set; }
         public string NumeroIngresosBrutos { get; set; }
         public short? TipoCuentaId { get; set; }
         public string CuentaBancaria { get; set; }

@@ -4,6 +4,7 @@ using GS.Certifications.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GS.Certifications.Infrastructure.Migrations
 {
     [DbContext(typeof(CertificationsDbContext))]
-    partial class CertificationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250523170425_modificacion_empresa_portal")]
+    partial class modificacion_empresa_portal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -39,7 +39,7 @@ public class Program
             try
             {
                 var context = services.GetRequiredService<CertificationsDbContext>();
-                //context.Database.Migrate();
+                ////context.Database.Migrate();
                 //await ApplicationDbContextSeed.SeedAsync(context);
                 //await GSCertificationsDbContextSeed.SeedAsync(context);
                 await host.RunAsync();
