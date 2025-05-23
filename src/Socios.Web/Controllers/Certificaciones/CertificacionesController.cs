@@ -3,6 +3,7 @@ using GS.Certifications.Application.UseCases.Proveedores.SolicitudCertificacions
 using GS.Certifications.Application.UseCases.Proveedores.SolicitudCertificacions.Queries;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Dto;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Queries;
+using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 using GS.Certifications.Domain.Entities.Comprobantes;
 using GSF.Application.Helpers.Pagination.Interfaces;
 using MediatR;
@@ -90,6 +91,7 @@ namespace Socios.Web.Controllers.Certificaciones
         public async Task<ActionResult<Unit>> UpdateAsync([FromRoute] int id, [FromBody] UpdateDocumentoSolicitudCertificacionCommand command)
         {
             command.Id = id;
+            command.EstadoId = DocumentoEstado.PRESENTADO; // actualizar el documento desde la web de socios es presentarlo
             await _mediator.Send(command);
             return Ok();
         }

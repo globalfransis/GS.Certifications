@@ -132,7 +132,7 @@ public class AnalyzeDocumentoSolicitudCertificacionCommandHandler : BaseRequestH
 
             var folderPath = $"Doc_{documentoCargado.Guid}";
             documentoCargado.ArchivoURL = request.FormFile.FileName;
-            documentoCargado.EstadoId = DocumentoEstado.PRESENTADO;
+            //documentoCargado.EstadoId = DocumentoEstado.PRESENTADO;
             documentoCargado.FechaSubida = DateTime.Now;
 
             string directorioBase = $"Solicitud_{documentoCargado.Solicitud.Guid}/Doc_{documentoCargado.Guid}";
