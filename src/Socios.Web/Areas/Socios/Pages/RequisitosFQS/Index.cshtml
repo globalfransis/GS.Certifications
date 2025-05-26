@@ -1,0 +1,33 @@
+﻿@page
+
+@using Newtonsoft.Json
+@using Socios.Web.Areas.Socios.Pages.RequisitosFQS
+@model Socios.Web.Areas.Socios.Pages.RequisitosFQS.IndexModel;
+@inject IStringLocalizer<RequisitosFQS> loc;
+@{
+    var translations = new Dictionary<string, string>()
+    {
+        {"Requisitos", loc["Requisitos"].Value },{"Prueba", loc["Prueba"].Value }
+    };
+
+    var translationsJSON = Html.Raw(Json.Serialize(translations)).ToString();
+}
+@* 
+<script>
+    const _loc = @translations;
+    console.log("------")
+    console.log(_loc)
+</script> *@
+
+<div id="requisitos-app">
+    <requisitos-crud></requisitos-crud>
+</div>
+
+@section Scripts {
+    <script>
+        const _loc = '@translationsJSON';
+        console.log("------")
+        console.log(_loc)
+    </script>
+    <script src="@Url.Content("~/bundle/Socios/RequisitosFQS.js")" asp-append-version="true"></script>
+}

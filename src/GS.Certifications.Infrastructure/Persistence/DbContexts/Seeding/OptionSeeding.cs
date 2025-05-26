@@ -26,6 +26,8 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
 
     public const long ConceptosGastosTiposOptionId = TiposOrdenesComprasOptionId + 1;
 
+    public const long SolicitudesRequisitosFQSOptionId = ConceptosGastosTiposOptionId + 1;
+
     protected override void ConfigureEntity(EntityTypeBuilder<Option> builder)
     {
         //Nothing Here. This class is only for seeding.
@@ -61,6 +63,18 @@ public class OptionSeeding : BaseWithIdEntityConfiguration<Option>
                 Code = "SOC-CER",
                 Description = "Gestión de Solicitudes de Certificación",
                 TargetPath = "Socios/Certificaciones/Index",
+                Transferable = true,
+                DomainFIdm = DomainFIdmConstants.Socios
+            },
+            new Option()
+            {
+                Id = SolicitudesRequisitosFQSOptionId,
+                Name = "Requisitos FQS",
+                OrderNo = 2,
+                ParentId = SociosOptionId,
+                Code = "SOC-RFQ",
+                Description = "Muestra de Requisitos de FQS",
+                TargetPath = "Socios/RequisitosFQS/Index",
                 Transferable = true,
                 DomainFIdm = DomainFIdmConstants.Socios
             }
