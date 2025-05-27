@@ -350,6 +350,9 @@
     <value>Users</value>
     <comment>General</comment>
   </data>
+  <data name="Requisitos mínimos para obtener el Fonasba Quality Standard:" xml:space="preserve">
+    <value>Minimum requirements to obtain the Fonasba Quality Standard:</value>
+  </data>
   <data name="Portal de Socios" xml:space="preserve">
     <value>Partners Portal</value>
   </data>

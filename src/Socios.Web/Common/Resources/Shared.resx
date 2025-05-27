@@ -328,4 +328,8 @@
   <data name="Socio" xml:space="preserve">
     <value>Socio</value>
   </data>
+  <data name="Requisitos mínimos para obtener el Fonasba Quality Standard:" xml:space="preserve">
+    <value>Requisitos mínimos para obtener el Fonasba Quality Standard:</value>
+    <comment>Mensaje de Requisitos</comment>
+  </data>
 </root>
