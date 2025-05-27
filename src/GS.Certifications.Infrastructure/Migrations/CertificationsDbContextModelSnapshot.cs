@@ -13662,6 +13662,23 @@ namespace GS.Certifications.Infrastructure.Migrations
                         },
                         new
                         {
+                            Id = 100012L,
+                            Code = "SOC-RFQ",
+                            Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Process",
+                            Description = "Muestra de Requisitos de FQS",
+                            DomainFIdm = 1001L,
+                            IsDeleted = false,
+                            Modified = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Process",
+                            Name = "Requisitos FQS",
+                            OrderNo = 2,
+                            ParentId = 100001L,
+                            TargetPath = "Socios/RequisitosFQS/Index",
+                            Transferable = true
+                        },
+                        new
+                        {
                             Id = 100003L,
                             Code = "PRO",
                             Created = new DateTime(1986, 6, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),

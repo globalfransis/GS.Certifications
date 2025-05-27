@@ -83,7 +83,7 @@ public class BasePageModel : PageModel
     public virtual void GetStringTranslations()
     {
         // for translations
-        var allStrings = Loc.GetAllStrings()
+        var allStrings = Loc.GetAllStrings()?
                                    .ToDictionary(localizedString => localizedString.Name, localizedString => localizedString.Value);
 
         LocalizedStringsJson = JsonSerializer.Serialize(allStrings);
