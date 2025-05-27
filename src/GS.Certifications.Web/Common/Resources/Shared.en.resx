@@ -375,4 +375,10 @@
   <data name="Socios" xml:space="preserve">
     <value>Partners</value>
   </data>
+  <data name="Bienvenido" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Portal de Certificaciones" xml:space="preserve">
+    <value>Certifications Portal</value>
+  </data>
 </root>
