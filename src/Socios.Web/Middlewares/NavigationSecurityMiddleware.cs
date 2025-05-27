@@ -20,7 +20,7 @@ public class NavigationSecurityMiddleware
 
     private const string _grantUpdate = "update";
 
-    private readonly ReadOnlyCollection<string> WhiteListPages = new ReadOnlyCollection<string>(new[] { "/security/login", "/security/passwordchange", "/security/passwordrecovery", "/security/useractivation", "/socios/certificaciones/index" });
+    private readonly ReadOnlyCollection<string> WhiteListPages = new ReadOnlyCollection<string>(new[] { "/security/login", "/security/passwordchange", "/security/passwordrecovery", "/security/useractivation", "/socios/certificaciones/index", "/socios/requisitosfqs/index" });
 
     private HttpContext _httpContext;
     private ISecurityTempStoreService _securityTempStoreService;

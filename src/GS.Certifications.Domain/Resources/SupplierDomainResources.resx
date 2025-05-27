@@ -133,6 +133,9 @@
     <value>El producto reservado indica {0} item/s, pero tiene {1} vehículo/s asociados.</value>
     <comment>booking</comment>
   </data>
+  <data name="Portal de Socios" xml:space="preserve">
+    <value>Portal de Socios</value>
+  </data>
   <data name="SalePointIsEmpty" xml:space="preserve">
     <value>Se debe indicar el Punto de Venta de la reserva.</value>
     <comment>booking</comment>
