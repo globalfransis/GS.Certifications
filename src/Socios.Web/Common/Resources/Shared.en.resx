@@ -398,4 +398,13 @@
   <data name="Documentos requeridos" xml:space="preserve">
     <value>Required Documents</value>
   </data>
+	<data name="Portal de Socios" xml:space="preserve">
+    <value>Partners Portal</value>
+  </data>
+	<data name="Socios" xml:space="preserve">
+    <value>Partners</value>
+  </data>
+	<data name="Socio" xml:space="preserve">
+    <value>Partner</value>
+  </data>
 </root>

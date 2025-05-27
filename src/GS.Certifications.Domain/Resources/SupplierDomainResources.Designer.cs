@@ -97,6 +97,15 @@ namespace GS.Certifications.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Portal de Socios.
+        /// </summary>
+        internal static string Portal_de_Socios {
+            get {
+                return ResourceManager.GetString("Portal de Socios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Se debe indicar el Punto de Venta de la reserva..
         /// </summary>
         internal static string SalePointIsEmpty {

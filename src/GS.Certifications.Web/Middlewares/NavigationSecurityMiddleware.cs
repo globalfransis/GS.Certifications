@@ -27,7 +27,7 @@ public class NavigationSecurityMiddleware
     private const string _grantUpdate = "update";
 
     // TODO: ver por que no se puede navegar a las rutas de las options incluso teniendo permisos
-    private readonly ReadOnlyCollection<string> WhiteListPages = new ReadOnlyCollection<string>(new[] { "/security/login", "/security/passwordchange", "/security/passwordrecovery", "/security/useractivation", "/socios/certificaciones/index", "/socios/empresas/index", "/notifications/index", "/alertas/index", "/security/groups/", "/security/users/"});
+    private readonly ReadOnlyCollection<string> WhiteListPages = new ReadOnlyCollection<string>(new[] { "/security/login", "/security/passwordchange", "/security/passwordrecovery", "/security/useractivation", "/socios/certificaciones/index", "/socios/empresas/index", "/notifications/index", "/alertas/index", "/security/groups/", "/security/usuarios/actividades", });
 
     private HttpContext _httpContext;
     private ISecurityTempStoreService _securityTempStoreService;
