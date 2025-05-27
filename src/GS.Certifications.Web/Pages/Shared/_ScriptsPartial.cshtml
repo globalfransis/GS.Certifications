@@ -41,3 +41,13 @@
     var onlyAllLengthMenuOptDataTable = [[-1], ["@loc["Todos"]"]];
 </script>
 
+<script type="text/javascript">
+    window.AppTexts = window.AppTexts || {};
+
+    window.AppTexts.strings = @Html.Raw(Model.LocalizedStringsJson)
+
+    window.AppTexts.getString = function(key) {
+        return window.AppTexts.strings[key] || key;
+    };
+</script>
+

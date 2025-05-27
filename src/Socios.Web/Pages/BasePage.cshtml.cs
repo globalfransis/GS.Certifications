@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
+using System.Text.Json;
 using System.Web;
 
 namespace Socios.Web.Pages;
@@ -37,6 +38,8 @@ public class BasePageModel : PageModel
     protected List<SecurityGrantDto> grants;
 
     public bool ShowTitle { get; set; } = true;
+
+    public string LocalizedStringsJson { get; private set; }
 
     [ViewData]
     public string Title { get; set; }
@@ -75,6 +78,15 @@ public class BasePageModel : PageModel
     public override void OnPageHandlerSelected(PageHandlerSelectedContext context)
     {
         base.OnPageHandlerSelected(context);
+    }
+
+    public virtual void GetStringTranslations()
+    {
+        // for translations
+        var allStrings = Loc.GetAllStrings()
+                                   .ToDictionary(localizedString => localizedString.Name, localizedString => localizedString.Value);
+
+        LocalizedStringsJson = JsonSerializer.Serialize(allStrings);
     }
 }
 

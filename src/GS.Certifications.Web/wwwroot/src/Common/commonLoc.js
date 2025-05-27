@@ -33,6 +33,10 @@ class Loc {
         console.warn(`"${text}" could not be translated.`)
         return text.toString()
     }
+
+    getString(str) {
+        return window.AppTexts.getString(str);
+    }
 }
 
 /**
@@ -41,8 +45,7 @@ class Loc {
  */
 let defaultLocValueHandler = {
     get: (target, text) => {
-        if (["Symbol(Symbol.toStringTag)", "_isVue"].includes(text.toString())) return target[text]
-        return target.hasOwnProperty(text) ? target[text] : target.returnDefault(text.toString())
+        return target.getString(text);
     },
 };
 

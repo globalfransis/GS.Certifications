@@ -61,11 +61,29 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Certificaciones.
+        /// </summary>
+        public static string Certificaciones {
+            get {
+                return ResourceManager.GetString("Certificaciones", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contraseña.
         /// </summary>
         public static string Contraseña {
             get {
                 return ResourceManager.GetString("Contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Grupo {
+            get {
+                return ResourceManager.GetString("Grupo", resourceCulture);
             }
         }
         
@@ -93,6 +111,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Usuario {
+            get {
+                return ResourceManager.GetString("Usuario", resourceCulture);
             }
         }
         
