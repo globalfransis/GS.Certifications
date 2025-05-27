@@ -125,8 +125,8 @@
     <value>Password</value>
     <comment>Security</comment>
   </data>
-  <data name="Filtro de Búsqueda" xml:space="preserve">
-    <value>Search Filter</value>
+  <data name="Filtro de búsqueda" xml:space="preserve">
+    <value>Search filter</value>
     <comment>General</comment>
   </data>
   <data name="Precio desde" xml:space="preserve">
@@ -313,5 +313,21 @@
   </data>
   <data name="Listado de Solicitudes" xml:space="preserve">
     <value>List of Certification Applications</value>
+  </data>
+  <data name="Solicitudes1" xml:space="preserve">
+    <value>Certification Applications</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Certificaciones1" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="Listado de Solicitudes1" xml:space="preserve">
+    <value>List of Certification Applications</value>
+  </data>
+  <data name="Listado de Resultados" xml:space="preserve">
+    <value>List of Results</value>
+  </data>
+  <data name="Actividad Usuarios" xml:space="preserve">
+    <value>User Activities</value>
   </data>
 </root>
