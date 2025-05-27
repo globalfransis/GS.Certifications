@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>@HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "Name").ToString()) - @ViewBag.Title</title>
+    <title>@loc[HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "Name").ToString())] - @ViewBag.Title</title>
 
     @* css *@
     <link rel="icon" type="image/x-icon" href="~/favicon.png" />

@@ -2,6 +2,7 @@
 @using GS.Certifications.Web.Pages
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<GSFSharedResources.Shared> loc
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> SharedLocalizer
 @model ErrorModel
 @{
     Layout = null;
@@ -17,7 +18,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Portal de Certificaciones - Error</title>
+    <title>@SharedLocalizer["Portal de Certificaciones"] - Error</title>
 
     @* css *@
     <link rel="icon" type="image/x-icon" href="~/favicon.png" />

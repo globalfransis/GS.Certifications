@@ -1,5 +1,7 @@
 ﻿@page
+@using Microsoft.Extensions.Localization
 @using Socios.Web.Pages
+@inject IStringLocalizer<Common.Resources.Shared> SharedLocalizer
 @model IndexModel
 @section BackButton { }
 <div class="mt-5 col main-content">
@@ -9,7 +11,7 @@
 
                 <div class="text-center">
                     <h3>
-                        Bienvenido <span class="highlight">@Model.CurrentEmpresaPortal?.RazonSocial</span> al portal de
+                        @SharedLocalizer["Bienvenido"] <span class="highlight">@Model.CurrentEmpresaPortal?.RazonSocial</span> @SharedLocalizer["al portal de"]
                     </h3>
                     <h3 class="highlight">@Model.CurrentCompany?.Name</h3>
                 </div>

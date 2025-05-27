@@ -18,22 +18,22 @@
                     <tr class="text-center align-middle">
                         <!-- <th data-column="Email" class="text-center">Email</th> -->
 
-                        <th no-sort-datatable class="text-center">Email</th>
-                        <th no-sort-datatable class="text-center">Nombre</th>
-                        <th no-sort-datatable class="text-center">Apellido</th>
-                        <th no-sort-datatable class="text-center">Tipo Usuario</th>
-                        <th no-sort-datatable class="text-center">Dominios</th>
+                        <th no-sort-datatable class="text-center">{{loc["Email"]}}</th>
+                        <th no-sort-datatable class="text-center">{{loc["Nombre"]}}</th>
+                        <th no-sort-datatable class="text-center">{{loc["Apellido"]}}</th>
+                        <th no-sort-datatable class="text-center">{{loc["Tipo Usuario"]}}</th>
+                        <th no-sort-datatable class="text-center">{{loc["Dominios"]}}</th>
                         <!-- <th data-colum="UserActivity.UltimoAcceso" class="text-center">Fecha</th> -->
-                        <th no-sort-datatable class="text-center">Fecha</th>
-                        <th no-sort-datatable class="text-center">Actividad</th>
-                        <th no-sort-datatable class="text-center">Navegador</th>
+                        <th no-sort-datatable class="text-center">{{loc["Fecha"]}}</th>
+                        <th no-sort-datatable class="text-center">{{loc["Actividad"]}}</th>
+                        <th no-sort-datatable class="text-center">{{loc["Navegador"]}}</th>
                         <!-- Agregar los headers necesarios -->
                         <!-- Descripción es un ejemplo -->
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-if="list.length === 0" class="no-data text-center">
-                        <td class="text-center" colspan="100">{{ resultsMessage }}</td>
+                        <td class="text-center" colspan="100">{{ loc[resultsMessage] }}</td>
                     </tr>
                     <template v-for="item in list">
                         <tr :key="item.id">
