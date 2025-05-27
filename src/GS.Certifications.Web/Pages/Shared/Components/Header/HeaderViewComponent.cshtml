@@ -214,7 +214,7 @@
             <a class="navbar-brand" onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0);" href="~/index">
                 <p class="h2 text-light m-0 ms-5 me-5">
                     @* @HttpUtility.HtmlDecode(Configuration.GetSection("Application").GetValue(typeof(string), "Name").ToString()) *@
-                    Certificaciones
+                    @SharedLocalizer["Certificaciones"]
                 </p>
             </a>
         </div>

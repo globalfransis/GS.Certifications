@@ -330,4 +330,49 @@
   <data name="Actividad Usuarios" xml:space="preserve">
     <value>User Activities</value>
   </data>
+  <data name="Tipo Usuario" xml:space="preserve">
+    <value>User Type</value>
+  </data>
+  <data name="Dominio" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+  <data name="Fecha/Hora Desde" xml:space="preserve">
+    <value>Date/Time From</value>
+  </data>
+  <data name="Fecha/Hora Hasta" xml:space="preserve">
+    <value>Date/Time To</value>
+  </data>
+  <data name="Actividad" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="ACCESO OK" xml:space="preserve">
+    <value>ACCESS OK</value>
+  </data>
+  <data name="ACCESO FALLIDO" xml:space="preserve">
+    <value>ACCESS FAILED</value>
+  </data>
+  <data name="Limpiar" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Dominios" xml:space="preserve">
+    <value>Domains</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Navegador" xml:space="preserve">
+    <value>Browser</value>
+  </data>
+  <data name="Click en 'Buscar' para traer resultados" xml:space="preserve">
+    <value>Click on 'Search' to bring up results</value>
+  </data>
+  <data name="No hay datos" xml:space="preserve">
+    <value>No data</value>
+  </data>
+  <data name="Portal de" xml:space="preserve">
+    <value>Portal of</value>
+  </data>
+  <data name="Socios" xml:space="preserve">
+    <value>Partners</value>
+  </data>
 </root>

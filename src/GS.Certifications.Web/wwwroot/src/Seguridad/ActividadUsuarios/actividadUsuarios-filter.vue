@@ -14,15 +14,15 @@
                             <!-- Agregar controles de filtro  -->
                             <!-- Este es un ejemplo -->
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Email</label>
+                                <label>{{ loc["Email"] }}</label>
                                 <input type="text" class="form-control" v-model="parameters.Email">
                             </div>
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Nombre</label>
+                                <label>{{loc["Nombre"]}}</label>
                                 <input type="text" class="form-control" v-model="parameters.Nombre">
                             </div>
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Apellido</label>
+                                <label>{{loc["Apellido"]}}</label>
                                 <input type="text" class="form-control" v-model="parameters.Apellido">
                             </div>
                             <!--
@@ -39,7 +39,7 @@
                                 <input type="text" class="form-control" v-model="parameters.TipoUsuario">
                             </div> -->
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                <label class="control-label">Tipo Usuario</label>
+                                <label class="control-label">{{loc["Tipo Usuario"]}}</label>
                                 <userTypesSelect v-model="parameters.TipoUsuario"/>
                             </div>
                             <!-- <div class="col-lg-3 col-sm-12 mb-4">
@@ -47,7 +47,7 @@
                                 <input type="text" class="form-control" v-model="parameters.DominioId">
                             </div> -->
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                <label class="control-label">Dominio</label>
+                                <label class="control-label">{{loc["Dominio"]}}</label>
                                 <userDomainFSelect v-model="parameters.DominioId"/>
                             </div>
                             <!-- <div class="col-lg-3 col-sm-12 mb-4">
@@ -55,19 +55,19 @@
                                 <usuariosExternosDomainFs-select v-model="parameters.DominioId" />
                             </div> -->
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Fecha/Hora Desde</label>
+                                <label>{{loc["Fecha/Hora Desde"]}}</label>
                                 <input type="datetime-local" class="form-control" v-model="parameters.FechaDesde">
                             </div>
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Fecha/Hora Hasta</label>
+                                <label>{{loc["Fecha/Hora Hasta"]}}</label>
                                 <input type="datetime-local" class="form-control" v-model="parameters.FechaHasta">
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                <label>Actividad</label>
+                                <label>{{loc["Actividad"]}}</label>
                                 <select class="form-select" v-model.number="parameters.Actividad">
-                                    <option :value="null">Sin Especificar</option>
-                                    <option :value="ACCESSO_OK">ACCESO OK</option>
-                                    <option :value="ACCESSO_FALLIDO">ACCESO FALLIDO</option>
+                                    <option :value="null">{{loc["Sin Especificar"]}}</option>
+                                    <option :value="ACCESSO_OK">{{loc["ACCESO OK"]}}</option>
+                                    <option :value="ACCESSO_FALLIDO">{{loc["ACCESO FALLIDO"]}}</option>
                                 </select>
                             </div>
 
@@ -75,12 +75,12 @@
                                 <div class="d-flex justify-content-between">
                                     <button v-on:click.prevent="search" class="btn btn-primary btn-sm">
                                         <i class="fas fa-search"></i>
-                                        Buscar
+                                        {{loc["Buscar"]}}
                                     </button>
                                     <button tabindex="12" @click.prevent="clearFilters"
                                         class="btn btn-secondary btn-sm ms-2">
                                         <i class="fas fa-eraser"></i>
-                                        Limpiar
+                                        {{loc["Limpiar"]}}
                                     </button>
                                 </div>
                             </div>
