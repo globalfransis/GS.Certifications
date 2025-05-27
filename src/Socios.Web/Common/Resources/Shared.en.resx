@@ -117,6 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Activar para ordenar la columna de manera ascendente" xml:space="preserve">
+    <value>Activate to sort the column in ascending order</value>
+    <comment>DataTables</comment>
+  </data>
+  <data name="Activar para ordenar la columna de manera descendente" xml:space="preserve">
+    <value>Activate to sort the column in descending order</value>
+    <comment>DataTables</comment>
+  </data>
+  <data name="Anterior" xml:space="preserve">
+    <value>Previous</value>
+    <comment>DataTables</comment>
+  </data>
+  <data name="Apellido" xml:space="preserve">
+    <value>Last Name</value>
+    <comment>General</comment>
+  </data>
+  <data name="Ser un miembro plenario del Centro de Navegación con una antigüedad no menor a tres (3) años." xml:space="preserve">
+    <value>Be a full member of the Navigation Center with a seniority of not less than three (3) years.</value>
+  </data>
+  <data name="Presentar una nota compromiso firmada por el representante legal o apoderado de la compañía, expresando su compromiso para cumplir con el Código de Conducta de FONASBA y con los estatutos y Código de Ética del Centro de Navegación." xml:space="preserve">
+    <value>Submit a commitment note signed by the legal representative or attorney-in-fact of the company, expressing its commitment to comply with the FONASBA Code of Conduct and with the bylaws and Code of Ethics of the Navigation Center.</value>
+  </data>
+  <data name="Presentar estatutos de la compañía, con la correspondiente inscripción en la Inspección General de Justicia o Registro Público de Comercio pertinente." xml:space="preserve">
+    <value>Submit the company's bylaws, with the corresponding registration at the General Inspectorate of Justice or the pertinent Public Registry of Commerce.</value>
+  </data>
+  <data name="Presentar copia del acta de asamblea y directorio con la designación de los cargos del órgano de administración, debidamente inscripta en la Inspección General de Justicia o Registro Público de Comercio pertinente." xml:space="preserve">
+    <value>Submit a copy of the minutes of the meeting and board of directors with the designation of the positions of the administrative body, duly registered with the General Inspection of Justice or the pertinent Public Registry of Commerce.</value>
+  </data>
+  <data name="Demostrar evidencia de la inscripción de la compañía ante la Aduana, Prefectura, Migraciones, Sanidad de Fronteras, Administraciones Portuarias y cualquier otra autoridad relevante." xml:space="preserve">
+    <value>Demonstrate evidence of the company's registration with Customs, Prefecture, Migration, Border Health, Port Administrations and any other relevant authority.</value>
+  </data>
+  <data name="Presentar constancia de C.U.I.T. y una prueba de la registración de la compañía en las distintas categorías de tributación de la Administración Federal de Ingresos Públicos y órganos de recaudación tributaria provinciales correspondientes." xml:space="preserve">
+    <value>Present proof of C.U.I.T. and proof of the company's registration in the different tax categories of the Federal Administration of Public Revenues and the corresponding provincial tax collection agencies.</value>
+  </data>
+  <data name="Presentar una certificación contable emitida por la el auditor externo de la compañía, y debidamente legalizado por el Consejo Profesional pertinente, estableciendo que la compañía:" xml:space="preserve">
+    <value>Submit an accounting certification issued by the company's external auditor, and duly legalized by the relevant Professional Council, stating that the company:</value>
+  </data>
+  <data name="Cumple con los procedimientos y regulaciones contables de la Argentina." xml:space="preserve">
+    <value>Complies with Argentine accounting procedures and regulations.</value>
+  </data>
+  <data name="Mantiene cuentas separadas para cada uno de sus principales." xml:space="preserve">
+    <value>It maintains separate accounts for each of its principals.</value>
+  </data>
+  <data name="Cumple con todas las obligaciones impositivas y previsionales." xml:space="preserve">
+    <value>Complies with all tax and social security obligations.</value>
+  </data>
+  <data name="Cuenta con un estado financiero solvente." xml:space="preserve">
+    <value>It has a solvent financial statement.</value>
+  </data>
+  <data name="Demostrar evidencia de compromiso a procesos de calidad, a través de Certificación ISO 9001 o superior, con mención de las áreas de certificación." xml:space="preserve">
+    <value>Demonstrate evidence of commitment to quality processes, through ISO 9001 Certification or higher, with mention of the areas of certification.</value>
+  </data>
+  <data name="Presentar una copia de la Póliza de Seguros emitida por el ITIC o cualquier otro Club Mutual o Compañía de Seguros internacionalmente reconocida." xml:space="preserve">
+    <value>Submit a copy of the Insurance Policy issued by ITIC or any other Mutual Club or internationally recognized Insurance Company.</value>
+  </data>
+  <data name="Presentar un organigrama, indicando los miembros del staff que son profesionales (capitanes, contadores públicos, abogados, etc.) y aquellos que están autorizados para representar a la compañía ante la Aduana, Prefectura, Sanidad de Fronteras, Migraciones, autoridades portuarias y otras autoridades." xml:space="preserve">
+    <value>Present an organizational chart, indicating the staff members who are professionals (captains, public accountants, lawyers, etc.) and those who are authorized to represent the company before Customs, Prefecture, Border Health, Migration, port authorities and other authorities.</value>
+  </data>
+  <data name="Presentar una declaración demostrando la política de capacitación del personal de la compañía, más una copia de los programas anuales de entrenamiento." xml:space="preserve">
+    <value>Submit a statement demonstrating the company's personnel training policy, plus a copy of the annual training programs.</value>
+  </data>
   <data name="Buscar" xml:space="preserve">
     <value>Search</value>
     <comment>General</comment>
@@ -155,14 +216,6 @@
   </data>
   <data name="Mostrando registros del 0 al 0 de un total de 0 registros" xml:space="preserve">
     <value>Showing records from 0 to 0 of a total of 0 records</value>
-    <comment>DataTables</comment>
-  </data>
-  <data name="Activar para ordenar la columna de manera ascendente" xml:space="preserve">
-    <value>Activate to sort the column in ascending order</value>
-    <comment>DataTables</comment>
-  </data>
-  <data name="Activar para ordenar la columna de manera descendente" xml:space="preserve">
-    <value>Activate to sort the column in descending order</value>
     <comment>DataTables</comment>
   </data>
   <data name="Procesando..." xml:space="preserve">
@@ -245,14 +298,6 @@
     <value>Actions</value>
     <comment>General</comment>
   </data>
-  <data name="Anterior" xml:space="preserve">
-    <value>Previous</value>
-    <comment>DataTables</comment>
-  </data>
-  <data name="Apellido" xml:space="preserve">
-    <value>Last Name</value>
-    <comment>General</comment>
-  </data>
   <data name="Búsqueda:" xml:space="preserve">
     <value>Search:</value>
     <comment>DataTables</comment>
@@ -305,49 +350,7 @@
     <value>Users</value>
     <comment>General</comment>
   </data>
-  <data name="Ser un miembro plenario del Centro de Navegación con una antigüedad no menor a tres (3) años." xml:space="preserve">
-    <value>Be a full member of the Navigation Center with a seniority of not less than three (3) years.</value>
-  </data>
-  <data name="Presentar una nota compromiso firmada por el representante legal o apoderado de la compañía, expresando su compromiso para cumplir con el Código de Conducta de FONASBA y con los estatutos y Código de Ética del Centro de Navegación." xml:space="preserve">
-    <value>Submit a commitment note signed by the legal representative or attorney-in-fact of the company, expressing its commitment to comply with the FONASBA Code of Conduct and with the bylaws and Code of Ethics of the Navigation Center.</value>
-  </data>
-  <data name="Presentar estatutos de la compañía, con la correspondiente inscripción en la Inspección General de Justicia o Registro Público de Comercio pertinente." xml:space="preserve">
-    <value>Submit the company's bylaws, with the corresponding registration at the General Inspectorate of Justice or the pertinent Public Registry of Commerce.</value>
-  </data>
-  <data name="Presentar copia del acta de asamblea y directorio con la designación de los cargos del órgano de administración, debidamente inscripta en la Inspección General de Justicia o Registro Público de Comercio pertinente." xml:space="preserve">
-    <value>Submit a copy of the minutes of the meeting and board of directors with the designation of the positions of the administrative body, duly registered with the General Inspection of Justice or the pertinent Public Registry of Commerce.</value>
-  </data>
-  <data name="Demostrar evidencia de la inscripción de la compañía ante la Aduana, Prefectura, Migraciones, Sanidad de Fronteras, Administraciones Portuarias y cualquier otra autoridad relevante." xml:space="preserve">
-    <value>Demonstrate evidence of the company's registration with Customs, Prefecture, Migration, Border Health, Port Administrations and any other relevant authority.</value>
-  </data>
-  <data name="Presentar constancia de C.U.I.T. y una prueba de la registración de la compañía en las distintas categorías de tributación de la Administración Federal de Ingresos Públicos y órganos de recaudación tributaria provinciales correspondientes." xml:space="preserve">
-    <value>Present proof of C.U.I.T. and proof of the company's registration in the different tax categories of the Federal Administration of Public Revenues and the corresponding provincial tax collection agencies.</value>
-  </data>
-  <data name="Presentar una certificación contable emitida por la el auditor externo de la compañía, y debidamente legalizado por el Consejo Profesional pertinente, estableciendo que la compañía:" xml:space="preserve">
-    <value>Submit an accounting certification issued by the company's external auditor, and duly legalized by the relevant Professional Council, stating that the company:</value>
-  </data>
-  <data name="Cumple con los procedimientos y regulaciones contables de la Argentina." xml:space="preserve">
-    <value>Complies with Argentine accounting procedures and regulations.</value>
-  </data>
-  <data name="Mantiene cuentas separadas para cada uno de sus principales." xml:space="preserve">
-    <value>It maintains separate accounts for each of its principals.</value>
-  </data>
-  <data name="Cumple con todas las obligaciones impositivas y previsionales." xml:space="preserve">
-    <value>Complies with all tax and social security obligations.</value>
-  </data>
-  <data name="Cuenta con un estado financiero solvente." xml:space="preserve">
-    <value>It has a solvent financial statement.</value>
-  </data>
-  <data name="Demostrar evidencia de compromiso a procesos de calidad, a través de Certificación ISO 9001 o superior, con mención de las áreas de certificación." xml:space="preserve">
-    <value>Demonstrate evidence of commitment to quality processes, through ISO 9001 Certification or higher, with mention of the areas of certification.</value>
-  </data>
-  <data name="Presentar una copia de la Póliza de Seguros emitida por el ITIC o cualquier otro Club Mutual o Compañía de Seguros internacionalmente reconocida." xml:space="preserve">
-    <value>Submit a copy of the Insurance Policy issued by ITIC or any other Mutual Club or internationally recognized Insurance Company.</value>
-  </data>
-  <data name="Presentar un organigrama, indicando los miembros del staff que son profesionales (capitanes, contadores públicos, abogados, etc.) y aquellos que están autorizados para representar a la compañía ante la Aduana, Prefectura, Sanidad de Fronteras, Migraciones, autoridades portuarias y otras autoridades." xml:space="preserve">
-    <value>Present an organizational chart, indicating the staff members who are professionals (captains, public accountants, lawyers, etc.) and those who are authorized to represent the company before Customs, Prefecture, Border Health, Migration, port authorities and other authorities.</value>
-  </data>
-  <data name="Presentar una declaración demostrando la política de capacitación del personal de la compañía, más una copia de los programas anuales de entrenamiento." xml:space="preserve">
-    <value>Submit a statement demonstrating the company's personnel training policy, plus a copy of the annual training programs.</value>
+  <data name="Requisitos mínimos para obtener el Fonasba Quality Standard:" xml:space="preserve">
+    <value>Minimum requirements to obtain the Fonasba Quality Standard:</value>
   </data>
 </root>

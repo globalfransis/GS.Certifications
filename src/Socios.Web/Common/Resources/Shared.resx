@@ -190,4 +190,8 @@
     <value>Presentar una declaración demostrando la política de capacitación del personal de la compañía, más una copia de los programas anuales de entrenamiento.</value>
     <comment>Onceavo Requerimiento</comment>
   </data>
+  <data name="Requisitos mínimos para obtener el Fonasba Quality Standard:" xml:space="preserve">
+    <value>Requisitos mínimos para obtener el Fonasba Quality Standard:</value>
+    <comment>Mensaje de Requisitos</comment>
+  </data>
 </root>
