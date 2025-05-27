@@ -2,8 +2,9 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p>
-                <p class="h6">Certificación {{ solicitudCertificacion.certificacion }}</p>
+                <!-- <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p> -->
+                <p class="h5">Certificación {{ solicitudCertificacion.certificacion }}</p>
+                <p class="h6">Vigencia: {{ solicitudCertificacion.vigenciaDesde | uidate }} - {{ solicitudCertificacion.vigenciaHasta | uidate }}</p>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -11,7 +12,7 @@
                         
                         <div class="col-12 d-flex justify-content-between align-items-center mb-4">
                             <div>
-                                <p class="h5 m-0">Documentos requeridos</p>
+                                <p class="h5 m-0">Documentos</p>
                                 <span class="text-danger field-validation-error">
                                         {{ errorBag.get("documentos") }}
                                 </span>
