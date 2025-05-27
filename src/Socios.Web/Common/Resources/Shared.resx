@@ -194,4 +194,50 @@
     <value>Requisitos mínimos para obtener el Fonasba Quality Standard:</value>
     <comment>Mensaje de Requisitos</comment>
   </data>
+  <data name="Listado de Solicitudes" xml:space="preserve">
+    <value>Listado de Solicitudes</value>
+    <comment>Listado de Solicitudes</comment>
+  </data>
+  <data name="Agregar" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="Certificación" xml:space="preserve">
+    <value>Certificación</value>
+  </data>
+  <data name="Fecha Solicitud" xml:space="preserve">
+    <value>Fecha Solicitud</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="Fecha Estado" xml:space="preserve">
+    <value>Fecha Estado</value>
+  </data>
+  <data name="Vigencia" xml:space="preserve">
+    <value>Vigencia</value>
+  </data>
+  <data name="Estado Documentación" xml:space="preserve">
+    <value>Estado Documentación</value>
+  </data>
+  <data name="Docs. Pendientes" xml:space="preserve">
+    <value>Docs. Pendientes</value>
+  </data>
+  <data name="Docs. Cargados" xml:space="preserve">
+    <value>Docs. Cargados</value>
+  </data>
+  <data name="Docs. Aprobados" xml:space="preserve">
+    <value>Docs. Aprobados</value>
+  </data>
+  <data name="No hay datos" xml:space="preserve">
+    <value>No hay datos</value>
+  </data>
+  <data name="Click en 'Buscar' para traer resultados" xml:space="preserve">
+    <value>Click en 'Buscar' para traer resultados</value>
+  </data>
+  <data name="Solicitud nro." xml:space="preserve">
+    <value>Solicitud nro.</value>
+  </data>
+  <data name="Documentos requeridos" xml:space="preserve">
+    <value>Documentos requeridos</value>
+  </data>
 </root>

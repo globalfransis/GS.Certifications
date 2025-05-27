@@ -353,4 +353,49 @@
   <data name="Requisitos mínimos para obtener el Fonasba Quality Standard:" xml:space="preserve">
     <value>Minimum requirements to obtain the Fonasba Quality Standard:</value>
   </data>
+  <data name="Listado de Solicitudes" xml:space="preserve">
+    <value>List of Certification Applications</value>
+  </data>
+  <data name="Agregar" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Certificación" xml:space="preserve">
+    <value>Certification</value>
+  </data>
+  <data name="Fecha Solicitud" xml:space="preserve">
+    <value>Request Date</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Fecha Estado" xml:space="preserve">
+    <value>Status Date</value>
+  </data>
+  <data name="Vigencia" xml:space="preserve">
+    <value>Validity</value>
+  </data>
+  <data name="Estado Documentación" xml:space="preserve">
+    <value>Documentation Status</value>
+  </data>
+  <data name="Docs. Pendientes" xml:space="preserve">
+    <value>Pending Docs.</value>
+  </data>
+  <data name="Docs. Cargados" xml:space="preserve">
+    <value>Uploaded Docs.</value>
+  </data>
+  <data name="Docs. Aprobados" xml:space="preserve">
+    <value>Approved Docs.</value>
+  </data>
+  <data name="No hay datos" xml:space="preserve">
+    <value>There are no data</value>
+  </data>
+  <data name="Click en 'Buscar' para traer resultados" xml:space="preserve">
+    <value>Click on 'Search' to bring up results</value>
+  </data>
+  <data name="Solicitud nro." xml:space="preserve">
+    <value>Certification Applications Number</value>
+  </data>
+  <data name="Documentos requeridos" xml:space="preserve">
+    <value>Required Documents</value>
+  </data>
 </root>

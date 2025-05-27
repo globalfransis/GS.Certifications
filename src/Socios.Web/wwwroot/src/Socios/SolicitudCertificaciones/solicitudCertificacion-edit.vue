@@ -2,8 +2,8 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p>
-                <p class="h6">Certificación {{ solicitudCertificacion.certificacion }}</p>
+                <p class="h5">{{ loc["Solicitud nro."] + " " + solicitudCertificacion.id }}</p>
+                <p class="h6">{{ loc["Certificación"] + " " + solicitudCertificacion.certificacion }}</p>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -11,7 +11,7 @@
                         
                         <div class="col-12 d-flex justify-content-between align-items-center mb-4">
                             <div>
-                                <p class="h5 m-0">Documentos requeridos</p>
+                                <p class="h5 m-0">{{loc["Documentos requeridos"] }}</p>
                                 <span class="text-danger field-validation-error">
                                         {{ errorBag.get("documentos") }}
                                 </span>
@@ -23,14 +23,14 @@
                         <table :id="`${idTable}`" class="table table-bordered table-hover">
                             <thead class="table-top">
                                 <tr class="text-center align-middle">
-                                    <th class="w-10" scope="col">Tipo</th>
-                                    <th class="w-2" scope="col">Versión</th>
-                                    <th class="w-10" scope="col">Vigencia</th>
-                                    <th class="w-10" scope="col">Estado</th>
-                                    <th class="w-10" scope="col">Validado Por</th>
-                                    <th class="w-10" scope="col">Fecha Subida</th>
-                                    <th class="w-10" scope="col">Archivo</th>
-                                    <th class="w-2" scope="col">Acciones</th>
+                                    <th class="w-10" scope="col">{{ loc["Tipo"] }}</th>
+                                    <th class="w-2" scope="col">{{ loc["Versión"] }}</th>
+                                    <th class="w-10" scope="col">{{ loc["Vigencia"] }}</th>
+                                    <th class="w-10" scope="col">{{ loc["Estado"] }}</th>
+                                    <th class="w-10" scope="col">{{ loc["Validado Por"] }}</th>
+                                    <th class="w-10" scope="col">{{ loc["Fecha Subida"] }}</th>
+                                    <th class="w-10" scope="col">{{ loc["Archivo"] }}</th>
+                                    <th class="w-2" scope="col">{{ loc["Acciones"] }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,7 +68,7 @@
                         <hr>
 
                         <div class="form-group col-lg-12 col-sm-12 mb-2">
-                            <label class="control-label">Observaciones</label>
+                            <label class="control-label">{{loc["Observaciones"] }}</label>
                             <textarea class="form-control" cols="20" rows="5"
                                 v-model="solicitudCertificacion.observaciones"></textarea>
                             <span class="text-danger field-validation-error">
@@ -83,8 +83,8 @@
         </div>
         <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3">
             <accept-button :disabled="!grants.update && solicitudCertificacion.propietarioActualId != SOCIOS" v-if="solicitudCertificacion.propietarioActualId == SOCIOS && solicitudCertificacion.estadoId != PRESENTADA" @click="updateAsync">
-                Presentar</accept-button>
-            <cancel-button @click="cancel">Volver</cancel-button>
+                {{loc["Presentar"]}}</accept-button>
+            <cancel-button @click="cancel">{{loc["Volver"]}}</cancel-button>
         </div>
     </div>
 </template>
@@ -98,6 +98,10 @@ import commonMixin from '@/Common/Mixins/commonMixin';
 
 import inlineEdit from "@/components/forms/inline-edit-button.vue";
 import inlineDelete from "@/components/forms/inline-delete-button.vue";
+
+import loc from "@/common/commonLoc.js"
+
+const NO_DATA_MESSAGE = loc["No hay datos"];
 
 // Origen de la solicitud
 const SOCIOS = 1;
@@ -115,6 +119,7 @@ export default {
     name: "solicitudCertificacion-edit",
     data: function () {
         return {
+            loc : loc,
             // --- Origen de la solicitud ---
             SOCIOS,
             BACKOFFICE,
