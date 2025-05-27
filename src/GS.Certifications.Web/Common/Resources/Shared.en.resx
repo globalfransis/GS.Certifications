@@ -305,4 +305,13 @@
     <value>Users</value>
     <comment>General</comment>
   </data>
+  <data name="Solicitudes" xml:space="preserve">
+    <value>Certification Applications</value>
+  </data>
+  <data name="Certificaciones" xml:space="preserve">
+    <value>Certifications</value>
+  </data>
+  <data name="Listado de Solicitudes" xml:space="preserve">
+    <value>List of Certification Applications</value>
+  </data>
 </root>

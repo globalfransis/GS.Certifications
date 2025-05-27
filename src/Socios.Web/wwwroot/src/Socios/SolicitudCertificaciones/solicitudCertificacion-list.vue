@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <solicitudCertificacion-filter v-model="parameters" @clear="onClear()" @search="onSearch" />
+        <!-- <solicitudCertificacion-filter v-model="parameters" @clear="onClear()" @search="onSearch" /> -->
 
         <br />
 
@@ -153,9 +153,9 @@ export default {
             this.currentPage = this.parameters.start;
             this.recordsLength = this.parameters.length;
 
-            if (this.$route.query.fromDetail) {
+            // if (this.$route.query.fromDetail) {
                 await this.getAsync();
-            }
+            // }
         },
         // Guarda los parámetros en local storage (sesión)
         saveParameters() {

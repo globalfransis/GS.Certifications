@@ -6,7 +6,7 @@
         <br />
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
-            <p class="h5 m-0">Listado de Solicitudes</p>
+            <p class="h5 m-0">{{ loc["Listado de Solicitudes"] }}</p>
             <button :disabled="!grants.create || !parameters.certificacionId || !parameters.socioId" type="button"
                 class="btn btn-outline-primary btn-sm" @click="createAsync">
                 <b><i class="fas fa-plus"></i>Agregar</b>
@@ -90,6 +90,7 @@ import SolicitudCertificacion from "./SolicitudCertificacion";
 import solicitudCertificacionEstadoLabel from "@/Selects/solicitudCertificacionEstado-label.vue";
 import solicitudCertificacionDocumentacionEstadoLabel from "@/Selects/solicitudCertificacionDocumentacionEstado-label.vue";
 
+import loc from "@/common/commonLoc.js"
 
 const NO_DATA_MESSAGE = "No hay datos";
 const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
@@ -136,7 +137,8 @@ export default {
             parameters: {},
             currentPage: '0',
             recordsLength: 100,
-            uiService: new UiService()
+            uiService: new UiService(),
+            loc
         };
     },
     async mounted() {

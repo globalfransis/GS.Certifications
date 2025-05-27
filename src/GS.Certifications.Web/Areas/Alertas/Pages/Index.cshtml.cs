@@ -10,7 +10,9 @@ public class IndexModel : BasePageModel
     {
         Title = loc["Gestión de Alertas"];
     }
+
     public void OnGet()
     {
+        GetStringTranslations();
     }
 }
