@@ -83,7 +83,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
     public interface IDocumentoSolicitudCertificacionAnalysisParameter
     {
         int Id { get; set; }
-        int SocioId { get; set; }
+        //int SocioId { get; set; }
         int SolicitudId { get; set; }
     }
 

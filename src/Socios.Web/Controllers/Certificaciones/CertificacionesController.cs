@@ -60,12 +60,12 @@ namespace Socios.Web.Controllers.Certificaciones
         public async Task<ActionResult<int>> AnalyzeAsync([FromRoute] int solicitudId, [FromRoute] int id)
         {
             if (HttpContext.Request.Form.Files.Count == 0) return BadRequest("Se debe enviar un archivo.");
-            var currentSociolId = _currentSocioService.GetCurrentEmpresaPortalId();
+            //var currentSociolId = _currentSocioService.GetCurrentEmpresaPortalId();
             var cmd = new AnalyzeDocumentoSolicitudCertificacionCommand
             {
                 Id = id,
                 SolicitudId = solicitudId,
-                SocioId = (int)currentSociolId,
+                //SocioId = (int)currentSociolId,
                 FormFile = HttpContext.Request.Form.Files[0]
             };
 

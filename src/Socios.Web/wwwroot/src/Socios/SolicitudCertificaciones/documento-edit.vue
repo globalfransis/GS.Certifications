@@ -322,7 +322,7 @@ export default {
                     this.documento.operationId = res.operationId;
                     this.documento.operationStatus = res.operationStatus;
                     this.documento.fechaDesde = new Date(res.fechaDesde).toISOString().split('T')[0];
-                    this.documento.fechaHasta = new Date(res.fechaDesde).toISOString().split('T')[0];
+                    this.documento.fechaHasta = new Date(res.fechaHasta).toISOString().split('T')[0];
 
                     if (this.documento.operationStatus === this.PROCESSING) {
                         this.startStatusPolling();

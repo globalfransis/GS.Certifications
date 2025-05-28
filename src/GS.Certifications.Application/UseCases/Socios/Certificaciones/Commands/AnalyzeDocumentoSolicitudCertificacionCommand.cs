@@ -23,14 +23,14 @@ public class AnalyzeDocumentoSolicitudCertificacionCommand : IRequest<int>
 {
     public int Id { get; set; }
     public IFormFile FormFile { get; set; }
-    public int? SocioId { get; set; } = null;
+    //public int? SocioId { get; set; } = null;
     public int? SolicitudId { get; set; } = null;
 }
 
 public class AnalysisParameters : IDocumentoSolicitudCertificacionAnalysisParameter
 {
     public int Id { get; set; }
-    public int SocioId { get; set; }
+    //public int SocioId { get; set; }
     public int SolicitudId { get; set; }
 }
 
@@ -96,7 +96,7 @@ public class AnalyzeDocumentoSolicitudCertificacionCommandHandler : BaseRequestH
             var analysisParams = new AnalysisParameters()
             {
                 Id = request.Id,
-                SocioId = (int)request.SocioId,
+                //SocioId = (int)request.SocioId,
                 SolicitudId = (int)request.SolicitudId,
             };
 
