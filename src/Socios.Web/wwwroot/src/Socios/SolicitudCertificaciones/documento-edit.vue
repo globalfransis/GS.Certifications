@@ -130,12 +130,12 @@
             </div>
             <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3" v-if="currentLayoutMode != LayoutMode.File">
                 <button @click.prevent="saveAsync" class="btn btn-secondary btn-sm"
-                    :disabled="documento.operationStatus == PROCESSING && documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
+                    :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
                     <i class="fas fa-save"></i>
                     Guardar
                 </button>
                 <accept-button @click="updateAsync"
-                    :disabled="documento.operationStatus == PROCESSING && documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
+                    :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
                     Aceptar</accept-button>
                 <cancel-button @click="cancel">Volver</cancel-button>
             </div>

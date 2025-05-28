@@ -129,14 +129,14 @@
             </div>
             <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3" v-if="currentLayoutMode != LayoutMode.File">
                 <button @click.prevent="saveAsync"
-                    :disabled="documento.operationStatus == PROCESSING && documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
+                    :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
                     class="btn btn-secondary btn-sm">
                     <i class="fas fa-save"></i>
                     Guardar
                 </button>
 
                 <accept-button @click="updateAsync"
-                    :disabled="documento.operationStatus == PROCESSING && documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PRESENTADO"
+                    :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PRESENTADO"
                     v-if="documento.estadoId == DOCUMENTO_PRESENTADO">
                     Validar</accept-button>
 
