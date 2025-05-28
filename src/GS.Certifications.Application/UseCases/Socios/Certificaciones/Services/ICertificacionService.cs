@@ -1,11 +1,14 @@
+using GS.AI.DocumentIntelligence.Legacy.Models;
+using GS.Certifications.Application.CQRS.DbContexts;
 using GS.Certifications.Domain.Entities.Certificaciones;
 using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
-using GS.Certifications.Domain.Entities.Empresas;
 using GSF.Application.Helpers.Pagination.Interfaces;
 using GSF.Application.Services;
+using GSF.Domain.Entities.Security;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
@@ -18,6 +21,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         Task<Certificacion> GetAsync(int id);
         Task<SolicitudCertificacion> GetSolicitudAsync(int id);
         Task<DocumentoCargado> GetDocumentoAsync(int id);
+        Task<string> AnalyzeDocumentoAsync(BinaryData bytesSource, IDocumentoSolicitudCertificacionAnalysisParameter parameters, AnalysisCompletedCallback onCompletedCallback, CancellationToken cancellationToken);
         DocumentoCargado CreateDocumento(ISolicitudCertificacionDocumentoCreate d);
         Task UpdateDocumentoDraftAsync(int id, ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate);
         Task UpdateDocumentoAsync(int id, ISolicitudCertificacionDocumentoUpdate solicitudCertificacionDocumentoUpdate);
@@ -44,6 +48,17 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         short? EstadoId { get; set; }
     }
 
+    public interface ISolicitudCertificacionAnalysisParameters
+    {
+        public int Id { get; set; }
+        public int SolicitudId { get; set; }
+        public int DocumentoRequeridoId { get; set; }
+        public string ArchivoURL { get; set; }
+        public long? ValidadoPorId { get; set; }
+        public User ValidadoPor { get; set; }
+        public DateTime? FechaSubida { get; set; }
+    }
+
     /// <summary>
     /// Filtros de consulta para Certificacion.
     /// </summary>
@@ -68,7 +83,6 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
     public interface IDocumentoSolicitudCertificacionAnalysisParameter
     {
         int Id { get; set; }
-        IFormFile FormFile { get; set; }
         int SocioId { get; set; }
         int SolicitudId { get; set; }
     }
@@ -127,4 +141,21 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         DateTime? FechaSubida { get; set; }
         byte[] RowVersion { get; set; }
     }
+
+    public class AnalysisCompletionData
+    {
+        public int DocumentoId { get; init; }
+        public string OperationId { get; init; }
+        public Domain.Commons.Enums.OperationStatus FinalStatus { get; init; }
+        public IEnumerable<DocumentAnalysisResult>? Results { get; init; } // Null si falló
+        public Exception? Exception { get; init; } // Null si tuvo éxito
+        public CancellationToken OriginalCancellationToken { get; init; }
+    }
+
+    // Firma del Callback
+    // El callback recibe los datos de completación y el DbContext del scope creado en Task.Run
+    public delegate Task AnalysisCompletedCallback(
+        AnalysisCompletionData completionData,
+        ICertificationsDbContext dbContextForCallback // El servicio proveerá este contexto
+    );
 }

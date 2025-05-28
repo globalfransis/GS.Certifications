@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GS.Certifications.Domain.Commons.Enums;
 using GS.Certifications.Domain.Entities.Certificaciones;
 using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 using GSF.Application.Common.Mappings;
@@ -104,6 +105,9 @@ public class DocumentoCargadoDto : IMapFrom<DocumentoCargado>
     public short? PropietarioActualId { get; set; }
 
     public string Observaciones { get; set; }
+
+    public string OperationId { get; set; }
+    public OperationStatus? OperationStatus { get; set; }
 
     public class MappingProfile : Profile
     {

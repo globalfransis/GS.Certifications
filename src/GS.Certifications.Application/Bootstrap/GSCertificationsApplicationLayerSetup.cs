@@ -26,7 +26,7 @@ public static class GSCertificationsApplicationLayerSetup
         {
             config.Endpoint = appConfig["GS.AI:DocumentIntelligence:Endpoint"];
             config.ApiKey = appConfig["GS.AI:DocumentIntelligence:ApiKey"];
-            config.Invoice = appConfig["GS.AI:DocumentIntelligence:Invoice"];
+            config.Custom = appConfig["GS.AI:DocumentIntelligence:Custom"];
         });
 
 

@@ -2,18 +2,18 @@
 using GS.Certifications.Application.CQRS.DbContexts;
 using GS.Certifications.Application.GSFExtensions.GSFWebFilteTransferService;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Services;
-using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 using GSF.Application.Extensions.GSFMediatR;
 using GSFSharedResources;
 using GSFWebFileTransferService.Abstractions.Builder;
 using GSFWebFileTransferService.Abstractions.DefaultValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,6 +25,13 @@ public class AnalyzeDocumentoSolicitudCertificacionCommand : IRequest<int>
     public IFormFile FormFile { get; set; }
     public int? SocioId { get; set; } = null;
     public int? SolicitudId { get; set; } = null;
+}
+
+public class AnalysisParameters : IDocumentoSolicitudCertificacionAnalysisParameter
+{
+    public int Id { get; set; }
+    public int SocioId { get; set; }
+    public int SolicitudId { get; set; }
 }
 
 public class DocumentoSolicitudCertificacionAnalysisParameter : IDocumentoSolicitudCertificacionAnalysisParameter
@@ -78,61 +85,31 @@ public class AnalyzeDocumentoSolicitudCertificacionCommandHandler : BaseRequestH
         }
         var binData = new BinaryData(bytes);
 
-        // --- 2. Análisis del Documento ---
-        Log.Logger.Information("Iniciando análisis de documento para SolicitudId={SolicitudId}, FileName={FileName}", request.SolicitudId, request.FormFile.FileName);
-
-
-        //var result = await certificacionService.AnalyzeAsync(binData, request);
-        Log.Logger.Information("Análisis de documento finalizado para SolicitudId={SolicitudId}, FileName={FileName}", request.SolicitudId, request.FormFile.FileName);
-
-        // Esto ya debería estar en la implementación de AnalyzeAsync si la interfaz IComprobanteAnalysisResult lo define
-        //result.FileName = request.FormFile.FileName; // setteamos a result el nombre del archivo analizado
-
-        //// --- 3. Datos Adicionales (CompanyExtra) ---
-        //var companyExtra = await _context.CompanyExtras
-        //                           .AsNoTracking()
-        //                           .FirstOrDefaultAsync(c => c.SolicitudId == request.SolicitudId, cancellationToken)
-        //                        ?? throw new InvalidOperationException($"No se encontraron datos de configuración (CompanyExtra) para la compañía ID {request.SolicitudId}.");
-
-
-        //// --- 4. Mapeo: IComprobanteAnalysisResult -> ComprobanteCreate ---
-        //ComprobanteCreate comprobanteCreateArgs;
-        //try
-        //{
-        //    comprobanteCreateArgs = await MapAnalysisResultToSaveArgsAsync(result, companyExtra, request.SolicitudId, empresaPortal, request.OrigenId);
-        //    Log.Logger.Debug("Mapeo de AnalysisResult a ComprobanteCreate completado para SolicitudId={SolicitudId}", request.SolicitudId);
-        //}
-        //catch (Exception ex)
-        //{
-        //    Log.Logger.Error(ex, "Error al mapear resultado del análisis para SolicitudId={SolicitudId}, FileName={FileName}", request.SolicitudId, result.FileName);
-        //    throw new InvalidOperationException($"Error al preparar datos del análisis para guardar borrador: {ex.Message}", ex);
-        //}
-
-        // --- 5. Validación Manual ---
-        //var validationFailures = ValidateComprobanteCreate(comprobanteCreateArgs);
-        //if (validationFailures.Any())
-        //{
-        //    Log.Logger.Warning("Validación manual fallida para borrador de comprobante analizado (SolicitudId={SolicitudId}). Errores: {@ValidationFailures}", request.SolicitudId, validationFailures);
-        //    throw new ValidationErrorException(validationFailures);
-        //}
-        //Log.Logger.Debug("Validación manual completada exitosamente para borrador (SolicitudId={SolicitudId})", request.SolicitudId);
-
-
-        // --- 6. Borrador ---
         try
         {
-            //Log.Logger.Information("Intentando guardar documento analizado como borrador para SolicitudId={SolicitudId}, FileName={FileName}", request.SolicitudId, result.FileName);
-            //var borrador = await certificacionService.SaveDraftAsync(comprobanteCreateArgs);
+            Log.Logger.Information("Iniciando análisis de documento para SolicitudId={SolicitudId}, FileName={FileName}", request.SolicitudId, request.FormFile.FileName);
 
-            //Log.Logger.Information("Documento analizado (FileName={FileName}) guardado como borrador Id={BorradorId} para SolicitudId={SolicitudId}", result.FileName, borrador.Id, request.SolicitudId);
-            
-            var documentoCargado = await _context.DocumentoCargados
-                .Include(d => d.Solicitud)
-                .FirstOrDefaultAsync(x => x.Id == request.Id);
+            var documentoCargado = await certificacionService.GetDocumentoAsync(request.Id);
 
             var folderPath = $"Doc_{documentoCargado.Guid}";
+
+            var analysisParams = new AnalysisParameters()
+            {
+                Id = request.Id,
+                SocioId = (int)request.SocioId,
+                SolicitudId = (int)request.SolicitudId,
+            };
+
+            string operationId = await certificacionService.AnalyzeDocumentoAsync(
+                binData,
+                analysisParams,
+                ProcessAnalysisCompletion, // Referencia al método callback
+                cancellationToken
+            );
+
+            documentoCargado.OperationId = operationId;
+            documentoCargado.OperationStatus = Domain.Commons.Enums.OperationStatus.PROCESSING;
             documentoCargado.ArchivoURL = request.FormFile.FileName;
-            //documentoCargado.EstadoId = DocumentoEstado.PRESENTADO;
             documentoCargado.FechaSubida = DateTime.Now;
 
             string directorioBase = $"Solicitud_{documentoCargado.Solicitud.Guid}/Doc_{documentoCargado.Guid}";
@@ -149,4 +126,39 @@ public class AnalyzeDocumentoSolicitudCertificacionCommandHandler : BaseRequestH
             throw;
         }
     }
+
+    private async Task ProcessAnalysisCompletion(AnalysisCompletionData completionData, ICertificationsDbContext dbContext)
+    {
+        // Volvemos a cargar la entidad usando el DbContext proporcionado para asegurar que está rastreada
+        var documento = await dbContext.DocumentoCargados.FindAsync(
+            new object[] { completionData.DocumentoId },
+            completionData.OriginalCancellationToken
+        );
+
+        if (documento == null || documento.OperationId != completionData.OperationId)
+        {
+            Console.WriteLine($"Callback: Documento {completionData.DocumentoId} no encontrado o OperationId no coincide.");
+            return;
+        }
+
+        if (completionData.FinalStatus == Domain.Commons.Enums.OperationStatus.COMPLETED && completionData.Results != null)
+        {
+            var firstResult = completionData.Results.FirstOrDefault();
+            if (firstResult != null && firstResult.ExtractedFields != null)
+            {
+                documento.FechaDesde = firstResult.ExtractedFields.GetValueOrDefault("VigenciaDesde")?.ValueDate?.DateTime;
+                documento.FechaHasta = firstResult.ExtractedFields.GetValueOrDefault("VigenciaHasta")?.ValueDate?.DateTime;
+            }
+            documento.OperationStatus = Domain.Commons.Enums.OperationStatus.COMPLETED;
+        }
+        else // hubo una falla en la operación de IA
+        {
+            documento.OperationStatus = Domain.Commons.Enums.OperationStatus.FAILED;
+            Console.WriteLine($"Callback: Operación {completionData.OperationId} falló: {completionData.Exception?.Message}");
+        }
+
+        await dbContext.SaveChangesAsync(completionData.OriginalCancellationToken);
+        Console.WriteLine($"Callback: Documento {documento.Id} actualizado a estado {documento.OperationStatus}.");
+    }
 }
+

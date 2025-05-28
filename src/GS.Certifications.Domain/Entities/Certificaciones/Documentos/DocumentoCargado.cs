@@ -1,4 +1,5 @@
-﻿using GSF.Domain.Common;
+﻿using GS.Certifications.Domain.Commons.Enums;
+using GSF.Domain.Common;
 using GSF.Domain.Entities.Security;
 using System;
 
@@ -25,6 +26,8 @@ namespace GS.Certifications.Domain.Entities.Certificaciones.Documentos
         public User ValidadoPor { get; set; }
         public DateTime? FechaSubida { get; set; }
         public string Observaciones { get; set; }
+        public string OperationId { get; set; }
+        public OperationStatus? OperationStatus { get; set; } = null;
     }
 
     public class DocumentoEstado : BaseFixedShortEntity
