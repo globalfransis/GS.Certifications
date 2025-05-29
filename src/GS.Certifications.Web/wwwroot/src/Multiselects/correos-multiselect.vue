@@ -19,6 +19,7 @@
 import Multiselect from 'vue-multiselect'
 import UiService from "@/common/uiService";
 
+import loc from "@/common/commonLoc.js"
 
 export default {
     components: {
@@ -32,9 +33,10 @@ export default {
     },
     data: function () {
         return {
+            loc,
             options: [],
             multiselectId: `correosMultiselect-${this.id}`,
-            placeHolder: "Ingresar correos",
+            placeHolder: loc["Ingresar correos"],
             isLoading: false,
             uiService: new UiService(),
             nuevoCorreo: ""

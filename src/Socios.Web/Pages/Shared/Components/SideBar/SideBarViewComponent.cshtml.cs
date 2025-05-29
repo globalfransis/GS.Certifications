@@ -2,6 +2,9 @@ using GSF.Application.Security.Options.GetOptions.Queries;
 using GSF.Application.Security.Options.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Socios.Web.Common.Helpers.Localizations;
+using Socios.Web.Common.Resources;
 using Socios.Web.Common.Services;
 
 public class SideBarViewComponent : ViewComponent
@@ -9,6 +12,7 @@ public class SideBarViewComponent : ViewComponent
     public IHttpContextAccessor _httpContextAccessor { get; }
 
     private readonly IArgumentFowardingService _argumentFowardingService;
+    private LocalizationHelper<Shared> _localizationHelper;
 
     public OptionDto Options { get; set; }
 
@@ -22,6 +26,18 @@ public class SideBarViewComponent : ViewComponent
     {
         _httpContextAccessor = httpContextAccessor;
         _argumentFowardingService = argumentFowardingService;
+        _localizationHelper = null;
+    }
+
+    public LocalizationHelper<Shared> LocalizationHelper { get
+        {
+            if(_localizationHelper is null)
+            {
+                var stringLocalizaer = (IStringLocalizer<Shared>)HttpContext.RequestServices.GetService(typeof(IStringLocalizer<Shared>));
+                _localizationHelper = new LocalizationHelper<Shared>(stringLocalizaer);
+            }
+            return _localizationHelper;
+        }
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
@@ -29,7 +45,6 @@ public class SideBarViewComponent : ViewComponent
         CurrentPage = _httpContextAccessor.HttpContext.Items["navigationKey"].ToString();
 
         IMediator _mediator = (IMediator)HttpContext.RequestServices.GetService(typeof(IMediator));
-
 
         var queryContextOptions = new GetContextOptionsByPageQuery
         {

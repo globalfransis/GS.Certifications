@@ -4,21 +4,21 @@
             <div class="card">
                 <div class="card-body">
                     <div class="col-12 mb-4">
-                        <p class="h5 m-0">Modificación del Usuario {{ this.usuarioExternoDto.email }}</p> <!-- Modificar según el caso -->
+                        <p class="h5 m-0">{{loc["Modificación del Usuario"]}} {{ this.usuarioExternoDto.email }}</p> <!-- Modificar según el caso -->
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Email</label><span class="text-danger">*</span>
+                            <label class="control-label">{{loc["Email"]}}</label><span class="text-danger">*</span>
                             <input disabled type="text" class="form-control" v-model="usuarioExternoDto.email">
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Roles</label><span class="text-danger">*</span>
+                            <label class="control-label">{{loc["Roles"]}}</label><span class="text-danger">*</span>
                             <div>
                                 <multiselect @open="loadRoles" v-model="listaRolesAgregados" :options="listaRoles"
                                 track-by="idm" :custom-label="(item) => {return `${item.descripcion}`}" :hide-selected="true"
-                                :close-on-select="true" open-direction="bottom" :multiple="true" placeholder="Seleccionar opción"
+                                :close-on-select="true" open-direction="bottom" :multiple="true" :placeholder="loc['Seleccionar opción']"
                                 :show-labels="false">
-                                <template slot="noResult"> No se encontraron resultados</template>
+                                <template slot="noResult"> {{loc["No se encontraron resultados"]}}</template>
                                 </multiselect>
                             </div>
                             <span class="text-danger field-validation-error" data-valmsg-for="Roles" data-valmsg-replace="true">
@@ -28,8 +28,8 @@
                     </div>
                     <div class="col-12 d-flex justify-content-end mb-3 mt-3">
                         <div>
-                        <accept-button :disabled="!grants.updateUsuario" @click="save">Aceptar</accept-button>
-                        <cancel-button @click="cancel">Cancelar</cancel-button>
+                        <accept-button :disabled="!grants.updateUsuario" @click="save">{{loc["Aceptar"]}}</accept-button>
+                        <cancel-button @click="cancel">{{loc["Cancelar"]}}</cancel-button>
                         </div>
                     </div>
                 </div>
@@ -51,6 +51,8 @@ import multiselect from "vue-multiselect";
 
 import ajax from "@/common/ajaxWrapper";
 
+import loc from "@/common/commonLoc.js"
+
 const API_ROLES_URL = baseUrl + "/api/Proveedores/RolesTipos";
 const API_URL = baseUrl + "/api/Proveedores/Administracion";
 
@@ -63,6 +65,8 @@ export default {
     },
     data: function(){
         return {
+            loc,
+
             usuarioExternoDto: new UsuarioExternoDto(),
             uiService: new UiService(),
             existeUsuario: true,
@@ -127,10 +131,10 @@ export default {
                         })
                     .then(() => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             this.cancel()
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(loc["Operación rechazada"])
                         }
                     })
                     .finally(() => {
@@ -180,7 +184,7 @@ export default {
             var validacion = true;
             if(this.usuarioExternoDto.roles.length === 0){
                 validacion = false;
-                this.errorBag.addError("roles", ["Se debe agregar un rol como minimo"]);
+                this.errorBag.addError("roles", [loc["Se debe agregar un rol como minimo"]]);
             }
             return validacion
         }

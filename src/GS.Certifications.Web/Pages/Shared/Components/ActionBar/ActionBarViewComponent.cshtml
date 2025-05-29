@@ -17,7 +17,7 @@
             @foreach (OptionDto option in Model.Options.Options)
             {
                 <li class="list-group-item list-group-item-action right-menu-item">
-                    <a href="@option.Url">@option.Name</a>
+                    <a href="@option.Url">@loc[option.Name]</a>
                 </li>
             }
 

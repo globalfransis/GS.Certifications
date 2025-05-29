@@ -26,7 +26,7 @@ public class PasswordRecoveryModel : BasePageModel
         try
         {
             Email = await Mediator.Send(new ValidatePasswordRecoveryTokenCommand() { Token = Token });
-
+            GetStringTranslations();
         }
         catch (NonExistentUserException)
         {

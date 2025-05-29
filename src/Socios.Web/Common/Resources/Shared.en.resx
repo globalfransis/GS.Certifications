@@ -350,6 +350,15 @@
     <value>Users</value>
     <comment>General</comment>
   </data>
+  <data name="Portal de Socios" xml:space="preserve">
+    <value>Partners Portal</value>
+  </data>
+  <data name="Socios" xml:space="preserve">
+    <value>Partners</value>
+  </data>
+  <data name="Socio" xml:space="preserve">
+    <value>Partner</value>
+  </data>
   <data name="Requisitos mínimos para obtener el Fonasba Quality Standard:" xml:space="preserve">
     <value>Minimum requirements to obtain the Fonasba Quality Standard:</value>
   </data>
@@ -398,13 +407,46 @@
   <data name="Documentos requeridos" xml:space="preserve">
     <value>Required Documents</value>
   </data>
-	<data name="Portal de Socios" xml:space="preserve">
-    <value>Partners Portal</value>
+  <data name="Tipo" xml:space="preserve">
+    <value>Type</value>
   </data>
-	<data name="Socios" xml:space="preserve">
-    <value>Partners</value>
+  <data name="Versión" xml:space="preserve">
+    <value>Version</value>
   </data>
-	<data name="Socio" xml:space="preserve">
-    <value>Partner</value>
+  <data name="Validado Por" xml:space="preserve">
+    <value>Validated By</value>
+  </data>
+  <data name="Fecha Subida" xml:space="preserve">
+    <value>Upload Date</value>
+  </data>
+  <data name="Archivo" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Observaciones" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="Presentar" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Requisitos FQS" xml:space="preserve">
+    <value>FQS Requirements</value>
+  </data>
+  <data name="Certificaciones" xml:space="preserve">
+    <value>Certifications</value>
+  </data>
+  <data name="Inicio" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Bienvenido" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="al portal de" xml:space="preserve">
+    <value>to the portal of</value>
+  </data>
+  <data name="Se muestran" xml:space="preserve">
+    <value>Shown are</value>
+  </data>
+  <data name="registros por página" xml:space="preserve">
+    <value>records per page</value>
   </data>
 </root>

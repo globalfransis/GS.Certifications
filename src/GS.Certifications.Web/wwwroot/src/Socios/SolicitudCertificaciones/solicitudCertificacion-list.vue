@@ -9,7 +9,7 @@
             <p class="h5 m-0">{{ loc["Listado de Solicitudes"] }}</p>
             <button :disabled="!grants.create || !parameters.certificacionId || !parameters.socioId" type="button"
                 class="btn btn-outline-primary btn-sm" @click="createAsync">
-                <b><i class="fas fa-plus"></i>Agregar</b>
+                <b><i class="fas fa-plus"></i>{{ loc["Agregar"]}}</b>
             </button>
         </div>
 
@@ -20,19 +20,17 @@
                 class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th data-column="Certificacion.Nombre" class="text-center w-10">Certificación</th>
-                        <th data-column="Socio.RazonSocial" class="text-center w-10">Socio</th>
-                        <th data-column="FechaSolicitud" datatable-datetime class="text-center w-10">Fecha Solicitud
-                        </th>
-                        <th data-column="Estado.Descripcion" class="text-center w-10">Estado</th>
-                        <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center w-5">Fecha
-                            Estado</th>
-                        <th no-sort-datatable class="text-center w-10">Vigencia</th>
-                        <th class="text-center w-10" no-sort-datatable>Estado Documentación</th>
-                        <th class="text-center w-5" no-sort-datatable>Docs. Pendientes</th>
-                        <th class="text-center w-5" no-sort-datatable>Docs. Cargados</th>
-                        <th class="text-center w-5" no-sort-datatable>Docs. Aprobados</th>
-                        <th class="text-center w-5" no-sort-datatable>Acciones</th>
+                        <th data-column="Certificacion.Nombre" class="text-center w-10">{{ loc["Certificación"]}}</th>
+                        <th data-column="Socio.RazonSocial" class="text-center w-10">{{ loc["Socio"]}}</th>
+                        <th data-column="FechaSolicitud" datatable-datetime class="text-center w-10">{{ loc["Fecha Solicitud"]}}</th>
+                        <th data-column="Estado.Descripcion" class="text-center w-10">{{ loc["Estado"]}}</th>
+                        <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center w-5">{{ loc["Fecha Estado"]}}</th>
+                        <th no-sort-datatable class="text-center w-10">{{ loc["Vigencia"]}}</th>
+                        <th class="text-center w-10" no-sort-datatable>{{ loc["Estado Documentación"]}}</th>
+                        <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Pendientes"]}}</th>
+                        <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Cargados"]}}</th>
+                        <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Aprobados"]}}</th>
+                        <th class="text-center w-5" no-sort-datatable>{{ loc["Acciones"]}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -176,19 +174,19 @@ export default {
         async remove(dto) {
             if (
                 await this.uiService.confirmActionModal(
-                    "¿Está usted seguro que desea eliminar esta solicitud?",
-                    "Aceptar",
-                    "Cancelar"
+                loc["¿Está usted seguro que desea eliminar esta solicitud?"],
+                loc["Aceptar"],
+                loc["Cancelar"]
                 )
             ) {
                 this.uiService.showSpinner(true)
                 await this.$store.dispatch("deleteAsync", dto)
                     .then(async () => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             await this.getAsync();
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(loc["Operación rechazada"])
                         }
                     })
                     .finally(() => {

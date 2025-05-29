@@ -70,22 +70,6 @@
     </div>
 </template>
 
-<!-- <template>
-    <div>
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row justify-content-center text-center">
-                        <h5> {{ loc["Requisitos"] }} </h5>
-                        <h5> {{ loc["Prueba"] }} </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template> -->
-
-
 <script>
 
 import loc from "@/common/commonLoc.js"

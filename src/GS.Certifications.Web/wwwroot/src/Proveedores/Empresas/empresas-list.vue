@@ -6,9 +6,9 @@
         <br />
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
-            <p class="h5 m-0">Listado de Empresas</p> <!-- Modificar según el caso -->
+            <p class="h5 m-0">{{ loc["Listado de Empresas"]}}</p> <!-- Modificar según el caso -->
             <button :disabled="!grants.createEmpresa" type="button" class="btn btn-outline-primary btn-sm" @click="create">
-                <b><i class="fas fa-plus"></i>Agregar</b>
+                <b><i class="fas fa-plus"></i>{{ loc["Agregar"]}}</b>
             </button>
         </div>
 
@@ -19,12 +19,12 @@
                 class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th data-column="RazonSocial" class="text-center">Razon Social</th>
-                        <th data-column="IdentificadorTributario" class="text-center w-15">Identificador Tributario</th>
-                        <th data-column="CodigoProveedor" class="text-center w-10">Codigo Proveedor</th>
-                        <th data-column="Contacto" class="text-center w-20">Contacto</th>
-                        <th data-column="Confirmado" style="width: 7% !important;">Confirmado</th>
-                        <th class="text-center w-10" no-sort-datatable>Acciones</th>
+                        <th data-column="RazonSocial" class="text-center">{{ loc["Razón Social"]}}</th>
+                        <th data-column="IdentificadorTributario" class="text-center w-15">{{ loc["Identificador Tributario"]}}</th>
+                        <th data-column="CodigoProveedor" class="text-center w-10">{{ loc["Codigo Proveedor"]}}</th>
+                        <th data-column="Contacto" class="text-center w-20">{{ loc["Contacto"]}}</th>
+                        <th data-column="Confirmado" style="width: 7% !important;">{{ loc["Confirmado"]}}</th>
+                        <th class="text-center w-10" no-sort-datatable>{{ loc["Acciones"]}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,8 +80,10 @@ import Parameters from "./Parameters";
 import columnSortedMixin from '@/Common/Mixins/columnSortedMixin';
 import empresasFilter from './empresas-filter.vue';
 
-const NO_DATA_MESSAGE = "No hay datos";
-const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
+import loc from "@/common/commonLoc.js"
+
+const NO_DATA_MESSAGE = loc["No hay datos"];
+const SEARCH_RESULTS_MESSAGE = loc["Click en 'Buscar' para traer resultados"];
 
 export default {
     name: "empresas-list",
@@ -120,6 +122,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             parameters: {},
             currentPage: '0',
             recordsLength: 100,
@@ -158,19 +161,19 @@ export default {
         async remove(dto) {
             if (
                 await this.uiService.confirmActionModal(
-                "¿Está usted seguro que desea eliminar a esta empresa portal?",
-                "Aceptar",
-                "Cancelar"
+                loc["¿Está usted seguro que desea eliminar a esta empresa portal?"],
+                loc["Aceptar"],
+                loc["Cancelar"]
                 )
             ){
                 this.uiService.showSpinner(true)
                 await this.$store.dispatch("deleteAsync", dto)
                     .then(async () => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             await this.getAsync();
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(loc["Operación rechazada"])
                         }
                     })
                     .finally(() => {

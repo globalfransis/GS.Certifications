@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using GS.Certifications.Web.Pages;
 using System.Threading.Tasks;
+using GS.Certifications.Web.Common.Resources;
 
 namespace GS.Certifications.Web.Areas.Security.Pages;
 
 public class PasswordChangeModel : BasePageModel
 {
     private readonly ICurrentUserService _currentUserService;
-    private readonly IStringLocalizer<SecurityResources> _securityLoc;
+    private readonly IStringLocalizer<Shared> _securityLoc;
 
     [BindProperty(SupportsGet = true)] public string Email { get; set; }
 
@@ -20,7 +21,7 @@ public class PasswordChangeModel : BasePageModel
 
     [BindProperty] public string PasswordConfirmation { get; set; }
 
-    public PasswordChangeModel(ICurrentUserService currentUserService, IStringLocalizer<SecurityResources> securityLoc)
+    public PasswordChangeModel(ICurrentUserService currentUserService, IStringLocalizer<Shared> securityLoc)
     {
         _currentUserService = currentUserService;
         _securityLoc = securityLoc;
@@ -44,5 +45,9 @@ public class PasswordChangeModel : BasePageModel
             return Page();
         }
 
+    }
+    public void OnGet()
+    {
+        GetStringTranslations();
     }
 }

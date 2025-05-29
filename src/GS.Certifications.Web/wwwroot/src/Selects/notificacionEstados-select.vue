@@ -1,6 +1,6 @@
 <template>
     <select v-model="selected" class="form-select" @change="onChange($event.target.value)">
-        <option :value="null">Sin especificar</option>
+        <option :value="null">{{loc["Sin especificar"]}}</option>
         <option v-for="option in optionsData" :key="option.idm" :value="option.idm">
             {{ option.descripcion }}
         </option>
@@ -11,6 +11,8 @@
 
 import ajax from "@/common/ajaxWrapper";
 
+import loc from "@/common/commonLoc.js"
+
 export default {
     components: {},
     name: "notificacionEstados-select",
@@ -19,6 +21,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             optionsData: [],
         };
     },

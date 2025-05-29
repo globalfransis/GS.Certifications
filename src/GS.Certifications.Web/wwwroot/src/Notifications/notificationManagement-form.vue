@@ -2,14 +2,14 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">Reenviar Notificación</p>
+                <p class="h5">{{loc["Reenviar Notificación"]}}</p>
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
 
                         <div class="col mb-4">
-                            <label>Destinatarios</label>
+                            <label>{{loc["Destinatarios"]}}</label>
                             <correos-multiselect id="destinatarios" :editMode="true" v-model="notificacion.destinatarios" />
                             <span class="text-danger field-validation-error" data-valmsg-for="destinatarios"
                                 data-valmsg-replace="true">
@@ -18,7 +18,7 @@
                         </div>
 
                         <div class="col mb-4">
-                            <label>CC</label>
+                            <label>{{loc["CC"]}}</label>
                             <correos-multiselect id="cc" :editMode="true" v-model="notificacion.conCopia" />
                             <span class="text-danger field-validation-error" data-valmsg-for="conCopia"
                                 data-valmsg-replace="true">
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="col mb-4">
-                            <label>CCO</label>
+                            <label>{{loc["CCO"]}}</label>
                             <correos-multiselect id="cco" :editMode="true" v-model="notificacion.conCopiaOculta" />
                             <span class="text-danger field-validation-error" data-valmsg-for="conCopiaOculta"
                                 data-valmsg-replace="true">
@@ -40,8 +40,8 @@
             </div>
             <div class="col-12 d-flex justify-content-end mb-3 mt-3">
                 <div>
-                    <accept-button @click="saveNotificacion">Reenviar</accept-button>
-                    <cancel-button @click="goBack">Cancelar</cancel-button>
+                    <accept-button @click="saveNotificacion">{{loc["Reenviar"]}}</accept-button>
+                    <cancel-button @click="goBack">{{loc["Cancelar"]}}</cancel-button>
                 </div>
             </div>
         </div>
@@ -55,6 +55,8 @@ import ajax from "@/common/ajaxWrapper";
 import ErrorBag from "@/common/ErrorBag";
 import UiService from "@/common/uiService";
 import correosMultiselect from "@/Multiselects/correos-multiselect";
+
+import loc from "@/common/commonLoc.js"
 
 const GET_NOTIFICACION_URL = baseUrl + "/api/Notifications/GetNotificacion";
 const SAVE_NOTIFICACION_URL = baseUrl + "/api/Notifications/CreateNotificacionReenvio";
@@ -70,6 +72,7 @@ export default {
 
     data: function () {
         return {
+            loc,
             notificacion: {
                 id: null,
                 destinatarios: [],

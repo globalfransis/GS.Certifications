@@ -4,39 +4,15 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" :class="{ active: currentTab === 'empresaDetail' }" 
                         @click="changeTab('empresaDetail')">
-                    Detalle de Empresa Portal
+                    {{loc["Detalle de Empresa Portal"]}}
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" :class="{ active: currentTab === 'usuariosExternosForm' }" 
                         @click="changeTab('usuariosExternosForm')">
-                    Usuarios Web
+                    {{loc["Usuarios Web"]}}
                 </button>
             </li>
-            <!-- <li class="nav-item" role="presentation">
-                <button class="nav-link" :class="{ active: currentTab === 'usuariosInternosForm' }" 
-                        @click="changeTab('usuariosInternosForm')">
-                    Usuarios Backoffice
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" :class="{ active: currentTab === 'documentosComprasForm' }" 
-                        @click="changeTab('documentosComprasForm')">
-                    Documentos de Compras
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" :class="{ active: currentTab === 'conceptosGastosForm' }" 
-                        @click="changeTab('conceptosGastosForm')">
-                    Conceptos de Gastos
-                </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" :class="{ active: currentTab === 'configuracionAnalisisForm' }" 
-                        @click="changeTab('configuracionAnalisisForm')">
-                    Configuracion / Analisis
-                </button>
-            </li> -->
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <empresa-detail v-if="currentTab === 'empresaDetail'" class="card-tab" ref="empresaDetalle"/>
@@ -57,6 +33,8 @@ import documentosComprasForm from "./documentos-compras-form.vue";
 import conceptosGastosForm from "./conceptos-gastos-form.vue";
 import configuracionAnalisisForm from "./configuracion-analisis-form.vue";
 
+import loc from "@/common/commonLoc.js"
+
 export default {
     name: "empresas-form",
     components: {
@@ -69,6 +47,7 @@ export default {
     },
     data() {
         return {
+            loc,
             currentTab: this.$route.query.tab || 'empresaDetail' // Usa la pestaña de la URL o el valor por defecto
         };
     },

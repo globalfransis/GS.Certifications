@@ -4,11 +4,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="col-12 mb-4">
-                        <p class="h5 m-0">Alta de Usuario Web</p> <!-- Modificar según el caso -->
+                        <p class="h5 m-0">{{loc["Alta de Usuario Web"]}}</p> <!-- Modificar según el caso -->
                     </div>
                     <div class="row">
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Email</label><span class="text-danger">*</span>
+                            <label class="control-label">{{loc["Email"]}}</label><span class="text-danger">*</span>
                             <input type="text" class="form-control" v-model="usuarioExternoDto.email" @blur="getUsuarioCliente">
                             <span class="text-danger field-validation-error" data-valmsg-for="Email" data-valmsg-replace="true">
                                 {{ errorBag.get("Email") }}
@@ -18,13 +18,13 @@
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Roles</label><span class="text-danger">*</span>
+                            <label class="control-label">{{loc["Roles"]}}</label><span class="text-danger">*</span>
                             <div>
                                 <multiselect @open="loadRoles" v-model="listaRolesAgregados" :options="listaRoles"
                                 track-by="rolTipoId" :custom-label="(item) => {return `${item.rolTipo.descripcion}`}" :hide-selected="true"
-                                :close-on-select="true" open-direction="bottom" :multiple="true" placeholder="Seleccionar opción"
+                                :close-on-select="true" open-direction="bottom" :multiple="true" :placeholder="loc['Seleccionar opción']"
                                 :show-labels="false">
-                                <template slot="noResult"> No se encontraron resultados</template>
+                                <template slot="noResult">{{loc["No se encontraron resultados"]}}</template>
                                 </multiselect>
                             </div>
                             <span class="text-danger field-validation-error" data-valmsg-for="Roles" data-valmsg-replace="true">
@@ -34,28 +34,28 @@
                         <div class="col-12 mb-4 collapse" :id="usuariosExternosCollapseId">
                             <div class="row">
                                 <div class="form-group col-lg-3 col-sm-12 mb-4">
-                                    <label class="control-label">Nombre</label><span class="text-danger">*</span>
+                                    <label class="control-label">{{loc["Nombre"]}}</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" v-model="usuarioExternoDto.firstName" :disabled="!isEditable">
                                     <span class="text-danger field-validation-error" data-valmsg-for="Nombre" data-valmsg-replace="true">
                                         {{ errorBag.get("Nombre") }}
                                     </span>
                                 </div>
                                 <div class="form-group col-lg-3 col-sm-12 mb-4">
-                                    <label class="control-label">Apellido</label><span class="text-danger">*</span>
+                                    <label class="control-label">{{loc["Apellido"]}}</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" v-model="usuarioExternoDto.lastName" :disabled="!isEditable">
                                     <span class="text-danger field-validation-error" data-valmsg-for="Apellido" data-valmsg-replace="true">
                                         {{ errorBag.get("Apellido") }}
                                     </span>
                                 </div>
                                 <div class="form-group col-lg-3 col-sm-12 mb-4">
-                                    <label class="control-label">Documento</label><span class="text-danger">*</span>
+                                    <label class="control-label">{{loc["Documento"]}}</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" v-model="usuarioExternoDto.idNumber" :disabled="!isEditable">
                                     <span class="text-danger field-validation-error" data-valmsg-for="Documento" data-valmsg-replace="true">
                                         {{ errorBag.get("Documento") }}
                                     </span>
                                 </div>
                                 <div class="form-group col-lg-3 col-sm-12 mb-4">
-                                    <label class="control-label">Telefono</label><span class="text-danger">*</span>
+                                    <label class="control-label">{{loc["Telefono"]}}</label><span class="text-danger">*</span>
                                     <input type="text" class="form-control" v-model="usuarioExternoDto.phoneNumber" :disabled="!isEditable">
                                     <span class="text-danger field-validation-error" data-valmsg-for="Telefono" data-valmsg-replace="true">
                                         {{ errorBag.get("Telefono") }}
@@ -66,8 +66,8 @@
                     </div>
                     <div class="col-12 d-flex justify-content-end mb-3 mt-3">
                         <div>
-                        <accept-button :disabled="!grants.createUsuario" @click="save">Aceptar</accept-button>
-                        <cancel-button @click="cancel">Cancelar</cancel-button>
+                        <accept-button :disabled="!grants.createUsuario" @click="save">{{loc["Aceptar"]}}</accept-button>
+                        <cancel-button @click="cancel">{{loc["Cancelar"]}}</cancel-button>
                         </div>
                     </div>
                 </div>
@@ -89,6 +89,8 @@ import multiselect from "vue-multiselect";
 
 import ajax from "@/common/ajaxWrapper";
 
+import loc from "@/common/commonLoc.js"
+
 const API_ROLES_URL = baseUrl + "/api/Proveedores/RolesTipos";
 const API_URL = baseUrl + "/api/Proveedores/Administracion";
 const API_USUARIOS_EXTERNOS_URL = baseUrl + "/api/Proveedores/Users/Externo"
@@ -102,6 +104,8 @@ export default {
     },
     data: function(){
         return {
+            loc, 
+            
             usuarioExternoDto: new UsuarioExternoDto(),
             uiService: new UiService(),
             existeUsuario: false,
@@ -154,10 +158,10 @@ export default {
                         })
                     .then((id) => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             this.cancel();
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(loc["Operación rechazada"])
                         }
                     })
                     .finally(() => {
@@ -175,7 +179,7 @@ export default {
             this.errorBag.clear();
             if(this.usuarioExternoDto.email == '' || this.usuarioExternoDto.email == "" || this.usuarioExternoDto.email == null){
                 this.mostrarCollapse(this.usuariosExternosCollapseId, false);
-                this.errorBag.addError("email", ["El campo 'Email' es obligatorio"]);
+                this.errorBag.addError("email", [loc["El campo 'Email' es obligatorio"]]);
                 return
             }
             var usuarioExternoExiste = await this.getUsuarioExterno(this.usuarioExternoDto.email);
@@ -258,34 +262,34 @@ export default {
             var validacion = true;
             if(this.usuarioExternoDto.roles.length === 0){
                 validacion = false;
-                this.errorBag.addError("roles", ["Se debe agregar un rol como minimo"]);
+                this.errorBag.addError("roles", [loc["Se debe agregar un rol como minimo"]]);
             }
             if(!this.existeUsuario){
                 if(this.usuarioExternoDto.firstName == '' || this.usuarioExternoDto.firstName == "" || this.usuarioExternoDto.firstName == null){
                     validacion = false;
-                    this.errorBag.addError("nombre", ["El campo 'Nombre' es obligatorio"]);
+                    this.errorBag.addError("nombre", [loc["El campo 'Nombre' es obligatorio"]]);
                 }
                 if(this.usuarioExternoDto.lastName == '' || this.usuarioExternoDto.lastName == "" || this.usuarioExternoDto.lastName == null){
                     validacion = false;
-                    this.errorBag.addError("apellido", ["El campo 'Apellido' es obligatorio"]);
+                    this.errorBag.addError("apellido", [loc["El campo 'Apellido' es obligatorio"]]);
                 }
                 if(this.usuarioExternoDto.idNumber == '' || this.usuarioExternoDto.idNumber == "" || this.usuarioExternoDto.idNumber == null){
                     validacion = false;
-                    this.errorBag.addError("documento", ["El campo 'Documento' es obligatorio"]);
+                    this.errorBag.addError("documento", [loc["El campo 'Documento' es obligatorio"]]);
                 }
                 if(this.usuarioExternoDto.phoneNumber == '' || this.usuarioExternoDto.phoneNumber == "" || this.usuarioExternoDto.phoneNumber == null){
                     validacion = false;
-                    this.errorBag.addError("telefono", ["El campo 'Telefono' es obligatorio"]);
+                    this.errorBag.addError("telefono", [loc["El campo 'Telefono' es obligatorio"]]);
                 }
                 if(this.usuarioExternoDto.email == '' || this.usuarioExternoDto.email == "" || this.usuarioExternoDto.email == null){
                     validacion = false;
-                    this.errorBag.addError("email", ["El campo 'Email' es obligatorio"]);
+                    this.errorBag.addError("email", [loc["El campo 'Email' es obligatorio"]]);
                 } else {
                     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if(!regex.test(this.usuarioExternoDto.email) && 
                     (this.usuarioExternoDto.email != '' || this.usuarioExternoDto.email != "" || this.usuarioExternoDto.email != null)){
                         validacion = false
-                        this.errorBag.addError("email", ["El formato de Email es incorrecto"]);
+                        this.errorBag.addError("email", [loc["El formato de Email es incorrecto"]]);
                     }
                 }
             }

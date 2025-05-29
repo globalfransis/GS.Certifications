@@ -378,4 +378,46 @@
   <data name="Documentos requeridos" xml:space="preserve">
     <value>Documentos requeridos</value>
   </data>
+  <data name="Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Versión" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="Validado Por" xml:space="preserve">
+    <value>Validado Por</value>
+  </data>
+  <data name="Fecha Subida" xml:space="preserve">
+    <value>Fecha Subida</value>
+  </data>
+  <data name="Archivo" xml:space="preserve">
+    <value>Archivo</value>
+  </data>
+  <data name="Observaciones" xml:space="preserve">
+    <value>Observaciones</value>
+  </data>
+  <data name="Presentar" xml:space="preserve">
+    <value>Presentar</value>
+  </data>
+  <data name="Requisitos FQS" xml:space="preserve">
+    <value>Requisitos FQS</value>
+  </data>
+  <data name="Certificaciones" xml:space="preserve">
+    <value>Certificaciones</value>
+  </data>
+  <data name="Inicio" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="Bienvenido" xml:space="preserve">
+    <value>Bienvenido</value>
+  </data>
+  <data name="al portal de" xml:space="preserve">
+    <value>al portal de</value>
+  </data>
+  <data name="Se muestran" xml:space="preserve">
+    <value>Se muestran</value>
+  </data>
+  <data name="registros por página" xml:space="preserve">
+    <value>registros por página</value>
+  </data>
 </root>

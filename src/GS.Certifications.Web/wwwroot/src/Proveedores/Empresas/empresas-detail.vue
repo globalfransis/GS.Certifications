@@ -2,235 +2,134 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">Detalle de la Empresa {{ this.empresaDto.razonSocial }}</p> <!-- Agregar un título, por ejemplo: Detalle del Usuario {userId} -->
+                <p class="h5">{{ loc["Detalle de la Empresa"] }} {{ this.empresaDto.razonSocial }}</p>
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row form-container">
-                        <!-- Agregar campos del detalle -->
-                        <!-- Este es un ejemplo -->
                         <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Roles</label>
+                            <label class="control-label">{{ loc["Roles"] }}</label>
                             <div>
                                 <multiselect @open="loadRoles" v-model="listaRolesAgregados" :options="listaRoles"
                                 track-by="id" :custom-label="(item) => {return `${item.descripcion}`}" 
                                 :hide-selected="true" :close-on-select="true" open-direction="bottom" :multiple="true" 
-                                placeholder="Seleccionar opción" :disabled="true" :show-labels="false"
+                                :placeholder="loc['Seleccionar opción']" :disabled="true" :show-labels="false"
                                 :class="{
                                     'multiselect-no-arrow': listaRoles.length > 0,
                                     'multiselect-empty': listaRoles.length === 0
                                 }">
-                                    <template slot="noResult"> No se encontraron resultados</template>
+                                    <template slot="noResult">{{ loc["No se encontraron resultados"] }}</template>
                                 </multiselect>
                             </div>
                         </div>
-
-                        <!-- <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Alicuotas (IVA)</label>
-                            <div>
-                                <multiselect @open="loadAlicuotas" v-model="listaAlicuotasAgregados" :options="listaAlicuotas"
-                                track-by="id" :custom-label="(item) => {return `${item.valor} %`}" 
-                                :hide-selected="true" :close-on-select="true" open-direction="bottom" :multiple="true" 
-                                placeholder="Seleccionar opción" :disabled="true" :show-labels="false"
-                                :class="{
-                                    'multiselect-no-arrow': listaAlicuotas.length > 0,
-                                    'multiselect-empty': listaAlicuotas.length === 0
-                                }">
-                                    <template slot="noResult"> No se encontraron resultados</template>
-                                </multiselect>
-                            </div>
-                        </div> -->
-
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Número de Socio</label>
+                            <label class="control-label">{{ loc["Número de Socio"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.codigoProveedor ? empresaDto.codigoProveedor : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Razón Social</label>
+                            <label class="control-label">{{ loc["Razón Social"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.razonSocial ? empresaDto.razonSocial : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Nombre Fantasía</label>
+                            <label class="control-label">{{ loc["Nombre Fantasía"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.nombreFantasia ? empresaDto.nombreFantasia : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Identificador Tributario</label>
+                            <label class="control-label">{{ loc["Identificador Tributario"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.identificadorTributario ? empresaDto.identificadorTributario : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Tipo de Socio</label>
+                            <label class="control-label">{{ loc["Tipo de Socio"] }}</label>
                             <input type="text" class="form-control" 
-                            :value="empresaDto.granContribuyente ? 'Adherente' : 'Pleno'" readonly>
+                            :value="empresaDto.granContribuyente ? loc['Adherente'] : loc['Pleno']" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Dirección</label>
+                            <label class="control-label">{{ loc["Dirección"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.direccion ? empresaDto.direccion : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Código Postal</label>
+                            <label class="control-label">{{ loc["Código Postal"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.codigoPostal ? empresaDto.codigoPostal : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">País</label>
+                            <label class="control-label">{{ loc["País"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.pais ? empresaDto.pais.name : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Provincia</label>
+                            <label class="control-label">{{ loc["Provincia"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.provincia ? empresaDto.provincia.name : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Ciudad</label>
+                            <label class="control-label">{{ loc["Ciudad"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.ciudad ? empresaDto.ciudad.name : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Ciudad Descripción</label>
+                            <label class="control-label">{{ loc["Ciudad Descripción"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.ciudadDescripcion ? empresaDto.ciudadDescripcion : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Teléfono Principal</label>
+                            <label class="control-label">{{ loc["Teléfono Principal"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.telefonoPrincipal ? empresaDto.telefonoPrincipal : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Teléfono Alternativo</label>
+                            <label class="control-label">{{ loc["Teléfono Alternativo"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.telefonoAlternativo ? empresaDto.telefonoAlternativo : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Email Principal</label>
+                            <label class="control-label">{{ loc["Email Principal"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.emailPrincipal ? empresaDto.emailPrincipal : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Email Alternativo</label>
+                            <label class="control-label">{{ loc["Email Alternativo"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.emailAlternativo ? empresaDto.emailAlternativo : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Contacto</label>
+                            <label class="control-label">{{ loc["Contacto"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.contacto ? empresaDto.contacto : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Contacto Alternativo</label>
+                            <label class="control-label">{{ loc["Contacto Alternativo"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.contactoAlternativo ? empresaDto.contactoAlternativo : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Tipo Responsable</label>
+                            <label class="control-label">{{ loc["Tipo Responsable"] }}</label>
                             <input type="text" class="form-control" 
                             :value="empresaDto.tipoResponsable ? empresaDto.tipoResponsable.descripcion : null" readonly>
                         </div>
-                        <!-- <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Número Ingresos Brutos</label>
-                            <input type="text" class="form-control" 
-                            :value="empresaDto.numeroIngresosBrutos ? empresaDto.numeroIngresosBrutos : null" readonly>
-                        </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Tipo Cuenta</label>
-                            <input type="text" class="form-control" 
-                            :value="empresaDto.tipoCuenta ? empresaDto.tipoCuenta.nombre : null" readonly>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Cuenta Bancaria</label>
-                            <input type="text" class="form-control" 
-                            :value="empresaDto.cuentaBancaria ? empresaDto.cuentaBancaria : null" readonly>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Página Web</label>
-                            <input type="text" class="form-control" 
-                            :value="empresaDto.paginaWeb ? empresaDto.paginaWeb : null" readonly>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Redes Sociales</label>
-                            <input type="text" class="form-control" 
-                            :value="empresaDto.redesSociales ? empresaDto.redesSociales : null" readonly>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Descripción Empresa</label>
-                            <input type="text" class="form-control" 
-                            :value="empresaDto.descripcionEmpresa ? empresaDto.descripcionEmpresa : null" readonly>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Productos Servicios Ofrecidos</label>
-                            <input type="text" class="form-control" 
-                            :value="empresaDto.productosServiciosOfrecidos ? empresaDto.productosServiciosOfrecidos : null" readonly>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Referencias Comerciales</label>
-                            <input type="text" class="form-control" 
-                            :value="empresaDto.referenciasComerciales ? empresaDto.referenciasComerciales : null" readonly>
-                        </div> -->
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Confirmado</label>
+                            <label class="control-label">{{ loc["Confirmado"] }}</label>
                             <div>
                                 <input type="checkbox" class="form-check-input" v-model="empresaDto.confirmado" readonly>
                             </div>
                         </div>
-
-                        <!-- <hr>
-
-                        <div class="col-12 d-flex justify-content-between align-items-center mt-4 mb-4">
-                            <div>
-                                <p class="h5 m-0">Monedas</p>
-                                <span class="text-danger field-validation-error">
-                                    {{ errorBag.get("monedas") }}
-                                </span>
-                            </div>
-                        </div>
-                        <div>
-                            <table :id="`${idTableEmpresaMonedas}`" :key="empresaMonedasKey" class="table table-bordered table-hover">
-                                <thead class="table-top">
-                                    <tr class="text-center align-middle">
-                                        <th scope="col">Moneda</th>
-                                        <th scope="col">Predeterminado</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-if="empresaDto.monedas.filter(i => !i.deleted).length === 0"
-                                        class="no-data">
-                                        <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
-                                    </tr>
-                                    <template v-for="(i, index) in empresaDto.monedas">
-                                        <tr v-if="i.mode.isDetail && !i.deleted" :key="index">
-                                            <td data-toggle="tooltip">
-                                                <monedasEmpresa-select disabled v-model="i.currencyId"/>
-                                            </td>
-                                            <td data-toggle="tooltip" class="text-center align-middle">
-                                                <input disabled placeholder="Moneda predeterminada"
-                                                 id="monedaPorDefecto" type="checkbox"
-                                                  class="form-check-input" v-model="i.monedaPorDefecto"/>
-                                            </td>
-                                        </tr>
-                                        <empresaMoneda-form :key="index" :index="index" :empresaMoneda="i"
-                                            @cancel-edit="cancelEditMoneda(index)" v-if="i.mode.isEdit"
-                                            @edit-finished="editFinishedMoneda($event, index)" />
-                                    </template>
-                                </tbody>
-                            </table>
-                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 d-flex justify-content-end mb-3 mt-3">
             <button :disabled="!grants.updateEmpresa" class="btn btn-primary btn-sm" @click="update" style="margin-right: 10px;">
-                Editar
+                {{ loc["Editar"] }}
             </button>
             <button :disabled="!grants.deleteEmpresa" class="btn btn-danger btn-sm" @click="remove" style="margin-right: 10px;">
-                Eliminar
+                {{ loc["Eliminar"] }}
             </button>
-            <cancel-button @click="goBack">Volver</cancel-button>
+            <cancel-button @click="goBack">{{ loc["Volver"] }}</cancel-button>
         </div>
     </div>
 </template>
@@ -256,10 +155,12 @@ import inlineEdit from "@/components/forms/inline-edit-button.vue";
 import inlineDelete from "@/components/forms/inline-delete-button.vue";
 import inlineCancel from "@/components/forms/inline-cancel-button.vue";
 
+import loc from "@/common/commonLoc.js"
+
 const AFIRMATIVO = true;
 const NEGATIVO = false;
 
-const NO_DATA_MESSAGE = "No hay datos";
+const NO_DATA_MESSAGE = loc["No hay datos"];
 
 export default {
     components: {
@@ -278,6 +179,8 @@ export default {
 
     data: function () {
         return {
+            loc,
+
             empresaDto: new EmpresaDto(), // Modificar por la clase dto correspondiente
             uiService: new UiService(),
 
@@ -420,19 +323,19 @@ export default {
         async remove() {
             if (
                 await this.uiService.confirmActionModal(
-                "¿Está usted seguro que desea eliminar a esta empresa portal?",
-                "Aceptar",
-                "Cancelar"
+                loc["¿Está usted seguro que desea eliminar a esta empresa portal?"],
+                loc["Aceptar"],
+                loc["Cancelar"]
                 )
             ){
                 this.uiService.showSpinner(true)
                 await this.$store.dispatch("deleteAsync", this.empresaDto)
                     .then(async () => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             this.goBack();
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(loc["Operación rechazada"])
                         }
                     })
                     .finally(() => {

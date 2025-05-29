@@ -204,8 +204,8 @@
   <data name="Usuario" xml:space="preserve">
     <value />
   </data>
-  <data name="Cambiar contraseña" xml:space="preserve">
-    <value />
+  <data name="Cambiar Contraseña" xml:space="preserve">
+    <value>Cambiar Contraseña</value>
   </data>
   <data name="Cerrar sesión" xml:space="preserve">
     <value />
@@ -332,5 +332,320 @@
   </data>
   <data name="Portal de Certificaciones" xml:space="preserve">
     <value>Portal de Certificaciones</value>
+  </data>
+  <data name="Administración" xml:space="preserve">
+    <value>Administración</value>
+  </data>
+  <data name="Listado de Empresas" xml:space="preserve">
+    <value>Listado de Empresas</value>
+  </data>
+  <data name="Agregar" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="Razón Social" xml:space="preserve">
+    <value>Razon Social</value>
+  </data>
+  <data name="Identificador Tributario" xml:space="preserve">
+    <value>Identificador Tributario</value>
+  </data>
+  <data name="Codigo Proveedor" xml:space="preserve">
+    <value>Codigo Proveedor</value>
+  </data>
+  <data name="Contacto" xml:space="preserve">
+    <value>Contacto</value>
+  </data>
+  <data name="Confirmado" xml:space="preserve">
+    <value>Confirmado</value>
+  </data>
+  <data name="Nombre Fantasía" xml:space="preserve">
+    <value>Nombre Fantasía</value>
+  </data>
+  <data name="Tipo de Socio" xml:space="preserve">
+    <value>Tipo de Socio</value>
+  </data>
+  <data name="País" xml:space="preserve">
+    <value>País</value>
+  </data>
+  <data name="Provincia" xml:space="preserve">
+    <value>Provincia</value>
+  </data>
+  <data name="Ciudad" xml:space="preserve">
+    <value>Ciudad</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Número de Socio" xml:space="preserve">
+    <value>Número de Socio</value>
+  </data>
+  <data name="Dirección" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="Código Postal" xml:space="preserve">
+    <value>Código Postal</value>
+  </data>
+  <data name="Ciudad Descripción" xml:space="preserve">
+    <value>Ciudad Descripción</value>
+  </data>
+  <data name="Teléfono Principal" xml:space="preserve">
+    <value>Teléfono Principal</value>
+  </data>
+  <data name="Teléfono Alternativo" xml:space="preserve">
+    <value>Teléfono Alternativo</value>
+  </data>
+  <data name="Email Principal" xml:space="preserve">
+    <value>Email Principal</value>
+  </data>
+  <data name="Email Alternativo" xml:space="preserve">
+    <value>Email Alternativo</value>
+  </data>
+  <data name="Contacto Alternativo" xml:space="preserve">
+    <value>Contacto Alternativo</value>
+  </data>
+  <data name="Tipo Responsable" xml:space="preserve">
+    <value>Tipo Responsable</value>
+  </data>
+  <data name="Seleccionar opción" xml:space="preserve">
+    <value>Seleccionar opción</value>
+  </data>
+  <data name="Sin especificar" xml:space="preserve">
+    <value>Sin especificar</value>
+  </data>
+  <data name="Se muestran" xml:space="preserve">
+    <value>Se muestran</value>
+  </data>
+  <data name="registros por página" xml:space="preserve">
+    <value>registros por página</value>
+  </data>
+  <data name="Detalle de Empresa Portal" xml:space="preserve">
+    <value>Detalle de Empresa Portal</value>
+  </data>
+  <data name="Usuarios Web" xml:space="preserve">
+    <value>Usuarios Web</value>
+  </data>
+  <data name="Listado de Usuarios Web" xml:space="preserve">
+    <value>Listado de Usuarios Web</value>
+  </data>
+  <data name="No hay Usuarios Web asociados a este proveedor" xml:space="preserve">
+    <value>No hay Usuarios Web asociados a este proveedor</value>
+  </data>
+  <data name="Telefono" xml:space="preserve">
+    <value>Telefono</value>
+  </data>
+  <data name="Operación confirmada" xml:space="preserve">
+    <value>Operación confirmada</value>
+  </data>
+  <data name="Operación rechazada" xml:space="preserve">
+    <value>Operación rechazada</value>
+  </data>
+  <data name="¿Está usted seguro que desea eliminar a esta empresa portal?" xml:space="preserve">
+    <value>¿Está usted seguro que desea eliminar a esta empresa portal?</value>
+  </data>
+  <data name="El valor ingresado debe ser numerico" xml:space="preserve">
+    <value>El valor ingresado debe ser numerico</value>
+  </data>
+  <data name="El formato de Email es incorrecto" xml:space="preserve">
+    <value>El formato de Email es incorrecto</value>
+  </data>
+  <data name="Se debe agregar un rol como minimo" xml:space="preserve">
+    <value>Se debe agregar un rol como minimo</value>
+  </data>
+  <data name="Se debe agregar un Documento como minimo" xml:space="preserve">
+    <value>Se debe agregar un Documento como minimo</value>
+  </data>
+  <data name="Se debe agregar un Concepto como minimo" xml:space="preserve">
+    <value>Se debe agregar un Concepto como minimo</value>
+  </data>
+  <data name="El campo 'Código Proveedor' es obligatorio" xml:space="preserve">
+    <value>El campo 'Código Proveedor' es obligatorio</value>
+  </data>
+  <data name="El campo 'Razón Social' es obligatorio" xml:space="preserve">
+    <value>El campo 'Razón Social' es obligatorio</value>
+  </data>
+  <data name="El campo 'Nombre Fantasía' es obligatorio" xml:space="preserve">
+    <value>El campo 'Nombre Fantasía' es obligatorio</value>
+  </data>
+  <data name="El campo 'Identificador Tributario' es obligatorio" xml:space="preserve">
+    <value>El campo 'Identificador Tributario' es obligatorio</value>
+  </data>
+  <data name="El campo 'Tipo de Socio' es obligatorio" xml:space="preserve">
+    <value>El campo 'Tipo de Socio' es obligatorio</value>
+  </data>
+  <data name="El campo 'Teléfono Principal' es obligatorio" xml:space="preserve">
+    <value>El campo 'Teléfono Principal' es obligatorio</value>
+  </data>
+  <data name="El campo 'Email Principal' es obligatorio" xml:space="preserve">
+    <value>El campo 'Email Principal' es obligatorio</value>
+  </data>
+  <data name="El campo 'Contacto' es obligatorio" xml:space="preserve">
+    <value>El campo 'Contacto' es obligatorio</value>
+  </data>
+  <data name="Alta de Empresa" xml:space="preserve">
+    <value>Alta de Empresa</value>
+  </data>
+  <data name="Modificación de la Empresa" xml:space="preserve">
+    <value>Modificación de la Empresa</value>
+  </data>
+  <data name="Detalle de la Empresa" xml:space="preserve">
+    <value>Detalle de la Empresa</value>
+  </data>
+  <data name="Alta de Usuario Web" xml:space="preserve">
+    <value>Alta de Usuario Web</value>
+  </data>
+  <data name="Modificación del Usuario" xml:space="preserve">
+    <value>Modificación del Usuario</value>
+  </data>
+  <data name="Socio" xml:space="preserve">
+    <value>Socio</value>
+  </data>
+  <data name="Fecha Solicitud" xml:space="preserve">
+    <value>Fecha Solicitud</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="Fecha Estado" xml:space="preserve">
+    <value>Fecha Estado</value>
+  </data>
+  <data name="Vigencia" xml:space="preserve">
+    <value>Vigencia</value>
+  </data>
+  <data name="Estado Documentación" xml:space="preserve">
+    <value>Estado Documentación</value>
+  </data>
+  <data name="Docs. Pendientes" xml:space="preserve">
+    <value>Docs. Pendientes</value>
+  </data>
+  <data name="Docs. Cargados" xml:space="preserve">
+    <value>Docs. Cargados</value>
+  </data>
+  <data name="Docs. Aprobados" xml:space="preserve">
+    <value>Docs. Aprobados</value>
+  </data>
+  <data name="Nueva Solicitud de Certificación" xml:space="preserve">
+    <value>Nueva Solicitud de Certificación</value>
+  </data>
+  <data name="Titulo" xml:space="preserve">
+    <value>Titulo</value>
+  </data>
+  <data name="Certificación" xml:space="preserve">
+    <value>Certificación</value>
+  </data>
+  <data name="Solicitud nro." xml:space="preserve">
+    <value>Solicitud nro.</value>
+  </data>
+  <data name="Documentos requeridos" xml:space="preserve">
+    <value>Documentos requeridos</value>
+  </data>
+  <data name="Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="Versión" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="Validado Por" xml:space="preserve">
+    <value>Validado Por</value>
+  </data>
+  <data name="Fecha Subida" xml:space="preserve">
+    <value>Fecha Subida</value>
+  </data>
+  <data name="Archivo" xml:space="preserve">
+    <value>Archivo</value>
+  </data>
+  <data name="Fecha Desde" xml:space="preserve">
+    <value>Fecha Desde</value>
+  </data>
+  <data name="Fecha Hasta" xml:space="preserve">
+    <value>Fecha Hasta</value>
+  </data>
+  <data name="Observaciones" xml:space="preserve">
+    <value>Observaciones</value>
+  </data>
+  <data name="Aprobar" xml:space="preserve">
+    <value>Aprobar</value>
+  </data>
+  <data name="Rechazar" xml:space="preserve">
+    <value>Rechazar</value>
+  </data>
+  <data name="¿Está usted seguro que desea eliminar esta solicitud?" xml:space="preserve">
+    <value>¿Está usted seguro que desea eliminar esta solicitud?</value>
+  </data>
+  <data name="El campo 'Email' es obligatorio" xml:space="preserve">
+    <value>El campo 'Email' es obligatorio</value>
+  </data>
+  <data name="El campo 'Nombre' es obligatorio" xml:space="preserve">
+    <value>El campo 'Nombre' es obligatorio</value>
+  </data>
+  <data name="El campo 'Apellido' es obligatorio" xml:space="preserve">
+    <value>El campo 'Apellido' es obligatorio</value>
+  </data>
+  <data name="El campo 'Documento' es obligatorio" xml:space="preserve">
+    <value>El campo 'Documento' es obligatorio</value>
+  </data>
+  <data name="El campo 'Telefono' es obligatorio" xml:space="preserve">
+    <value>El campo 'Telefono' es obligatorio</value>
+  </data>
+  <data name="Listado de Notificaciones" xml:space="preserve">
+    <value>Listado de Notificaciones</value>
+  </data>
+  <data name="Fecha / Hora Registración" xml:space="preserve">
+    <value>Fecha / Hora Registración</value>
+  </data>
+  <data name="Fecha / Hora Notificación" xml:space="preserve">
+    <value>Fecha / Hora Notificación</value>
+  </data>
+  <data name="Destinatarios" xml:space="preserve">
+    <value>Destinatarios</value>
+  </data>
+  <data name="Asunto" xml:space="preserve">
+    <value>Asunto</value>
+  </data>
+  <data name="Correo" xml:space="preserve">
+    <value>Correo</value>
+  </data>
+  <data name="Fecha Registración" xml:space="preserve">
+    <value>Fecha Registración</value>
+  </data>
+  <data name="Fecha Notificación" xml:space="preserve">
+    <value>Fecha Notificación</value>
+  </data>
+  <data name="Reenviar Notificación" xml:space="preserve">
+    <value>Reenviar Notificación</value>
+  </data>
+  <data name="Reenviar" xml:space="preserve">
+    <value>Reenviar</value>
+  </data>
+  <data name="Eventos" xml:space="preserve">
+    <value>Eventos</value>
+  </data>
+  <data name="Motivo" xml:space="preserve">
+    <value>Motivo</value>
+  </data>
+  <data name="Intentos" xml:space="preserve">
+    <value>Intentos</value>
+  </data>
+  <data name="Ingresar correos" xml:space="preserve">
+    <value>Ingresar correos</value>
+  </data>
+  <data name="Gestión de Notificaciones" xml:space="preserve">
+    <value>Gestión de Notificaciones</value>
+  </data>
+  <data name="Contraseña actual" xml:space="preserve">
+    <value>Contraseña actual</value>
+  </data>
+  <data name="Nueva contraseña" xml:space="preserve">
+    <value>Nueva contraseña</value>
+  </data>
+  <data name="Repetir nueva contraseña" xml:space="preserve">
+    <value>Repetir nueva contraseña</value>
+  </data>
+  <data name="Cambio de Contraseña" xml:space="preserve">
+    <value>Cambio de Contraseña</value>
+  </data>
+  <data name="Seleccione la nueva contraseña para" xml:space="preserve">
+    <value>Seleccione la nueva contraseña para</value>
+  </data>
+  <data name="Ingresar como" xml:space="preserve">
+    <value>Ingresar como</value>
   </data>
 </root>

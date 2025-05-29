@@ -100,6 +100,8 @@ public class IndexModel : BasePageModel
         OptionDto options = await _mediator.Send(queryOptions);
 
         Options = options;
+
+        GetStringTranslations();
     }
 
     public IActionResult OnPostProcessRole(long? rolIdm)

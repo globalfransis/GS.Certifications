@@ -4,9 +4,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
-                        <p class="h5 m-0">Listado de Usuarios Web</p> <!-- Modificar según el caso -->
+                        <p class="h5 m-0">{{loc["Listado de Usuarios Web"]}}</p> <!-- Modificar según el caso -->
                         <button :disabled="!grants.createUsuario" type="button" class="btn btn-outline-primary btn-sm" @click="addExterno">
-                            <b><i class="fas fa-plus"></i>Agregar</b>
+                            <b><i class="fas fa-plus"></i>{{loc["Agregar"]}}</b>
                         </button>
                     </div>
                     <div class="col-12 table-responsive">
@@ -14,14 +14,14 @@
                         convert-to-datatable-manual no-paging :id="`detalleExternosAsociados`">
                             <thead class="table-top">
                                 <tr class="text-center">
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Roles</th>
-                                    <th scope="col">Acciones</th>
+                                    <th scope="col">{{loc["Email"]}}</th>
+                                    <th scope="col">{{loc["Roles"]}}</th>
+                                    <th scope="col">{{loc["Acciones"]}}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-if="externosAsociados.length === 0" class="no-data text-center">
-                                    <td class="text-center" colspan="7">No hay Usuarios Web asociados a este proveedor</td>
+                                    <td class="text-center" colspan="7">{{loc["No hay Usuarios Web asociados a este proveedor"]}}</td>
                                 </tr>
                                 <tr v-for="(item, index) in externosAsociados" :key="index">
                                     <td class="text-center align-middle">{{ item.email }}</td>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-end mb-3 mt-3">
-                <cancel-button @click="goBack">Volver</cancel-button>
+                <cancel-button @click="goBack">{{loc["Volver"]}}</cancel-button>
             </div>
         </div>
     </div>
@@ -57,6 +57,8 @@ import CancelButton from "@/components/forms/cancel-button.vue";
 
 import ajax from "@/common/ajaxWrapper";
 
+import loc from "@/common/commonLoc.js"
+
 const API_URL = baseUrl + "/api/Proveedores/Administracion";
 
 export default {
@@ -68,6 +70,8 @@ export default {
     },
     data: function(){
         return {
+            loc,
+            
             uiService: new UiService(),
             esCreacion: false,
             externosAsociados: [],

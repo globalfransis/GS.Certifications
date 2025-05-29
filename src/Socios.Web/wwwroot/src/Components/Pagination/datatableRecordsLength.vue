@@ -1,6 +1,6 @@
 <template>
   <div class="dataTables_length col-6 row gsf-records-length d-flex align-items-center" :id="`${idRecordsLength}`">
-    <label class="col-auto">Se muestran</label>
+    <label class="col-auto">{{ loc["Se muestran"]}}</label>
     <div class="col-2 gsf-pagination-select">
     <select :name="`${idRecordsLength}`" v-model="currentRecordsLength" class="form-select form-select-sm">
       <option :value="10">10</option>
@@ -9,7 +9,7 @@
       <option :value="100">100</option>
     </select>
   </div>
-    <label class="col-auto">registros por página</label>
+    <label class="col-auto">{{ loc["registros por página"]}}</label>
   </div>
 </template>
 

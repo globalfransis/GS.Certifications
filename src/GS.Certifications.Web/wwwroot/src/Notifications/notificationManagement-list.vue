@@ -7,7 +7,7 @@
         <br />
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-5 mb-3">
-            <p class="h5 m-0">Listado de Notificaciones</p>
+            <p class="h5 m-0">{{loc["Listado de Notificaciones"]}}</p>
         </div>
 
         <div class="col-12 table-responsive">
@@ -19,16 +19,15 @@
                 <thead class="table-top">
                     <tr class="text-center align-middle">
                         <th data-column="FechaEncolado" class="text-center" datatable-datetime
-                            default-sort-datatable="desc">Fecha / Hora Registración</th>
-                        <th data-column="FechaEnviado" class="text-center" datatable-datetime>Fecha / Hora Notificación
-                        </th>
-                        <th data-column="EstadoIdm" class="text-center">Tipo</th>
-                        <th data-column="Destinatarios" class="text-center">Destinatarios</th>
-                        <th data-column="ConCopia" class="text-center">CC</th>
-                        <th data-column="ConCopiaOculta" class="text-center">CCO</th>
-                        <th data-column="ConfiguracionNotificacion.Subject" class="text-center">Asunto</th>
+                            default-sort-datatable="desc">{{loc["Fecha / Hora Registración"]}}</th>
+                        <th data-column="FechaEnviado" class="text-center" datatable-datetime>{{loc["Fecha / Hora Notificación"]}}</th>
+                        <th data-column="EstadoIdm" class="text-center">{{loc["Tipo"]}}</th>
+                        <th data-column="Destinatarios" class="text-center">{{loc["Destinatarios"]}}</th>
+                        <th data-column="ConCopia" class="text-center">{{loc["CC"]}}</th>
+                        <th data-column="ConCopiaOculta" class="text-center">{{loc["CCO"]}}</th>
+                        <th data-column="ConfiguracionNotificacion.Subject" class="text-center">{{loc["Asunto"]}}</th>
                         <!-- <th no-sort-datatable class="text-center">Eventos</th> -->
-                        <th no-sort-datatable>Acciones</th>
+                        <th no-sort-datatable>{{loc["Acciones"]}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +49,7 @@
                             </td>
                             <td class="text-right align-middle">
                                 <!-- RM6051 no existe la tabla tipo, hardcodeo Correo {{ notificacion.tipo }} -->
-                                Correo
+                                {{loc["Correo"]}}
                             </td>
                             <td class="text-right align-middle">
                                 {{ notificacion.destinatarios ? notificacion.destinatarios : "-" }}
@@ -126,6 +125,8 @@ import Parameters from "./Parameters";
 
 import SessionParametersService from '@/Common/SessionParametersService';
 
+import loc from "@/common/commonLoc.js"
+
 const NO_DATA_MESSAGE = "No hay datos";
 const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
 const GET_NOTIFICACIONES_URL = baseUrl + "/api/Notifications/GetNotificaciones";
@@ -147,6 +148,8 @@ export default {
     },
     data: function () {
         return {
+            loc,
+
             notificaciones: [],
             recordsTotal: 0,
             recordsLength: 25,

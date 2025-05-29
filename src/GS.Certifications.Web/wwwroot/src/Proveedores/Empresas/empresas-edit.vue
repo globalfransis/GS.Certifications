@@ -2,105 +2,88 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">Modificación de la Empresa {{ this.empresaDto.razonSocial }}</p> <!-- Agregar título, por ejemplo: Modificación del Usuario {userId} -->
+                <p class="h5">{{ loc["Modificación de la Empresa"]}} {{this.empresaDto.razonSocial }}</p> <!-- Agregar título, por ejemplo: Modificación del Usuario {userId} -->
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <!-- Agregar campos del formulario de alta -->
-                        <!-- Este es un ejemplo -->
-                        <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Roles</label>
+                        <div class="form-group col-lg-3 col-sm-12 mb-4">
+                            <label class="control-label">{{ loc["Roles"] }}</label><span class="text-danger">*</span>
                             <div>
                                 <multiselect @open="loadRoles" v-model="listaRolesAgregados" :options="listaRoles"
                                 track-by="idm" :custom-label="(item) => {return `${item.descripcion}`}" :hide-selected="true"
-                                :close-on-select="true" open-direction="bottom" :multiple="true" placeholder="Seleccionar opción"
+                                :close-on-select="true" open-direction="bottom" :multiple="true" :placeholder="loc['Seleccionar opción']"
                                 :show-labels="false">
-                                <template slot="noResult"> No se encontraron resultados</template>
+                                <template slot="noResult">{{ loc["No se encontraron resultados"] }}</template>
                                 </multiselect>
                             </div>
                             <span class="text-danger field-validation-error" data-valmsg-for="RolesIdm" data-valmsg-replace="true">
                                 {{ errorBag.get("RolesIdm") }}
                             </span>
-                        </div>
-
-                        <!-- <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Alicuotas (IVA)</label>
-                            <div>
-                                <multiselect @open="loadAlicuotas" v-model="listaAlicuotasAgregados" :options="listaAlicuotas"
-                                track-by="idm" :custom-label="(item) => {return `${item.valor} %`}" :hide-selected="true"
-                                :close-on-select="true" open-direction="bottom" :multiple="true" placeholder="Seleccionar opción"
-                                :show-labels="false">
-                                <template slot="noResult"> No se encontraron resultados</template>
-                                </multiselect>
-                            </div>
-                            <span class="text-danger field-validation-error" data-valmsg-for="AlicuotasIdm" data-valmsg-replace="true">
-                                {{ errorBag.get("AlicuotasIdm") }}
-                            </span>
-                        </div> -->
-
+                        </div> 
+                        
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Número de Socio</label><span class="text-danger">*</span>
+                            <label class="control-label">{{ loc["Número de Socio"] }}</label><span class="text-danger">*</span>
                             <input maxlength="15" type="text" class="form-control" v-model="empresaDto.codigoProveedor">
                             <span class="text-danger field-validation-error" data-valmsg-for="CodigoProveedor" data-valmsg-replace="true">
                                 {{ errorBag.get("CodigoProveedor") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Razón Social</label><span class="text-danger">*</span>
+                            <label class="control-label">{{ loc["Razón Social"] }}</label><span class="text-danger">*</span>
                             <input maxlength="100" type="text" class="form-control" v-model="empresaDto.razonSocial">
                             <span class="text-danger field-validation-error" data-valmsg-for="RazonSocial" data-valmsg-replace="true">
                                 {{ errorBag.get("RazonSocial") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Nombre Fantasía</label><span class="text-danger">*</span>
+                            <label class="control-label">{{ loc["Nombre Fantasía"] }}</label><span class="text-danger">*</span>
                             <input maxlength="100" type="text" class="form-control" v-model="empresaDto.nombreFantasia">
                             <span class="text-danger field-validation-error" data-valmsg-for="NombreFantasia" data-valmsg-replace="true">
                                 {{ errorBag.get("NombreFantasia") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Identificador Tributario</label><span class="text-danger">*</span>
+                            <label class="control-label">{{ loc["Identificador Tributario"] }}</label><span class="text-danger">*</span>
                             <input maxlength="30" type="text" class="form-control" v-model="empresaDto.identificadorTributario">
                             <span class="text-danger field-validation-error" data-valmsg-for="IdentificadorTributario" data-valmsg-replace="true">
                                 {{ errorBag.get("IdentificadorTributario") }}
                             </span>
                         </div>
                         <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Tipo de Socio</label><span class="text-danger">*</span>
+                            <label class="control-label">{{ loc["Tipo de Socio"] }}</label><span class="text-danger">*</span>
                             <select class="form-select" v-model="empresaDto.granContribuyente">
-                                <option :value="null">Sin Especificar</option>
-                                <option :value="AFIRMATIVO">Adherente</option>
-                                <option :value="NEGATIVO">Pleno</option>
+                                <option :value="null">{{ loc["Sin especificar"] }}</option>
+                                <option :value="AFIRMATIVO">{{ loc["Adherente"] }}</option>
+                                <option :value="NEGATIVO">{{ loc["Pleno"] }}</option>
                             </select>
                             <span class="text-danger field-validation-error" data-valmsg-for="GranContribuyente" data-valmsg-replace="true">
                                 {{ errorBag.get("GranContribuyente") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Dirección</label>
+                            <label class="control-label">{{ loc["Direccion"] }}</label>
                             <input maxlength="120" type="text" class="form-control" v-model="empresaDto.direccion">
                             <span class="text-danger field-validation-error" data-valmsg-for="Direccion" data-valmsg-replace="true">
-                                {{ errorBag.get("Direccion") }}
+                                {{ errorBag.get("Dirección") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Código Postal</label>
+                            <label class="control-label">{{ loc["Código Postal"] }}</label>
                             <input maxlength="20" type="text" class="form-control" v-model="empresaDto.codigoPostal">
                             <span class="text-danger field-validation-error" data-valmsg-for="CodigoPostal" data-valmsg-replace="true">
                                 {{ errorBag.get("CodigoPostal") }}
                             </span>
                         </div>
                         <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">País</label><!--<span class="text-danger">*</span>-->
+                            <label class="control-label">{{ loc["País"] }}</label>
                             <country-select v-model.number="empresaDto.paisId" />
                             <span class="text-danger field-validation-error" data-valmsg-for="Pais" data-valmsg-replace="true">
                                 {{ errorBag.get("Pais") }}
                             </span>
                         </div>
                         <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Provincia</label>
+                            <label class="control-label">{{ loc["Provincia"] }}</label>
                             <province-select :enabled="empresaDto.paisId != null" v-model.number="empresaDto.provinciaId"
                             :paisId="empresaDto.paisId" />
                             <span class="text-danger field-validation-error" data-valmsg-for="Provincia" data-valmsg-replace="true">
@@ -108,7 +91,7 @@
                             </span>
                         </div>
                         <div class="col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Ciudad</label>
+                            <label class="control-label">{{ loc["Ciudad"] }}</label>
                             <city-select :enabled="empresaDto.provinciaId != null && empresaDto.paisId != null"
                             v-model.number="empresaDto.ciudadId"
                             :provinciaId="empresaDto.provinciaId" />
@@ -117,28 +100,28 @@
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Ciudad Descripción</label>
+                            <label class="control-label">{{ loc["Ciudad Descripción"] }}</label>
                             <input maxlength="1000" type="text" class="form-control" v-model="empresaDto.ciudadDescripcion">
                             <span class="text-danger field-validation-error" data-valmsg-for="CiudadDescripcion" data-valmsg-replace="true">
                                 {{ errorBag.get("CiudadDescripcion") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Teléfono Principal</label><span class="text-danger">*</span>
+                            <label class="control-label">{{ loc["Teléfono Principal"] }}</label><span class="text-danger">*</span>
                             <input maxlength="25" type="text" class="form-control" v-model="empresaDto.telefonoPrincipal">
                             <span class="text-danger field-validation-error" data-valmsg-for="TelefonoPrincipal" data-valmsg-replace="true">
                                 {{ errorBag.get("TelefonoPrincipal") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Teléfono Alternativo</label>
+                            <label class="control-label">{{ loc["Teléfono Alternativo"] }}</label>
                             <input maxlength="25" type="text" class="form-control" v-model="empresaDto.telefonoAlternativo">
                             <span class="text-danger field-validation-error" data-valmsg-for="TelefonoAlternativo" data-valmsg-replace="true">
                                 {{ errorBag.get("TelefonoAlternativo") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Email Principal</label><span class="text-danger">*</span>
+                            <label class="control-label">{{ loc["Email Principal"] }}</label><span class="text-danger">*</span>
                             <input maxlength="150" type="text" class="form-control" v-model="empresaDto.emailPrincipal">
                             <span class="text-danger field-validation-error" data-valmsg-for="EmailPrincipal" data-valmsg-replace="true">
                                 {{ errorBag.get("EmailPrincipal") }}
@@ -146,166 +129,51 @@
                         </div>
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Email Alternativo</label>
+                            <label class="control-label">{{ loc["Email Alternativo"] }}</label>
                             <input maxlength="150" type="text" class="form-control" v-model="empresaDto.emailAlternativo">
                             <span class="text-danger field-validation-error" data-valmsg-for="EmailAlternativo" data-valmsg-replace="true">
                                 {{ errorBag.get("EmailAlternativo") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Contacto</label><span class="text-danger">*</span>
+                            <label class="control-label">{{ loc["Contacto"] }}</label><span class="text-danger">*</span>
                             <input maxlength="30" type="text" class="form-control" v-model="empresaDto.contacto">
                             <span class="text-danger field-validation-error" data-valmsg-for="Contacto" data-valmsg-replace="true">
                                 {{ errorBag.get("Contacto") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Contacto Alternativo</label>
+                            <label class="control-label">{{ loc["Contacto Alternativo"] }}</label>
                             <input maxlength="30" type="text" class="form-control" v-model="empresaDto.contactoAlternativo">
                             <span class="text-danger field-validation-error" data-valmsg-for="ContactoAlternativo" data-valmsg-replace="true">
                                 {{ errorBag.get("ContactoAlternativo") }}
                             </span>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Tipo Responsable</label><!--<span class="text-danger">*</span>-->
+                            <label class="control-label">{{ loc["Tipo Responsable"] }}</label>
                             <categoriasTipos-select v-model.number="empresaDto.tipoResponsableId" />
                             <span class="text-danger field-validation-error" data-valmsg-for="TipoResponsable" data-valmsg-replace="true">
                                 {{ errorBag.get("TipoResponsable") }}
                             </span>
                         </div>
-                        <!-- <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Número Ingresos Brutos</label>
-                            <input maxlength="30" type="text" class="form-control" v-model="empresaDto.numeroIngresosBrutos">
-                            <span class="text-danger field-validation-error" data-valmsg-for="NumeroIngresosBrutos" data-valmsg-replace="true">
-                                {{ errorBag.get("NumeroIngresosBrutos") }}
-                            </span>
-                        </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Tipo Cuenta</label>
-                            <tiposCuentas-select v-model.number="empresaDto.tipoCuentaId" />
-                            <span class="text-danger field-validation-error" data-valmsg-for="TipoCuenta" data-valmsg-replace="true">
-                                {{ errorBag.get("TipoCuenta") }}
-                            </span>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Cuenta Bancaria</label>
-                            <input maxlength="50" type="text" class="form-control" v-model="empresaDto.cuentaBancaria">
-                            <span class="text-danger field-validation-error" data-valmsg-for="CuentaBancaria" data-valmsg-replace="true">
-                                {{ errorBag.get("CuentaBancaria") }}
-                            </span>
-                        </div>
-
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Página Web</label>
-                            <input maxlength="100" type="text" class="form-control" v-model="empresaDto.paginaWeb">
-                            <span class="text-danger field-validation-error" data-valmsg-for="PaginaWeb" data-valmsg-replace="true">
-                                {{ errorBag.get("PaginaWeb") }}
-                            </span>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Redes Sociales</label>
-                            <input maxlength="200" type="text" class="form-control" v-model="empresaDto.redesSociales">
-                            <span class="text-danger field-validation-error" data-valmsg-for="RedesSociales" data-valmsg-replace="true">
-                                {{ errorBag.get("RedesSociales") }}
-                            </span>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Descripción Empresa</label>
-                            <input maxlength="500" type="text" class="form-control" v-model="empresaDto.descripcionEmpresa">
-                            <span class="text-danger field-validation-error" data-valmsg-for="DescripcionEmpresa" data-valmsg-replace="true">
-                                {{ errorBag.get("DescripcionEmpresa") }}
-                            </span>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Productos Servicios Ofrecidos</label>
-                            <input maxlength="500" type="text" class="form-control" v-model="empresaDto.productosServiciosOfrecidos">
-                            <span class="text-danger field-validation-error" data-valmsg-for="ProductosServiciosOfrecidos" data-valmsg-replace="true">
-                                {{ errorBag.get("ProductosServiciosOfrecidos") }}
-                            </span>
-                        </div>
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Referencias Comerciales</label>
-                            <input maxlength="500" type="text" class="form-control" v-model="empresaDto.referenciasComerciales">
-                            <span class="text-danger field-validation-error" data-valmsg-for="ReferenciasComerciales" data-valmsg-replace="true">
-                                {{ errorBag.get("ReferenciasComerciales") }}
-                            </span>
-                        </div> -->
-                        <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Confirmado</label>
+                            <label class="control-label">{{ loc["Confirmado"] }}</label>
                             <div>
                                 <input type="checkbox" class="form-check-input" v-model="empresaDto.confirmado">
                             </div>
-                            <span class="text-danger field-validation-error" data-valmsg-for="Confirmado" data-valmsg-replace="true">
-                                {{ errorBag.get("Confirmado") }}
-                            </span>
-                        </div>
-
-                        <!-- <hr>
-
-                        <div class="col-12 d-flex justify-content-between align-items-center mt-4 mb-4">
-                            <div>
-                                <label class="control-label h5 m-0">Monedas</label><span class="text-danger">*</span>
-                            </div>
-                            <button type="button" class="btn btn-outline-primary btn-sm" @click="addNuevaMoneda()">
-                                <b><i class="fas fa-plus"></i>Agregar</b>
-                            </button>
-                        </div>
-                        <div>
-                            <span class="text-danger field-validation-error">
-                                {{ errorBag.get("monedas") }}
+                            <span class="text-danger field-validation-error" data-valmsg-for="Confirmado" data-valmsg-replace="true">
+                                {{ errorBag.get("Confirmado") }}
                             </span>
                         </div>
-                        <div>
-                            <table :id="`${idTableEmpresaMonedas}`" :key="empresaMonedasKey" class="table table-bordered table-hover">
-                                <thead class="table-top">
-                                    <tr class="text-center align-middle">
-                                        <th scope="col">Moneda</th>
-                                        <th scope="col">Predeterminado</th>
-                                        <th scope="col">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-if="empresaDto.monedas.filter(i => !i.deleted).length === 0"
-                                        class="no-data">
-                                        <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
-                                    </tr>
-                                    <template v-for="(i, index) in empresaDto.monedas">
-                                        <tr v-if="i.mode.isDetail && !i.deleted" :key="index">
-                                            <td data-toggle="tooltip">
-                                                <monedasEmpresa-select disabled v-model="i.currencyId"/>
-                                            </td>
-                                            <td data-toggle="tooltip" class="text-center align-middle">
-                                                <input disabled placeholder="Moneda predeterminada"
-                                                 id="monedaPorDefecto" type="checkbox" 
-                                                 class="form-check-input" v-model="i.monedaPorDefecto"/>
-                                            </td>
-                                            <td data-toggle="tooltip" class="text-center align-middle">
-                                                <div class="d-inline-flex">
-                                                    <inline-edit @click="updateMoneda(i)"
-                                                        :enabled="i.mode.isDetail" />
-                                                    <inline-delete @click="removeMoneda(i, index)"
-                                                        :enabled="i.mode.isDetail" />
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <empresaMoneda-form :ref="`empresaMonedaForm-${index}`" :key="index" :index="index" :empresaMoneda="i"
-                                            :listaMonedasUsadas="listaMonedasUsadas"
-                                            @cancel-edit="cancelEditMoneda(index)" v-if="i.mode.isEdit"
-                                            @edit-finished="editFinishedMoneda($event, index)" />
-                                    </template>
-                                </tbody>
-                            </table>
-                        </div> -->
-
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 d-flex justify-content-end mb-3 mt-3">
             <accept-button :disabled="!grants.updateEmpresa" @click="updateAsync" style="margin-right: 10px;">
-                Aceptar
+                {{loc["Aceptar"]}}
             </accept-button>
-            <cancel-button @click="cancel">Cancelar</cancel-button>
+            <cancel-button @click="cancel">{{loc["Cancelar"]}}</cancel-button>
         </div>
     </div>
 </template>
@@ -335,10 +203,12 @@ import inlineCancel from "@/components/forms/inline-cancel-button.vue";
 
 import multiselect from "vue-multiselect";
 
+import loc from "@/common/commonLoc.js"
+
 const AFIRMATIVO = true;
 const NEGATIVO = false;
 
-const NO_DATA_MESSAGE = "No hay datos";
+const NO_DATA_MESSAGE = loc["No hay datos"];
 
 export default {
     components: {
@@ -363,6 +233,8 @@ export default {
     name: "empresas-edit",
     data: function () {
         return {
+            loc, 
+
             empresaDto: new EmpresaEditDto(),
             uiService: new UiService(),
             primeraCargaPais: true,
@@ -538,10 +410,10 @@ export default {
                 await this.$store.dispatch("putAsync", this.empresaDto)
                 .then(() => {
                     if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"])
                         this.goDetail();
                     } else {
-                        this.uiService.showMessageError("Operación rechazada")
+                        this.uiService.showMessageError(loc["Operación rechazada"])
                     }
                 })
                 .finally(() => {
@@ -553,15 +425,15 @@ export default {
             var validacion = true
             if (isNaN(this.empresaDto.identificadorTributario)) {
                 validacion = false
-                this.errorBag.addError("identificadorTributario", ["El valor ingresado debe ser numerico"]);
+                this.errorBag.addError("identificadorTributario", [loc["El valor ingresado debe ser numerico"]]);
             }
             if (isNaN(this.empresaDto.telefonoPrincipal)) {
                 validacion = false
-                this.errorBag.addError("telefonoPrincipal", ["El valor ingresado debe ser numerico"]);
+                this.errorBag.addError("telefonoPrincipal", [loc["El valor ingresado debe ser numerico"]]);
             }
             if (isNaN(this.empresaDto.telefonoAlternativo)) {
                 validacion = false
-                this.errorBag.addError("telefonoAlternativo", ["El valor ingresado debe ser numerico"]);
+                this.errorBag.addError("telefonoAlternativo", [loc["El valor ingresado debe ser numerico"]]);
             }
             return validacion
         },
@@ -570,11 +442,11 @@ export default {
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if(!regex.test(this.empresaDto.emailPrincipal) && (this.empresaDto.emailPrincipal != '' && this.empresaDto.emailPrincipal != "" && this.empresaDto.emailPrincipal != null)){
                 validacion = false
-                this.errorBag.addError("emailPrincipal", ["El formato de Email es incorrecto"]);
+                this.errorBag.addError("emailPrincipal", [loc["El formato de Email es incorrecto"]]);
             }
             if(!regex.test(this.empresaDto.emailAlternativo) && (this.empresaDto.emailAlternativo != '' && this.empresaDto.emailAlternativo != "" && this.empresaDto.emailAlternativo != null)){
                 validacion = false
-                this.errorBag.addError("emailAlternativo", ["El formato de Email es incorrecto"]);
+                this.errorBag.addError("emailAlternativo", [loc["El formato de Email es incorrecto"]]);
             }
             return validacion
         },
@@ -588,59 +460,41 @@ export default {
             }
             if(this.empresaDto.rolesIdm.length === 0){
                 validacion = false;
-                this.errorBag.addError("rolesIdm", ["Se debe agregar un rol como minimo"]);
+                this.errorBag.addError("rolesIdm", [loc["Se debe agregar un rol como minimo"]]);
             }
             if(this.empresaDto.codigoProveedor == '' || this.empresaDto.codigoProveedor == "" || this.empresaDto.codigoProveedor == null){
                 validacion = false;
-                this.errorBag.addError("codigoProveedor", ["El campo 'Código Proveedor' es obligatorio"]);
+                this.errorBag.addError("codigoProveedor", [loc["El campo 'Código Proveedor' es obligatorio"]]);
             }
-            if(this.empresaDto.razonSocial == '' || this.empresaDto.razonSocial == "" || this.empresaDto.razonSocial == null){
+            if(this.empresaDto.razonSocial == '' || this.empresaDto.razonSocial == "" ||this.empresaDto.razonSocial == null){
                 validacion = false;
-                this.errorBag.addError("razonSocial", ["El campo 'Razón Social' es obligatorio"]);
+                this.errorBag.addError("razonSocial", [loc["El campo 'Razón Social' es obligatorio"]]);
             }
-            if(this.empresaDto.nombreFantasia == '' || this.empresaDto.nombreFantasia == "" || this.empresaDto.nombreFantasia == null){
+            if(this.empresaDto.nombreFantasia == '' || this.empresaDto.nombreFantasia == "" ||this.empresaDto.nombreFantasia == null){
                 validacion = false;
-                this.errorBag.addError("nombreFantasia", ["El campo 'Nombre Fantasía' es obligatorio"]);
+                this.errorBag.addError("nombreFantasia", [loc["El campo 'Nombre Fantasía' es obligatorio"]]);
             }
-            if(this.empresaDto.identificadorTributario == '' || this.empresaDto.identificadorTributario == "" || this.empresaDto.identificadorTributario == null){
+            if(this.empresaDto.identificadorTributario == '' || this.empresaDto.identificadorTributario == "" ||this.empresaDto.identificadorTributario == null){
                 validacion = false;
-                this.errorBag.addError("identificadorTributario", ["El campo 'Identificador Tributario' es obligatorio"]);
+                this.errorBag.addError("identificadorTributario", [loc["El campo 'Identificador Tributario' es obligatorio"]]);
             }
             if(this.empresaDto.granContribuyente == null){
                 validacion = false;
-                this.errorBag.addError("granContribuyente", ["El campo 'Gran Contribuyente' es obligatorio"]);
+                this.errorBag.addError("granContribuyente", [loc["El campo 'Tipo de Socio' es obligatorio"]]);
             }
-            // if(this.empresaDto.paisId == null){
-            //     validacion = false;
-            //     this.errorBag.addError("Pais", ["El campo 'País' es obligatorio"]);
-            // }
-            if(this.empresaDto.telefonoPrincipal == '' || this.empresaDto.telefonoPrincipal == "" || this.empresaDto.telefonoPrincipal == null){
+            if(this.empresaDto.telefonoPrincipal == '' || this.empresaDto.telefonoPrincipal == "" ||this.empresaDto.telefonoPrincipal == null){
                 validacion = false;
-                this.errorBag.addError("telefonoPrincipal", ["El campo 'Teléfono Principal' es obligatorio"]);
+                this.errorBag.addError("telefonoPrincipal", [loc["El campo 'Teléfono Principal' es obligatorio"]]);
             }
-            if(this.empresaDto.emailPrincipal == '' || this.empresaDto.emailPrincipal == "" || this.empresaDto.emailPrincipal == null){
+            if(this.empresaDto.emailPrincipal == '' || this.empresaDto.emailPrincipal == "" ||this.empresaDto.emailPrincipal == null){
                 validacion = false;
-                this.errorBag.addError("emailPrincipal", ["El campo 'Email Principal' es obligatorio"]);
+                this.errorBag.addError("emailPrincipal", [loc["El campo 'Email Principal' es obligatorio"]]);
             }
-            if(this.empresaDto.contacto == '' || this.empresaDto.contacto == "" || this.empresaDto.contacto == null){
+            if(this.empresaDto.contacto == '' || this.empresaDto.contacto == "" ||this.empresaDto.contacto == null){
                 validacion = false;
-                this.errorBag.addError("contacto", ["El campo 'Contacto' es obligatorio"]);
+                this.errorBag.addError("contacto", [loc["El campo 'Contacto' es obligatorio"]]);
             }
-            // if(this.empresaDto.tipoResponsableId == null){
-            //     validacion = false;
-            //     this.errorBag.addError("tipoResponsable", ["El campo 'Tipo Responsable' es obligatorio"]);
-            // }
-
-            // var listaNoEliminadas = this.empresaDto.monedas.filter(moneda => !moneda.deleted)
-
-            // if(listaNoEliminadas.length == 0){
-            //     validacion = false;
-            //     this.errorBag.addError("monedas", ["El campo 'Monedas' es obligatorio"]);
-            // }
-            // if(listaNoEliminadas.length != 0 && listaNoEliminadas.filter(moneda => moneda.monedaPorDefecto === true).length !== 1){
-            //     validacion = false;
-            //     this.errorBag.addError("monedas", ["Se debe marcar una unica moneda como predeterminada"]);
-            // }
+                
             return validacion
         }
     },

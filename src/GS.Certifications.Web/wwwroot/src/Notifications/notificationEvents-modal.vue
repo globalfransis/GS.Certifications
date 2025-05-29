@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-dialog-scrollable grid-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Eventos</h4>
+                    <h4 class="modal-title">{{loc["Eventos"]}}</h4>
                     <button type="button" class="btn-close" @click="modalClosed" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -26,13 +26,13 @@
                                 <thead class="table-top">
                                     <tr class="text-center align-middle">
                                         <th>
-                                            Fecha
+                                            {{loc["Fecha"]}}
                                         </th>
                                         <th>
-                                            Estado
+                                            {{loc["Estado"]}}
                                         </th>
-                                        <th>Motivo</th>
-                                        <th>Intentos</th>
+                                        <th>{{loc["Motivo"]}}</th>
+                                        <th>{{loc["Intentos"]}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,6 +74,8 @@ import UiService from "@/common/uiService";
 import CancelButton from "@/components/forms/cancel-button.vue";
 import ajax from "@/common/ajaxWrapper";
 
+import loc from "@/common/commonLoc.js"
+
 const API_URL = baseUrl + "/api/Notifications";
 
 const NO_DATA_MESSAGE = "No hay datos";
@@ -89,6 +91,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             uiService: new UiService(),
             resultsMessage: NO_DATA_MESSAGE,
             eventsByEmail: {},

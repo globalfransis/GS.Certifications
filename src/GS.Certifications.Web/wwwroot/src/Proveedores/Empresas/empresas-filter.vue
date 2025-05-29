@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col-12 mt-4">
-            <p class="h5">Filtro de búsqueda</p>
+            <p class="h5">{{ loc["Filtro de búsqueda"]}}</p>
         </div>
         <!-- Title end -->
         <div class="col-12">
@@ -14,15 +14,15 @@
                             <!-- Agregar controles de filtro-->
                             <!-- Este es un ejemplo -->
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Razón Social</label>
+                                <label>{{ loc["Razón Social"]}}</label>
                                 <input type="text" class="form-control" v-model="parameters.razonSocial">
                             </div>
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Nombre Fantasía</label>
+                                <label>{{ loc["Nombre Fantasía"]}}</label>
                                 <input type="text" class="form-control" v-model="parameters.nombreFantasia">
                             </div>
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Identificador Tributario</label>
+                                <label>{{ loc["Identificador Tributario"]}}</label>
                                 <input type="text" class="form-control" v-model="parameters.identificadorTributario">
                             </div>
                             <!-- <div class="col-lg-3 col-sm-12 mb-4">
@@ -30,29 +30,29 @@
                                 <input type="text" class="form-control" v-model="parameters.granContribuyente">
                             </div> -->
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                                <label>Gran Contribuyente</label>
+                                <label>{{ loc["Tipo de Socio"]}}</label>
                                 <select class="form-select" v-model.number="parameters.granContribuyente">
-                                    <option :value="null">Sin Especificar</option>
-                                    <option :value="AFIRMATIVO">Si</option>
-                                    <option :value="NEGATIVO">No</option>
+                                    <option :value="null">{{loc["Sin especificar"]}}</option>
+                                    <option :value="AFIRMATIVO">{{ loc["Adherente"]}}</option>
+                                    <option :value="NEGATIVO">{{ loc["Pleno"]}}</option>
                                 </select>
                             </div>
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Contacto</label>
+                                <label>{{ loc["Contacto"]}}</label>
                                 <input type="text" class="form-control" v-model="parameters.contacto">
                             </div>
 
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>País</label>
+                                <label>{{ loc["País"]}}</label>
                                 <country-select v-model="parameters.paisId" />
                             </div>
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Provincia</label>
+                                <label>{{ loc["Provincia"]}}</label>
                                 <province-select :enabled="parameters.paisId != null" v-model="parameters.provinciaId"
                                 :paisId="parameters.paisId" />
                             </div>
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Ciudad</label>
+                                <label>{{ loc["Ciudad"]}}</label>
                                 <city-select
                                 :enabled="parameters.provinciaId != null && parameters.paisId != null" v-model="parameters.ciudadId"
                                 :provinciaId="parameters.provinciaId" />
@@ -62,12 +62,12 @@
                                 <div class="d-flex justify-content-between">
                                     <button v-on:click.prevent="search" class="btn btn-primary btn-sm">
                                         <i class="fas fa-search"></i>
-                                        Buscar
+                                        {{ loc["Buscar"]}}
                                     </button>
                                     <button tabindex="12" @click.prevent="clearFilters"
                                         class="btn btn-secondary btn-sm ms-2">
                                         <i class="fas fa-eraser"></i>
-                                        Limpiar
+                                        {{ loc["Limpiar"]}}
                                     </button>
                                 </div>
                             </div>
@@ -86,6 +86,8 @@ import citySelect from "@/Components/Global/Cities/city-select";
 import provinceSelect from "@/Components/Global/Provinces/province-select";
 import countrySelect from "@/Components/Global/Countries/country-select";
 
+import loc from "@/common/commonLoc.js"
+
 const AFIRMATIVO = true;
 const NEGATIVO = false;
 
@@ -103,6 +105,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             AFIRMATIVO,
             NEGATIVO
         };

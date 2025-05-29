@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col-12 mt-4">
-            <p class="h5">Filtro de búsqueda</p>
+            <p class="h5">{{ loc["Filtro de búsqueda"]}}</p>
         </div>
         <!-- Title end -->
         <div class="col-12">
@@ -10,15 +10,13 @@
                 <div class="card-body">
                     <form method="get">
                         <div class="row">
-
-
                             <div class="form-group col-lg-3 col-sm-12 mb-4">
-                                <label class="control-label">Certificación</label>
+                                <label class="control-label">{{ loc["Certificación"]}}</label>
                                 <input type="text" disabled class="form-control" value="FONASBA">
                             </div>
 
                             <div class="form-group col-lg-3 col-sm-12 mb-4">
-                                <label class="control-label">Socio</label>
+                                <label class="control-label">{{ loc["Socio"]}}</label>
                                 <empresaPortal-select v-model="parameters.socioId" />
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("socioId") }}
@@ -26,7 +24,7 @@
                             </div>
 
                             <div class="form-group col-lg-3 col-sm-12 mb-4">
-                                <label class="control-label">Estado</label>
+                                <label class="control-label">{{ loc["Estado"]}}</label>
                                 <solicitudCertificacionEstado-select v-model="parameters.estadoId" />
                             </div>
 
@@ -34,12 +32,12 @@
                                 <div class="d-flex justify-content-between">
                                     <button v-on:click.prevent="search" class="btn btn-primary btn-sm">
                                         <i class="fas fa-search"></i>
-                                        Buscar
+                                        {{ loc["Buscar"]}}
                                     </button>
                                     <button tabindex="12" @click.prevent="clearFilters"
                                         class="btn btn-secondary btn-sm ms-2">
                                         <i class="fas fa-eraser"></i>
-                                        Limpiar
+                                        {{ loc["Limpiar"]}}
                                     </button>
                                 </div>
                             </div>
@@ -56,6 +54,8 @@ import Parameters from "./Parameters.js"
 import solicitudCertificacionEstadoSelect from "@/Selects/solicitudCertificacionEstado-select.vue";
 import empresaPortalSelect from "@/Selects/empresaPortal-select.vue";
 
+import loc from "@/common/commonLoc.js"
+
 export default {
     components: { empresaPortalSelect, solicitudCertificacionEstadoSelect },
     name: "solicitudCertificacion-filter",
@@ -64,6 +64,7 @@ export default {
     },
     data: function () {
         return {
+            loc
         };
     },
     mounted() {

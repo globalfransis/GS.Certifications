@@ -3,7 +3,7 @@
 @model SideBarViewComponent
 @using Microsoft.Extensions.Localization
 @using System.Web
-@inject IStringLocalizer<Socios.Web.Common.Resources.Shared> loc
+@inject IStringLocalizer<Socios.Web.Common.Resources.Shared> SharedLocalizer
 @inject IConfiguration Configuration
 <!-- Main side-menu -->
 <div id="drawer" class="main-side-menu border-end d-block">
@@ -16,7 +16,7 @@
                     <a href="~/index" class="d-flex align-items-center menu-item-active"
                        onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0)"
                        optionid="0">
-                        <i class="fas fa-home"></i> <span class="ms-1">Inicio</span>
+                        <i class="fas fa-home"></i> <span class="ms-1">@SharedLocalizer["Inicio"]</span>
                     </a>
                 </div>
                 <div class="d-flex ms-auto ">
@@ -38,7 +38,7 @@
                                 <a class="menu-accordion-body list-group-item border-0"
                                    href="javascript:RedirectToOption(@option.Id, @(option.ParentId != null ? @option.ParentId : option.Id), '@option.Url');"
                                    onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0)">
-                                    <i class="@option.Icon"></i> <span class="ms-1">@option.Name</span>
+                                    <i class="@option.Icon"></i> <span class="ms-1">@SharedLocalizer[option.Name]</span>
                                 </a>
                             </div>
 

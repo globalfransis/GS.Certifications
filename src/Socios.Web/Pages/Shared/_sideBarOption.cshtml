@@ -1,5 +1,6 @@
 ﻿@model GSF.Application.Security.Options.Queries.OptionDto
-
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Common.Resources.Shared> SharedLocalizer
 @if (Model.Options != null && Model.Options.Any())
 {
     @foreach (var childOption in Model.Options)
@@ -16,7 +17,7 @@ else
                optionId="@Model.Id"
                href="javascript:RedirectToOption(@Model.Id, @Model.ParentId, '@Model.Url');"
                indent="@ViewData["optionLevel"]">
-                <i class="@Model.Icon"></i> <span class="ms-1">@Model.Name</span>
+                <i class="@Model.Icon"></i> <span class="ms-1">@SharedLocalizer[Model.Name]</span>
             </a>
         </div>
     </div>

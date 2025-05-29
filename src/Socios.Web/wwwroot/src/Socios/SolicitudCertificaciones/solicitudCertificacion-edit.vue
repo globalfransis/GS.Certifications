@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="col-12 mt-4">
                 <!-- <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p> -->
-                <p class="h5">Certificación {{ solicitudCertificacion.certificacion }} ({{ solicitudCertificacion.vigenciaDesde | uidate }} - {{ solicitudCertificacion.vigenciaHasta | uidate }})</p>
+                <p class="h5">{{ loc["Certificación"] }} {{ solicitudCertificacion.certificacion }} ({{ solicitudCertificacion.vigenciaDesde | uidate }} - {{ solicitudCertificacion.vigenciaHasta | uidate }})</p>
             </div>
             <div class="card">
                 <div class="card-body">
