@@ -210,7 +210,7 @@ export default {
             // ---
             pollingIntervalId: null, // Para guardar el ID del intervalo del polling
             isCurrentlyPolling: false, // Para evitar ejecuciones solapadas del poll
-            pollingDelay: 3000, // Tiempo en milisegundos para el polling 
+            pollingDelay: 1500, // Tiempo en milisegundos para el polling 
         };
     },
     computed: {

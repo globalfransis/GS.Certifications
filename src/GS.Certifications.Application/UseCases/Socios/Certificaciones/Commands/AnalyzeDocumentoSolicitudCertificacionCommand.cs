@@ -11,9 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -122,7 +120,7 @@ public class AnalyzeDocumentoSolicitudCertificacionCommandHandler : BaseRequestH
         }
         catch (Exception ex)
         {
-            Log.Logger.Error(ex, "Error inesperado al guardar el comprobante analizado como borrador para SolicitudId={SolicitudId}, FileName={FileName}", request.SolicitudId, request.FormFile.FileName);
+            Log.Logger.Error(ex, "Error inesperado al guardar el documento analizado para SolicitudId={SolicitudId}, FileName={FileName}", request.SolicitudId, request.FormFile.FileName);
             throw;
         }
     }
