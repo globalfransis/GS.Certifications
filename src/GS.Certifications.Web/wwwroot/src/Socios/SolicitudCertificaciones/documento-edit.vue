@@ -14,23 +14,23 @@
                                 <div :key="`operationStatus-${documento.operationStatus}`"
                                     v-if="documento.operationStatus == this.PROCESSING"
                                     class=" spinner-border spinner-border-sm text-primary" role="status">
-                                    <span class="visually-hidden">Analizando documento...</span>
+                                    <span class="visually-hidden">{{loc["Analizando documento..."]}}</span>
                                 </div>
-                                <span>Analizando documento...</span>
+                                <span>{{loc["Analizando documento..."]}}</span>
                             </div>
 
                             <div :key="`operationStatus-${documento.operationStatus}`"
                                 v-if="documento.operationStatus == this.COMPLETED"
                                 class="d-flex align-items-center text-success gap-1">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Documento analizado</span>
+                                <span>{{loc["Documento analizado"]}}</span>
                             </div>
 
                             <div :key="`operationStatus-${documento.operationStatus}`"
                                 v-if="documento.operationStatus == this.FAILED"
                                 class="d-flex align-items-center text-danger gap-1">
                                 <i class="fas fa-times-circle"></i>
-                                <span>Error de análisis</span>
+                                <span>{{loc["Error de análisis"]}}</span>
                             </div>
                             <cancel-button class="ms-2" @click="cancel">{{loc["Volver"]}}</cancel-button>
                         </div>
@@ -40,20 +40,20 @@
                         aria-label="Controles de visualización del documento">
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.Split }"
-                            @click="setLayout(LayoutMode.Split)" title="Mostrar vista dividida"
-                            aria-label="Mostrar vista dividida" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            @click="setLayout(LayoutMode.Split)" :title="loc['Mostrar vista dividida']"
+                            :aria-label="loc['Mostrar vista dividida']" data-bs-toggle="tooltip" data-bs-placement="bottom">
                             <i class="fas fa-columns" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.File }"
-                            @click="setLayout(LayoutMode.File)" title="Mostrar solo el documento"
-                            aria-label="Mostrar solo el documento" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            @click="setLayout(LayoutMode.File)" :title="loc['Mostrar solo el documento']"
+                            :aria-label="loc['Mostrar solo el documento']" data-bs-toggle="tooltip" data-bs-placement="bottom">
                             <i class="fas fa-file-alt" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.Form }"
-                            @click="setLayout(LayoutMode.Form)" title="Mostrar solo el formulario"
-                            aria-label="Mostrar solo el formulario" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            @click="setLayout(LayoutMode.Form)" :title="loc['Mostrar solo el formulario']"
+                            :aria-label="loc['Mostrar solo el formulario']" data-bs-toggle="tooltip" data-bs-placement="bottom">
                             <i class="fas fa-list-alt" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -143,7 +143,7 @@
                 <button
                     :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
                     v-if="documento.estadoId == DOCUMENTO_PRESENTADO" class="btn btn-outline-danger btn-sm"
-                    @click="rejectAsync" title="Rechazar solicitud">
+                    @click="rejectAsync" :title="loc['Rechazar solicitud']">
                     {{loc["Rechazar"]}}
                 </button>
 
@@ -321,7 +321,7 @@ export default {
                     if (this.documento.operationStatus === this.PROCESSING) {
                         this.startStatusPolling();
                     } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
-                        this.uiService.showMessageSuccess("Análisis de IA completado!"); // O un mensaje más específico
+                        this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]); // O un mensaje más específico
                         this.stopStatusPolling();
                     }
                 })
@@ -342,7 +342,7 @@ export default {
                     if (this.documento.operationStatus === this.PROCESSING) {
                         this.startStatusPolling();
                     } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
-                        this.uiService.showMessageSuccess("Análisis de IA completado!");
+                        this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]);
                         this.stopStatusPolling();
                     }
                 });
@@ -365,9 +365,9 @@ export default {
         async updateAsync() {
             if (
                 await this.uiService.confirmActionModal(
-                    "¿Está usted seguro que desea aprobar esta solicitud?",
-                    "Aceptar",
-                    "Cancelar"
+                    loc["¿Está usted seguro que desea aprobar esta solicitud?"],
+                    loc["Aceptar"],
+                    loc["Cancelar"]
                 )
             ) {
                 this.errorBag.clear();
@@ -375,10 +375,10 @@ export default {
                 return await this.$store.dispatch("putDocumentoAsync", this.documento)
                     .then(() => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             this.goSolicitudEdit();
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(loc["Operación rechazada"])
                         }
                     })
                     .finally(() => {
@@ -389,9 +389,9 @@ export default {
         async rejectAsync() {
             if (
                 await this.uiService.confirmActionModal(
-                    "¿Está usted seguro que desea rechazar esta solicitud?",
-                    "Aceptar",
-                    "Cancelar"
+                    loc["¿Está usted seguro que desea rechazar esta solicitud?"],
+                    loc["Aceptar"],
+                    loc["Cancelar"]
                 )
             ) {
                 this.errorBag.clear();
@@ -399,10 +399,10 @@ export default {
                 return await this.$store.dispatch("rejectDocumentoAsync", this.documento)
                     .then(() => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             this.goSolicitudEdit();
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(loc["Operación rechazada"])
                         }
                     })
                     .finally(() => {
@@ -416,10 +416,10 @@ export default {
             await this.$store.dispatch("updateDocumentoDraftAsync", this.documento)
                 .then(() => {
                     if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"])
                         this.goSolicitudEdit();
                     } else {
-                        this.uiService.showMessageError("Operación rechazada")
+                        this.uiService.showMessageError(loc["Operación rechazada"])
                     }
                 })
                 .finally(() => {

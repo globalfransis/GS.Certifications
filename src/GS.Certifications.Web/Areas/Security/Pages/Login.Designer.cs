@@ -61,6 +61,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aceptar.
+        /// </summary>
+        public static string Aceptar {
+            get {
+                return ResourceManager.GetString("Aceptar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Certificaciones.
         /// </summary>
         public static string Certificaciones {
@@ -79,11 +88,56 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grupo.
         /// </summary>
         public static string Grupo {
             get {
                 return ResourceManager.GetString("Grupo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingresar.
+        /// </summary>
+        public static string Ingresar {
+            get {
+                return ResourceManager.GetString("Ingresar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingresar contraseña.
+        /// </summary>
+        public static string Ingresar_contraseña {
+            get {
+                return ResourceManager.GetString("Ingresar contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingresar email para recuperar contraseña.
+        /// </summary>
+        public static string Ingresar_email_para_recuperar_contraseña {
+            get {
+                return ResourceManager.GetString("Ingresar email para recuperar contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingresar usuario o email.
+        /// </summary>
+        public static string Ingresar_usuario_o_email {
+            get {
+                return ResourceManager.GetString("Ingresar usuario o email", resourceCulture);
             }
         }
         
@@ -97,11 +151,47 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingreso al sistema.
+        /// </summary>
+        public static string Ingreso_al_sistema {
+            get {
+                return ResourceManager.GetString("Ingreso al sistema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre de usuario o email.
+        /// </summary>
+        public static string Nombre_de_usuario_o_email {
+            get {
+                return ResourceManager.GetString("Nombre de usuario o email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Olvidé mi contraseña.
+        /// </summary>
+        public static string Olvidé_mi_contraseña {
+            get {
+                return ResourceManager.GetString("Olvidé mi contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Olvidé mi contraseña.
         /// </summary>
         public static string OlvideMiContraseña {
             get {
                 return ResourceManager.GetString("OlvideMiContraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portal de Certificaciones.
+        /// </summary>
+        public static string Portal_de_Certificaciones {
+            get {
+                return ResourceManager.GetString("Portal de Certificaciones", resourceCulture);
             }
         }
         
@@ -115,7 +205,7 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Usuario.
         /// </summary>
         public static string Usuario {
             get {
@@ -129,6 +219,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         public static string Usuario_o_Email {
             get {
                 return ResourceManager.GetString("Usuario o Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volver al inicio.
+        /// </summary>
+        public static string Volver_al_inicio {
+            get {
+                return ResourceManager.GetString("Volver al inicio", resourceCulture);
             }
         }
     }

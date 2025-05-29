@@ -141,4 +141,37 @@
   <data name="Certificaciones" xml:space="preserve">
     <value>Certifications</value>
   </data>
+  <data name="Portal de Certificaciones" xml:space="preserve">
+    <value>Certifications Portal</value>
+  </data>
+  <data name="Ingreso al sistema" xml:space="preserve">
+    <value>System Login</value>
+  </data>
+  <data name="Nombre de usuario o email" xml:space="preserve">
+    <value>Username or email</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Ingresar email para recuperar contraseña" xml:space="preserve">
+    <value>Enter email to recover password</value>
+  </data>
+  <data name="Aceptar" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="Ingresar" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="Olvidé mi contraseña" xml:space="preserve">
+    <value>I forgot my password</value>
+  </data>
+  <data name="Volver al inicio" xml:space="preserve">
+    <value>Back home</value>
+  </data>
+  <data name="Ingresar usuario o email" xml:space="preserve">
+    <value>Enter username or email</value>
+  </data>
+  <data name="Ingresar contraseña" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
 </root>

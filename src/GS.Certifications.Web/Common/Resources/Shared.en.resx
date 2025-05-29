@@ -1082,4 +1082,40 @@
   <data name="El campo ‘Clave’ es obligatorio." xml:space="preserve">
     <value>The 'Key' field is mandatory.</value>
   </data>
+  <data name="¿Está usted seguro que desea iniciar una nueva solicitud de certificación?" xml:space="preserve">
+    <value>Are you sure you want to start a new certification application?</value>
+  </data>
+  <data name="¿Está usted seguro que desea rechazar esta solicitud?" xml:space="preserve">
+    <value>Are you sure you want to decline this request?</value>
+  </data>
+  <data name="¿Está usted seguro que desea aprobar esta solicitud?" xml:space="preserve">
+    <value>Are you sure you want to approve this application?</value>
+  </data>
+  <data name="Análisis de IA completado!" xml:space="preserve">
+    <value>AI analysis completed!</value>
+  </data>
+  <data name="Error durante el polling del estado del documento:" xml:space="preserve">
+    <value>Error during document status polling:</value>
+  </data>
+  <data name="Rechazar solicitud" xml:space="preserve">
+    <value>Reject request</value>
+  </data>
+  <data name="Mostrar solo el formulario" xml:space="preserve">
+    <value>Show only the form</value>
+  </data>
+  <data name="Mostrar solo el documento" xml:space="preserve">
+    <value>Show only the document</value>
+  </data>
+  <data name="Mostrar vista dividida" xml:space="preserve">
+    <value>Show split view</value>
+  </data>
+  <data name="Error de análisis" xml:space="preserve">
+    <value>Analysis error</value>
+  </data>
+  <data name="Documento analizado" xml:space="preserve">
+    <value>Document analyzed</value>
+  </data>
+  <data name="Analizando documento..." xml:space="preserve">
+    <value>Analyzing document...</value>
+  </data>
 </root>

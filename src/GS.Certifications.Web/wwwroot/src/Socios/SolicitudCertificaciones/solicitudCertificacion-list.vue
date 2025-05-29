@@ -238,9 +238,9 @@ export default {
         async createAsync() {
             if (
                 await this.uiService.confirmActionModal(
-                    "¿Está usted seguro que desea iniciar una nueva solicitud de certificación?",
-                    "Aceptar",
-                    "Cancelar"
+                    loc["¿Está usted seguro que desea iniciar una nueva solicitud de certificación?"],
+                    loc["Aceptar"],
+                    loc["Cancelar"]
                 )
             ) {
 
@@ -252,14 +252,14 @@ export default {
                 await this.$store.dispatch("postAsync", nueva)
                     .then((id) => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
 
                             // Limpiamos la lista antes de navegar
                             this.$store.dispatch("clearList");
 
                             this.update(id);
                         } else {
-                            this.uiService.showMessageError(`Operación rechazada: ${this.errorBag.get("certificacionId")}`)
+                            this.uiService.showMessageError(`${loc["Operación rechazada"]}: ${this.errorBag.get("certificacionId")}`)
                         }
                     })
                     .finally(() => {

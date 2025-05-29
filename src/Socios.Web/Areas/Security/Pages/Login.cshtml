@@ -2,6 +2,7 @@
 @model             Socios.Web.Areas.Security.Pages.LoginModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @inject IConfiguration Configuration
+@inject IStringLocalizer<Login> LoginLocalizer
 @using System.Web;
 @using Microsoft.Extensions.Configuration
 @using Socios.Web.Areas.Security.Pages
@@ -147,12 +148,12 @@
                             <div class="col-lg-12" style="position:relative">
                                 <hr />
                                 <h1 class="welcome-login">
-                                    Portal de Socios
+                                    @LoginLocalizer["Portal de Socios"]
                                 </h1>
                                 <form method="post" action="" style="background-color: transparent;">
 
                                     <div class="form-group col-12 text-center">
-                                        <h2 class="pb-2">Ingreso al sistema</h2>
+                                        <h2 class="pb-2">@LoginLocalizer["Ingreso al sistema"]</h2>
                                     </div>
 
                                     @if (!Model.ModelState.IsValid)
@@ -175,17 +176,17 @@
                                     {
                                         <div class="form-group col-12 d-flex justify-content-center">
                                             <div class="col-12">
-                                                <label class="col-form-label login-side-text" placeholder="Default input" asp-for="Login_or_Email">Nombre de usuario o email</label>
-                                                <input class="form-control" placeholder="Ingresar usuario o email" asp-for="Login_or_Email" autofocus />
+                                                <label class="col-form-label login-side-text" placeholder="Default input" asp-for="Login_or_Email">@LoginLocalizer["Nombre de usuario o email"]</label>
+                                                <input class="form-control" placeholder="@LoginLocalizer["Ingresar usuario o email"]" asp-for="Login_or_Email" autofocus />
                                                 <span asp-validation-for="Login_or_Email" class="text-danger"></span>
                                             </div>
                                         </div>
 
                                         <div class="form-group col-12 pb-3 d-flex justify-content-center">
                                             <div class="col-12">
-                                                <label class="col-form-label login-side-text" asp-for="Login_or_Email">Contrase&ntilde;a</label>
+                                                <label class="col-form-label login-side-text" asp-for="Login_or_Email">@LoginLocalizer["Contraseña"]</label>
                                                 <div class="input-group" input-password>
-                                                    <input class="form-control pw" placeholder="Ingresar contraseña" asp-for="Password" type="password" />
+                                                    <input class="form-control pw" placeholder="@LoginLocalizer["Ingresar contraseña"]" asp-for="Password" type="password" />
                                                     <button type="button" class="btn btn-outline-primary btn-sm" style="width: 3em">
                                                         <i class="fas fa-eye-slash"></i>
                                                     </button>
@@ -199,8 +200,8 @@
                                     {
                                         <div class="form-group col-12 d-flex justify-content-center">
                                             <div class="col-12 mb-4">
-                                                <label class="col-form-label login-side-text" placeholder="Default input" asp-for="Login_or_Email">Email</label>
-                                                <input class="form-control" placeholder="Ingresar email para recuperar contraseña" asp-for="Login_or_Email" autofocus />
+                                                <label class="col-form-label login-side-text" placeholder="Default input" asp-for="Login_or_Email">@LoginLocalizer["Email"]</label>
+                                                <input class="form-control" placeholder="@LoginLocalizer["Ingresar email para recuperar contraseña"]" asp-for="Login_or_Email" autofocus />
                                                 <span asp-validation-for="Login_or_Email" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -213,17 +214,17 @@
                                             @if (Model.PasswordForgotten)
                                             {
                                                 <div class="col-12">
-                                                    <button type="submit" asp-page-handler="PasswordRecovery" class="login-side-text btn btn-primary w-100 login-submit-button login-submit-button">Aceptar</button>
+                                                    <button type="submit" asp-page-handler="PasswordRecovery" class="login-side-text btn btn-primary w-100 login-submit-button login-submit-button">@LoginLocalizer["Aceptar"]</button>
                                                     <a asp-page="/Login" asp-area="Security" class="login-side-text btn btn-link w-100">Cancelar</a>
                                                 </div>
                                             }
                                             else
                                             {
                                                 <div class="col-12 p-0 mb-3">
-                                                    <button type="submit" asp-page-handler="" tabindex="0" class="login-side-text btn btn-primary w-100 login-submit-button" onclick="RedirectToOption(0, 0, '/index')">Ingresar</button>
+                                                    <button type="submit" asp-page-handler="" tabindex="0" class="login-side-text btn btn-primary w-100 login-submit-button" onclick="RedirectToOption(0, 0, '/index')">@LoginLocalizer["Ingresar"]</button>
                                                 </div>
                                                 <div class="col-12">
-                                                    <button asp-page-handler="PasswordForgotten" type="submit" class="login-side-text btn btn-link w-100">Olvid&eacute; mi contraseña</button>
+                                                    <button asp-page-handler="PasswordForgotten" type="submit" class="login-side-text btn btn-link w-100">@LoginLocalizer["Olvidé mi contraseña"]</button>
                                                 </div>
                                             }
 
@@ -254,7 +255,7 @@
                                 <div class="alert alert-info">@Html.Raw(ViewData["PasswordChangeRequestedMessage"].ToString())</div>
                             }
 
-                            <a asp-page="/Login" asp-area="Security" class="login-side-text btn btn-link w-100">Volver al inicio</a>
+                            <a asp-page="/Login" asp-area="Security" class="login-side-text btn btn-link w-100">@LoginLocalizer["Volver al inicio"]</a>
 
                         </div>
                     </div>

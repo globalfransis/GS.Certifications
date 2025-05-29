@@ -126,10 +126,58 @@
   <data name="Title" xml:space="preserve">
     <value>Bienvenido a Boarding.coex</value>
   </data>
-  <data name="IngresarAlSistema" xml:space="preserve">
+  <data name="Grupo" xml:space="preserve">
+    <value>Grupo</value>
+  </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Portal de Socios" xml:space="preserve">
+    <value>Portal de Socios</value>
+  </data>
+  <data name="Ingreso al sistema" xml:space="preserve">
+    <value>Ingreso al sistema</value>
+  </data>
+  <data name="Olvidé mi contraseña" xml:space="preserve">
+    <value>Olvidé mi contraseña</value>
+  </data>
+  <data name="Nombre de usuario o email" xml:space="preserve">
+    <value>Nombre de usuario o email</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Ingresar email para recuperar contraseña" xml:space="preserve">
+    <value>Ingresar email para recuperar contraseña</value>
+  </data>
+  <data name="Aceptar" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="Ingresar" xml:space="preserve">
     <value>Ingresar</value>
   </data>
-  <data name="OlvideMiContraseña" xml:space="preserve">
-    <value>Olvidé mi contraseña</value>
+  <data name="Volver al inicio" xml:space="preserve">
+    <value>Volver al inicio</value>
+  </data>
+  <data name="Ingresar usuario o email" xml:space="preserve">
+    <value>Ingresar usuario o email</value>
+  </data>
+  <data name="Ingresar contraseña" xml:space="preserve">
+    <value>Ingresar contraseña</value>
+  </data>
+  <data name="Portal de Proveedores de" xml:space="preserve">
+    <value>Portal de Proveedores de</value>
+  </data>
+  <data name="Selección de Socio" xml:space="preserve">
+    <value>Selección de Socio</value>
+  </data>
+  <data name="Seleccione un Socio" xml:space="preserve">
+    <value>Seleccione un Socio</value>
+  </data>
+  <data name="Seleccione Socio" xml:space="preserve">
+    <value>Seleccione Socio</value>
+  </data>
+  <data name="Socio" xml:space="preserve">
+    <value>Socio</value>
   </data>
 </root>

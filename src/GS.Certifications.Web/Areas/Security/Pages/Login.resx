@@ -133,12 +133,45 @@
     <value>Olvidé mi contraseña</value>
   </data>
   <data name="Grupo" xml:space="preserve">
-    <value />
+    <value>Grupo</value>
   </data>
   <data name="Usuario" xml:space="preserve">
-    <value />
+    <value>Usuario</value>
   </data>
   <data name="Certificaciones" xml:space="preserve">
     <value>Certificaciones</value>
+  </data>
+  <data name="Portal de Certificaciones" xml:space="preserve">
+    <value>Portal de Certificaciones</value>
+  </data>
+  <data name="Ingreso al sistema" xml:space="preserve">
+    <value>Ingreso al sistema</value>
+  </data>
+  <data name="Nombre de usuario o email" xml:space="preserve">
+    <value>Nombre de usuario o email</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Ingresar email para recuperar contraseña" xml:space="preserve">
+    <value>Ingresar email para recuperar contraseña</value>
+  </data>
+  <data name="Aceptar" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="Ingresar" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="Olvidé mi contraseña" xml:space="preserve">
+    <value>Olvidé mi contraseña</value>
+  </data>
+  <data name="Volver al inicio" xml:space="preserve">
+    <value>Volver al inicio</value>
+  </data>
+  <data name="Ingresar usuario o email" xml:space="preserve">
+    <value>Ingresar usuario o email</value>
+  </data>
+  <data name="Ingresar contraseña" xml:space="preserve">
+    <value>Ingresar contraseña</value>
   </data>
 </root>

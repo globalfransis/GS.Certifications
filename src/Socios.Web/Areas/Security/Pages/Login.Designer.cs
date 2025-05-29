@@ -61,6 +61,15 @@ namespace Socios.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aceptar.
+        /// </summary>
+        public static string Aceptar {
+            get {
+                return ResourceManager.GetString("Aceptar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contraseña.
         /// </summary>
         public static string Contraseña {
@@ -70,20 +79,137 @@ namespace Socios.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grupo.
+        /// </summary>
+        public static string Grupo {
+            get {
+                return ResourceManager.GetString("Grupo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingresar.
         /// </summary>
-        public static string IngresarAlSistema {
+        public static string Ingresar {
             get {
-                return ResourceManager.GetString("IngresarAlSistema", resourceCulture);
+                return ResourceManager.GetString("Ingresar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingresar contraseña.
+        /// </summary>
+        public static string Ingresar_contraseña {
+            get {
+                return ResourceManager.GetString("Ingresar contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingresar email para recuperar contraseña.
+        /// </summary>
+        public static string Ingresar_email_para_recuperar_contraseña {
+            get {
+                return ResourceManager.GetString("Ingresar email para recuperar contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingresar usuario o email.
+        /// </summary>
+        public static string Ingresar_usuario_o_email {
+            get {
+                return ResourceManager.GetString("Ingresar usuario o email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingreso al sistema.
+        /// </summary>
+        public static string Ingreso_al_sistema {
+            get {
+                return ResourceManager.GetString("Ingreso al sistema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre de usuario o email.
+        /// </summary>
+        public static string Nombre_de_usuario_o_email {
+            get {
+                return ResourceManager.GetString("Nombre de usuario o email", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Olvidé mi contraseña.
         /// </summary>
-        public static string OlvideMiContraseña {
+        public static string Olvidé_mi_contraseña {
             get {
-                return ResourceManager.GetString("OlvideMiContraseña", resourceCulture);
+                return ResourceManager.GetString("Olvidé mi contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portal de Proveedores de.
+        /// </summary>
+        public static string Portal_de_Proveedores_de {
+            get {
+                return ResourceManager.GetString("Portal de Proveedores de", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portal de Socios.
+        /// </summary>
+        public static string Portal_de_Socios {
+            get {
+                return ResourceManager.GetString("Portal de Socios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selección de Socio.
+        /// </summary>
+        public static string Selección_de_Socio {
+            get {
+                return ResourceManager.GetString("Selección de Socio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleccione Socio.
+        /// </summary>
+        public static string Seleccione_Socio {
+            get {
+                return ResourceManager.GetString("Seleccione Socio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleccione un Socio.
+        /// </summary>
+        public static string Seleccione_un_Socio {
+            get {
+                return ResourceManager.GetString("Seleccione un Socio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Socio.
+        /// </summary>
+        public static string Socio {
+            get {
+                return ResourceManager.GetString("Socio", resourceCulture);
             }
         }
         
@@ -97,11 +223,29 @@ namespace Socios.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        public static string Usuario {
+            get {
+                return ResourceManager.GetString("Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Usuario o Email.
         /// </summary>
         public static string Usuario_o_Email {
             get {
                 return ResourceManager.GetString("Usuario o Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volver al inicio.
+        /// </summary>
+        public static string Volver_al_inicio {
+            get {
+                return ResourceManager.GetString("Volver al inicio", resourceCulture);
             }
         }
     }
