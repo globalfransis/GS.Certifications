@@ -28,7 +28,7 @@
                             <div :key="`operationStatus-${documento.operationStatus}`"
                                 v-if="documento.operationStatus == this.FAILED"
                                 class="d-flex align-items-center text-danger gap-1">
-                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-times-circle"></i>
                                 <span>Error de análisis</span>
                             </div>
 
@@ -323,6 +323,7 @@ export default {
                     this.documento.operationStatus = res.operationStatus;
                     this.documento.fechaDesde = new Date(res.fechaDesde).toISOString().split('T')[0];
                     this.documento.fechaHasta = new Date(res.fechaHasta).toISOString().split('T')[0];
+                    this.documento.rowVersion = res.rowVersion;
 
                     if (this.documento.operationStatus === this.PROCESSING) {
                         this.startStatusPolling();

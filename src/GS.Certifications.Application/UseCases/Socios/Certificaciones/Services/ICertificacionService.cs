@@ -147,9 +147,16 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         public int DocumentoId { get; init; }
         public string OperationId { get; init; }
         public Domain.Commons.Enums.OperationStatus FinalStatus { get; init; }
-        public IEnumerable<DocumentAnalysisResult>? Results { get; init; } // Null si falló
+        //public IEnumerable<DocumentAnalysisResult>? Results { get; init; } // Null si falló
+        public IDocumentoAnalysisResult Result { get; init; } // Null si falló
         public Exception? Exception { get; init; } // Null si tuvo éxito
         public CancellationToken OriginalCancellationToken { get; init; }
+    }
+
+    public interface IDocumentoAnalysisResult
+    {
+        DateTime? FechaDesde { get; set; }
+        DateTime? FechaHasta { get; set; }
     }
 
     // Firma del Callback

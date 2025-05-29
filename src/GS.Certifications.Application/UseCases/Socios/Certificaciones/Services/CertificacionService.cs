@@ -2,6 +2,7 @@ using GS.AI.DocumentIntelligence.Legacy.Models;
 using GS.AI.DocumentIntelligence.Legacy.Services.Interfaces;
 using GS.Certifications.Application.CQRS.DbContexts;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptions;
+using GS.Certifications.Application.UseCases.Socios.Certificaciones.Helpers;
 using GS.Certifications.Domain.Entities.Certificaciones;
 using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 using GSF.Application.Helpers.Pagination.Interfaces;
@@ -74,12 +75,45 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                     // se puede loggear la excepción si es necesario, o guardar algun detalle del error
                 }
 
+                var result = completionResults?.FirstOrDefault();
+
+                DateTime? fechaDesde = null;
+                DateTime? fechaHasta = null;
+
+                if (result != null)
+                {
+                    var fechaDesdeField = result.ExtractedFields.GetValueOrDefault("VigenciaDesde");
+                    fechaDesde = fechaDesdeField.ValueDate?.DateTime;
+                
+                    if (fechaDesde == null)
+                    {
+                        var fechaDesdeDesc = result.ExtractedFields.GetValueOrDefault("VigenciaDesdeDescripcion")?.Content;
+                        fechaDesde = DocumentAnalysisHelper.TryParseSpanishDateInternal(fechaDesdeDesc);
+                    }
+
+                    var fechaHastaField = result.ExtractedFields.GetValueOrDefault("VigenciaHasta");
+                    fechaHasta = fechaHastaField.ValueDate?.DateTime;
+                    
+                    if (fechaHasta == null)
+                    {
+                        var fechaHastaDesc = result.ExtractedFields.GetValueOrDefault("VigenciaHastaDescripcion")?.Content;
+                        fechaHasta = DocumentAnalysisHelper.TryParseSpanishDateInternal(fechaHastaDesc);
+                    }
+                }
+
+                var analysisResult = new DocumentoAnalysisResult()
+                {
+                    FechaDesde = fechaDesde,
+                    FechaHasta = fechaHasta,
+                };
+
                 var completionData = new AnalysisCompletionData
                 {
                     DocumentoId = parameters.Id,
                     OperationId = analysisOperationId,
                     FinalStatus = finalStatus,
-                    Results = completionResults,
+                    //Results = completionResults,
+                    Result = analysisResult,
                     Exception = capturedException,
                     OriginalCancellationToken = cancellationToken
                 };
@@ -487,6 +521,12 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         #endregion
 
         #region Classes
+        public class DocumentoAnalysisResult : IDocumentoAnalysisResult
+        {
+            public DateTime? FechaDesde { get; set; }
+            public DateTime? FechaHasta { get; set; }
+        }
+
         public class SolicitudCertificacionUpdate : ISolicitudCertificacionUpdate
         {
             public short? EstadoId { get; set; }

@@ -141,14 +141,10 @@ public class AnalyzeDocumentoSolicitudCertificacionCommandHandler : BaseRequestH
             return;
         }
 
-        if (completionData.FinalStatus == Domain.Commons.Enums.OperationStatus.COMPLETED && completionData.Results != null)
+        if (completionData.FinalStatus == Domain.Commons.Enums.OperationStatus.COMPLETED && completionData.Result != null)
         {
-            var firstResult = completionData.Results.FirstOrDefault();
-            if (firstResult != null && firstResult.ExtractedFields != null)
-            {
-                documento.FechaDesde = firstResult.ExtractedFields.GetValueOrDefault("VigenciaDesde")?.ValueDate?.DateTime;
-                documento.FechaHasta = firstResult.ExtractedFields.GetValueOrDefault("VigenciaHasta")?.ValueDate?.DateTime;
-            }
+            documento.FechaDesde = completionData.Result.FechaDesde;
+            documento.FechaHasta = completionData.Result.FechaHasta;
             documento.OperationStatus = Domain.Commons.Enums.OperationStatus.COMPLETED;
         }
         else // hubo una falla en la operación de IA
