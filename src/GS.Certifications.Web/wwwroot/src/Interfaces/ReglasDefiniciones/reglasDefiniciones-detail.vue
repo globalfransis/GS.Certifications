@@ -2,24 +2,24 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">Definición de Regla de Interfaz {{ this.reglaDefinicion.id }}</p>
+                <p class="h5">{{loc["Definición de Regla de Interfaz"]}} {{ this.reglaDefinicion.id }}</p>
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Interfaz</label>
+                            <label class="control-label">{{loc["Interfaz"]}}</label>
                             <interfaz-select disabled :sistemaIdm="reglaDefinicion.sistemaIdm" v-model="reglaDefinicion.interfazIdm" />
                         </div>
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Consecuencia</label>
+                            <label class="control-label">{{loc["Consecuencia"]}}</label>
                             <input disabled class="form-control" v-model="reglaDefinicion.consecuencia" />
                         </div>
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Descripción</label>
+                            <label class="control-label">{{loc["Descripción"]}}</label>
                             <input disabled class="form-control" v-model="reglaDefinicion.descripción" />
                         </div>
                     </div>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="col-12 d-flex justify-content-end mb-3 mt-3">
-            <cancel-button @click="goBack">Volver</cancel-button>
+            <cancel-button @click="goBack">{{loc["Volver"]}}</cancel-button>
         </div>
     </div>
 </template>
@@ -43,6 +43,8 @@ import ReglaDefinicion from './ReglaDefinicion'
 
 import commonMixin from '@/Common/Mixins/commonMixin';
 
+import loc from "@/common/commonLoc.js"
+
 const INTERFAZ_REGLAS_URL = baseUrl + "/api/Interfaces/Reglas";
 
 export default {
@@ -54,6 +56,7 @@ export default {
     mixins: [commonMixin],
     data: function () {
         return {
+            loc,
             reglaDefinicion: new ReglaDefinicion(),
             errorBag: new ErrorBag(),
             uiService: new UiService()

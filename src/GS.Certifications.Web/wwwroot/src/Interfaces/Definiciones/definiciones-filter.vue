@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col-12 mt-4">
-            <p class="h5">Filtro de búsqueda</p>
+            <p class="h5">{{loc["Filtro de búsqueda"]}}</p>
         </div>
         <!-- Title end -->
         <div class="col-12">
@@ -12,12 +12,12 @@
                         <div class="row">
 
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Sistema</label>
+                                <label>{{loc["Sistema"]}}</label>
                                 <sistema-select v-model="parameters.sistemaIdm" />
                             </div>
 
                             <div class="col-lg-3 col-sm-12 mb-4">
-                                <label>Interfaz</label>
+                                <label>{{loc["Interfaz"]}}</label>
                                 <interfaz-select :sistemaIdm="parameters.sistemaIdm" v-model="parameters.interfazId" />
                             </div>
 
@@ -25,12 +25,12 @@
                                 <div class="d-flex justify-content-between">
                                     <button v-on:click.prevent="search" class="btn btn-primary btn-sm">
                                         <i class="fas fa-search"></i>
-                                        Buscar
+                                        {{loc["Buscar"]}}
                                     </button>
                                     <button tabindex="12" @click.prevent="clearFilters"
                                         class="btn btn-secondary btn-sm ms-2">
                                         <i class="fas fa-eraser"></i>
-                                        Limpiar
+                                        {{loc["Limpiar"]}}
                                     </button>
                                 </div>
                             </div>
@@ -48,6 +48,8 @@ import sistemaSelect from "@/selects/sistema-select.vue";
 
 import Parameters from "./Parameters.js"
 
+import loc from "@/common/commonLoc.js"
+
 export default {
     components: { interfazSelect, sistemaSelect },
     name: "definiciones-filter",
@@ -58,6 +60,7 @@ export default {
     },
     data: function () {
         return {
+            loc
         };
     },
     mounted() {

@@ -4,12 +4,12 @@
             <div class="col-12 d-flex justify-content-between sticky-header mt-4">
                 <div class="col-12 d-grid">
                     <div class="row">
-                        <p class="h5 col-6">{{ tipoDoc }} - Solicitud nro {{ documento.solicitudId }}
+                        <p class="h5 col-6">{{ tipoDoc }} - {{loc["Solicitud nro."]}} {{ documento.solicitudId }}
                         </p>
                         <div class="col-6 gap-4 d-flex justify-content-end">
                             <documentoEstado-label :value="documento.estadoId" />
 
-                            <cancel-button class="ms-2" @click="cancel">Volver</cancel-button>
+                            <cancel-button class="ms-2" @click="cancel">{{loc["Volver"]}}</cancel-button>
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@
 
                     <div class="form-group col-sm-12 mb-4 row">
                         <div class="col-8">
-                            <label class="control-label">Importar Documento</label>
+                            <label class="control-label">{{loc["Importar Documento"]}}</label>
                             <importar-documento idModal="__modal_DocumentoArchivo" ref="importarDocumento"
                                 title="Documento" :disabled="!updateGrant" :documentoId="documento.id"
                                 :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
@@ -78,21 +78,21 @@
                         </div>
                         <div :id="documentoFormularioDivId" class="col-6">
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
-                                <label class="control-label">Fecha Desde</label>
+                                <label class="control-label">{{loc["Fecha Desde"]}}</label>
                                 <input type="date" class="form-control" v-model="documento.fechaDesde">
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("vigencia") }}
                                 </span>
                             </div>
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
-                                <label class="control-label">Fecha Hasta</label>
+                                <label class="control-label">{{loc["Fecha Hasta"]}}</label>
                                 <input type="date" class="form-control" v-model="documento.fechaHasta">
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("fechaHasta") }}
                                 </span>
                             </div>
                             <div class="form-group col-lg-12 col-sm-12 mb-2">
-                                <label class="control-label">Observaciones</label>
+                                <label class="control-label">{{loc["Observaciones"]}}</label>
                                 <textarea class="form-control" cols="50" rows="25"
                                     v-model="documento.observaciones"></textarea>
                                 <span class="text-danger field-validation-error">
@@ -108,22 +108,23 @@
                     :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
                     class="btn btn-secondary btn-sm">
                     <i class="fas fa-save"></i>
-                    Guardar
+                    {{loc["Guardar"]}}
                 </button>
 
                 <accept-button @click="updateAsync"
                     :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PRESENTADO"
                     v-if="documento.estadoId == DOCUMENTO_PRESENTADO">
-                    Validar</accept-button>
+                    {{loc["Validar"]}}
+                </accept-button>
 
                 <button
                     :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
                     v-if="documento.estadoId == DOCUMENTO_PRESENTADO" class="btn btn-outline-danger btn-sm"
                     @click="rejectAsync" title="Rechazar solicitud">
-                    Rechazar
+                    {{loc["Rechazar"]}}
                 </button>
 
-                <cancel-button @click="cancel">Volver</cancel-button>
+                <cancel-button @click="cancel">{{loc["Volver"]}}</cancel-button>
             </div>
         </div>
     </div>
@@ -144,7 +145,9 @@ import LayoutMode from "./LayoutMode";
 
 import Documento from "./Documento";
 
-const NO_DATA_MESSAGE = "No hay datos";
+import loc from "@/common/commonLoc.js"
+
+const NO_DATA_MESSAGE = loc["No hay datos"];
 
 // Origen de la solicitud
 const SOCIOS = 1;
@@ -165,6 +168,7 @@ export default {
     name: "documento-edit",
     data: function () {
         return {
+            loc,
             documento: new Documento(),
             uiService: new UiService(),
             tipoDoc: '',

@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import loc from "@/common/commonLoc.js"
 
 const POR_VENCER_DIAS_LIMITE = 30; // TODO: esto más adelante podria ser una prop, y el valor tendria que ser alguna configuracion a nivel company
 
@@ -14,10 +15,11 @@ export default {
     props: {
         value: Object, // ID del estado
     },
+    data: function () {return {loc}},
     computed: {
         estado() {
             if (!this.value || typeof this.value.estadoId === 'undefined') {
-                return { descripcion: "Inválida", color: "text-muted", icono: "fas fa-question-circle" };
+                return { descripcion: this.loc["Inválida"], color: "text-muted", icono: "fas fa-question-circle" };
             }
 
             const hoy = new Date();
@@ -26,56 +28,56 @@ export default {
             const posiblesEstados = [
                 {
                     condition: this.esDocumentacionRechazada,
-                    descripcion: "Documentación Rechazada",
+                    descripcion: this.loc["Documentación Rechazada"],
                     color: "text-danger",
                     icono: "fas fa-times-circle"
                 },
                 {
                     condition: this.esDocumentacionPendienteVerificacion,
-                    descripcion: "Doc. Pend. Verificación",
+                    descripcion: this.loc["Doc. Pend. Verificación"],
                     color: "text-danger",
                     icono: "fas fa-hourglass-half"
                 },
                 {
                     condition: this.esDocumentacionVencida,
-                    descripcion: "Documentación Vencida",
+                    descripcion: this.loc["Documentación Vencida"],
                     color: "text-danger",
                     icono: "fas fa-exclamation-circle"
                 },
                 {
                     condition: this.esDocumentacionPorVencer,
-                    descripcion: "Documentación por Vencer",
+                    descripcion: this.loc["Documentación por Vencer"],
                     color: "text-warning",
                     icono: "fas fa-exclamation-triangle"
                 },
                 {
                     condition: this.esDocumentacionOk,
-                    descripcion: "OK",
+                    descripcion: this.loc["OK"],
                     color: "text-success",
                     icono: "fas fa-check-circle"
                 },
                 {
                     condition: this.esDocumentacionFaltante,
-                    descripcion: "Documentación Faltante",
+                    descripcion: this.loc["Documentación Faltante"],
                     color: "text-danger",
                     icono: "fas fa-pencil-alt"
                 },
                 // otros estados
                 {
                     condition: (value) => value.estadoId === SolicitudEstado.APROBADA,
-                    descripcion: "Aprobada",
+                    descripcion: this.loc["Aprobada"],
                     color: "text-success",
                     icono: "fas fa-check-circle"
                 },
                 {
                     condition: (value) => value.estadoId === SolicitudEstado.PRESENTADA,
-                    descripcion: "Presentada",
+                    descripcion: this.loc["Presentada"],
                     color: "text-primary",
                     icono: "fas fa-file-import"
                 },
                 {
                     condition: (value) => value.estadoId === SolicitudEstado.RECHAZADA,
-                    descripcion: "Rechazada",
+                    descripcion: this.loc["Rechazada"],
                     color: "text-danger",
                     icono: "fas fa-ban"
                 },
@@ -88,7 +90,7 @@ export default {
             }
 
             // fallback si ninguna condición específica se cumple
-            return { descripcion: "Estado Desconocido", color: "text-muted", icono: "fas fa-question-circle" };
+            return { descripcion: this.loc["Estado Desconocido"], color: "text-muted", icono: "fas fa-question-circle" };
         },
         estadoDescripcion() {
             return this.estado.descripcion;

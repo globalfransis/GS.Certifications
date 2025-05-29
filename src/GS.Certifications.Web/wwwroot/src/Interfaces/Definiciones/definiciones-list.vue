@@ -6,7 +6,7 @@
         <br />
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
-            <p class="h5 m-0">Listado de Definiciones de Interfaces</p>
+            <p class="h5 m-0">{{loc["Listado de Definiciones de Interfaces"]}}</p>
         </div>
 
         <div class="col-12 table-responsive">
@@ -18,13 +18,13 @@
                 class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th data-column="Idm" default-sort-datatable="desc" class="text-center">Id</th>
-                        <th data-column="Interfaz.Sistema.Descripcion" class="text-center">Sistema</th>
-                        <th data-column="Interfaz.DescripcionMiddleware" class="text-center">Interfaz</th>
-                        <th data-column="NumeroOrdenCampo" class="text-center">Nro. Orden</th>
-                        <th data-column="Descripcion" class="text-center">Descripción</th>
-                        <th data-column="CampoExterno" class="text-center">Campo Externo</th>
-                        <th data-column="CampoMiddleware" class="text-center">Campo Middleware</th>
+                        <th data-column="Idm" default-sort-datatable="desc" class="text-center">{{loc["Id"]}}</th>
+                        <th data-column="Interfaz.Sistema.Descripcion" class="text-center">{{loc["Sistema"]}}</th>
+                        <th data-column="Interfaz.DescripcionMiddleware" class="text-center">{{loc["Interfaz"]}}</th>
+                        <th data-column="NumeroOrdenCampo" class="text-center">{{loc["Nro. Orden"]}}</th>
+                        <th data-column="Descripcion" class="text-center">{{loc["Descripción"]}}</th>
+                        <th data-column="CampoExterno" class="text-center">{{loc["Campo Externo"]}}</th>
+                        <th data-column="CampoMiddleware" class="text-center">{{loc["Campo Middleware"]}}</th>
                         <!-- <th class="text-center" no-sort-datatable>Acciones</th> -->
                     </tr>
                 </thead>
@@ -89,9 +89,10 @@ import datatableRecordsLength from "@/components/pagination/datatableRecordsLeng
 import Parameters from "./Parameters";
 import columnSortedMixin from '@/Common/Mixins/columnSortedMixin';
 
+import loc from "@/common/commonLoc.js"
 
-const NO_DATA_MESSAGE = "No hay datos";
-const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
+const NO_DATA_MESSAGE = loc["No hay datos"];
+const SEARCH_RESULTS_MESSAGE = loc["Click en 'Buscar' para traer resultados"];
 const INTERFAZ_CAMPOS_URL = baseUrl + "/api/Interfaces/Campos";
 
 export default {
@@ -111,6 +112,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             list: [],
             recordsTotal: 0,
             idTable: "definiciones",

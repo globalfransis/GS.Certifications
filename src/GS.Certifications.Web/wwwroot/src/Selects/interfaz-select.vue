@@ -1,6 +1,6 @@
 <template>
     <select v-model="selected" class="form-select">
-        <option :value="null" v-if="nullOption">Sin especificar</option>
+        <option :value="null" v-if="nullOption">{{loc["Sin especificar"]}}</option>
         <option v-for="option in optionsData" :key="option.idm" :value="option.idm">
             {{ option.descripcionMiddleware }}
         </option>
@@ -10,6 +10,8 @@
 <script>
 
 import ajax from "@/common/ajaxWrapper";
+
+import loc from "@/common/commonLoc.js"
 
 export default {
     components: {},
@@ -21,6 +23,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             optionsData: [],
         };
     },

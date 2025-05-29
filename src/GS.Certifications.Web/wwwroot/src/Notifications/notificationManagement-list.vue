@@ -127,8 +127,8 @@ import SessionParametersService from '@/Common/SessionParametersService';
 
 import loc from "@/common/commonLoc.js"
 
-const NO_DATA_MESSAGE = "No hay datos";
-const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
+const NO_DATA_MESSAGE = loc["No hay datos"];
+const SEARCH_RESULTS_MESSAGE = loc["Click en 'Buscar' para traer resultados"];
 const GET_NOTIFICACIONES_URL = baseUrl + "/api/Notifications/GetNotificaciones";
 
 export default {
@@ -159,7 +159,7 @@ export default {
             parameters: {},
             uiService: new UiService(),
             INFO_REENVIAR: 'Reenviar',
-            INFO_BODY: 'Ver cuerpo de la Notificación',
+            INFO_BODY: loc['Ver cuerpo de la Notificación'],
             idModalNotificationBody: "notification_body_modal",
             idModalNotificationEvents: "notification_events_modal",
         };

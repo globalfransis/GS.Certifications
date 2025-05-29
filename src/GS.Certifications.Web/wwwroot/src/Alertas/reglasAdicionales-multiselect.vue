@@ -6,7 +6,7 @@
     <multiselect :hide-selected="true" :searchable="true" :loading="isLoading" :id="multiselectId" :disabled="!enabled"
         :internal-search="false" :ref="multiselectId" :close-on-select="false" tag-position="bottom" openDirection="top"
         @close="clearSearch" v-model="selectedValues" :options="options" :multiple="true" :placeholder="placeHolder"
-        deselectLabel="Click o Enter para Remover" selectLabel="Click o Enter para Seleccionar"
+        :deselectLabel="loc['Click o Enter para Remover']" :selectLabel="['Click o Enter para Seleccionar']"
         selectedLabel="Seleccionado" :showNoOptions="false" label="descripcionDetalle" track-by="idm" @search-change="asyncGet">
         <template slot="noResult">{{NO_RESULTS_MESSAGE}}</template>
     </multiselect>
@@ -20,8 +20,10 @@
 import ajax from "@/common/ajaxWrapper";
 import Multiselect from 'vue-multiselect'
 
-const NO_RESULTS_MESSAGE = "No se encontraron resultados"
-const SELECT_REGLAS_PLACEHOLDER = "Seleccionar reglas adicionales"
+import loc from "@/common/commonLoc.js"
+
+const NO_RESULTS_MESSAGE = loc["No se encontraron resultados"]
+const SELECT_REGLAS_PLACEHOLDER = loc["Seleccionar reglas adicionales"]
 
 export default {
     components: {
@@ -35,6 +37,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             options: [],
             multiselectId: "reglasAdicionalesMultiselect",
             placeHolder: SELECT_REGLAS_PLACEHOLDER,

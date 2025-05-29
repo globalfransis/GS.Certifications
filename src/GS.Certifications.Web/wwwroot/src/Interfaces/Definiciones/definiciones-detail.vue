@@ -2,39 +2,39 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">Definición de Interfaz {{ this.definicion.id }}</p>
+                <p class="h5">{{loc["Definición de Interfaz"]}} {{ this.definicion.id }}</p>
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Interfaz</label>
+                            <label class="control-label">{{loc["Interfaz"]}}</label>
                             <interfaz-select disabled :sistemaIdm="definicion.sistemaIdm" v-model="definicion.interfazIdm" />
                         </div>
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Número Orden Campo</label>
+                            <label class="control-label">{{loc["Número Orden Campo"]}}</label>
                             <input disabled class="form-control" v-model="definicion.numeroOrdenCampo" />
                         </div>
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Descripción</label>
+                            <label class="control-label">{{loc["Descripción"]}}</label>
                             <input disabled class="form-control" v-model="definicion.descripcion" />
                         </div>
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Campo Externo</label>
+                            <label class="control-label">{{loc["Campo Externo"]}}</label>
                             <input disabled class="form-control" v-model="definicion.campoExterno" />
                         </div>
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Campo Middleware</label>
+                            <label class="control-label">{{loc["Campo Middleware"]}}</label>
                             <input disabled class="form-control" v-model="definicion.campoMiddleware" />
                         </div>
 
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Explicación</label>
+                            <label class="control-label">{{loc["Explicación"]}}</label>
                             <textarea disabled class="form-control" v-model="definicion.explicacion" />
                         </div>
 
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="col-12 d-flex justify-content-end mb-3 mt-3">
-            <cancel-button @click="goBack">Volver</cancel-button>
+            <cancel-button @click="goBack">{{loc["Volver"]}}</cancel-button>
         </div>
     </div>
 </template>
@@ -59,6 +59,8 @@ import InterfazDefinicion from './InterfazDefinicion'
 
 import commonMixin from '@/Common/Mixins/commonMixin';
 
+import loc from "@/common/commonLoc.js"
+
 const INTERFAZ_CAMPOS_URL = baseUrl + "/api/Interfaces/Campos";
 
 export default {
@@ -70,6 +72,7 @@ export default {
     mixins: [commonMixin],
     data: function () {
         return {
+            loc,
             definicion: new InterfazDefinicion(),
             errorBag: new ErrorBag(),
             uiService: new UiService()

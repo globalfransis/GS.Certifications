@@ -6,10 +6,10 @@
     <multiselect :disabled="!editMode" @open="preventAutocomplete" :hide-selected="true" :searchable="true"
         @keydown.tab="create" @change="setNuevoCorreo" @keydown="onKeydown" :loading="isLoading" :id="multiselectId"
         :showNoResults="false" :internal-search="false" :ref="multiselectId" :close-on-select="false"
-        openDirection="top" :taggable="true" tagPosition="bottom" tag-placeholder="Presiona Enter o Tab para agregar"
+        openDirection="top" :taggable="true" tagPosition="bottom" :tag-placeholder="loc['Presiona Enter o Tab para agregar']"
         v-model="correos" :options="options" :multiple="true" :placeholder="placeHolder"
-        deselectLabel="Click o Enter para Remover" :clearOnSelect="true" selectLabel="Click o Enter para Seleccionar"
-        selectedLabel="Seleccionado" :showNoOptions="false" label="value" track-by="value" @tag="create"
+        :deselectLabel="loc['Click o Enter para Remover']" :clearOnSelect="true" :selectLabel="loc['Click o Enter para Seleccionar']"
+        :selectedLabel="loc['Seleccionado']" :showNoOptions="false" label="value" track-by="value" @tag="create"
         @remove="remove">
     </multiselect>
 </template>
@@ -94,7 +94,7 @@ export default {
                     this.$emit("input", this.correos.map(correo => correo.value));
                 }
             } else {
-                this.uiService.showMessageErrorAndFocus("La dirección de correo electrónico ingresada no es válida");
+                this.uiService.showMessageErrorAndFocus(this.loc["La dirección de correo electrónico ingresada no es válida"]);
             }
             this.setNuevoCorreo("");
         }

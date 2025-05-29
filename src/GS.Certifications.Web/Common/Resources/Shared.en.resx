@@ -317,10 +317,6 @@
   <data name="Solicitudes1" xml:space="preserve">
     <value>Certification Applications</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Certificaciones1" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
   <data name="Listado de Solicitudes1" xml:space="preserve">
     <value>List of Certification Applications</value>
   </data>
@@ -728,5 +724,362 @@
   </data>
   <data name="Notificaciones" xml:space="preserve">
     <value>Notifications</value>
+  </data>
+  <data name="Consulta" xml:space="preserve">
+    <value>Consultation</value>
+  </data>
+  <data name="Gestión" xml:space="preserve">
+    <value>Management</value>
+  </data>
+  <data name="Importar Documento" xml:space="preserve">
+    <value>Import Document</value>
+  </data>
+  <data name="Validar" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+  <data name="Importar" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Las extensiones soportadas son" xml:space="preserve">
+    <value>The supported extensions are</value>
+  </data>
+  <data name="con un máximo de" xml:space="preserve">
+    <value>with a maximum of</value>
+  </data>
+  <data name="megabytes" xml:space="preserve">
+    <value>megabytes</value>
+  </data>
+  <data name="Pendiente" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Validado" xml:space="preserve">
+    <value>Validated</value>
+  </data>
+  <data name="Rechazado" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="Vencido" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="Presentado" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="Presentada" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="Aprobada" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="Rechazada" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="Borrador" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="Documentación Rechazada" xml:space="preserve">
+    <value>Rejected Documentation</value>
+  </data>
+  <data name="Doc. Pend. Verificación" xml:space="preserve">
+    <value>Documentation Pending Verification</value>
+  </data>
+  <data name="Documentación Vencida" xml:space="preserve">
+    <value>Expired Documentation</value>
+  </data>
+  <data name="Documentación por Vencer" xml:space="preserve">
+    <value>Expiring Documentation</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Documentación Faltante" xml:space="preserve">
+    <value>Missing Documentation</value>
+  </data>
+  <data name="Estado Desconocido" xml:space="preserve">
+    <value>Status Unknown</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Clave" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="Valor" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Datos del Parametro" xml:space="preserve">
+    <value>Parameters Data</value>
+  </data>
+  <data name="Listado de Parametros" xml:space="preserve">
+    <value>List of Parameters</value>
+  </data>
+  <data name="Sistema" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="Interfaz" xml:space="preserve">
+    <value>Interface</value>
+  </data>
+  <data name="Nro. Orden" xml:space="preserve">
+    <value>Order Number</value>
+  </data>
+  <data name="Campo Externo" xml:space="preserve">
+    <value>External Field</value>
+  </data>
+  <data name="Campo Middleware" xml:space="preserve">
+    <value>Middleware Field</value>
+  </data>
+  <data name="Listado de Definiciones de Interfaces" xml:space="preserve">
+    <value>List of Interface Definitions</value>
+  </data>
+  <data name="Número Orden Campo" xml:space="preserve">
+    <value>Order Number Field</value>
+  </data>
+  <data name="Explicación" xml:space="preserve">
+    <value>Explanation</value>
+  </data>
+  <data name="Definiciones de Interfaces" xml:space="preserve">
+    <value>Interface Definitions</value>
+  </data>
+  <data name="Definiciones de Reglas de Interfaces" xml:space="preserve">
+    <value>Interface Rules Definitions</value>
+  </data>
+  <data name="Consecuencia" xml:space="preserve">
+    <value>Consequence</value>
+  </data>
+  <data name="Definición de Regla de Interfaz" xml:space="preserve">
+    <value>Interface Rule Definition</value>
+  </data>
+  <data name="Listado de Definiciones de Reglas" xml:space="preserve">
+    <value>List of Rule Definitions</value>
+  </data>
+  <data name="Últ. Modif. Estado" xml:space="preserve">
+    <value>Last Status Modification</value>
+  </data>
+  <data name="Leídos" xml:space="preserve">
+    <value>Reads</value>
+  </data>
+  <data name="Ignorados" xml:space="preserve">
+    <value>Ignored</value>
+  </data>
+  <data name="No Procesados" xml:space="preserve">
+    <value>Unprocessed</value>
+  </data>
+  <data name="Fecha Modif. Estado Desde" xml:space="preserve">
+    <value>Date Status Change From</value>
+  </data>
+  <data name="Fecha Modif. Estado Hasta" xml:space="preserve">
+    <value>Date Status Change To</value>
+  </data>
+  <data name="Última Modif. Estado" xml:space="preserve">
+    <value>Last Status Modification</value>
+  </data>
+  <data name="Nombre Archivo" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="Cant. Leídos" xml:space="preserve">
+    <value>Quantity Read</value>
+  </data>
+  <data name="Cant. Ignorados" xml:space="preserve">
+    <value>Quantity Ignored</value>
+  </data>
+  <data name="Cant. No Procesados" xml:space="preserve">
+    <value>Quantity Unprocessed</value>
+  </data>
+  <data name="Nro. Registro" xml:space="preserve">
+    <value>Registration Number</value>
+  </data>
+  <data name="Campo" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="Regla" xml:space="preserve">
+    <value>Rule</value>
+  </data>
+  <data name="Valor Relacionado" xml:space="preserve">
+    <value>Related Value</value>
+  </data>
+  <data name="Alerta Tipo" xml:space="preserve">
+    <value>Alert Type</value>
+  </data>
+  <data name="Ubicacion" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Horas" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Fecha / Hora Desde" xml:space="preserve">
+    <value>Date / Time From</value>
+  </data>
+  <data name="Fecha / Hora Hasta" xml:space="preserve">
+    <value>Date / Time To</value>
+  </data>
+  <data name="Reglas Adicionales" xml:space="preserve">
+    <value>Aditional Rules</value>
+  </data>
+  <data name="Para" xml:space="preserve">
+    <value>For</value>
+  </data>
+  <data name="Para Variable" xml:space="preserve">
+    <value>For Variable</value>
+  </data>
+  <data name="Ver Cuerpo" xml:space="preserve">
+    <value>See Body </value>
+  </data>
+  <data name="Activa" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="Usuario Últ. Modif." xml:space="preserve">
+    <value>Last Modification User</value>
+  </data>
+  <data name="Fecha / Hora Últ. Modif." xml:space="preserve">
+    <value>Date / Time Last Modification</value>
+  </data>
+  <data name="Crear Alerta" xml:space="preserve">
+    <value>Create Alert</value>
+  </data>
+  <data name="Modificar Alerta" xml:space="preserve">
+    <value>Modify Alert</value>
+  </data>
+  <data name="Alerta" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="Cuerpo" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="Sí" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Estado para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para seleccionar este campo" xml:space="preserve">
+    <value>Status to Trigger Alert Notification. You must specify Alert Type to select this field</value>
+  </data>
+  <data name="Ubicación para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para seleccionar este campo" xml:space="preserve">
+    <value>Location to Trigger Alert Notification. You must specify Alert Type to select this field</value>
+  </data>
+  <data name="Horas transcurridas en el Estado, para Disparar la Notificacion de Alerta. Podes indicar cero y esto disparara la Alerta de forma inmediata al llegar al Estado indicado" xml:space="preserve">
+    <value>Hours elapsed in the State, to Trigger Alert Notification. You can indicate zero and this will trigger the Alert immediately upon reaching the indicated State.</value>
+  </data>
+  <data name="Destinatarios (Para) de la notificacion de Alerta" xml:space="preserve">
+    <value>Recipients (To) of the Alert notification</value>
+  </data>
+  <data name="Destinatarios (Para Variables) de la notificacion de Alerta" xml:space="preserve">
+    <value>Alert Notification Recipients (For Variables)</value>
+  </data>
+  <data name="Destinatarios (CC) de la notificacion de Alerta" xml:space="preserve">
+    <value>Alert Notification Recipients (CC)</value>
+  </data>
+  <data name="CCO" xml:space="preserve">
+    <value>BCC</value>
+  </data>
+  <data name="CC" xml:space="preserve">
+    <value>CC</value>
+  </data>
+  <data name="Destinatarios (CCO) de la notificacion de Alerta" xml:space="preserve">
+    <value>Alert Notification Recipients (BCC)</value>
+  </data>
+  <data name="Asunto de la notificacion de Alerta" xml:space="preserve">
+    <value>Subject of Alert Notification</value>
+  </data>
+  <data name="Tener en cuenta que el sistema no valida colisiones entre Reglas Adicionales." xml:space="preserve">
+    <value>Note that the system does not validate collisions between Additional Rules.</value>
+  </data>
+  <data name="Esto significa que debes tener cuidado y no configurar Reglas Adicionales que colisionen entre si." xml:space="preserve">
+    <value>This means that you must be careful not to set up additional rules that collide with each other.</value>
+  </data>
+  <data name="Esto significa, no configurar reglas que por ejemplo indiquen:" xml:space="preserve">
+    <value>This means, do not configure rules that for example indicate:</value>
+  </data>
+  <data name="Validar X dato = Si" xml:space="preserve">
+    <value>Validate X data = Yes</value>
+  </data>
+  <data name="y otra que indique" xml:space="preserve">
+    <value>and another indicating</value>
+  </data>
+  <data name="Validar mismo X dato = No" xml:space="preserve">
+    <value>Validate same X data = No</value>
+  </data>
+  <data name="Fecha/Hora Desde de la modificacion de estado de la entidad para tomar a partir de esta" xml:space="preserve">
+    <value>Date/Time Since entity status change to take effect from this date</value>
+  </data>
+  <data name="Fecha/Hora Hasta de la modificacion de estado de la entidad para no tomar mas alla de esta" xml:space="preserve">
+    <value>Date/Time Until entity status modification not to take beyond this date/time</value>
+  </data>
+  <data name="Este marca indica si la Alerta esta siendo disparada o no" xml:space="preserve">
+    <value>This mark indicates whether the Alert is being triggered or not.</value>
+  </data>
+  <data name="Fecha / Hora Desde no puede ser menor a" xml:space="preserve">
+    <value>Date / Time From cannot be less than</value>
+  </data>
+  <data name="Horas no puede ser mayor a" xml:space="preserve">
+    <value>Hours cannot be greater than</value>
+  </data>
+  <data name="Campos Variables disponibles para el Tipo de Alerta" xml:space="preserve">
+    <value>Available Variable Fields for Alert Type</value>
+  </data>
+  <data name="Es Obligatorio" xml:space="preserve">
+    <value>Mandatory</value>
+  </data>
+  <data name="Se debe seleccionar Tipo de Alerta para ver los Campos Variables disponibles" xml:space="preserve">
+    <value>Select Alert Type to view the available Variable Fields.</value>
+  </data>
+  <data name="Se deben indicar entre llaves en el HTML" xml:space="preserve">
+    <value>They must be indicated between braces in the HTML</value>
+  </data>
+  <data name="Seleccionar reglas adicionales" xml:space="preserve">
+    <value>Select additional rules</value>
+  </data>
+  <data name="Click o Enter para Remover" xml:space="preserve">
+    <value>Click or Enter to Remove</value>
+  </data>
+  <data name="Click o Enter para Seleccionar" xml:space="preserve">
+    <value>Click or Enter to Select</value>
+  </data>
+  <data name="Presiona Enter o Tab para agregar" xml:space="preserve">
+    <value>Press Enter or Tab to add</value>
+  </data>
+  <data name="Seleccionado" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="La dirección de correo electrónico ingresada no es válida" xml:space="preserve">
+    <value>The mail address entered is invalid.</value>
+  </data>
+  <data name="Ver cuerpo de la Alerta renderizado" xml:space="preserve">
+    <value>View rendered Alert body</value>
+  </data>
+  <data name="Ver cuerpo de la Alerta en texto plano" xml:space="preserve">
+    <value>View Alert body in plain text</value>
+  </data>
+  <data name="Listado de Alertas" xml:space="preserve">
+    <value>List of Alerts</value>
+  </data>
+  <data name="Estado para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para utilizar este filtro" xml:space="preserve">
+    <value>Status to Trigger Alert Notification. You must specify Alert Type to use this filter</value>
+  </data>
+  <data name="Ubicación para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para utilizar este filtro" xml:space="preserve">
+    <value>Location to Trigger Alert Notification. You must specify Alert Type to use this filter</value>
+  </data>
+  <data name="Error al importar archivo. El o los archivos que se intentan importar superan el limite permitido." xml:space="preserve">
+    <value>Error importing file. The file or files you are trying to import exceed the allowed limit.</value>
+  </data>
+  <data name="Seleccione los archivos que desea importar" xml:space="preserve">
+    <value>Select the files you want to import</value>
+  </data>
+  <data name="Seleccione el archivo que desea importar" xml:space="preserve">
+    <value>Select the file you want to import</value>
+  </data>
+  <data name="Para confirmar la subida del archivo agregado, debes presionar Aceptar" xml:space="preserve">
+    <value>To confirm the upload of the added file, you must press OK.</value>
+  </data>
+  <data name="Para confirmar la subida o eliminación del archivo, debes presionar Aceptar" xml:space="preserve">
+    <value>To confirm the upload or deletion of the file, you must press OK</value>
+  </data>
+  <data name="Si" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Ver cuerpo de la Notificación" xml:space="preserve">
+    <value>See body of the Notice</value>
+  </data>
+  <data name="El campo ‘Clave’ es obligatorio." xml:space="preserve">
+    <value>The 'Key' field is mandatory.</value>
   </data>
 </root>

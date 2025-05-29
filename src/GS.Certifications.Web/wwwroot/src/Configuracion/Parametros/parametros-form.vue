@@ -2,22 +2,22 @@
   <div>
     <div class="col-12">
       <div class="col-12 mt-4">
-        <p class="h5">Datos del Parametro</p>
+        <p class="h5">{{loc["Datos del Parametro"]}}</p>
       </div>
       <div class="card">
         <div class="card-body">
           <div class="row">
 
             <div class='form-group required col-lg-6 col-md-6 col-sm-12 mb-4'>
-              <label class="control-label">Clave</label>
+              <label class="control-label">{{loc["Clave"]}}</label>
               <input :disabled="!mode.isEdit" maxlength="100" class="form-control" v-model="parametro.clave" />
               <span class="text-danger field-validation-error" data-valmsg-for="clave" data-valmsg-replace="true">
-                {{ errorBag.get("clave") }}
+                {{ loc[errorBag.get("clave")] }}
               </span>
             </div>
 
             <div class='form-group required col-lg-6 col-md-6 col-sm-12 mb-4'>
-              <label class="control-label">Valor</label>
+              <label class="control-label">{{loc["Valor"]}}</label>
               <input :disabled="!mode.isEdit" maxlength="250" class="form-control" v-model="parametro.valor" />
               <span class="text-danger field-validation-error" data-valmsg-for="valor" data-valmsg-replace="true">
                 {{ errorBag.get("valor") }}
@@ -25,7 +25,7 @@
             </div>
 
             <div class='form-group required col-lg-6 col-md-6 col-sm-12 mb-4'>
-              <label class="control-label">Descripcion</label>
+              <label class="control-label">{{loc["Descripcion"]}}</label>
               <input :disabled="!mode.isEdit" maxlength="250" class="form-control" v-model="parametro.descripcion" />
               <span class="text-danger field-validation-error" data-valmsg-for="descripcion" data-valmsg-replace="true">
                 {{ errorBag.get("descripcion") }}

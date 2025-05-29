@@ -62,7 +62,7 @@
                 </div>
                 <div class="modal-footer">
                     <cancel-button type="button" class="btn btn-outline-primary btn-sm" @click="modalClosed">
-                        Cerrar</cancel-button>
+                        {{loc["Cerrar"]}}</cancel-button>
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@ import loc from "@/common/commonLoc.js"
 
 const API_URL = baseUrl + "/api/Notifications";
 
-const NO_DATA_MESSAGE = "No hay datos";
+const NO_DATA_MESSAGE = loc["No hay datos"];
 
 export default {
     components: {

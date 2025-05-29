@@ -90,8 +90,8 @@ import solicitudCertificacionDocumentacionEstadoLabel from "@/Selects/solicitudC
 
 import loc from "@/common/commonLoc.js"
 
-const NO_DATA_MESSAGE = "No hay datos";
-const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
+const NO_DATA_MESSAGE = loc["No hay datos"];
+const SEARCH_RESULTS_MESSAGE = loc["Click en 'Buscar' para traer resultados"];
 
 export default {
     name: "solicitudCertificacion-list",

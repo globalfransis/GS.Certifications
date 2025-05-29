@@ -2,7 +2,7 @@
     <div class="mt-4">
         <div class="col-12 table-responsive">
             <div class="col input-group">
-                <label class="h6 control-label">Campos Variables disponibles para el Tipo de Alerta</label>
+                <label class="h6 control-label">{{loc["Campos Variables disponibles para el Tipo de Alerta"]}}</label>
                 <div data-toggle="tooltip" :title="INFO_CAMPOS_VARIABLES">
                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                 </div>
@@ -10,9 +10,9 @@
             <table :id="`${idTable}`" class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th class="text-center">Campo</th>
-                        <th class="text-center">Explicación</th>
-                        <th class="text-center">Es Obligatorio</th>
+                        <th class="text-center">{{loc["Campo"]}}</th>
+                        <th class="text-center">{{loc["Explicación"]}}</th>
+                        <th class="text-center">{{loc["Es Obligatorio"]}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,8 +49,10 @@
 import ajax from "@/common/ajaxWrapper";
 import UiService from "@/common/uiService";
 
-const NO_DATA_MESSAGE = "No hay datos";
-const SEARCH_RESULTS_MESSAGE = "Se debe seleccionar Tipo de Alerta para ver los Campos Variables disponibles";
+import loc from "@/common/commonLoc.js"
+
+const NO_DATA_MESSAGE = loc["No hay datos"];
+const SEARCH_RESULTS_MESSAGE = loc["Se debe seleccionar Tipo de Alerta para ver los Campos Variables disponibles"];
 const GET_CAMPOS_VARIABLES_URL = baseUrl + "/api/Alertas/GetCamposVariablesByAlertaTipo";
 
 export default {
@@ -64,11 +66,12 @@ export default {
     },
     data: function () {
         return {
+            loc,
             camposVariablesDisponibles: [],
             idTable: "alertaCamposVariables",
             resultsMessage: SEARCH_RESULTS_MESSAGE,
             uiService: new UiService(),
-            INFO_CAMPOS_VARIABLES: "Se deben indicar entre llaves en el HTML",
+            INFO_CAMPOS_VARIABLES: loc["Se deben indicar entre llaves en el HTML"],
             idModalAlertaBody: "alerta_body_modal"
         };
     },

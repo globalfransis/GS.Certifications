@@ -6,10 +6,10 @@
         <br />
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
-            <p class="h5 m-0">Listado de Alertas</p>
+            <p class="h5 m-0">{{loc["Listado de Alertas"]}}</p>
             <button type="button" class="btn btn-outline-primary btn-sm" @click="setCreate">
                 <b><i class="fas fa-plus"></i>
-                    Agregar</b>
+                    {{loc["Agregar"]}}</b>
             </button>
         </div>
 
@@ -22,24 +22,24 @@
                 class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th class="text-center">Id</th>
-                        <th class="text-center">Alerta Tipo</th>
-                        <th class="text-center">Estado</th>
-                        <th class="text-center">Ubicacion</th>
-                        <th class="text-center">Horas</th>
-                        <th class="text-center">Fecha / Hora Desde</th>
-                        <th class="text-center">Fecha / Hora Hasta</th>
-                        <th class="text-center">Reglas Adicionales</th>
-                        <th class="text-center">Para</th>
-                        <th class="text-center">Para Variable</th>
-                        <th class="text-center">CC</th>
-                        <th class="text-center">CCO</th>
-                        <th class="text-center">Asunto</th>
-                        <th class="text-center">Ver Cuerpo</th>
-                        <th class="text-center">Activa</th>
-                        <th class="text-center">Usuario Últ. Modif.</th>
-                        <th class="text-center" datatable-datetime>Fecha / Hora Últ. Modif.</th>
-                        <th class="text-center" no-sort-datatable>Acciones</th>
+                        <th class="text-center">{{loc["Id"]}}</th>
+                        <th class="text-center">{{loc["Alerta Tipo"]}}</th>
+                        <th class="text-center">{{loc["Estado"]}}</th>
+                        <th class="text-center">{{loc["Ubicacion"]}}</th>
+                        <th class="text-center">{{loc["Horas"]}}</th>
+                        <th class="text-center">{{loc["Fecha / Hora Desde"]}}</th>
+                        <th class="text-center">{{loc["Fecha / Hora Hasta"]}}</th>
+                        <th class="text-center">{{loc["Reglas Adicionales"]}}</th>
+                        <th class="text-center">{{loc["Para"]}}</th>
+                        <th class="text-center">{{loc["Para Variable"]}}</th>
+                        <th class="text-center">{{loc["CC"]}}</th>
+                        <th class="text-center">{{loc["CCO"]}}</th>
+                        <th class="text-center">{{loc["Asunto"]}}</th>
+                        <th class="text-center">{{loc["Ver Cuerpo"]}}</th>
+                        <th class="text-center">{{loc["Activa"]}}</th>
+                        <th class="text-center">{{loc["Usuario Últ. Modif."]}}</th>
+                        <th class="text-center" datatable-datetime>{{loc["Fecha / Hora Últ. Modif."]}}</th>
+                        <th class="text-center" no-sort-datatable>{{loc["Acciones"]}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -189,8 +189,10 @@ import datatablePagination from "@/components/pagination/datatablePagination.vue
 import datatableRecordsLength from "@/components/pagination/datatableRecordsLength.vue";
 import alertasBodyModal from "./alertasBody-modal.vue";
 
-const NO_DATA_MESSAGE = "No hay datos";
-const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
+import loc from "@/common/commonLoc.js"
+
+const NO_DATA_MESSAGE = loc["No hay datos"];
+const SEARCH_RESULTS_MESSAGE = loc["Click en 'Buscar' para traer resultados"];
 const GET_ALERTAS_URL = baseUrl + "/api/Alertas/GetAlertas";
 
 export default {
@@ -208,6 +210,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             alertas: [],
             recordsTotal: 0,
             recordsLength: 25,
@@ -217,8 +220,8 @@ export default {
             parameters: {},
             uiService: new UiService(),
             parametersStorage: new parametersService(),
-            INFO_BODY_RENDER: 'Ver cuerpo de la Alerta renderizado',
-            INFO_BODY_PLAIN_TEXT: 'Ver cuerpo de la Alerta en texto plano',
+            INFO_BODY_RENDER: loc['Ver cuerpo de la Alerta renderizado'],
+            INFO_BODY_PLAIN_TEXT: loc['Ver cuerpo de la Alerta en texto plano'],
             idModalAlertaBodyRender: "alerta_body_modal_render",
             idModalAlertaBodyPlainText: "alerta_body_modal_plain_text"
         };

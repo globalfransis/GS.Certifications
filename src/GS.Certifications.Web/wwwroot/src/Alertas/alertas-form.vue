@@ -2,16 +2,16 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p v-if="mode.isCreate" class="h5">Crear Alerta</p>
-                <p v-if="mode.isUpdate" class="h5">Modificar Alerta {{ this.alerta.id }}</p>
-                <p v-if="mode.isDetail" class="h5">Alerta {{ this.alerta.id }}</p>
+                <p v-if="mode.isCreate" class="h5">{{loc["Crear Alerta"]}}</p>
+                <p v-if="mode.isUpdate" class="h5">{{loc["Modificar Alerta"]}} {{ this.alerta.id }}</p>
+                <p v-if="mode.isDetail" class="h5">{{loc["Alerta"]}} {{ this.alerta.id }}</p>
             </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
 
                         <div class="form-group required col-lg-3 col-sm-12 mb-4">
-                            <label class="control-label">Alerta Tipo</label>
+                            <label class="control-label">{{loc["Alerta Tipo"]}}</label>
                             <alertaTipos-select :disabled="!mode.isCreate" v-model="alerta.alertaTipo" />
                             <span class="text-danger field-validation-error">
                                 {{ errorBag.get("alertaTipoIdm") }}
@@ -20,7 +20,7 @@
 
                         <div class="col-lg-3 col-sm-12 mb-4">
                             <div class="form-group required col input-group">
-                                <label class="control-label">Estado</label>
+                                <label class="control-label">{{loc["Estado"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_ESTADO">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -36,7 +36,7 @@
                         <div v-if="alerta.alertaTipo.idm == ALERTA_TIPO_TARJETA_IDM && mode.isCreate"
                             class="col-lg-3 col-sm-12 mb-4">
                             <div class="form-group required col input-group">
-                                <label class="control-label">Ubicacion</label>
+                                <label class="control-label">{{loc["Ubicacion"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_UBICACION">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -50,7 +50,7 @@
 
                         <div class="col-lg-3 col-sm-12 mb-4">
                             <div class="form-group required col input-group">
-                                <label class="control-label">Horas</label>
+                                <label class="control-label">{{loc["Horas"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_HORAS">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -64,7 +64,7 @@
 
                         <div class="col-lg-3 col-sm-12 mb-4">
                             <div class="form-group required col input-group">
-                                <label class="control-label">Fecha / Hora Desde</label>
+                                <label class="control-label">{{loc["Fecha / Hora Desde"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_FECHA_HORA_DESDE">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -78,7 +78,7 @@
 
                         <div class="col-lg-3 col-sm-12 mb-4">
                             <div class="form-group col input-group">
-                                <label class="control-label">Fecha / Hora Hasta</label>
+                                <label class="control-label">{{loc["Fecha / Hora Hasta"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_FECHA_HORA_HASTA">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -92,7 +92,7 @@
 
                         <div class="col-lg-3 mb-4">
                             <div class="form-group required col input-group">
-                                <label class="control-label">Para</label>
+                                <label class="control-label">{{loc["Para"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_PARA">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -106,7 +106,7 @@
 
                         <div v-if="alerta.alertaTipo.aceptaDestinatarioVariables" class="col-lg-3 col-sm-12 mb-4">
                             <div class="form-group col input-group">
-                                <label class="control-label">Para Variable</label>
+                                <label class="control-label">{{loc["Para Variable"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_PARA_VARIABLE">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -120,7 +120,7 @@
 
                         <div class="col-lg-3 mb-4">
                             <div class="col input-group">
-                                <label>CC</label>
+                                <label>{{loc["CC"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_CC">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -134,7 +134,7 @@
 
                         <div class="col-lg-3 mb-4">
                             <div class="col input-group">
-                                <label>CCO</label>
+                                <label>{{loc["CCO"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_CCO">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -148,7 +148,7 @@
 
                         <div class="col-12 mb-4">
                             <div class="form-group required col input-group">
-                                <label class="control-label">Asunto</label>
+                                <label class="control-label">{{loc["Asunto"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_ASUNTO">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -162,7 +162,7 @@
                         <div v-if="alerta.alertaTipo.idm == ALERTA_TIPO_TARJETA_IDM && mode.isCreate"
                             class="col-12 mb-4">
                             <div class="col input-group">
-                                <label class="control-label">Reglas Adicionales</label>
+                                <label class="control-label">{{loc["Reglas Adicionales"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_REGLAS">
                                     <i class="ms-2 fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -176,7 +176,7 @@
 
                         <div v-if="!mode.isCreate" class="col-lg-3 col-md-6 col-sm-12">
                             <div class="col input-group">
-                                <label class="control-label me-2">Activa</label>
+                                <label class="control-label me-2">{{loc["Activa"]}}</label>
                                 <div data-toggle="tooltip" :title="INFO_ACTIVA">
                                     <i class="fas fa-md fa-info-circle col-1"></i>
                                 </div>
@@ -184,18 +184,18 @@
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                 <input :disabled="mode.isDetail" :checked="alerta.activa" type="radio" class="btn-check"
                                     name="btnradio" id="btnActivaFiltro" autocomplete="off" v-on:click="esActiva(true)">
-                                <label class="btn btn-outline-primary" for="btnActivaFiltro">Sí</label>
+                                <label class="btn btn-outline-primary" for="btnActivaFiltro">{{loc["Sí"]}}</label>
                                 <input :disabled="mode.isDetail" :checked="!alerta.activa" type="radio"
                                     class="btn-check" name="btnradio" id="btnNoEsActivaFiltro" autocomplete="off"
                                     v-on:click="esActiva(false)">
-                                <label class="btn btn-outline-secondary" for="btnNoEsActivaFiltro">No</label>
+                                <label class="btn btn-outline-secondary" for="btnNoEsActivaFiltro">{{loc["No"]}}</label>
                             </div>
                         </div>
 
                         <div v-if="mode.isCreate">
                             <hr>
                             <div class="form-group required">
-                                <label class="control-label">Cuerpo</label>
+                                <label class="control-label">{{loc["Cuerpo"]}}</label>
                                 <importar-archivo-alerta ref="importarAlerta" :mostrarAcciones="true"
                                     :target="'alertas'" :targetId="null"
                                     @archivosImportados="onArchivosImportados($event)" />
@@ -212,12 +212,12 @@
             </div>
             <div class="col-12 d-flex justify-content-end mb-3 mt-3">
                 <div v-if="mode.isCreate || mode.isEdit">
-                    <accept-button @click="save">Aceptar</accept-button>
-                    <cancel-button @click="goBack">Cancelar</cancel-button>
+                    <accept-button @click="save">{{loc["Aceptar"]}}</accept-button>
+                    <cancel-button @click="goBack">{{loc["Cancelar"]}}</cancel-button>
                 </div>
                 <div v-else>
-                    <accept-button @click="setEdit">Editar</accept-button>
-                    <cancel-button @click="goBack">Volver</cancel-button>
+                    <accept-button @click="setEdit">{{loc["Editar"]}}</accept-button>
+                    <cancel-button @click="goBack">{{loc["Volver"]}}</cancel-button>
                 </div>
             </div>
         </div>
@@ -239,6 +239,8 @@ import ImportarArchivoAlerta from "@/Components/ImportadorArchivos/Importadores/
 import reglasAdicionalesMultiselect from "./reglasAdicionales-multiselect.vue";
 import camposVariablesList from "./camposVariables-list.vue";
 import CrudMode from "@/common/CrudMode";
+
+import loc from "@/common/commonLoc.js"
 
 const CREATE_ALERTA_URL = baseUrl + "/api/Alertas/CreateAlerta";
 const GET_ALERTA_URL = baseUrl + "/api/Alertas/GetAlerta";
@@ -264,6 +266,7 @@ export default {
 
     data: function () {
         return {
+            loc,
             alerta: {
                 id: null,
                 alertaTipo: {
@@ -286,18 +289,24 @@ export default {
             },
             errorBag: new ErrorBag(),
             uiService: new UiService(),
-            INFO_ESTADO: "Estado para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para seleccionar este campo",
-            INFO_UBICACION: "Ubicación para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para seleccionar este campo",
-            INFO_HORAS: "Horas transcurridas en el Estado, para Disparar la Notificacion de Alerta. Podes indicar cero y esto disparara la Alerta de forma inmediata al llegar al Estado indicado",
-            INFO_PARA: "Destinatarios (Para) de la notificacion de Alerta",
-            INFO_PARA_VARIABLE: "Destinatarios (Para Variables) de la notificacion de Alerta",
-            INFO_CC: "Destinatarios (CC) de la notificacion de Alerta",
-            INFO_CCO: "Destinatarios (CCO) de la notificacion de Alerta",
-            INFO_ASUNTO: "Asunto de la notificacion de Alerta",
-            INFO_REGLAS: "Tener en cuenta que el sistema no valida colisiones entre Reglas Adicionales. \nEsto significa que debes tener cuidado y no configurar Reglas Adicionales que colisionen entre si. \nEsto significa, no configurar reglas que por ejemplo indiquen: \n'Validar X dato = Si' \ny otra que indique \n'Validar mismo X dato = No'",
-            INFO_FECHA_HORA_DESDE: "Fecha/Hora Desde de la modificacion de estado de la entidad para tomar a partir de esta",
-            INFO_FECHA_HORA_HASTA: "Fecha/Hora Hasta de la modificacion de estado de la entidad para no tomar mas alla de esta",
-            INFO_ACTIVA: "Este marca indica si la Alerta esta siendo disparada o no",
+            INFO_ESTADO: loc["Estado para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para seleccionar este campo"],
+            INFO_UBICACION: loc["Ubicación para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para seleccionar este campo"],
+            INFO_HORAS: loc["Horas transcurridas en el Estado, para Disparar la Notificacion de Alerta. Podes indicar cero y esto disparara la Alerta de forma inmediata al llegar al Estado indicado"],
+            INFO_PARA: loc["Destinatarios (Para) de la notificacion de Alerta"],
+            INFO_PARA_VARIABLE: loc["Destinatarios (Para Variables) de la notificacion de Alerta"],
+            INFO_CC: loc["Destinatarios (CC) de la notificacion de Alerta"],
+            INFO_CCO: loc["Destinatarios (CCO) de la notificacion de Alerta"],
+            INFO_ASUNTO: loc["Asunto de la notificacion de Alerta"],
+            INFO_REGLAS: 
+                loc["Tener en cuenta que el sistema no valida colisiones entre Reglas Adicionales."] + "\n" +
+                loc["Esto significa que debes tener cuidado y no configurar Reglas Adicionales que colisionen entre si."] + "\n" +
+                loc["Esto significa, no configurar reglas que por ejemplo indiquen:"] + "\n" +
+                "'" + loc["Validar X dato = Si"] + "'" + "\n" +
+                loc["y otra que indique"] + "\n" +
+                "'" + loc["Validar mismo X dato = No"] + "'",
+            INFO_FECHA_HORA_DESDE: loc["Fecha/Hora Desde de la modificacion de estado de la entidad para tomar a partir de esta"],
+            INFO_FECHA_HORA_HASTA: loc["Fecha/Hora Hasta de la modificacion de estado de la entidad para no tomar mas alla de esta"],
+            INFO_ACTIVA: loc["Este marca indica si la Alerta esta siendo disparada o no"],
             ALERTA_TIPO_TARJETA_IDM: 501,
             mode: new CrudMode()
         };
@@ -349,7 +358,7 @@ export default {
 
                 // Si el valor ingresado es menor al mínimo, ajustamos al mínimo
                 if (valorIngresado && fechaHoraMinima && valorIngresado < fechaHoraMinima) {
-                    this.uiService.showMessageError(`'Fecha / Hora Desde' no puede ser menor a ${fechaHoraMinima.replace('T', ' ')}.`)
+                    this.uiService.showMessageError(`${loc['Fecha / Hora Desde no puede ser menor a']} ${fechaHoraMinima.replace('T', ' ')}.`)
                     this.alerta.fechaHoraDesde = fechaHoraMinima;
                 }
             }
@@ -407,10 +416,10 @@ export default {
                     { errorBag: this.errorBag })
                 .then((res) => {
                     if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"])
                         this.goBack()
                     } else {
-                        this.uiService.showMessageError("Operación rechazada")
+                        this.uiService.showMessageError(loc["Operación rechazada"])
                     }
                 })
                 .finally(() => {
@@ -440,10 +449,10 @@ export default {
                     { errorBag: this.errorBag })
                 .then((res) => {
                     if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"])
                         this.goBack()
                     } else {
-                        this.uiService.showMessageError("Operación rechazada")
+                        this.uiService.showMessageError(loc["Operación rechazada"])
                     }
                 })
                 .finally(() => {
@@ -470,7 +479,7 @@ export default {
         validateNumericValues(event) {
             this.uiService.admitOnyIntegersAndPositiveNumbers(event);
             if (event.target.value > MAX_HORAS_PERMITIDAS) {
-                this.uiService.showMessageError(`'Horas' no puede ser mayor a ${MAX_HORAS_PERMITIDAS}.`)
+                this.uiService.showMessageError(`${loc['Horas no puede ser mayor a']} ${MAX_HORAS_PERMITIDAS}.`)
                 this.alerta.horas = MAX_HORAS_PERMITIDAS;
             }
         },

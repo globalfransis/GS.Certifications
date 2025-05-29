@@ -1,6 +1,6 @@
 <template>
     <select v-model="selected" class="form-select">
-        <option :value="{ idm: null, descripcion: '', aceptaDestinatarioVariables: null }">Sin especificar</option>
+        <option :value="{ idm: null, descripcion: '', aceptaDestinatarioVariables: null }">{{loc["Sin especificar"]}}</option>
         <option v-for="option in optionsData" :key="option.idm" :value="option">
             {{ option.descripcion }}
         </option>
@@ -9,6 +9,8 @@
 
 <script>
 import ajax from "@/common/ajaxWrapper";
+
+import loc from "@/common/commonLoc.js"
 
 export default {
     name: "alertaTipos-select",
@@ -20,6 +22,7 @@ export default {
     },
     data() {
         return {
+            loc,
             optionsData: [],
         };
     },

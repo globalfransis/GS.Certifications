@@ -6,7 +6,7 @@
         <br />
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
-            <p class="h5 m-0">Listado de Resultados</p>
+            <p class="h5 m-0">{{loc["Listado de Resultados"]}}</p>
         </div>
 
         <div class="col-12 table-responsive">
@@ -16,17 +16,17 @@
                 class="table table-sm table-bordered table-striped table-hover">
                 <thead class="table-top">
                     <tr class="text-center align-middle">
-                        <th default-sort-datatable="desc" no-sort-datatable data-column="Id" class="text-center">Id</th>
-                        <th class="text-center" no-sort-datatable >Sistema</th>
-                        <th class="text-center" no-sort-datatable >Interfaz</th>
-                        <th class="text-center" no-sort-datatable >Tipo</th>
-                        <th class="text-center" no-sort-datatable >Estado</th>
-                        <th class="text-center" datatable-datetime no-sort-datatable>Últ. Modif. Estado</th>
-                        <th class="text-center" no-sort-datatable >Archivo</th>
-                        <th class="text-center" no-sort-datatable >Leídos</th>
-                        <th class="text-center" no-sort-datatable >Ignorados</th>
-                        <th class="text-center" no-sort-datatable >No Procesados</th>
-                        <th class="text-center" no-sort-datatable>Acciones</th>
+                        <th default-sort-datatable="desc" no-sort-datatable data-column="Id" class="text-center">{{loc["Id"]}}</th>
+                        <th class="text-center" no-sort-datatable >{{loc["Sistema"]}}</th>
+                        <th class="text-center" no-sort-datatable >{{loc["Interfaz"]}}</th>
+                        <th class="text-center" no-sort-datatable >{{loc["Tipo"]}}</th>
+                        <th class="text-center" no-sort-datatable >{{loc["Estado"]}}</th>
+                        <th class="text-center" datatable-datetime no-sort-datatable>{{loc["Últ. Modif. Estado"]}}</th>
+                        <th class="text-center" no-sort-datatable >{{loc["Archivo"]}}</th>
+                        <th class="text-center" no-sort-datatable >{{loc["Leídos"]}}</th>
+                        <th class="text-center" no-sort-datatable >{{loc["Ignorados"]}}</th>
+                        <th class="text-center" no-sort-datatable >{{loc["No Procesados"]}}</th>
+                        <th class="text-center" no-sort-datatable>{{loc["Acciones"]}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -107,9 +107,10 @@ import datatableRecordsLength from "@/components/pagination/datatableRecordsLeng
 import Parameters from "./Parameters";
 import columnSortedMixin from '@/Common/Mixins/columnSortedMixin';
 
+import loc from "@/common/commonLoc.js"
 
-const NO_DATA_MESSAGE = "No hay datos";
-const SEARCH_RESULTS_MESSAGE = "Click en 'Buscar' para traer resultados";
+const NO_DATA_MESSAGE = loc["No hay datos"];
+const SEARCH_RESULTS_MESSAGE = loc["Click en 'Buscar' para traer resultados"];
 const RESULTADOS_PROCESOS_URL = baseUrl + "/api/Interfaces/ResultadosProcesos";
 
 export default {
@@ -129,6 +130,7 @@ export default {
     },
     data: function () {
         return {
+            loc,
             list: [],
             recordsTotal: 0,
             idTable: "resultadosProcesos",
