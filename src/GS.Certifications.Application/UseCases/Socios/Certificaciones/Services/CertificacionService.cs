@@ -1,12 +1,18 @@
+using GS.AI.DocumentIntelligence.Legacy.Models;
+using GS.AI.DocumentIntelligence.Legacy.Services.Interfaces;
 using GS.Certifications.Application.CQRS.DbContexts;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptions;
+using GS.Certifications.Application.UseCases.Socios.Certificaciones.Helpers;
 using GS.Certifications.Domain.Entities.Certificaciones;
 using GS.Certifications.Domain.Entities.Certificaciones.Documentos;
 using GSF.Application.Helpers.Pagination.Interfaces;
 using GSF.Application.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
@@ -14,10 +20,13 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
     public class CertificacionService : BaseGSFService, ICertificacionService
     {
         private readonly ICertificationsDbContext context;
-
-        public CertificacionService(ICertificationsDbContext context)
+        private readonly IDocumentAnalysisService documentAnalysisService;
+        private readonly IServiceScopeFactory serviceScopeFactory;
+        public CertificacionService(ICertificationsDbContext context, IDocumentAnalysisService documentAnalysisService, IServiceScopeFactory serviceScopeFactory)
         {
             this.context = context;
+            this.documentAnalysisService = documentAnalysisService;
+            this.serviceScopeFactory = serviceScopeFactory;
         }
 
         public async Task<SolicitudCertificacion> GetSolicitudAsync(int id)
@@ -31,6 +40,103 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         {
             var queryable = getDocumentosCargadosQueryable();
             return await queryable.FirstOrDefaultAsync(c => c.Id == id) ?? throw new SolicitudCertificacionInexistenteException();
+        }
+
+        public async Task<string> AnalyzeDocumentoAsync(
+            BinaryData bytesSource,
+            IDocumentoSolicitudCertificacionAnalysisParameter parameters,
+            AnalysisCompletedCallback onCompletedCallback,
+            CancellationToken cancellationToken)
+        {
+            var analysisOperation = await documentAnalysisService.StartAnalyzeAsync(bytesSource, model: Model.Custom, cancellationToken: cancellationToken);
+            string analysisOperationId = analysisOperation.Id;
+
+            //var documento = await GetDocumentoAsync(parameters.Id);
+            //documento.OperationId = analysisOperationId;
+            //documento.OperationStatus = Domain.Commons.Enums.OperationStatus.PROCESSING;
+
+            await context.SaveChangesAsync(cancellationToken);
+
+            _ = Task.Run(async () =>
+            {
+                IEnumerable<DocumentAnalysisResult>? completionResults = null;
+                Exception? capturedException = null;
+                Domain.Commons.Enums.OperationStatus finalStatus;
+
+                try
+                {
+                    completionResults = await analysisOperation.WaitForCompletionAsync(cancellationToken);
+                    finalStatus = Domain.Commons.Enums.OperationStatus.COMPLETED;
+                }
+                catch (Exception ex)
+                {
+                    capturedException = ex;
+                    finalStatus = Domain.Commons.Enums.OperationStatus.FAILED;
+                    // se puede loggear la excepción si es necesario, o guardar algun detalle del error
+                }
+
+                var result = completionResults?.FirstOrDefault();
+
+                DateTime? fechaDesde = null;
+                DateTime? fechaHasta = null;
+
+                if (result != null)
+                {
+                    var fechaDesdeField = result.ExtractedFields.GetValueOrDefault("VigenciaDesde");
+                    fechaDesde = fechaDesdeField.ValueDate?.DateTime;
+                
+                    if (fechaDesde == null)
+                    {
+                        var fechaDesdeDesc = result.ExtractedFields.GetValueOrDefault("VigenciaDesdeDescripcion")?.Content;
+                        fechaDesde = DocumentAnalysisHelper.TryParseSpanishDateInternal(fechaDesdeDesc);
+                    }
+
+                    var fechaHastaField = result.ExtractedFields.GetValueOrDefault("VigenciaHasta");
+                    fechaHasta = fechaHastaField.ValueDate?.DateTime;
+                    
+                    if (fechaHasta == null)
+                    {
+                        var fechaHastaDesc = result.ExtractedFields.GetValueOrDefault("VigenciaHastaDescripcion")?.Content;
+                        fechaHasta = DocumentAnalysisHelper.TryParseSpanishDateInternal(fechaHastaDesc);
+                    }
+                }
+
+                var analysisResult = new DocumentoAnalysisResult()
+                {
+                    FechaDesde = fechaDesde,
+                    FechaHasta = fechaHasta,
+                };
+
+                var completionData = new AnalysisCompletionData
+                {
+                    DocumentoId = parameters.Id,
+                    OperationId = analysisOperationId,
+                    FinalStatus = finalStatus,
+                    //Results = completionResults,
+                    Result = analysisResult,
+                    Exception = capturedException,
+                    OriginalCancellationToken = cancellationToken
+                };
+
+                using (var scope = serviceScopeFactory.CreateScope())
+                {
+                    var dbContextForCallback = scope.ServiceProvider.GetRequiredService<ICertificationsDbContext>();
+                    try
+                    {
+                        Console.WriteLine($"=== EJECUTANDO CALLBACK onCompletedCallback");
+
+                        await onCompletedCallback(completionData, dbContextForCallback);
+                        // el callback es responsable de la lógica de actualización de la entidad
+                        // y de llamar a dbContextForCallback.SaveChangesAsync()
+                    }
+                    catch (Exception callbackEx)
+                    {
+                        Console.WriteLine($"Error en el callback de AnalyzeDocumentoAsync: {callbackEx.Message}");
+                    }
+                }
+            }, cancellationToken);
+
+            return analysisOperationId;
         }
 
         public async Task<Certificacion> GetAsync(int id)
@@ -415,6 +521,12 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         #endregion
 
         #region Classes
+        public class DocumentoAnalysisResult : IDocumentoAnalysisResult
+        {
+            public DateTime? FechaDesde { get; set; }
+            public DateTime? FechaHasta { get; set; }
+        }
+
         public class SolicitudCertificacionUpdate : ISolicitudCertificacionUpdate
         {
             public short? EstadoId { get; set; }

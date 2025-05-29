@@ -4,11 +4,34 @@
             <div class="col-12 d-flex justify-content-between sticky-header mt-4">
                 <div class="col-12 d-grid">
                     <div class="row">
-                        <p class="h5 col-3">{{ tipoDoc }}</p>
-                        <p class="h5 col-3">Solicitud nro {{ documento.solicitudId }}</p>
+                        <p class="h5 col-6">{{ tipoDoc }}</p>
                         <div class="col-6 gap-4 d-flex justify-content-end">
                             <documentoEstado-label :value="documento.estadoId" />
-                        
+
+                            <div :key="`operationStatus-${documento.operationStatus}`"
+                                v-if="documento.operationStatus == this.PROCESSING" class="d-flex align-items-center text-primary gap-1">
+                                <div :key="`operationStatus-${documento.operationStatus}`"
+                                    v-if="documento.operationStatus == this.PROCESSING"
+                                    class=" spinner-border spinner-border-sm text-primary" role="status">
+                                    <span class="visually-hidden">Analizando documento...</span>
+                                </div>
+                                <span>Analizando documento...</span>
+                            </div>
+
+                            <div :key="`operationStatus-${documento.operationStatus}`"
+                                v-if="documento.operationStatus == this.COMPLETED"
+                                class="d-flex align-items-center text-success gap-1">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Documento analizado</span>
+                            </div>
+
+                            <div :key="`operationStatus-${documento.operationStatus}`"
+                                v-if="documento.operationStatus == this.FAILED"
+                                class="d-flex align-items-center text-danger gap-1">
+                                <i class="fas fa-times-circle"></i>
+                                <span>Error de análisis</span>
+                            </div>
+
                             <cancel-button class="ms-2" @click="cancel">Volver</cancel-button>
                         </div>
                     </div>
@@ -22,19 +45,19 @@
                             <i class="fas fa-columns" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-light"
-                            :class="{ 'active': currentLayoutMode === LayoutMode.File }" @click="setLayout(LayoutMode.File)"
-                            title="Mostrar solo el documento" aria-label="Mostrar solo el documento"
-                            data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            :class="{ 'active': currentLayoutMode === LayoutMode.File }"
+                            @click="setLayout(LayoutMode.File)" title="Mostrar solo el documento"
+                            aria-label="Mostrar solo el documento" data-bs-toggle="tooltip" data-bs-placement="bottom">
                             <i class="fas fa-file-alt" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-light"
-                            :class="{ 'active': currentLayoutMode === LayoutMode.Form }" @click="setLayout(LayoutMode.Form)"
-                            title="Mostrar solo el formulario" aria-label="Mostrar solo el formulario"
-                            data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            :class="{ 'active': currentLayoutMode === LayoutMode.Form }"
+                            @click="setLayout(LayoutMode.Form)" title="Mostrar solo el formulario"
+                            aria-label="Mostrar solo el formulario" data-bs-toggle="tooltip" data-bs-placement="bottom">
                             <i class="fas fa-list-alt" aria-hidden="true"></i>
                         </button>
                     </div>
-<!-- 
+                    <!-- 
                     <div>
                         <a id="splitLayoutButton" @click="setLayout(LayoutMode.Split)" title="Mostrar vista dividida"
                             data-toggle="tooltip" class="ms-2 btn btn-primary px-2 py-1">
@@ -60,7 +83,7 @@
                             <importar-documento idModal="__modal_DocumentoArchivo" ref="importarDocumento"
                                 title="Documento" :disabled="!updateGrant" :documentoId="documento.id"
                                 :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
-                                @archivosUpdated="onDocumentoAnalyzed($event)" />
+                                @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
                             <span class="text-danger field-validation-error">
                                 {{ errorBag.get("documentoError") }}
                             </span>
@@ -79,14 +102,16 @@
                         <div :id="documentoFormularioDivId" class="col-6">
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
                                 <label class="control-label">Fecha Desde</label>
-                                <input type="date" class="form-control" v-model="documento.fechaDesde">
+                                <input :disabled="documento.operationStatus == PROCESSING" type="date"
+                                    class="form-control" v-model="documento.fechaDesde">
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("fechaDesde") }}
                                 </span>
                             </div>
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
                                 <label class="control-label">Fecha Hasta</label>
-                                <input type="date" class="form-control" v-model="documento.fechaHasta">
+                                <input :disabled="documento.operationStatus == PROCESSING" type="date"
+                                    class="form-control" v-model="documento.fechaHasta">
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("fechaHasta") }}
                                 </span>
@@ -105,12 +130,12 @@
             </div>
             <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3" v-if="currentLayoutMode != LayoutMode.File">
                 <button @click.prevent="saveAsync" class="btn btn-secondary btn-sm"
-                :disabled="documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE"
-                >
+                    :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
                     <i class="fas fa-save"></i>
                     Guardar
                 </button>
-                <accept-button @click="updateAsync" :disabled="documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
+                <accept-button @click="updateAsync"
+                    :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
                     Aceptar</accept-button>
                 <cancel-button @click="cancel">Volver</cancel-button>
             </div>
@@ -178,7 +203,14 @@ export default {
             DOCUMENTO_RECHAZADO: DocumentoEstado.RECHAZADO,
             DOCUMENTO_VENCIDO: DocumentoEstado.VENCIDO,
             DOCUMENTO_PRESENTADO: DocumentoEstado.PRESENTADO,
+            // --- Estados de operacion
+            PROCESSING: OperationStatus.PROCESSING,
+            COMPLETED: OperationStatus.COMPLETED,
+            FAILED: OperationStatus.FAILED,
             // ---
+            pollingIntervalId: null, // Para guardar el ID del intervalo del polling
+            isCurrentlyPolling: false, // Para evitar ejecuciones solapadas del poll
+            pollingDelay: 3000, // Tiempo en milisegundos para el polling 
         };
     },
     computed: {
@@ -195,10 +227,53 @@ export default {
     async mounted() {
         await this.init();
     },
+    beforeDestroy() {
+        this.stopStatusPolling();
+    },
     methods: {
-        onDocumentoAnalyzed(e) {
+        async pollDocumentStatus() {
+            // si ya no está procesando, o si otra llamada de poll está en curso, no hacemos nada
+            if (this.documento.operationStatus !== this.PROCESSING || this.isCurrentlyPolling) {
+                if (this.documento.operationStatus !== this.PROCESSING) {
+                    this.stopStatusPolling();
+                }
+                return;
+            }
+
+            this.isCurrentlyPolling = true;
+            try {
+                await this.getOperationStatusAsync(this.documento.id);
+            } catch (error) {
+                console.error("Error durante el polling del estado del documento:", error);
+                this.stopStatusPolling(); // detenemos el polling en caso de error
+            } finally {
+                this.isCurrentlyPolling = false;
+            }
+        },
+        startStatusPolling() {
+            // detenemos cualquier polling anterior para evitar múltiples intervalos
+            this.stopStatusPolling();
+
+            if (this.documento.operationStatus === this.PROCESSING && this.documento.id) {
+                this.pollingIntervalId = setInterval(() => {
+                    if (this.documento.operationStatus === this.PROCESSING) {
+                        this.pollDocumentStatus();
+                    } else {
+                        this.stopStatusPolling();
+                    }
+                }, this.pollingDelay);
+            }
+        },
+
+        stopStatusPolling() {
+            if (this.pollingIntervalId) {
+                clearInterval(this.pollingIntervalId);
+                this.pollingIntervalId = null;
+            }
+        },
+        async onDocumentoAnalyzedAsync(e) {
             if (!this.errorBag.hasErrors()) {
-                this.getAsync(e[0]);
+                await this.getAsync(e[0]);
             }
         },
         setLayout(mode) {
@@ -225,11 +300,37 @@ export default {
             this.uiService.showSpinner(true)
             await this.$store.dispatch("getDocumentoAsync", id)
                 .then((res) => {
+                    const previousStatus = this.documento.operationStatus;
                     this.documento = new Documento(res);
                     this.tipoDoc = this.documento.tipo;
+
+                    if (this.documento.operationStatus === this.PROCESSING) {
+                        this.startStatusPolling();
+                    } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
+                        this.uiService.showMessageSuccess("Análisis de IA completado!"); // O un mensaje más específico
+                        this.stopStatusPolling();
+                    }
                 })
                 .finally(() => {
                     this.uiService.showSpinner(false);
+                });
+        },
+        async getOperationStatusAsync(id) {
+            await this.$store.dispatch("getDocumentoAsync", id)
+                .then((res) => {
+                    const previousStatus = this.documento.operationStatus;
+                    this.documento.operationId = res.operationId;
+                    this.documento.operationStatus = res.operationStatus;
+                    this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : null;
+                    this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : null;
+                    this.documento.rowVersion = res.rowVersion;
+
+                    if (this.documento.operationStatus === this.PROCESSING) {
+                        this.startStatusPolling();
+                    } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
+                        this.uiService.showMessageSuccess("Análisis de IA completado!");
+                        this.stopStatusPolling();
+                    }
                 });
         },
         // completarFormularioDocumento(e) {
@@ -299,9 +400,9 @@ export default {
 
 <style>
 .btn-group .btn.btn-light.active {
-    background-color: #0d8b8b; 
-    color: white; 
-    border-color: #0d8b8b; 
+    background-color: #0d8b8b;
+    color: white;
+    border-color: #0d8b8b;
 }
 
 .btn-group .btn.btn-light:not(.active):hover {
@@ -309,6 +410,6 @@ export default {
 }
 
 .btn-group .btn.btn-light:not(.active):focus {
-  box-shadow: 0 0 0 0.2rem rgba(#0d8b8b, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(#0d8b8b, 0.25);
 }
 </style>
