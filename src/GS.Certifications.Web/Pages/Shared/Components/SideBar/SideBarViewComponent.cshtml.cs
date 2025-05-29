@@ -1,9 +1,9 @@
+using GS.Certifications.Web.Common.Services;
 using GSF.Application.Security.Options.GetOptions.Queries;
 using GSF.Application.Security.Options.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using GS.Certifications.Web.Common.Services;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +12,6 @@ public class SideBarViewComponent : ViewComponent
     public IHttpContextAccessor _httpContextAccessor { get; }
 
     private readonly IArgumentFowardingService _argumentFowardingService;
-
     public OptionDto Options { get; set; }
 
     public OptionDto ContextOptions { get; set; }

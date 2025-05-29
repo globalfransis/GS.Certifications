@@ -204,7 +204,7 @@
   <data name="Usuario" xml:space="preserve">
     <value />
   </data>
-  <data name="Cambiar Contraseña" xml:space="preserve">
+  <data name="Cambiar contraseña" xml:space="preserve">
     <value>Cambiar Contraseña</value>
   </data>
   <data name="Cerrar sesión" xml:space="preserve">
@@ -647,5 +647,38 @@
   </data>
   <data name="Ingresar como" xml:space="preserve">
     <value>Ingresar como</value>
+  </data>
+  <data name="Resultados de Procesos" xml:space="preserve">
+    <value>Resultados de Procesos</value>
+  </data>
+  <data name="Definiciones" xml:space="preserve">
+    <value>Definiciones</value>
+  </data>
+  <data name="Reglas - Definiciones" xml:space="preserve">
+    <value>Reglas - Definiciones</value>
+  </data>
+  <data name="Administracion" xml:space="preserve">
+    <value>Administracion</value>
+  </data>
+  <data name="Parámetros" xml:space="preserve">
+    <value>Parámetros</value>
+  </data>
+  <data name="Seguridad" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="Configuración" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
+  <data name="Configuración de Usuario" xml:space="preserve">
+    <value>Configuración de Usuario</value>
+  </data>
+  <data name="Inicio" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="Interfaces" xml:space="preserve">
+    <value>Interfaces</value>
+  </data>
+  <data name="Notificaciones" xml:space="preserve">
+    <value>Notificaciones</value>
   </data>
 </root>

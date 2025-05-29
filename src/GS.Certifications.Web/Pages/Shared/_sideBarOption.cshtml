@@ -1,5 +1,6 @@
-﻿@model GSF.Application.Security.Options.Queries.OptionDto
-
+﻿@using Microsoft.Extensions.Localization
+@model GSF.Application.Security.Options.Queries.OptionDto
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> loc
 @{
     @if (Model.Options != null && Model.Options.Any())
     {
@@ -14,7 +15,7 @@
                         data-bs-target=@string.Format("{0}{1}", "#collapseOption", Model.Id)
                         aria-expanded="true" aria-controls="collapseOne"
                         onclick="window.sessionStorage.setItem('currentOptionParentId', @Model.Id">
-                    <i class="@Model.Icon ms-3"></i><span class="ms-3">@Model.Name</span>
+                    <i class="@Model.Icon ms-3"></i><span class="ms-3">@loc[Model.Name]</span>
                 </button>
             </h2>
 
@@ -49,7 +50,7 @@
 
         <a class="accordion-body menu-accordion-body list-group-item border-0" optionId="@Model.Id" href="javascript:RedirectToOption(@Model.Id, @Model.ParentId, '@Model.Url');"
            indent="@ViewData["optionLevel"]">
-            <i class="@Model.Icon"></i><span class="ms-3">@Model.Name</span>
+            <i class="@Model.Icon"></i><span class="ms-3">@loc[@Model.Name]</span>
         </a>
 
     }

@@ -22,7 +22,7 @@
                         <div class="ms-1">
                             <i class="fas fa-home"></i>
                             <span class="">
-                                Inicio
+                                @loc["Inicio"]
                             </span>
                         </div>
                     </a>
@@ -49,7 +49,7 @@
                                         <button class="accordion-button menu-accordion-button border-0 collapsable-item collapsed" type="button" data-bs-toggle="collapse"
                                                 data-bs-target=@string.Format("{0}{1}", "#collapseOption", option.Id)
                                                 aria-expanded="true" aria-controls="collapseOne">
-                                            <a class="" href="#"><i class="@option.Icon"></i><span>@option.Name</span></a>
+                                            <a class="" href="#"><i class="@option.Icon"></i><span>@loc[option.Name]</span></a>
                                         </button>
                                     </h2>
 
@@ -82,7 +82,7 @@
 
                                 <a class="accordion-body menu-accordion-body list-group-item border-0" optionId="@option.Id" href="javascript:RedirectToOption(@option.Id, @(option.ParentId != null ? option.ParentId : option.Id), '@option.Url');"
                                    indent="@ViewData["optionLevel"]">
-                                    <i class="@option.Icon"></i><span>@option.Name</span>
+                                    <i class="@option.Icon"></i><span>@loc[option.Name]</span>
                                 </a>
 
                             }
@@ -172,7 +172,7 @@
                             <a href="~/index" class="border-0 d-block" onclick="window.sessionStorage.setItem('currentOptionId', 0);window.sessionStorage.setItem('currentOptionParentId', 0);">
                                 <i style="width: 16px !important; min-width: 16px !important;height: 16px !important;" class="ms-2 fas fa-home"></i>
                                 <span class="ms-2">
-                                    Inicio
+                                    @loc["Inicio"]
                                 </span>
                             </a>
                         </div>
@@ -196,7 +196,7 @@
                                                 <button class="accordion-button menu-accordion-button border-0 collapsable-item collapsed" type="button" data-bs-toggle="collapse"
                                                         data-bs-target=@string.Format("{0}{1}", "#collapseOption", option.Id) optionIdBig="@option.Id"
                                                         aria-expanded="true" aria-controls="collapseOne">
-                                                    <i style="width: 16px !important; min-width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span class="ms-3">@option.Name</span>
+                                                    <i style="width: 16px !important; min-width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span class="ms-3">@loc[option.Name]</span>
                                                 </button>
                                             </h2>
 
@@ -229,7 +229,7 @@
 
                                         <a class="accordion-body menu-accordion-body list-group-item border-0" optionId="@option.Id" href="javascript:RedirectToOption(@option.Id, @(option.ParentId != null ? @option.ParentId : @option.Id), '@option.Url');"
                                            indent="@ViewData["optionLevel"]">
-                                            <i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@option.Name</span>
+                                            <i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@loc[option.Name]</span>
                                         </a>
 
                                     }
@@ -270,7 +270,7 @@
                                                 <button class="accordion-button menu-accordion-button border-0 collapsable-item collapsed" type="button" data-bs-toggle="collapse"
                                                         data-bs-target=@string.Format("{0}{1}", "#collapseOption", option.Id)
                                                         aria-expanded="true" aria-controls="collapseOne">
-                                                    <a class="" href="#"><i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@option.Name</span></a>
+                                                    <a class="" href="#"><i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@loc[@option.Name]</span></a>
                                                 </button>
                                             </h2>
 
@@ -303,7 +303,7 @@
 
                                         <a class="accordion-body menu-accordion-body list-group-item border-0" optionId="@option.Id" href="javascript:RedirectToOption(@option.Id, @option.ParentId, '@option.Url');"
                                            indent="@ViewData["optionLevel"]">
-                                            <i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@option.Name</span>
+                                            <i style="width: 16px !important;height: 16px !important;" class="@option.Icon"></i><span>@loc[@option.Name]</span>
                                         </a>
 
                                     }

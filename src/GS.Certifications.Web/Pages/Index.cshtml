@@ -1,5 +1,7 @@
 ﻿@page
 @using GS.Certifications.Web.Pages
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> loc
 @model IndexModel
 
 @section BackButton { }
@@ -24,7 +26,7 @@
 
                 <div style="text-align: center;">
                     @* <h3>Bienvenido a Boarding</h3> *@
-                    <h3>Bienvenido</h3>
+                    <h3>@loc["Bienvenido"]</h3>
 
                 </div>
 

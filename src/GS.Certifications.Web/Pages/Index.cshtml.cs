@@ -16,7 +16,7 @@ public class IndexModel : BasePageModel
 
     public void OnGet()
     {
-        // LoadChangelog();
+        GetStringTranslations();
     }
 
     private void LoadChangelog()
