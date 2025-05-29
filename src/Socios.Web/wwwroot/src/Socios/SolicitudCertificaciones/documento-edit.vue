@@ -321,8 +321,8 @@ export default {
                     const previousStatus = this.documento.operationStatus;
                     this.documento.operationId = res.operationId;
                     this.documento.operationStatus = res.operationStatus;
-                    this.documento.fechaDesde = new Date(res.fechaDesde).toISOString().split('T')[0];
-                    this.documento.fechaHasta = new Date(res.fechaHasta).toISOString().split('T')[0];
+                    this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : null;
+                    this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : null;
                     this.documento.rowVersion = res.rowVersion;
 
                     if (this.documento.operationStatus === this.PROCESSING) {
