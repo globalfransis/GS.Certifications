@@ -88,7 +88,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                     if (fechaDesde == null)
                     {
                         var fechaDesdeDesc = result.ExtractedFields.GetValueOrDefault("VigenciaDesdeDescripcion")?.Content;
-                        fechaDesde = DocumentAnalysisHelper.TryParseSpanishDateInternal(fechaDesdeDesc);
+                        fechaDesde = DocumentAnalysisHelper.TryParseDateInternal(fechaDesdeDesc);
                     }
 
                     var fechaHastaField = result.ExtractedFields.GetValueOrDefault("VigenciaHasta");
@@ -97,7 +97,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                     if (fechaHasta == null)
                     {
                         var fechaHastaDesc = result.ExtractedFields.GetValueOrDefault("VigenciaHastaDescripcion")?.Content;
-                        fechaHasta = DocumentAnalysisHelper.TryParseSpanishDateInternal(fechaHastaDesc);
+                        fechaHasta = DocumentAnalysisHelper.TryParseDateInternal(fechaHastaDesc);
                     }
                 }
 
