@@ -1214,4 +1214,37 @@
   <data name="Documentos" xml:space="preserve">
     <value>Documents</value>
   </data>
+    <data name="Responsable Inscripto" xml:space="preserve">
+    <value>Responsible Registrant</value>
+  </data>
+  <data name="Responsable no Inscripto" xml:space="preserve">
+    <value>Non-Registered Responsible</value>
+  </data>
+  <data name="No Responsable" xml:space="preserve">
+    <value>Not Responsible</value>
+  </data>
+  <data name="Sujeto Exento" xml:space="preserve">
+    <value>Exempt Subject</value>
+  </data>
+  <data name="Consumidor Final" xml:space="preserve">
+    <value>Final Consumer</value>
+  </data>
+  <data name="Responsable Monotributo" xml:space="preserve">
+    <value>Responsible Monotributo</value>
+  </data>
+  <data name="Sujeto no Categorizado" xml:space="preserve">
+    <value>Subject not categorized</value>
+  </data>
+  <data name="Importador del Exterior" xml:space="preserve">
+    <value>Foreign Importer</value>
+  </data>
+  <data name="Cliente del Exterior" xml:space="preserve">
+    <value>Overseas Customer</value>
+  </data>
+  <data name="Liberado Ley Nº 19.740" xml:space="preserve">
+    <value>Released Law No. 19,740</value>
+  </data>
+  <data name="Responsable inscripto Agente de percepción" xml:space="preserve">
+    <value>Responsible party registered as a collection agent</value>
+  </data>
 </root>

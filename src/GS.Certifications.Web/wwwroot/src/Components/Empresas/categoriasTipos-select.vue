@@ -2,7 +2,7 @@
     <select v-model="selected" class="form-select">
         <option :value="null" v-if="nullOption">{{loc["Sin especificar"]}}</option>
         <option v-for="option in optionsData" :key="option.idm" :value="option.idm">
-            {{ option.descripcion }}
+            {{ loc[option.descripcion] }}
         </option>
     </select>
 </template>

@@ -110,7 +110,7 @@
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">{{ loc["Tipo Responsable"] }}</label>
                             <input type="text" class="form-control" 
-                            :value="empresaDto.tipoResponsable ? empresaDto.tipoResponsable.descripcion : null" readonly>
+                            :value="empresaDto.tipoResponsable ? loc[empresaDto.tipoResponsable.descripcion] : null" readonly>
                         </div>
                         <div class="form-group col-lg-3 col-sm-12 mb-4">
                             <label class="control-label">{{ loc["Confirmado"] }}</label>

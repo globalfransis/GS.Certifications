@@ -1167,4 +1167,37 @@
   <data name="Documentos" xml:space="preserve">
     <value>Documentos</value>
   </data>
+  <data name="Responsable Inscripto" xml:space="preserve">
+    <value>Responsable Inscripto</value>
+  </data>
+  <data name="Responsable no Inscripto" xml:space="preserve">
+    <value>Responsable no Inscripto</value>
+  </data>
+  <data name="No Responsable" xml:space="preserve">
+    <value>No Responsable</value>
+  </data>
+  <data name="Sujeto Exento" xml:space="preserve">
+    <value>Sujeto Exento</value>
+  </data>
+  <data name="Consumidor Final" xml:space="preserve">
+    <value>Consumidor Final</value>
+  </data>
+  <data name="Responsable Monotributo" xml:space="preserve">
+    <value>Responsable Monotributo</value>
+  </data>
+  <data name="Sujeto no Categorizado" xml:space="preserve">
+    <value>Sujeto no Categorizado</value>
+  </data>
+  <data name="Importador del Exterior" xml:space="preserve">
+    <value>Importador del Exterior</value>
+  </data>
+  <data name="Cliente del Exterior" xml:space="preserve">
+    <value>Cliente del Exterior</value>
+  </data>
+  <data name="Liberado Ley Nº 19.740" xml:space="preserve">
+    <value>Liberado Ley Nº 19.740</value>
+  </data>
+  <data name="Responsable inscripto Agente de percepción" xml:space="preserve">
+    <value>Responsable inscripto Agente de percepción</value>
+  </data>
 </root>
