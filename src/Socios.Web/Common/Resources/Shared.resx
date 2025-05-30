@@ -548,4 +548,34 @@
   <data name="Ha finalizado la sesión. Vuelva a ingresar." xml:space="preserve">
     <value>Ha finalizado la sesión. Vuelva a ingresar.</value>
   </data>
+  <data name="Seleccionar archivo..." xml:space="preserve">
+    <value>Seleccionar archivo...</value>
+  </data>
+  <data name="Los campos del formulario se habilitarán y/o completarán después del análisis del documento." xml:space="preserve">
+    <value>Los campos del formulario se habilitarán y/o completarán después del análisis del documento.</value>
+  </data>
+  <data name="Cambiar Documento " xml:space="preserve">
+    <value>Cambiar Documento </value>
+  </data>
+  <data name="Cambiar archivo..." xml:space="preserve">
+    <value>Cambiar archivo...</value>
+  </data>
+  <data name="No se puede mostrar el documento. La URL podría ser inválida o el archivo no está accesible." xml:space="preserve">
+    <value>No se puede mostrar el documento. La URL podría ser inválida o el archivo no está accesible.</value>
+  </data>
+  <data name="No hay documento cargado para visualizar." xml:space="preserve">
+    <value>No hay documento cargado para visualizar.</value>
+  </data>
+  <data name="Una vez cargado, se analizará para extraer información relevante." xml:space="preserve">
+    <value>Una vez cargado, se analizará para extraer información relevante.</value>
+  </data>
+  <data name="Cargar Documento Requerido" xml:space="preserve">
+    <value>Cargar Documento Requerido</value>
+  </data>
+  <data name="Para continuar, por favor seleccioná el archivo para" xml:space="preserve">
+    <value>Para continuar, por favor seleccioná el archivo para</value>
+  </data>
+  <data name="el documento actual" xml:space="preserve">
+    <value>el documento actual</value>
+  </data>
 </root>

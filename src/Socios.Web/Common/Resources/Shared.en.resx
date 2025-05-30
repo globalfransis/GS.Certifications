@@ -243,7 +243,7 @@
     <comment>General</comment>
   </data>
   <data name="Aceptar" xml:space="preserve">
-    <value>OK</value>
+    <value>Accept</value>
     <comment>General</comment>
   </data>
   <data name="Cancelar" xml:space="preserve">
@@ -573,5 +573,35 @@
   </data>
   <data name="Ha finalizado la sesión. Vuelva a ingresar." xml:space="preserve">
     <value>You are now logged out. Please log in again.</value>
+  </data>
+  <data name="Seleccionar archivo..." xml:space="preserve">
+    <value>Select file...</value>
+  </data>
+  <data name="Los campos del formulario se habilitarán y/o completarán después del análisis del documento." xml:space="preserve">
+    <value>The form fields will be enabled and/or populated after the document analysis.</value>
+  </data>
+  <data name="Cambiar Documento " xml:space="preserve">
+    <value>Change Document</value>
+  </data>
+  <data name="Cambiar archivo..." xml:space="preserve">
+    <value>Change file...</value>
+  </data>
+  <data name="No se puede mostrar el documento. La URL podría ser inválida o el archivo no está accesible." xml:space="preserve">
+    <value>Cannot display document. The URL might be invalid or the file is not accessible.</value>
+  </data>
+  <data name="No hay documento cargado para visualizar." xml:space="preserve">
+    <value>No document uploaded for viewing.</value>
+  </data>
+  <data name="Una vez cargado, se analizará para extraer información relevante." xml:space="preserve">
+    <value>Once uploaded, it will be analyzed to extract relevant information.</value>
+  </data>
+  <data name="Cargar Documento Requerido" xml:space="preserve">
+    <value>Upload Required Document</value>
+  </data>
+  <data name="Para continuar, por favor seleccioná el archivo para" xml:space="preserve">
+    <value>To continue, please select the file for</value>
+  </data>
+  <data name="el documento actual" xml:space="preserve">
+    <value>the current document</value>
   </data>
 </root>

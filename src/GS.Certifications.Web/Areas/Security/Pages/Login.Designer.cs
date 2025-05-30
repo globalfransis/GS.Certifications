@@ -79,6 +79,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cargar Documento Requerido.
+        /// </summary>
+        public static string Cargar_Documento_Requerido {
+            get {
+                return ResourceManager.GetString("Cargar Documento Requerido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Certificaciones.
         /// </summary>
         public static string Certificaciones {
@@ -93,6 +102,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         public static string Contraseña {
             get {
                 return ResourceManager.GetString("Contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to el documento actual.
+        /// </summary>
+        public static string el_documento_actual {
+            get {
+                return ResourceManager.GetString("el documento actual", resourceCulture);
             }
         }
         
@@ -210,6 +228,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         public static string OlvideMiContraseña {
             get {
                 return ResourceManager.GetString("OlvideMiContraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para continuar, por favor seleccioná el archivo para.
+        /// </summary>
+        public static string Para_continuar__por_favor_seleccioná_el_archivo_para {
+            get {
+                return ResourceManager.GetString("Para continuar, por favor seleccioná el archivo para", resourceCulture);
             }
         }
         

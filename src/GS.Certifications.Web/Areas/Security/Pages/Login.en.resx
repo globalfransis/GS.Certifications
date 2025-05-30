@@ -183,4 +183,13 @@
   <data name="Ha finalizado la sesión. Vuelva a ingresar." xml:space="preserve">
     <value>You are now logged out. Please log in again.</value>
   </data>
+  <data name="Cargar Documento Requerido" xml:space="preserve">
+    <value>Upload Required Document</value>
+  </data>
+  <data name="Para continuar, por favor seleccioná el archivo para" xml:space="preserve">
+    <value>To continue, please select the file for</value>
+  </data>
+  <data name="el documento actual" xml:space="preserve">
+    <value>the current document</value>
+  </data>
 </root>

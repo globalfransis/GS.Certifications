@@ -206,7 +206,7 @@
     <comment>General</comment>
   </data>
   <data name="Aceptar" xml:space="preserve">
-    <value>OK</value>
+    <value>Accept</value>
     <comment>General</comment>
   </data>
   <data name="Cancelar" xml:space="preserve">
