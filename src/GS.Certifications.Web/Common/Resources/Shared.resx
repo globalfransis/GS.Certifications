@@ -1110,4 +1110,61 @@
   <data name="Documentos" xml:space="preserve">
     <value>Documentos</value>
   </data>
+  <data name="El campo 'Destinatarios' es obligatorio" xml:space="preserve">
+    <value>El campo 'Destinatarios' es obligatorio</value>
+  </data>
+  <data name="El campo ‘Descripcion’ es obligatorio." xml:space="preserve">
+    <value>El campo ‘Descripcion’ es obligatorio.</value>
+  </data>
+  <data name="El campo 'Alerta Tipo' es obligatorio" xml:space="preserve">
+    <value>El campo 'Alerta Tipo' es obligatorio</value>
+  </data>
+  <data name="El campo 'Horas' es obligatorio" xml:space="preserve">
+    <value>El campo 'Horas' es obligatorio</value>
+  </data>
+  <data name="El campo 'Fecha / Hora Desde' es obligatorio" xml:space="preserve">
+    <value>El campo 'Fecha / Hora Desde' es obligatorio</value>
+  </data>
+  <data name="Se debe especificar 'Estado' o 'Ubicacion'" xml:space="preserve">
+    <value>Se debe especificar 'Estado' o 'Ubicacion'</value>
+  </data>
+  <data name="Se debe especificar 'Para' o 'Para Variable'" xml:space="preserve">
+    <value>Se debe especificar 'Para' o 'Para Variable'</value>
+  </data>
+  <data name="Se debe subir un archivo .html con el cuerpo de la Alerta" xml:space="preserve">
+    <value>Se debe subir un archivo .html con el cuerpo de la Alerta</value>
+  </data>
+  <data name="El campo ‘Valor’ es obligatorio." xml:space="preserve">
+    <value>El campo 'Valor' es obligatorio.</value>
+  </data>
+  <data name="El campo 'Asunto' es obligatorio" xml:space="preserve">
+    <value>El campo 'Asunto' es obligatorio</value>
+  </data>
+  <data name="Nuevo" xml:space="preserve">
+    <value>Nuevo</value>
+  </data>
+  <data name="Error general" xml:space="preserve">
+    <value>Error general</value>
+  </data>
+  <data name="Ambiente configurado para no realizar envíos" xml:space="preserve">
+    <value>Ambiente configurado para no realizar envíos</value>
+  </data>
+  <data name="Envío ok" xml:space="preserve">
+    <value>Envío ok</value>
+  </data>
+  <data name="Error de SMTP" xml:space="preserve">
+    <value>Error de SMTP</value>
+  </data>
+  <data name="Error de Autenticacion" xml:space="preserve">
+    <value>Error de Autenticacion</value>
+  </data>
+  <data name="Máximo de reintentos alcanzados" xml:space="preserve">
+    <value>Máximo de reintentos alcanzados</value>
+  </data>
+  <data name="Adherente" xml:space="preserve">
+    <value>Adherente</value>
+  </data>
+  <data name="Pleno" xml:space="preserve">
+    <value>Pleno</value>
+  </data>
 </root>
