@@ -180,4 +180,7 @@
   <data name="Entorno" xml:space="preserve">
     <value>Environment</value>
   </data>
+  <data name="Ha finalizado la sesión. Vuelva a ingresar." xml:space="preserve">
+    <value>You are now logged out. Please log in again.</value>
+  </data>
 </root>

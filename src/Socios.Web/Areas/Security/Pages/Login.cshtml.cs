@@ -65,7 +65,7 @@ public class LoginModel : BasePageModel
             ReturnUrl = "/";
             _ = ModelState.TryAddModelError("SessionExpired", _pageLoc["Ha finalizado la sesión"]);
             SessionExpired = true;
-            SessionExpiredMessage = _pageLoc["Ha finalizado la sesión, vuelva a loguearse."];
+            SessionExpiredMessage = _pageLoc["Ha finalizado la sesión. Vuelva a ingresar."];
         }
 
         if (Url.IsLocalUrl(returnUrl))

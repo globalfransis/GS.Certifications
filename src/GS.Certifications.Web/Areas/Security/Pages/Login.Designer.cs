@@ -124,6 +124,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ha finalizado la sesión. Vuelva a ingresar..
+        /// </summary>
+        public static string Ha_finalizado_la_sesión__Vuelva_a_ingresar_ {
+            get {
+                return ResourceManager.GetString("Ha finalizado la sesión. Vuelva a ingresar.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingresar.
         /// </summary>
         public static string Ingresar {

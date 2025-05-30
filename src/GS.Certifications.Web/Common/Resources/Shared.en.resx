@@ -1154,4 +1154,7 @@
   <data name="El usuario ya esta relacionado con el socio" xml:space="preserve">
     <value>The user is already related to the partner</value>
   </data>
+  <data name="Documentos" xml:space="preserve">
+    <value>Documents</value>
+  </data>
 </root>

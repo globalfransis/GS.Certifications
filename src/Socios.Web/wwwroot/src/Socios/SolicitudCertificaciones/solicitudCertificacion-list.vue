@@ -2,7 +2,7 @@
     <div>
 
         <div v-if="searched && list.length === 0" class="col-12 text-center mt-4 mb-5">
-            <div class="card p-4 shadow-sm" style="max-width: 600px; margin: auto; border-radius: 0.5rem;">
+            <div class="card p-4 shadow-sm" style="margin: auto; border-radius: 0.5rem;">
                 <div class="card-body">
                     <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
                     <h4 class="card-title mb-3">{{ loc["Aún no tenés solicitudes de certificación"] }}</h4>

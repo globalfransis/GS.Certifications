@@ -1107,4 +1107,7 @@
   <data name="El usuario ya esta relacionado con el socio" xml:space="preserve">
     <value>El usuario ya esta relacionado con el socio</value>
   </data>
+  <data name="Documentos" xml:space="preserve">
+    <value>Documentos</value>
+  </data>
 </root>

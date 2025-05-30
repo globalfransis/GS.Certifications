@@ -186,4 +186,7 @@
   <data name="Entorno" xml:space="preserve">
     <value>Entorno</value>
   </data>
+  <data name="Ha finalizado la sesión. Vuelva a ingresar." xml:space="preserve">
+    <value>Ha finalizado la sesión. Vuelva a ingresar.</value>
+  </data>
 </root>

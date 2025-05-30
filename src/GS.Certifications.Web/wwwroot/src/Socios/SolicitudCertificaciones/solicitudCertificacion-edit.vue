@@ -12,7 +12,7 @@
 
                         <div class="col-12 d-flex justify-content-between align-items-center mb-4">
                             <div>
-                                <p class="h5 m-0">{{loc["Documentos requeridos"]}}</p>
+                                <p class="h5 m-0">{{loc["Documentos"]}}</p>
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("documentos") }}
                                 </span>
@@ -47,7 +47,7 @@
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.fechaDesde | uidate }} - {{ cd.fechaHasta | uidate }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.estado ? cd.estado : "-" }}</td>
+                                            {{ cd.estado ? loc[cd.estado] : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.validadoPor ? cd.validadoPor : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
