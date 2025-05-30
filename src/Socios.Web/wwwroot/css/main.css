@@ -1262,6 +1262,14 @@ table td.gsf-table-cell {
     background-color: #0d8b8b;
 }
 
+.text-primary {
+    color: #0d8b8b;
+}
+
+.primary {
+    color: #0d8b8b;
+}
+
 .sticky-header {
     position: sticky;
     z-index: 1000;

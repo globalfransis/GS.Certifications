@@ -96,17 +96,14 @@
                             <iframe v-if="iframeSrc" :src="iframeSrc" style="width: 100%; height: 100%; border: none;"></iframe>
                             <div v-else-if="documento.archivoURL && !iframeSrc"
                                  class="alert alert-warning text-center d-flex align-items-center justify-content-center h-100">
-                                <span><i class="fas fa-exclamation-triangle me-2"></i>{{ loc["No se puede mostrar el documento.La URL podría ser inválida o el archivo no está accesible."] }}</span>
+                                <span><i class="fas fa-exclamation-triangle me-2"></i>{{ loc["No se puede mostrar el documento. La URL podría ser inválida o el archivo no está accesible."] }}</span>
                             </div>
                             <div v-else-if="!documento.archivoURL"
-                                 class="alert alert-light text-center d-flex align-items-center justify-content-center h-100 border rounded">
-                                 <div v-if="documento.operationStatus != PROCESSING && documento.operationStatus != FAILED">
-                                     <i class="fas fa-eye-slash fa-2x text-muted mb-2 d-block"></i>
-                                     <span>{{ loc["No hay documento cargado para visualizar."] }}</span>
-                                 </div>
+                                class="alert alert-light text-center d-flex align-items-center justify-content-center h-100 border">
+                                <span><i class="fas fa-eye-slash me-2"></i>{{ loc["No hay documento cargado para visualizar."] }}</span>
                             </div>
                         </div>
-                        <div :id="documentoFormularioDivId" class="col-md-6">
+                        <div :id="documentoFormularioDivId" class="col-md-6 col-6">
                             <div class="form-group col-lg-10 col-sm-12 mb-3 required">
                                 <label class="control-label">{{ loc["Fecha Desde"] }}</label>
                                 <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date" class="form-control form-control-sm" v-model="documento.fechaDesde">

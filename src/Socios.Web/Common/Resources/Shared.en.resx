@@ -628,4 +628,10 @@
   <data name="Finalizando análisis..." xml:space="preserve">
     <value>Finalizing analysis...</value>
   </data>
+  <data name="Cambiar Documento" xml:space="preserve">
+    <value>Change Document</value>
+  </data>
+  <data name="Documento analizado con éxito" xml:space="preserve">
+    <value>Document analyzed successfully</value>
+  </data>
 </root>
