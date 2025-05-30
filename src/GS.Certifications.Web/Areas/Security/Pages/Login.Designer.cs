@@ -106,6 +106,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entorno.
+        /// </summary>
+        public static string Entorno {
+            get {
+                return ResourceManager.GetString("Entorno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grupo.
         /// </summary>
         public static string Grupo {

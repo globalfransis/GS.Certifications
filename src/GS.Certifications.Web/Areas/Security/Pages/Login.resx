@@ -177,4 +177,7 @@
   <data name="Cancelar" xml:space="preserve">
     <value>Cancelar</value>
   </data>
+  <data name="Entorno" xml:space="preserve">
+    <value>Entorno</value>
+  </data>
 </root>

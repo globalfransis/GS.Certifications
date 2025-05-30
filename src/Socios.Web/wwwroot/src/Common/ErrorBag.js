@@ -1,4 +1,5 @@
 ﻿import '@/common/ui-extensions'
+import loc from '@/common/commonLoc.js'
 
 const GSFWEBFILETRANSFERSERVICEEXCEPTION = "GSFWebFileTransferServiceException";
 
@@ -17,11 +18,11 @@ export default class ErrorBag {
                 err = this.errors[field.toPascalCase()]
             }
 
-            return (err !== undefined && err.length > 0) ? err[0] : ''
+            return (err !== undefined && err.length > 0) ? loc[err[0]] : ''
 
         }
         else {
-            return this.errors[''] || ''
+            return loc[this.errors['']] || ''
         }
     }
 
@@ -34,7 +35,7 @@ export default class ErrorBag {
         for (const [key, value] of Object.entries(this.errors)) {
             message = "\n" + value;
         }
-        return message;
+        return loc[message];
     }
 
     getGSFWebFileTransferServiceException() {

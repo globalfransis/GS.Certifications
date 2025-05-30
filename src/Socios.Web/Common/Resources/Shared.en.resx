@@ -556,7 +556,16 @@
   <data name="Para confirmar la subida o eliminación del archivo, debes presionar Aceptar" xml:space="preserve">
     <value>To confirm the upload or deletion of the file, you must press OK</value>
   </data>
-  <data name="Ya existe una solicitud en curso para la certificación indicada." xml:space="preserve">
-    <value>There is already an application in progress for the indicated certification.</value>
+  <data name="Aún no tenés solicitudes de certificación" xml:space="preserve">
+    <value>You don't have any certification applications yet</value>
+  </data>
+  <data name="Parece que no hay nada por acá. ¡Iniciá una nueva solicitud para comenzar a gestionar tus certificaciones!" xml:space="preserve">
+    <value>It looks like there's nothing here yet. Start a new application to begin managing your certifications!</value>
+  </data>
+  <data name="Crear Primera Solicitud" xml:space="preserve">
+    <value>Create First Application</value>
+  </data>
+  <data name="Nueva Solicitud" xml:space="preserve">
+    <value>New Application</value>
   </data>
 </root>

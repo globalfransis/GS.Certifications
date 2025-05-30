@@ -530,7 +530,16 @@
   <data name="Para confirmar la subida o eliminación del archivo, debes presionar Aceptar" xml:space="preserve">
     <value>Para confirmar la subida o eliminación del archivo, debes presionar Aceptar</value>
   </data>
-  <data name="Ya existe una solicitud en curso para la certificación indicada." xml:space="preserve">
-    <value>Ya existe una solicitud en curso para la certificación indicada.</value>
+  <data name="Aún no tenés solicitudes de certificación" xml:space="preserve">
+    <value>Aún no tenés solicitudes de certificación</value>
+  </data>
+  <data name="Parece que no hay nada por acá. ¡Iniciá una nueva solicitud para comenzar a gestionar tus certificaciones!" xml:space="preserve">
+    <value>Parece que no hay nada por acá. ¡Iniciá una nueva solicitud para comenzar a gestionar tus certificaciones!</value>
+  </data>
+  <data name="Crear Primera Solicitud" xml:space="preserve">
+    <value>Crear Primera Solicitud</value>
+  </data>
+  <data name="Nueva Solicitud" xml:space="preserve">
+    <value>Nueva Solicitud</value>
   </data>
 </root>

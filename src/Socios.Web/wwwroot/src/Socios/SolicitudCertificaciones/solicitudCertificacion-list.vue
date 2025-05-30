@@ -1,71 +1,88 @@
 <template>
     <div>
 
-        <!-- <solicitudCertificacion-filter v-model="parameters" @clear="onClear()" @search="onSearch" /> -->
-
-        <br />
-
-        <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
-            <p class="h5 m-0">{{ loc["Listado de Solicitudes"] }}</p>
-            <button :disabled="!grants.create || !parameters.certificacionId" type="button"
-                class="btn btn-outline-primary btn-sm" @click="createAsync">
-                <b><i class="fas fa-plus"></i>{{ loc["Agregar"] }}</b>
-            </button>
+        <div v-if="list.length === 0" class="col-12 text-center mt-4 mb-5">
+            <div class="card p-4 shadow-sm" style="max-width: 600px; margin: auto; border-radius: 0.5rem;">
+                <div class="card-body">
+                    <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                    <h4 class="card-title mb-3">{{ loc["Aún no tenés solicitudes de certificación"] }}</h4>
+                    <p class="card-text text-muted mb-4">
+                        {{ loc["Parece que no hay nada por acá. ¡Iniciá una nueva solicitud para comenzar a gestionar tus certificaciones!"] }}
+                    </p>
+                    <button :disabled="!grants.create || !parameters.certificacionId" type="button"
+                        class="btn btn-primary btn-lg px-4" @click="createAsync">
+                        <i class="fas fa-plus-circle me-2"></i>{{ loc["Crear Primera Solicitud"] }}
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="col-12 table-responsive">
-            <datatableRecordsLength v-model="recordsLength" v-if="list.length > 0" :id="`${idTable}-recordsLength`"
-                @changed="onRecordsLengthChanged" />
-            <table :id="`${idTable}`" convert-to-datatable-manual server-side-paging
-                class="table table-sm table-bordered table-striped table-hover">
-                <thead class="table-top">
-                    <tr class="text-center align-middle">
-                        <th data-column="Certificacion.Nombre" class="text-center w-10">{{ loc["Certificación"] }}</th>
-                        <th data-column="FechaSolicitud" datatable-datetime class="text-center w-10">{{ loc["Fecha Solicitud"] }}</th>
-                        <th data-column="Estado.Descripcion" class="text-center w-10">{{ loc["Estado"] }}</th>
-                        <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center w-10">{{ loc["Fecha Estado"] }}</th>
-                        <th no-sort-datatable class="text-center w-10">{{ loc["Vigencia"]}}</th>
-                        <th class="text-center w-10" no-sort-datatable>{{ loc["Estado Documentación"]}}</th>
-                        <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Pendientes"]}}</th>
-                        <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Cargados"]}}</th>
-                        <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Aprobados"]}}</th>
-                        <th class="text-center w-5" no-sort-datatable>{{ loc["Acciones"]}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-if="list.length === 0" class="no-data text-center">
-                        <td class="text-center" colspan="100">{{ resultsMessage }}</td>
-                    </tr>
-                    <template v-for="item in list">
-                        <tr :key="item.id">
-                            <td class="text-start align-middle">{{ item.certificacion }}</td>
-                            <td class="text-start align-middle">{{ item.fechaSolicitud | uidate }}</td>
-                            <td class="text-start align-middle">
-                                <solicitudCertificacionEstado-label v-model="item.estadoId" />
-                            </td>
-                            <td class="text-start align-middle">{{ item.ultimaModificacionEstado | uidate }}</td>
-                            <td class="text-start align-middle">{{ item.vigenciaDesde | uidate }} - {{
-            item.vigenciaHasta | uidate }}</td>
-                            <td class="align-middle">
-                                <solicitudCertificacionDocumentacionEstado-label :value="item" />
-                            </td>
-                            <td class="text-end align-middle">{{ item.cantDocsPendientes }}</td>
-                            <td class="text-end align-middle">{{ item.cantDocsCargados }}</td>
-                            <td class="text-end align-middle">{{ item.cantDocsAprobados }}</td>
-                            <td class="text-center align-middle">
-                                <div class="d-inline-flex">
-                                    <inlineEdit :enabled="grants.update" @click="update(item.id)" />
-                                    <!-- Habilitar este botón si aplica -->
-                                    <inlineDelete :enabled="grants.delete" @click="remove(item)" />
-                                </div>
-                            </td>
+        <div v-show="list.length > 0">
+            <div
+                class="col-12 d-flex justify-content-between align-items-center mt-2 mb-3 p-3 bg-light border rounded-3">
+                <p class="h5 m-0">{{ loc["Listado de Solicitudes"] }}</p>
+                <button :disabled="!grants.create || !parameters.certificacionId" type="button" class="btn btn-primary"
+                    @click="createAsync">
+                    <i class="fas fa-plus me-2"></i>{{ loc["Nueva Solicitud"] }}
+                </button>
+            </div>
+
+            <div class="col-12 table-responsive">
+                <datatableRecordsLength v-model="recordsLength" v-if="list.length > 0" :id="`${idTable}-recordsLength`"
+                    @changed="onRecordsLengthChanged" />
+                <table :id="`${idTable}`" convert-to-datatable-manual server-side-paging
+                    class="table table-sm table-bordered table-striped table-hover">
+                    <thead class="table-top">
+                        <tr class="text-center align-middle">
+                            <th data-column="Certificacion.Nombre" class="text-center w-10">{{ loc["Certificación"] }}
+                            </th>
+                            <th data-column="FechaSolicitud" datatable-datetime class="text-center w-10">{{ loc["Fecha Solicitud"] }}</th>
+                            <th data-column="Estado.Descripcion" class="text-center w-10">{{ loc["Estado"] }}</th>
+                            <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center w-10">{{
+            loc["Fecha Estado"] }}</th>
+                            <th no-sort-datatable class="text-center w-10">{{ loc["Vigencia"] }}</th>
+                            <th class="text-center w-10" no-sort-datatable>{{ loc["Estado Documentación"] }}</th>
+                            <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Pendientes"] }}</th>
+                            <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Cargados"] }}</th>
+                            <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Aprobados"] }}</th>
+                            <th class="text-center w-5" no-sort-datatable>{{ loc["Acciones"] }}</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
-            <datatablePagination v-if="list.length > 0" v-model="currentPage" :id="`${idTable}-datatable`"
-                @page-changed="onPageChanged" :recordsTotal="recordsTotal" :recordsLength="recordsLength"
-                :maxVisiblePages="5" />
+                    </thead>
+                    <tbody>
+                        <tr v-if="list.length === 0" class="no-data text-center">
+                            <td class="text-center" colspan="100">{{ resultsMessage }}</td>
+                        </tr>
+                        <template v-for="item in list">
+                            <tr :key="item.id">
+                                <td class="text-start align-middle">{{ item.certificacion }}</td>
+                                <td class="text-start align-middle">{{ item.fechaSolicitud | uidate }}</td>
+                                <td class="text-start align-middle">
+                                    <solicitudCertificacionEstado-label v-model="item.estadoId" />
+                                </td>
+                                <td class="text-start align-middle">{{ item.ultimaModificacionEstado | uidate }}</td>
+                                <td class="text-start align-middle">{{ item.vigenciaDesde | uidate }} - {{
+            item.vigenciaHasta | uidate }}</td>
+                                <td class="align-middle">
+                                    <solicitudCertificacionDocumentacionEstado-label :value="item" />
+                                </td>
+                                <td class="text-end align-middle">{{ item.cantDocsPendientes }}</td>
+                                <td class="text-end align-middle">{{ item.cantDocsCargados }}</td>
+                                <td class="text-end align-middle">{{ item.cantDocsAprobados }}</td>
+                                <td class="text-center align-middle">
+                                    <div class="d-inline-flex">
+                                        <inlineEdit :enabled="grants.update" @click="update(item.id)" />
+                                        <!-- Habilitar este botón si aplica -->
+                                        <inlineDelete :enabled="grants.delete" @click="remove(item)" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <datatablePagination v-if="list.length > 0" v-model="currentPage" :id="`${idTable}-datatable`"
+                    @page-changed="onPageChanged" :recordsTotal="recordsTotal" :recordsLength="recordsLength"
+                    :maxVisiblePages="5" />
+            </div>
         </div>
     </div>
 </template>
@@ -130,7 +147,7 @@ export default {
     },
     data: function () {
         return {
-            loc : loc,
+            loc: loc,
             parameters: {},
             currentPage: '0',
             recordsLength: 100,
@@ -154,7 +171,7 @@ export default {
             this.recordsLength = this.parameters.length;
 
             // if (this.$route.query.fromDetail) {
-                await this.getAsync();
+            await this.getAsync();
             // }
         },
         // Guarda los parámetros en local storage (sesión)
