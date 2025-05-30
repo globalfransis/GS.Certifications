@@ -1104,4 +1104,7 @@
   <data name="El archivo proporcionado está vacío." xml:space="preserve">
     <value>El archivo proporcionado está vacío.</value>
   </data>
+  <data name="El usuario ya esta relacionado con el socio" xml:space="preserve">
+    <value>El usuario ya esta relacionado con el socio</value>
+  </data>
 </root>

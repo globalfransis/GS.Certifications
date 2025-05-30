@@ -1151,4 +1151,7 @@
   <data name="El archivo proporcionado está vacío." xml:space="preserve">
     <value>The file provided is empty.</value>
   </data>
+  <data name="El usuario ya esta relacionado con el socio" xml:space="preserve">
+    <value>The user is already related to the partner</value>
+  </data>
 </root>
