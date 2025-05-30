@@ -18,18 +18,14 @@
   export default {
     name: 'SparklesIcon',
     props: {
-      // Color base del icono cuando no está animado o como punto de partida.
-      // La animación anulará 'fill' directamente.
       color: {
         type: String,
         default: 'currentColor' 
       },
-      // Tamaño del icono, ej: '3rem', '48px'
       size: {
         type: String,
         default: '3.0rem' 
       },
-      // Prop para activar/desactivar la animación
       animated: {
         type: Boolean,
         default: false 
@@ -37,11 +33,6 @@
     },
     computed: {
       componentColor() {
-        // Si está animado, la animación controla el 'fill'.
-        // Si no está animado, usa el color provisto o currentColor.
-        // Para asegurar que la animación comience desde un color definido por CSS si es necesario,
-        // podríamos no establecer 'fill' aquí si está animado, o dejar que el keyframe 0% lo establezca.
-        // Por simplicidad, este 'color' prop puede ser el color base.
         return this.color; 
       },
       currentSize() {
@@ -64,7 +55,6 @@
   </script>
   
   <style scoped>
-  /* La animación de pulso y cambio de color para el SVG */
   @keyframes aiIconAnimate {
     0% {
       transform: scale(0.9);

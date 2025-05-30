@@ -224,9 +224,7 @@ export default {
         iframeSrc() {
             if (this.documento && this.documento.archivoURL && this.documento.solicitudGuid && this.documento.guid) {
                 try {
-                    // Validar que la URL es construible y segura si es necesario
                     const url = `${this.currentLocation}/CertificacionesWebRepository/Uploads/Solicitudes/Solicitud_${this.documento.solicitudGuid}/Doc_${this.documento.guid}/${this.documento.archivoURL}`;
-                    // new URL(url); // Esto podría usarse para validar la URL si es completa
                     return url;
                 } catch (e) {
                     console.error("Error construyendo iframeSrc:", e);
@@ -262,25 +260,39 @@ export default {
     },
     methods: {
         startAiMessageCycling() {
-            this.stopAiMessageCycling();
-            if (this.documento.operationStatus === this.PROCESSING) {
+            this.stopAiMessageCycling(); // detenemos  cualquier ciclo anterior
+
+            if (this.documento.operationStatus === this.PROCESSING && this.aiProcessingMessages.length > 0) {
                 this.currentAiMessageIndex = 0;
-                this.currentAiMessage = this.aiProcessingMessages[this.currentAiMessageIndex] || this.loc["Analizando documento..."];
+                this.currentAiMessage = this.aiProcessingMessages[this.currentAiMessageIndex];
+
+                if (this.currentAiMessageIndex === this.aiProcessingMessages.length - 1) {
+                    return;
+                }
 
                 this.aiMessageIntervalId = setInterval(() => {
-                    this.currentAiMessageIndex = (this.currentAiMessageIndex + 1) % this.aiProcessingMessages.length;
-                    this.currentAiMessage = this.aiProcessingMessages[this.currentAiMessageIndex];
+                    if (this.documento.operationStatus !== this.PROCESSING) {
+                        this.stopAiMessageCycling();
+                        return;
+                    }
+                    this.currentAiMessageIndex++;
+                    if (this.currentAiMessageIndex >= this.aiProcessingMessages.length - 1) {
+                        this.currentAiMessageIndex = this.aiProcessingMessages.length - 1;
+                        this.currentAiMessage = this.aiProcessingMessages[this.currentAiMessageIndex];
+                        this.stopAiMessageCycling();
+                    } else {
+                        this.currentAiMessage = this.aiProcessingMessages[this.currentAiMessageIndex];
+                    }
                 }, 1500);
+            } else if (this.documento.operationStatus === this.PROCESSING) {
+                this.currentAiMessage = this.loc["Analizando documento..."];
             }
         },
-
         stopAiMessageCycling() {
             if (this.aiMessageIntervalId) {
                 clearInterval(this.aiMessageIntervalId);
                 this.aiMessageIntervalId = null;
             }
-            // Opcional: Resetear al mensaje por defecto o dejar el último mostrado
-            // this.currentAiMessage = this.loc["Analizando documento..."];
         },
         async pollDocumentStatus() {
             // si ya no está procesando, o si otra llamada de poll está en curso, no hacemos nada
@@ -362,7 +374,7 @@ export default {
         if (this.documento.operationStatus === this.PROCESSING) {
             if (previousStatus !== this.PROCESSING) {
                 this.startAiMessageCycling();
-                this.previousOperationStatusForMessage = this.PROCESSING; // Marcar que empezó a procesar
+                this.previousOperationStatusForMessage = this.PROCESSING;
             }
             this.startStatusPolling();
             this.iframeHeight = '30vh';
@@ -370,16 +382,13 @@ export default {
             this.stopAiMessageCycling();
             this.stopStatusPolling();
             this.iframeHeight = '120vh';
-            if (previousStatus === this.PROCESSING) { // Si *antes* estaba procesando
+            if (previousStatus === this.PROCESSING) { //
                 if (this.documento.operationStatus === this.COMPLETED) {
                     this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
                 } else if (this.documento.operationStatus === this.FAILED) {
                     this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
                 }
-                // No reseteamos previousOperationStatusForMessage aquí para que los v-else-if del template funcionen
-                // Se reseteará si el usuario interactúa de nuevo (ej. nueva carga).
             } else {
-                 // Si no venía de PROCESSING, y ahora tampoco es PROCESSING, limpiar por si acaso.
                  this.previousOperationStatusForMessage = null;
             }
         }
@@ -408,7 +417,7 @@ async getOperationStatusAsync(id) { // Llamado por el poller
         if (res.operationStatus === this.COMPLETED) {
             this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : this.documento.fechaDesde; // No sobreescribir si ya tiene valor
             this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : this.documento.fechaHasta;
-            if (res.archivoURL && !this.documento.archivoURL) { // Solo actualizar si no teníamos una URL y ahora sí
+            if (res.archivoURL && !this.documento.archivoURL) {
                 this.documento.archivoURL = res.archivoURL;
             }
         }
@@ -416,13 +425,12 @@ async getOperationStatusAsync(id) { // Llamado por el poller
         if (this.documento.operationStatus === this.PROCESSING) {
             if (previousPollingStatus !== this.PROCESSING) {
                 this.startAiMessageCycling();
-                this.previousOperationStatusForMessage = this.PROCESSING; // Marcar que empezó
+                this.previousOperationStatusForMessage = this.PROCESSING;
             }
-            // No se llama a startStatusPolling() aquí porque ya está en un ciclo de polling
             this.iframeHeight = '30vh';
         } else { // COMPLETED o FAILED
             this.stopAiMessageCycling();
-            this.stopStatusPolling(); // Detener el polling actual
+            this.stopStatusPolling();
             this.iframeHeight = '120vh';
             if (previousPollingStatus === this.PROCESSING) {
                 if (this.documento.operationStatus === this.COMPLETED) {
@@ -430,14 +438,12 @@ async getOperationStatusAsync(id) { // Llamado por el poller
                 } else if (this.documento.operationStatus === this.FAILED) {
                     this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
                 }
-                 // No reseteamos previousOperationStatusForMessage aquí para que los v-else-if del template funcionen
             } else {
                  this.previousOperationStatusForMessage = null;
             }
         }
     } catch (error) {
         console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
-        // Podríamos decidir si detener el polling aquí o dejar que reintente. Por ahora, no lo detenemos.
     }
 },
         // completarFormularioDocumento(e) {
