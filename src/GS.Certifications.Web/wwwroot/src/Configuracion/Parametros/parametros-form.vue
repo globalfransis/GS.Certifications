@@ -12,7 +12,7 @@
               <label class="control-label">{{loc["Clave"]}}</label>
               <input :disabled="!mode.isEdit" maxlength="100" class="form-control" v-model="parametro.clave" />
               <span class="text-danger field-validation-error" data-valmsg-for="clave" data-valmsg-replace="true">
-                {{ loc[errorBag.get("clave")] }}
+                {{ errorBag.get("clave") }}
               </span>
             </div>
 
