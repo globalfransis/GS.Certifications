@@ -111,7 +111,7 @@
             <button
                 :disabled="solicitudCertificacion.propietarioActualId != BACKOFFICE && solicitudCertificacion.estadoId != BORRADOR"
                 v-if="solicitudCertificacion.estadoId == PRESENTADA" class="btn btn-outline-danger btn-sm"
-                @click="rejectAsync" title="Rechazar solicitud">
+                @click="rejectAsync" :title="loc['Rechazar solicitud']">
                 {{ loc["Rechazar"]}}
             </button>
 

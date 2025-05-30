@@ -1074,4 +1074,34 @@
   <data name="Ya existe una solicitud en curso para la certificación indicada." xml:space="preserve">
     <value>Ya existe una solicitud en curso para la certificación indicada.</value>
   </data>
+  <data name="La certificación no existe." xml:space="preserve">
+    <value>La certificación no existe.</value>
+  </data>
+  <data name="La solicitud de certificación no existe." xml:space="preserve">
+    <value>La solicitud de certificación no existe.</value>
+  </data>
+  <data name="El documento no existe." xml:space="preserve">
+    <value>El documento no existe.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no fueron presentados." xml:space="preserve">
+    <value>Uno o más documentos de la solicitud no fueron presentados.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no son válidos." xml:space="preserve">
+    <value>Uno o más documentos de la solicitud no son válidos.</value>
+  </data>
+  <data name="La vigencia de la solicitud es requerida." xml:space="preserve">
+    <value>La vigencia de la solicitud es requerida.</value>
+  </data>
+  <data name="La vigencia de la solicitud es inválida." xml:space="preserve">
+    <value>La vigencia de la solicitud es inválida.</value>
+  </data>
+  <data name="La vigencia del documento es requerida." xml:space="preserve">
+    <value>La vigencia del documento es requerida.</value>
+  </data>
+  <data name="La vigencia del documento es inválida." xml:space="preserve">
+    <value>La vigencia del documento es inválida.</value>
+  </data>
+  <data name="El archivo proporcionado está vacío." xml:space="preserve">
+    <value>El archivo proporcionado está vacío.</value>
+  </data>
 </root>

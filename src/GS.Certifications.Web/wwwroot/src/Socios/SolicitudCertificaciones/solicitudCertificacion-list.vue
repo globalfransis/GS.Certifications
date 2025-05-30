@@ -259,7 +259,7 @@ export default {
 
                             this.update(id);
                         } else {
-                            this.uiService.showMessageError(`${loc["Operación rechazada"]}: ${loc[this.errorBag.get("certificacionId")]}`)
+                            this.uiService.showMessageError(`${loc["Operación rechazada"]}: ${this.errorBag.get("certificacionId")}`)
                         }
                     })
                     .finally(() => {

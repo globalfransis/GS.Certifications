@@ -65,7 +65,7 @@ public class AnalyzeDocumentoSolicitudCertificacionCommandHandler : BaseRequestH
         ArgumentNullException.ThrowIfNull(request.FormFile, nameof(request.FormFile));
         if (request.FormFile.Length == 0)
         {
-            throw new ArgumentException("El archivo proporcionado está vacío.", nameof(request.FormFile));
+            throw new Exception("El archivo proporcionado está vacío.");
         }
 
         var fileTransferService = fileTransferServiceBuilder.GetIWebFileTransferService(StorageTypeGSFWFTS.FileSystemStorage, CertificacionesFileConfiguration.DocumentoSolicitudCertificacion);
