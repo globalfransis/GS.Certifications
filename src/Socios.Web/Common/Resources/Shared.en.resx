@@ -604,4 +604,28 @@
   <data name="el documento actual" xml:space="preserve">
     <value>the current document</value>
   </data>
+  <data name="Procesando Documento con IA..." xml:space="preserve">
+    <value>Processing Document with AI...</value>
+  </data>
+  <data name="Error en el Análisis del Documento" xml:space="preserve">
+    <value>Error in Document Analysis</value>
+  </data>
+  <data name="El análisis previo falló. Podés intentar cargar el archivo de nuevo o contactarte con soporte." xml:space="preserve">
+    <value>Previous analysis failed. You can try uploading the file again or contact support.</value>
+  </data>
+  <data name="Reintentar Carga" xml:space="preserve">
+    <value>Retry Upload</value>
+  </data>
+  <data name="Leyendo estructura del documento..." xml:space="preserve">
+    <value>Reading document structure...</value>
+  </data>
+  <data name="Extrayendo campos clave..." xml:space="preserve">
+    <value>Extracting key fields...</value>
+  </data>
+  <data name="Verificando información..." xml:space="preserve">
+    <value>Verifying information...</value>
+  </data>
+  <data name="Finalizando análisis..." xml:space="preserve">
+    <value>Finalizing analysis...</value>
+  </data>
 </root>

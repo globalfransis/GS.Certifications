@@ -1,149 +1,130 @@
 <template>
     <div ref="top">
         <div class="col-12">
-            <div class="col-12 d-flex justify-content-between sticky-header mt-4 align-items-start">
+            <div class="col-12 d-flex justify-content-between mt-4 align-items-start">
                 <div class="col-12 d-grid">
                     <div class="row align-items-center">
-                        <p class="h5 col-md-6 col-12 mb-md-0 mb-2">{{ tipoDoc }}</p>
-                        <div class="col-md-6 col-12 gap-3 d-flex justify-content-md-end align-items-center">
+                        <p class="h5 col-md-7 col-12 mb-md-0 mb-2">{{ tipoDoc }}</p>
+                        <div class="col-md-5 col-12 gap-3 d-flex justify-content-md-end align-items-center">
                             <documentoEstado-label :value="documento.estadoId" />
-
-                            <div :key="`operationStatus-${documento.operationStatus}-processing`"
-                                v-if="documento.operationStatus == PROCESSING"
-                                class="d-flex align-items-center text-primary gap-1">
-                                <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                    <span class="visually-hidden">{{ loc["Analizando documento..."] }}</span>
-                                </div>
-                                <span>{{ loc["Analizando documento..."] }}</span>
-                            </div>
-                            <div :key="`operationStatus-${documento.operationStatus}-completed`"
-                                v-if="documento.operationStatus == COMPLETED"
-                                class="d-flex align-items-center text-success gap-1">
-                                <i class="fas fa-check-circle"></i>
-                                <span>{{ loc["Documento analizado"] }}</span>
-                            </div>
-                            <div :key="`operationStatus-${documento.operationStatus}-failed`"
-                                v-if="documento.operationStatus == FAILED"
-                                class="d-flex align-items-center text-danger gap-1">
-                                <i class="fas fa-times-circle"></i>
-                                <span>{{ loc["Error de análisis"] }}</span>
-                            </div>
                             <cancel-button class="ms-2" @click="cancel">{{ loc["Volver"] }}</cancel-button>
                         </div>
                     </div>
-
-                    <div class="btn-group btn-group-sm mt-2 col-1" v-if="documento.archivoURL" role="group"
+                    <div class="btn-group btn-group-sm mt-2 col-1" v-if="documento.archivoURL && documento.operationStatus != PROCESSING" role="group"
                         aria-label="Controles de visualización del documento">
-                        <button type="button" class="btn btn-light"
-                            :class="{ 'active': currentLayoutMode === LayoutMode.Split }"
-                            @click="setLayout(LayoutMode.Split)" :title="loc['Mostrar vista dividida']"
-                            aria-label="Mostrar vista dividida" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                            <i class="fas fa-columns" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" class="btn btn-light"
-                            :class="{ 'active': currentLayoutMode === LayoutMode.File }"
-                            @click="setLayout(LayoutMode.File)" :title="loc['Mostrar solo el documento']"
-                            aria-label="Mostrar solo el documento" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                            <i class="fas fa-file-alt" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" class="btn btn-light"
-                            :class="{ 'active': currentLayoutMode === LayoutMode.Form }"
-                            @click="setLayout(LayoutMode.Form)" :title="loc['Mostrar solo el formulario']"
-                            aria-label="Mostrar solo el formulario" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                            <i class="fas fa-list-alt" aria-hidden="true"></i>
-                        </button>
+                        <button type="button" class="btn btn-light" :class="{ 'active': currentLayoutMode === LayoutMode.Split }" @click="setLayout(LayoutMode.Split)" :title="loc['Mostrar vista dividida']"><i class="fas fa-columns"></i></button>
+                        <button type="button" class="btn btn-light" :class="{ 'active': currentLayoutMode === LayoutMode.File }" @click="setLayout(LayoutMode.File)" :title="loc['Mostrar solo el documento']"><i class="fas fa-file-alt"></i></button>
+                        <button type="button" class="btn btn-light" :class="{ 'active': currentLayoutMode === LayoutMode.Form }" @click="setLayout(LayoutMode.Form)" :title="loc['Mostrar solo el formulario']"><i class="fas fa-list-alt"></i></button>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card mt-3">
                 <div class="card-body">
-                    <div v-if="!documento.archivoURL && documento.id" class="text-center p-lg-5 p-md-4 p-3">
-                        <div class="card shadow-sm bg-light"
-                            style="margin: auto; border-radius: 0.5rem;">
-                            <div class="card-body">
+
+                    <div v-if="!documento.archivoURL && documento.id && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED" 
+                         class="text-center p-lg-4 p-3 mb-4">
+                        <div class="card shadow-sm bg-light" style="margin: auto; border-radius: 0.5rem">
+                            <div class="card-body p-4">
                                 <i class="fas fa-file-upload fa-3x text-primary mb-3"></i>
                                 <h5 class="card-title mb-3">{{ loc["Cargar Documento Requerido"] }}</h5>
-                                <p class="text-muted">
-                                    {{ loc["Para continuar, por favor seleccioná el archivo para"] }} <strong
-                                        v-if="tipoDoc">{{ tipoDoc }}</strong><strong v-else>{{ loc['el documento actual'] }}</strong>.
-                                    <br>
-                                    {{ loc["Una vez cargado, se analizará para extraer información relevante."] }}
+                                <p class="text-muted small">
+                                    {{ loc["Para continuar, por favor seleccioná el archivo para"] }} <strong v-if="tipoDoc">{{ tipoDoc }}</strong><strong v-else>{{ loc['el documento actual'] }}</strong>.
+                                    <br> {{ loc["Una vez cargado, se analizará para extraer información relevante."] }}
                                 </p>
-                                <div class="mt-4 mb-3">
-                                    <importar-documento idModal="__modal_DocumentoArchivo_empty"
-                                        ref="importarDocumentoEmpty" :title="loc['Seleccionar archivo...']"
-                                        :disabled="!grants.update" :documentoId="documento.id"
-                                        :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
+                                <div class="mt-4">
+                                    <importar-documento idModal="__modal_DocumentoArchivo_empty" ref="importarDocumentoEmpty"
+                                        :title="loc['Seleccionar archivo...']" :disabled="!grants.update" 
+                                        :documentoId="documento.id" :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
                                         @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
-                                    <span class="text-danger field-validation-error d-block mt-2">
-                                        {{ errorBag.get("documentoError") }}
-                                    </span>
+                                    <span class="text-danger field-validation-error d-block mt-2 small">{{ errorBag.get("documentoError") }}</span>
                                 </div>
                             </div>
                         </div>
-                        <hr class="my-4">
-                        <p class="text-muted text-center mb-3 fst-italic">
+                        <p class="text-muted text-center mt-3 mb-0 fst-italic small">
                             {{ loc["Los campos del formulario se habilitarán y/o completarán después del análisis del documento."] }}
                         </p>
+                         <hr class="my-4">
                     </div>
 
-                    <div v-else-if="documento.id">
-                        <div class="form-group col-sm-12 mb-4 row">
-                            <div class="col-lg-8 col-md-10">
-                                <label class="control-label">{{ loc["Cambiar Documento"] }}</label>
-                                <importar-documento idModal="__modal_DocumentoArchivo_loaded"
-                                    ref="importarDocumentoLoaded" :title="loc['Cambiar archivo...']"
-                                    :disabled="!grants.update" :documentoId="documento.id"
-                                    :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
-                                    @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
-                                <span class="text-danger field-validation-error">
-                                    {{ errorBag.get("documentoError") }}
-                                </span>
+                    <div v-if="documento.archivoURL && documento.id" class="form-group col-sm-12 mb-3 row">
+                        <div class="col-lg-8 col-md-10">
+                            <label class="control-label">{{ loc["Cambiar Documento"] }}</label>
+                            <importar-documento idModal="__modal_DocumentoArchivo_loaded" ref="importarDocumentoLoaded"
+                                :title="loc['Cambiar archivo...']"
+                                :disabled="!grants.update || documento.operationStatus == PROCESSING"
+                                :documentoId="documento.id" :solicitudId="documento.solicitudId"
+                                :fileName="documento.archivoURL"
+                                @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
+                            <span class="text-danger field-validation-error d-block mt-1 small">{{ errorBag.get("documentoError") }}</span>
+                        </div>
+                    </div>
+                    
+                    <div v-if="documento.id && (documento.operationStatus == PROCESSING || (documento.operationStatus == FAILED && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == COMPLETED && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL) )"
+                         class="mt-3 mb-4 p-3 text-center d-flex flex-column align-items-center justify-content-center">
+                        
+                        <div :key="documento.operationStatus" v-if="documento.operationStatus == PROCESSING">
+                            <div class="ai-animated-icon-container mb-3"> <sparkles-icon :animated="true" size="2.5rem"/> </div>
+                            <h5 class="text-primary mb-2">{{ loc["Procesando Documento con IA..."] }}</h5>
+                            <p class="text-muted small" style="min-height: 1.5em;">{{ currentAiMessage }}</p>
+                            <div class="progress mt-2" style="height: 6px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
                             </div>
                         </div>
-                        <hr>
-                    </div>
 
-                    <div class="row" v-if="documento.id">
-                        <div :id="documentoArchivoDivId" class="col-md-6" style="height: 120vh;"> <iframe
-                                v-if="iframeSrc" :src="iframeSrc" style="width: 100%; height: 100%; border: none;">
-                            </iframe>
+                        <div v-else-if="documento.operationStatus == COMPLETED && previousOperationStatusForMessage == PROCESSING"
+                             class="alert alert-success d-flex align-items-center justify-content-center shadow-sm w-75">
+                            <i class="fas fa-check-circle fa-lg me-2"></i> {{ loc["Documento analizado con éxito"] }}
+                        </div>
+
+                        <div v-else-if="documento.operationStatus == FAILED"
+                             class="alert alert-danger d-flex flex-column align-items-center justify-content-center shadow-sm w-75 p-4">
+                            <i class="fas fa-exclamation-triangle fa-2x text-danger mb-3"></i>
+                            <h5 class="text-danger mb-2">{{ loc["Error en el Análisis del Documento"] }}</h5>
+                            <p v-if="!documento.archivoURL" class="text-muted mb-3 small">{{ loc["El análisis previo falló. Puedes intentar cargar el archivo de nuevo o contactar a soporte."] }}</p>
+                            <importar-documento v-if="!documento.archivoURL"
+                                idModal="__modal_DocumentoArchivo_retry_failed" ref="importarDocumentoRetryFailed"
+                                :title="loc['Reintentar Carga']" :disabled="!grants.update" :documentoId="documento.id"
+                                :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
+                                @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
+                        </div>
+                    </div>
+                    <hr v-if="documento.id && (documento.operationStatus == PROCESSING || ((documento.operationStatus == COMPLETED || documento.operationStatus == FAILED) && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL))">
+
+                    <div class="row mt-2" v-if="documento.id && (documento.archivoURL || (!documento.archivoURL && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED))">
+                        <div :id="documentoArchivoDivId" class="col-md-6" :style="{ height: iframeHeight }">
+                            <iframe v-if="iframeSrc" :src="iframeSrc" style="width: 100%; height: 100%; border: none;"></iframe>
                             <div v-else-if="documento.archivoURL && !iframeSrc"
-                                class="alert alert-warning text-center d-flex align-items-center justify-content-center h-100">
-                                <span><i class="fas fa-exclamation-triangle me-2"></i>{{ loc["No se puede mostrar el documento. La URL podría ser inválida o el archivo no está accesible."] }}</span>
+                                 class="alert alert-warning text-center d-flex align-items-center justify-content-center h-100">
+                                <span><i class="fas fa-exclamation-triangle me-2"></i>{{ loc["No se puede mostrar el documento.La URL podría ser inválida o el archivo no está accesible."] }}</span>
                             </div>
                             <div v-else-if="!documento.archivoURL"
-                                class="alert alert-light text-center d-flex align-items-center justify-content-center h-100 border">
-                                <span><i class="fas fa-eye-slash me-2"></i>{{ loc["No hay documento cargado para visualizar."] }}</span>
+                                 class="alert alert-light text-center d-flex align-items-center justify-content-center h-100 border rounded">
+                                 <div v-if="documento.operationStatus != PROCESSING && documento.operationStatus != FAILED">
+                                     <i class="fas fa-eye-slash fa-2x text-muted mb-2 d-block"></i>
+                                     <span>{{ loc["No hay documento cargado para visualizar."] }}</span>
+                                 </div>
                             </div>
                         </div>
                         <div :id="documentoFormularioDivId" class="col-md-6">
-                            <div class="form-group col-lg-8 col-sm-12 mb-3 required"> <label
-                                    class="control-label">{{ loc["Fecha Desde"] }}</label>
-                                <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date"
-                                    class="form-control" v-model="documento.fechaDesde">
-                                <span class="text-danger field-validation-error">{{ errorBag.get("fechaDesde") }}</span>
+                            <div class="form-group col-lg-10 col-sm-12 mb-3 required">
+                                <label class="control-label">{{ loc["Fecha Desde"] }}</label>
+                                <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date" class="form-control form-control-sm" v-model="documento.fechaDesde">
+                                <span class="text-danger field-validation-error small">{{ errorBag.get("fechaDesde") }}</span>
                             </div>
-                            <div class="form-group col-lg-8 col-sm-12 mb-3 required"> <label
-                                    class="control-label">{{ loc["Fecha Hasta"] }}</label>
-                                <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date"
-                                    class="form-control" v-model="documento.fechaHasta">
-                                <span class="text-danger field-validation-error">{{ errorBag.get("fechaHasta") }}</span>
+                            <div class="form-group col-lg-10 col-sm-12 mb-3 required">
+                                <label class="control-label">{{ loc["Fecha Hasta"] }}</label>
+                                <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date" class="form-control form-control-sm" v-model="documento.fechaHasta">
+                                <span class="text-danger field-validation-error small">{{ errorBag.get("fechaHasta") }}</span>
                             </div>
                             <div class="form-group col-lg-12 col-sm-12 mb-3">
                                 <label class="control-label">{{ loc["Observaciones"] }}</label>
-                                <textarea class="form-control" cols="50" rows="10" :disabled="!grants.update"
-                                    v-model="documento.observaciones"></textarea>
-                                <span class="text-danger field-validation-error">{{ errorBag.get("observaciones")
-                                    }}</span>
+                                <textarea class="form-control form-control-sm" cols="50" rows="6" :disabled="!grants.update" v-model="documento.observaciones"></textarea>
+                                <span class="text-danger field-validation-error small">{{ errorBag.get("observaciones") }}</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3"
+                </div> </div> <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3"
                 v-if="currentLayoutMode != LayoutMode.File && documento.id">
                 <button @click.prevent="saveAsync" class="btn btn-secondary btn-sm"
                     :disabled="documento.operationStatus == PROCESSING || (!grants.update || documento.propietarioActualId == SOCIOS && documento.estadoId != DOCUMENTO_PRESENTADO) || (!grants.update || documento.propietarioActualId == BACKOFFICE && documento.estadoId == DOCUMENTO_PRESENTADO)">
@@ -153,7 +134,7 @@
                 <accept-button @click="updateAsync"
                     :disabled="documento.operationStatus == PROCESSING || (!grants.update || documento.propietarioActualId == SOCIOS && documento.estadoId != DOCUMENTO_PRESENTADO) || (!grants.update || documento.propietarioActualId == BACKOFFICE && documento.estadoId == DOCUMENTO_PRESENTADO)">
                     {{loc["Aceptar"]}}</accept-button>
-                <cancel-button @click="cancel">{{loc["Volver"]}}</cancel-button>
+                <cancel-button @click="cancel">{{ loc["Volver"] }}</cancel-button>
             </div>
         </div>
     </div>
@@ -175,6 +156,8 @@ import Documento from "./Documento";
 
 import loc from "@/common/commonLoc.js"
 
+import SparklesIcon from '@/common/ui/SparklesIcon.vue';
+
 const NO_DATA_MESSAGE = loc["No hay datos"];
 // Origen de la solicitud
 const SOCIOS = 1;
@@ -189,7 +172,8 @@ export default {
         inlineEdit,
         inlineDelete,
         inlineCancel,
-        documentoEstadoLabel
+        documentoEstadoLabel,
+        SparklesIcon
     },
     mixins: [commonMixin],
     name: "documento-edit",
@@ -227,7 +211,13 @@ export default {
             // ---
             pollingIntervalId: null, // Para guardar el ID del intervalo del polling
             isCurrentlyPolling: false, // Para evitar ejecuciones solapadas del poll
-            pollingDelay: 1500, // Tiempo en milisegundos para el polling 
+            pollingDelay: 1500, // Tiempo en milisegundos para el polling
+            aiProcessingMessages: [], // Se poblará en mounted o created
+            currentAiMessage: '',
+            aiMessageIntervalId: null,
+            currentAiMessageIndex: 0,
+            iframeHeight: '120vh',
+            previousOperationStatusForMessage: null, // Para mostrar mensajes de COMPLETED/FAILED solo una vez
         };
     },
     computed: {
@@ -256,12 +246,42 @@ export default {
         }
     },
     async mounted() {
+        this.aiProcessingMessages = [
+            this.loc["Analizando documento..."],
+            this.loc["Leyendo estructura del documento..."],
+            this.loc["Extrayendo campos clave..."],
+            this.loc["Verificando información..."],
+            this.loc["Finalizando análisis..."]
+        ];
+        this.currentAiMessage = this.aiProcessingMessages[0];
         await this.init();
     },
     beforeDestroy() {
         this.stopStatusPolling();
+        this.stopAiMessageCycling();
     },
     methods: {
+        startAiMessageCycling() {
+            this.stopAiMessageCycling();
+            if (this.documento.operationStatus === this.PROCESSING) {
+                this.currentAiMessageIndex = 0;
+                this.currentAiMessage = this.aiProcessingMessages[this.currentAiMessageIndex] || this.loc["Analizando documento..."];
+
+                this.aiMessageIntervalId = setInterval(() => {
+                    this.currentAiMessageIndex = (this.currentAiMessageIndex + 1) % this.aiProcessingMessages.length;
+                    this.currentAiMessage = this.aiProcessingMessages[this.currentAiMessageIndex];
+                }, 1500);
+            }
+        },
+
+        stopAiMessageCycling() {
+            if (this.aiMessageIntervalId) {
+                clearInterval(this.aiMessageIntervalId);
+                this.aiMessageIntervalId = null;
+            }
+            // Opcional: Resetear al mensaje por defecto o dejar el último mostrado
+            // this.currentAiMessage = this.loc["Analizando documento..."];
+        },
         async pollDocumentStatus() {
             // si ya no está procesando, o si otra llamada de poll está en curso, no hacemos nada
             if (this.documento.operationStatus !== this.PROCESSING || this.isCurrentlyPolling) {
@@ -327,43 +347,99 @@ export default {
                 }
             }
         },
-        async getAsync(id) {
-            this.uiService.showSpinner(true)
-            await this.$store.dispatch("getDocumentoAsync", id)
-                .then((res) => {
-                    const previousStatus = this.documento.operationStatus;
-                    this.documento = new Documento(res);
-                    this.tipoDoc = this.documento.tipo;
+        async getAsync(id) { // Llamado en init y después de @archivosUpdated
+    if (!id && this.documento.id) id = this.documento.id;
+    if (!id) return;
 
-                    if (this.documento.operationStatus === this.PROCESSING) {
-                        this.startStatusPolling();
-                    } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
-                        this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]); // O un mensaje más específico
-                        this.stopStatusPolling();
-                    }
-                })
-                .finally(() => {
-                    this.uiService.showSpinner(false);
-                });
-        },
-        async getOperationStatusAsync(id) {
-            await this.$store.dispatch("getDocumentoAsync", id)
-                .then((res) => {
-                    const previousStatus = this.documento.operationStatus;
-                    this.documento.operationId = res.operationId;
-                    this.documento.operationStatus = res.operationStatus;
-                    this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : null;
-                    this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : null;
-                    this.documento.rowVersion = res.rowVersion;
+    this.uiService.showSpinner(true);
+    try {
+        const res = await this.$store.dispatch("getDocumentoAsync", id);
+        const previousStatus = this.documento.operationStatus;
+        
+        this.documento = new Documento(res);
+        this.tipoDoc = this.documento.tipo;
 
-                    if (this.documento.operationStatus === this.PROCESSING) {
-                        this.startStatusPolling();
-                    } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
-                        this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]);
-                        this.stopStatusPolling();
-                    }
-                });
-        },
+        if (this.documento.operationStatus === this.PROCESSING) {
+            if (previousStatus !== this.PROCESSING) {
+                this.startAiMessageCycling();
+                this.previousOperationStatusForMessage = this.PROCESSING; // Marcar que empezó a procesar
+            }
+            this.startStatusPolling();
+            this.iframeHeight = '30vh';
+        } else { // COMPLETED, FAILED, o cualquier otro estado que no sea PROCESSING
+            this.stopAiMessageCycling();
+            this.stopStatusPolling();
+            this.iframeHeight = '120vh';
+            if (previousStatus === this.PROCESSING) { // Si *antes* estaba procesando
+                if (this.documento.operationStatus === this.COMPLETED) {
+                    this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
+                } else if (this.documento.operationStatus === this.FAILED) {
+                    this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+                }
+                // No reseteamos previousOperationStatusForMessage aquí para que los v-else-if del template funcionen
+                // Se reseteará si el usuario interactúa de nuevo (ej. nueva carga).
+            } else {
+                 // Si no venía de PROCESSING, y ahora tampoco es PROCESSING, limpiar por si acaso.
+                 this.previousOperationStatusForMessage = null;
+            }
+        }
+    } catch (error) {
+        console.error(`${this.loc["Error en getAsync para el ID"]} ${id}:`, error);
+        this.uiService.showMessageError(this.loc["Error al obtener datos del documento."]);
+        this.stopStatusPolling();
+        this.stopAiMessageCycling();
+        this.iframeHeight = '120vh';
+        this.previousOperationStatusForMessage = null;
+    } finally {
+        this.uiService.showSpinner(false);
+    }
+},
+
+async getOperationStatusAsync(id) { // Llamado por el poller
+    try {
+        const res = await this.$store.dispatch("getDocumentoAsync", id);
+        const previousPollingStatus = this.documento.operationStatus;
+
+        // Solo actualizamos los campos que el polling necesita para evitar sobreescribir datos del formulario
+        this.documento.operationId = res.operationId;
+        this.documento.operationStatus = res.operationStatus;
+        this.documento.rowVersion = res.rowVersion;
+
+        if (res.operationStatus === this.COMPLETED) {
+            this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : this.documento.fechaDesde; // No sobreescribir si ya tiene valor
+            this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : this.documento.fechaHasta;
+            if (res.archivoURL && !this.documento.archivoURL) { // Solo actualizar si no teníamos una URL y ahora sí
+                this.documento.archivoURL = res.archivoURL;
+            }
+        }
+
+        if (this.documento.operationStatus === this.PROCESSING) {
+            if (previousPollingStatus !== this.PROCESSING) {
+                this.startAiMessageCycling();
+                this.previousOperationStatusForMessage = this.PROCESSING; // Marcar que empezó
+            }
+            // No se llama a startStatusPolling() aquí porque ya está en un ciclo de polling
+            this.iframeHeight = '30vh';
+        } else { // COMPLETED o FAILED
+            this.stopAiMessageCycling();
+            this.stopStatusPolling(); // Detener el polling actual
+            this.iframeHeight = '120vh';
+            if (previousPollingStatus === this.PROCESSING) {
+                if (this.documento.operationStatus === this.COMPLETED) {
+                    this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
+                } else if (this.documento.operationStatus === this.FAILED) {
+                    this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+                }
+                 // No reseteamos previousOperationStatusForMessage aquí para que los v-else-if del template funcionen
+            } else {
+                 this.previousOperationStatusForMessage = null;
+            }
+        }
+    } catch (error) {
+        console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
+        // Podríamos decidir si detener el polling aquí o dejar que reintente. Por ahora, no lo detenemos.
+    }
+},
         // completarFormularioDocumento(e) {
         //     this.errorBag.clear();
 
@@ -442,5 +518,80 @@ export default {
 
 .btn-group .btn.btn-light:not(.active):focus {
     box-shadow: 0 0 0 0.2rem rgba(#0d8b8b, 0.25);
+}
+
+.ai-animated-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    /* Espacio para el icono y su animación */
+    /* width: 100%; si necesitas que ocupe todo el ancho */
+}
+
+/* Estilos para el icono animado */
+.ai-animated-icon {
+    font-size: 3.0rem;
+    /* Ajusta el tamaño del icono aquí */
+    display: inline-block;
+    line-height: 1;
+    animation: aiIconAnimate 2.5s infinite ease-in-out;
+    /* El color inicial lo tomará del primer paso del keyframe */
+}
+
+@keyframes aiIconAnimate {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.7;
+        color: #FFD700;
+        /* Gold - Color inicial */
+        text-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
+        /* Sombra/brillo dorado */
+    }
+
+    25% {
+        transform: scale(1.15);
+        opacity: 1;
+        color: #00FFFF;
+        /* Aqua/Cyan - Segundo color */
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+    }
+
+    50% {
+        transform: scale(0.95);
+        opacity: 0.8;
+        color: #FF00FF;
+        /* Fuchsia/Magenta - Tercer color */
+        text-shadow: 0 0 8px rgba(255, 0, 255, 0.5);
+    }
+
+    75% {
+        transform: scale(1.1);
+        opacity: 1;
+        color: #9370DB;
+        /* MediumPurple - Cuarto color */
+        text-shadow: 0 0 10px rgba(147, 112, 219, 0.6);
+    }
+
+    100% {
+        transform: scale(0.9);
+        opacity: 0.7;
+        color: #FFD700;
+        /* Gold - De vuelta al color inicial */
+        text-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
+    }
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1020;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.col-md-6[style*="height"] {
+    transition: height 0.3s ease-in-out;
 }
 </style>
