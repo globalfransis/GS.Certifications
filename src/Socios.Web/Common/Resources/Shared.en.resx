@@ -568,4 +568,34 @@
   <data name="Nueva Solicitud" xml:space="preserve">
     <value>New Application</value>
   </data>
+  <data name="La certificación no existe." xml:space="preserve">
+    <value>Certification does not exist.</value>
+  </data>
+  <data name="La solicitud de certificación no existe." xml:space="preserve">
+    <value>The certification request does not exist.</value>
+  </data>
+  <data name="El documento no existe." xml:space="preserve">
+    <value>The document does not exist.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no fueron presentados." xml:space="preserve">
+    <value>One or more application documents were not submitted.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no son válidos." xml:space="preserve">
+    <value>One or more documents in the application are not valid.</value>
+  </data>
+  <data name="La vigencia de la solicitud es requerida." xml:space="preserve">
+    <value>Validity of the application is required.</value>
+  </data>
+  <data name="La vigencia de la solicitud es inválida." xml:space="preserve">
+    <value>The validity of the application is invalid.</value>
+  </data>
+  <data name="La vigencia del documento es requerida." xml:space="preserve">
+    <value>The validity of the document is required.</value>
+  </data>
+  <data name="La vigencia del documento es inválida." xml:space="preserve">
+    <value>The validity of the document is invalid.</value>
+  </data>
+  <data name="El archivo proporcionado está vacío." xml:space="preserve">
+    <value>The file provided is empty.</value>
+  </data>
 </root>
