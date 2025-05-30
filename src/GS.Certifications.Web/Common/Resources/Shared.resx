@@ -1107,9 +1107,6 @@
   <data name="El usuario ya esta relacionado con el socio" xml:space="preserve">
     <value>El usuario ya esta relacionado con el socio</value>
   </data>
-  <data name="Documentos" xml:space="preserve">
-    <value>Documentos</value>
-  </data>
   <data name="El campo 'Destinatarios' es obligatorio" xml:space="preserve">
     <value>El campo 'Destinatarios' es obligatorio</value>
   </data>
@@ -1166,5 +1163,8 @@
   </data>
   <data name="Pleno" xml:space="preserve">
     <value>Pleno</value>
+  </data>
+  <data name="Documentos" xml:space="preserve">
+    <value>Documentos</value>
   </data>
 </root>
