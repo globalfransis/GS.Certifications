@@ -81,7 +81,7 @@
                         <div class="col-8">
                             <label class="control-label">{{loc["Importar Documento"]}}</label>
                             <importar-documento idModal="__modal_DocumentoArchivo" ref="importarDocumento"
-                                title="Documento" :disabled="!updateGrant" :documentoId="documento.id"
+                                :title="loc['Documento']" :disabled="!updateGrant" :documentoId="documento.id"
                                 :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
                                 @archivosUpdated="onDocumentoAnalyzed($event)" />
                             <span class="text-danger field-validation-error">

@@ -174,4 +174,7 @@
   <data name="Ingresar contraseña" xml:space="preserve">
     <value>Ingresar contraseña</value>
   </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
 </root>
