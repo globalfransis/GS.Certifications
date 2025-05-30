@@ -70,6 +70,15 @@ namespace Socios.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancelar.
+        /// </summary>
+        public static string Cancelar {
+            get {
+                return ResourceManager.GetString("Cancelar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contraseña.
         /// </summary>
         public static string Contraseña {

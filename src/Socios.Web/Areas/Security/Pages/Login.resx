@@ -180,4 +180,7 @@
   <data name="Socio" xml:space="preserve">
     <value>Socio</value>
   </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
 </root>

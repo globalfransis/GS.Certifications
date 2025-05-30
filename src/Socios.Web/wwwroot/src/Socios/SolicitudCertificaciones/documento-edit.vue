@@ -13,26 +13,26 @@
                                 <div :key="`operationStatus-${documento.operationStatus}`"
                                     v-if="documento.operationStatus == this.PROCESSING"
                                     class=" spinner-border spinner-border-sm text-primary" role="status">
-                                    <span class="visually-hidden">Analizando documento...</span>
+                                    <span class="visually-hidden">{{loc["Analizando documento..."]}}</span>
                                 </div>
-                                <span>Analizando documento...</span>
+                                <span>{{loc["Analizando documento..."]}}</span>
                             </div>
 
                             <div :key="`operationStatus-${documento.operationStatus}`"
                                 v-if="documento.operationStatus == this.COMPLETED"
                                 class="d-flex align-items-center text-success gap-1">
                                 <i class="fas fa-check-circle"></i>
-                                <span>Documento analizado</span>
+                                <span>{{loc["Documento analizado"]}}</span>
                             </div>
 
                             <div :key="`operationStatus-${documento.operationStatus}`"
                                 v-if="documento.operationStatus == this.FAILED"
                                 class="d-flex align-items-center text-danger gap-1">
                                 <i class="fas fa-times-circle"></i>
-                                <span>Error de análisis</span>
+                                <span>{{loc["Error de análisis"]}}</span>
                             </div>
 
-                            <cancel-button class="ms-2" @click="cancel">Volver</cancel-button>
+                            <cancel-button class="ms-2" @click="cancel">{{loc["Volver"]}}</cancel-button>
                         </div>
                     </div>
 
@@ -40,19 +40,19 @@
                         aria-label="Controles de visualización del documento">
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.Split }"
-                            @click="setLayout(LayoutMode.Split)" title="Mostrar vista dividida"
-                            aria-label="Mostrar vista dividida" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            @click="setLayout(LayoutMode.Split)" :title="loc['Mostrar vista dividida']"
+                            :aria-label="loc['Mostrar vista dividida']" data-bs-toggle="tooltip" data-bs-placement="bottom">
                             <i class="fas fa-columns" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.File }"
-                            @click="setLayout(LayoutMode.File)" title="Mostrar solo el documento"
-                            aria-label="Mostrar solo el documento" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            @click="setLayout(LayoutMode.File)" :title="loc['Mostrar solo el documento']"
+                            :aria-label="loc['Mostrar solo el documento']" data-bs-toggle="tooltip" data-bs-placement="bottom">
                             <i class="fas fa-file-alt" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.Form }"
-                            @click="setLayout(LayoutMode.Form)" title="Mostrar solo el formulario"
+                            @click="setLayout(LayoutMode.Form)" :title="loc['Mostrar solo el formulario']"
                             aria-label="Mostrar solo el formulario" data-bs-toggle="tooltip" data-bs-placement="bottom">
                             <i class="fas fa-list-alt" aria-hidden="true"></i>
                         </button>
@@ -79,9 +79,9 @@
 
                     <div class="form-group col-sm-12 mb-4 row">
                         <div class="col-8">
-                            <label class="control-label">Importar Documento</label>
+                            <label class="control-label">{{loc["Importar Documento"]}}</label>
                             <importar-documento idModal="__modal_DocumentoArchivo" ref="importarDocumento"
-                                title="Documento" :disabled="!updateGrant" :documentoId="documento.id"
+                                :title="loc['Documento']" :disabled="!updateGrant" :documentoId="documento.id"
                                 :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
                                 @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
                             <span class="text-danger field-validation-error">
@@ -101,7 +101,7 @@
                         </div>
                         <div :id="documentoFormularioDivId" class="col-6">
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
-                                <label class="control-label">Fecha Desde</label>
+                                <label class="control-label">{{loc["Fecha Desde"]}}</label>
                                 <input :disabled="documento.operationStatus == PROCESSING" type="date"
                                     class="form-control" v-model="documento.fechaDesde">
                                 <span class="text-danger field-validation-error">
@@ -109,7 +109,7 @@
                                 </span>
                             </div>
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
-                                <label class="control-label">Fecha Hasta</label>
+                                <label class="control-label">{{loc["Fecha Hasta"]}}</label>
                                 <input :disabled="documento.operationStatus == PROCESSING" type="date"
                                     class="form-control" v-model="documento.fechaHasta">
                                 <span class="text-danger field-validation-error">
@@ -117,7 +117,7 @@
                                 </span>
                             </div>
                             <div class="form-group col-lg-12 col-sm-12 mb-2">
-                                <label class="control-label">Observaciones</label>
+                                <label class="control-label">{{loc["Observaciones"]}}</label>
                                 <textarea class="form-control" cols="50" rows="25"
                                     v-model="documento.observaciones"></textarea>
                                 <span class="text-danger field-validation-error">
@@ -132,12 +132,12 @@
                 <button @click.prevent="saveAsync" class="btn btn-secondary btn-sm"
                     :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
                     <i class="fas fa-save"></i>
-                    Guardar
+                    {{loc["Guardar"]}}
                 </button>
                 <accept-button @click="updateAsync"
                     :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != SOCIOS && documento.estadoId != DOCUMENTO_PENDIENTE">
-                    Aceptar</accept-button>
-                <cancel-button @click="cancel">Volver</cancel-button>
+                    {{loc["Aceptar"]}}</accept-button>
+                <cancel-button @click="cancel">{{loc["Volver"]}}</cancel-button>
             </div>
         </div>
     </div>
@@ -158,8 +158,9 @@ import LayoutMode from "./LayoutMode";
 
 import Documento from "./Documento";
 
-const NO_DATA_MESSAGE = "No hay datos";
+import loc from "@/common/commonLoc.js"
 
+const NO_DATA_MESSAGE = loc["No hay datos"];
 // Origen de la solicitud
 const SOCIOS = 1;
 const BACKOFFICE = 2;
@@ -179,6 +180,7 @@ export default {
     name: "documento-edit",
     data: function () {
         return {
+            loc,
             documento: new Documento(),
             uiService: new UiService(),
             tipoDoc: '',
@@ -244,7 +246,7 @@ export default {
             try {
                 await this.getOperationStatusAsync(this.documento.id);
             } catch (error) {
-                console.error("Error durante el polling del estado del documento:", error);
+                console.error(loc["Error durante el polling del estado del documento:"], error);
                 this.stopStatusPolling(); // detenemos el polling en caso de error
             } finally {
                 this.isCurrentlyPolling = false;
@@ -307,7 +309,7 @@ export default {
                     if (this.documento.operationStatus === this.PROCESSING) {
                         this.startStatusPolling();
                     } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
-                        this.uiService.showMessageSuccess("Análisis de IA completado!"); // O un mensaje más específico
+                        this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]); // O un mensaje más específico
                         this.stopStatusPolling();
                     }
                 })
@@ -328,7 +330,7 @@ export default {
                     if (this.documento.operationStatus === this.PROCESSING) {
                         this.startStatusPolling();
                     } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
-                        this.uiService.showMessageSuccess("Análisis de IA completado!");
+                        this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]);
                         this.stopStatusPolling();
                     }
                 });
@@ -354,10 +356,10 @@ export default {
             return await this.$store.dispatch("putDocumentoAsync", this.documento)
                 .then(() => {
                     if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"])
                         this.goSolicitudEdit();
                     } else {
-                        this.uiService.showMessageError("Operación rechazada")
+                        this.uiService.showMessageError(loc["Operación rechazada"])
                     }
                 })
                 .finally(() => {
@@ -370,10 +372,10 @@ export default {
             await this.$store.dispatch("updateDocumentoDraftAsync", this.documento)
                 .then(() => {
                     if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"])
                         this.goSolicitudEdit();
                     } else {
-                        this.uiService.showMessageError("Operación rechazada")
+                        this.uiService.showMessageError(loc["Operación rechazada"])
                     }
                 })
                 .finally(() => {

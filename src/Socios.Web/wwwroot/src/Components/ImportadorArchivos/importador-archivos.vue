@@ -60,9 +60,9 @@ const discardTargetArchivosURL =
 const importarTargetArchivosURL =
     baseUrl + "/api/archivos/ImportarTargetArchivos";
 const defaultFileSizeLimit = 2;
-const FILESIZEERROR = "Error al importar archivo. El o los archivos que se intentan importar superan el limite permitido.";
-const ARCHIVOS_IMPORTADOS_DETALLE = "Seleccione los archivos que desea importar";
-const ARCHIVO_IMPORTADO_DETALLE = "Seleccione el archivo que desea importar";
+const FILESIZEERROR =loc["Error al importar archivo. El o los archivos que se intentan importar superan el limite permitido."];
+const ARCHIVOS_IMPORTADOS_DETALLE = loc["Seleccione los archivos que desea importar"];
+const ARCHIVO_IMPORTADO_DETALLE = loc["Seleccione el archivo que desea importar"];
 
 export default {
     name: "importador-archivos",
@@ -143,8 +143,8 @@ export default {
             extensionsTypes: this.acceptedExtensions == null ? "*" : this.acceptedExtensions,
             showMessageAfterUpload: false,
             showMessageAfterAction: false,
-            MESSAGE_AFTER_UPLOAD: "Para confirmar la subida del archivo agregado, debes presionar Aceptar",
-            MESSAGE_AFTER_ACTION: "Para confirmar la subida o eliminación del archivo, debes presionar Aceptar",
+            MESSAGE_AFTER_UPLOAD: loc["Para confirmar la subida del archivo agregado, debes presionar Aceptar"],
+            MESSAGE_AFTER_ACTION: loc["Para confirmar la subida o eliminación del archivo, debes presionar Aceptar"],
             fileSizeLimit: this.maxFileSize == null ? defaultFileSizeLimit : this.maxFileSize,
             archivosImportadosDetalle: this.importarMultiplesArchivos ? ARCHIVOS_IMPORTADOS_DETALLE : ARCHIVO_IMPORTADO_DETALLE,
         };
@@ -154,7 +154,7 @@ export default {
             return document.getElementById(`formFile-${this.target}`);
         },
         infoText() {
-            return this.infoTextProp ? this.infoTextProp : loc[`Las extensiones soportadas son ${this.extensionsTypes} con un máximo de ${this.fileSizeLimit} megabytes`]
+            `${loc['Las extensiones soportadas son']} ${this.extensionsTypes} ${loc['con un máximo de']} ${this.fileSizeLimit} ${loc['megabytes']}`
         },
         urlImportarArchivos() {
             if (this.apiURL) return this.apiURL
@@ -357,10 +357,10 @@ export default {
                         if (this.errorBag.get("FORMULARIO_DIGITAL")) {
                             this.uiService.showMessageErrorAndFocus(this.errorBag.get("FORMULARIO_DIGITAL"));
                         } else {
-                            this.uiService.showMessageErrorAndFocus("Operación rechazada.");
+                            this.uiService.showMessageError(loc["Operación rechazada"]);
                         }
                     } else {
-                        this.uiService.showMessageSuccess(`Operación confirmada`);
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"]);
                         this.$emit('created');
                         await this.loadArchivos();
                     }

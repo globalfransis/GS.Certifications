@@ -1071,4 +1071,7 @@
   <data name="Analizando documento..." xml:space="preserve">
     <value>Analizando documento...</value>
   </data>
+  <data name="Ya existe una solicitud en curso para la certificación indicada." xml:space="preserve">
+    <value>Ya existe una solicitud en curso para la certificación indicada.</value>
+  </data>
 </root>

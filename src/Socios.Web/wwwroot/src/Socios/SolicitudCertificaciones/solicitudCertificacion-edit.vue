@@ -156,10 +156,10 @@ export default {
             await this.$store.dispatch("deleteDocumentoAsync", dto)
                 .then(async () => {
                     if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"])
                         await this.getAsync(this.solicitudCertificacion.id);
                     } else {
-                        this.uiService.showMessageError("Operación rechazada")
+                        this.uiService.showMessageError(loc["Operación rechazada"])
                     }
                 })
                 .finally(() => {
@@ -201,10 +201,10 @@ export default {
             await this.$store.dispatch("putAsync", this.solicitudCertificacion)
                 .then(() => {
                     if (!this.errorBag.hasErrors()) {
-                        this.uiService.showMessageSuccess("Operación confirmada")
+                        this.uiService.showMessageSuccess(loc["Operación confirmada"])
                         this.goHome();
                     } else {
-                        this.uiService.showMessageError("Operación rechazada")
+                        this.uiService.showMessageError(loc["Operación rechazada"])
                     }
                 })
                 .finally(() => {

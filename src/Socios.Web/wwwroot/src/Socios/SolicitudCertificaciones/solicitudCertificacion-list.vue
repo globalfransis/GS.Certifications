@@ -172,19 +172,19 @@ export default {
         async remove(dto) {
             if (
                 await this.uiService.confirmActionModal(
-                    "¿Está usted seguro que desea eliminar esta solicitud?",
-                    "Aceptar",
-                    "Cancelar"
+                    loc["¿Está usted seguro que desea eliminar esta solicitud?"],
+                    loc["Aceptar"],
+                    loc["Cancelar"]
                 )
             ) {
                 this.uiService.showSpinner(true)
                 await this.$store.dispatch("deleteAsync", dto)
                     .then(async () => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             await this.getAsync();
                         } else {
-                            this.uiService.showMessageError("Operación rechazada")
+                            this.uiService.showMessageError(loc["Operación rechazada"])
                         }
                     })
                     .finally(() => {
@@ -236,9 +236,9 @@ export default {
         async createAsync() {
             if (
                 await this.uiService.confirmActionModal(
-                    "¿Está usted seguro que desea iniciar una nueva solicitud de certificación?",
-                    "Aceptar",
-                    "Cancelar"
+                    loc["¿Está usted seguro que desea iniciar una nueva solicitud de certificación?"],
+                    loc["Aceptar"],
+                    loc["Cancelar"]
                 )
             ) {
                 var nueva = new SolicitudCertificacion();
@@ -248,14 +248,14 @@ export default {
                 await this.$store.dispatch("postAsync", nueva)
                     .then((id) => {
                         if (!this.errorBag.hasErrors()) {
-                            this.uiService.showMessageSuccess("Operación confirmada")
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
 
                             // Limpiamos la lista antes de navegar
                             this.$store.dispatch("clearList");
 
                             this.update(id);
                         } else {
-                            this.uiService.showMessageError(`Operación rechazada: ${this.errorBag.get("certificacionId")}`)
+                            this.uiService.showMessageError(`${loc["Operación rechazada"]}: ${loc[this.errorBag.get("certificacionId")]}`)
                         }
                     })
                     .finally(() => {

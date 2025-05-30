@@ -117,22 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Activar para ordenar la columna de manera ascendente" xml:space="preserve">
-    <value>Activate to sort the column in ascending order</value>
-    <comment>DataTables</comment>
-  </data>
-  <data name="Activar para ordenar la columna de manera descendente" xml:space="preserve">
-    <value>Activate to sort the column in descending order</value>
-    <comment>DataTables</comment>
-  </data>
-  <data name="Anterior" xml:space="preserve">
-    <value>Previous</value>
-    <comment>DataTables</comment>
-  </data>
-  <data name="Apellido" xml:space="preserve">
-    <value>Last Name</value>
-    <comment>General</comment>
-  </data>
   <data name="Ser un miembro plenario del Centro de Navegación con una antigüedad no menor a tres (3) años." xml:space="preserve">
     <value>Be a full member of the Navigation Center with a seniority of not less than three (3) years.</value>
   </data>
@@ -448,5 +432,131 @@
   </data>
   <data name="registros por página" xml:space="preserve">
     <value>records per page</value>
+  </data>
+  <data name="Analizando documento..." xml:space="preserve">
+    <value>Analyzing document...</value>
+  </data>
+  <data name="Documento analizado" xml:space="preserve">
+    <value>Document analyzed</value>
+  </data>
+  <data name="Error de análisis" xml:space="preserve">
+    <value>Analysis error</value>
+  </data>
+  <data name="Mostrar vista dividida" xml:space="preserve">
+    <value>Show split view</value>
+  </data>
+  <data name="Mostrar solo el documento" xml:space="preserve">
+    <value>Show only the document</value>
+  </data>
+  <data name="Mostrar solo el formulario" xml:space="preserve">
+    <value>Show only the form</value>
+  </data>
+  <data name="Importar Documento" xml:space="preserve">
+    <value>Import Document</value>
+  </data>
+  <data name="Fecha Desde" xml:space="preserve">
+    <value>Date From</value>
+  </data>
+  <data name="Fecha Hasta" xml:space="preserve">
+    <value>Date To</value>
+  </data>
+  <data name="Nueva Solicitud de Certificación" xml:space="preserve">
+    <value>New Certification Application</value>
+  </data>
+  <data name="Error durante el polling del estado del documento:" xml:space="preserve">
+    <value>Error during document status polling:</value>
+  </data>
+  <data name="Análisis de IA completado!" xml:space="preserve">
+    <value>AI analysis completed!</value>
+  </data>
+  <data name="Operación confirmada" xml:space="preserve">
+    <value>Operation confirmed</value>
+  </data>
+  <data name="Operación rechazada" xml:space="preserve">
+    <value>Operation rejected</value>
+  </data>
+  <data name="Titulo" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Documentos" xml:space="preserve">
+    <value>Documentos</value>
+  </data>
+  <data name="¿Está usted seguro que desea eliminar esta solicitud?" xml:space="preserve">
+    <value>Are you sure you want to delete this request?</value>
+  </data>
+  <data name="¿Está usted seguro que desea iniciar una nueva solicitud de certificación?" xml:space="preserve">
+    <value>Are you sure you want to start a new certification application?</value>
+  </data>
+  <data name="Pendiente" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Validado" xml:space="preserve">
+    <value>Validated</value>
+  </data>
+  <data name="Rechazado" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="Vencido" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="Presentado" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="Sin especificar" xml:space="preserve">
+    <value>Not specified</value>
+  </data>
+  <data name="Presentada" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="Aprobada" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="Rechazada" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="Borrador" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="Documentación Rechazada" xml:space="preserve">
+    <value>Rejected Documentation</value>
+  </data>
+  <data name="Doc. Pend. Verificación" xml:space="preserve">
+    <value>Documentation Pending Verification</value>
+  </data>
+  <data name="Documentación Vencida" xml:space="preserve">
+    <value>Expired Documentation</value>
+  </data>
+  <data name="Documentación por Vencer" xml:space="preserve">
+    <value>Expiring Documentation</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Documentación Faltante" xml:space="preserve">
+    <value>Missing Documentation</value>
+  </data>
+  <data name="Estado Desconocido" xml:space="preserve">
+    <value>Status Unknown</value>
+  </data>
+  <data name="Importar" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Error al importar archivo. El o los archivos que se intentan importar superan el limite permitido." xml:space="preserve">
+    <value>Error importing file. The file or files you are trying to import exceed the allowed limit.</value>
+  </data>
+  <data name="Seleccione los archivos que desea importar" xml:space="preserve">
+    <value>Select the files you want to import</value>
+  </data>
+  <data name="Seleccione el archivo que desea importar" xml:space="preserve">
+    <value>Select the file you want to import</value>
+  </data>
+  <data name="Para confirmar la subida del archivo agregado, debes presionar Aceptar" xml:space="preserve">
+    <value>To confirm the upload of the added file, you must press OK.</value>
+  </data>
+  <data name="Para confirmar la subida o eliminación del archivo, debes presionar Aceptar" xml:space="preserve">
+    <value>To confirm the upload or deletion of the file, you must press OK</value>
+  </data>
+  <data name="Ya existe una solicitud en curso para la certificación indicada." xml:space="preserve">
+    <value>There is already an application in progress for the indicated certification.</value>
   </data>
 </root>
