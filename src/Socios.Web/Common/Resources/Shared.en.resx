@@ -637,4 +637,7 @@
   <data name="Solicitudes" xml:space="preserve">
     <value>Certification Applications</value>
   </data>
+  <data name="Anterior" xml:space="preserve">
+    <value>Previous</value>
+  </data>
 </root>
