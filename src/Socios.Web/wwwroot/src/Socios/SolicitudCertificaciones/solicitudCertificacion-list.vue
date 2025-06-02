@@ -36,12 +36,12 @@
                         <tr class="text-center align-middle">
                             <th data-column="Certificacion.Nombre" class="text-center w-10">{{ loc["Certificación"] }}
                             </th>
-                            <th data-column="FechaSolicitud" datatable-datetime class="text-center w-10">{{ loc["Fecha Solicitud"] }}</th>
+                            <th data-column="FechaSolicitud" datatable-datetime class="text-center w-5">{{ loc["Fecha Solicitud"] }}</th>
                             <th data-column="Estado.Descripcion" class="text-center w-10">{{ loc["Estado"] }}</th>
-                            <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center w-10">{{
+                            <th data-column="UltimaModificacionEstado" datatable-datetime class="text-center w-5">{{
             loc["Fecha Estado"] }}</th>
                             <th no-sort-datatable class="text-center w-10">{{ loc["Vigencia"] }}</th>
-                            <th class="text-center w-10" no-sort-datatable>{{ loc["Estado Documentación"] }}</th>
+                            <th class="text-center w-15" no-sort-datatable>{{ loc["Estado Documentación"] }}</th>
                             <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Pendientes"] }}</th>
                             <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Cargados"] }}</th>
                             <th class="text-center w-5" no-sort-datatable>{{ loc["Docs. Aprobados"] }}</th>
