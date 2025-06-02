@@ -1214,7 +1214,7 @@
   <data name="Documentos" xml:space="preserve">
     <value>Documents</value>
   </data>
-    <data name="Responsable Inscripto" xml:space="preserve">
+  <data name="Responsable Inscripto" xml:space="preserve">
     <value>Responsible Registrant</value>
   </data>
   <data name="Responsable no Inscripto" xml:space="preserve">
@@ -1246,5 +1246,8 @@
   </data>
   <data name="Responsable inscripto Agente de percepción" xml:space="preserve">
     <value>Responsible party registered as a collection agent</value>
+  </data>
+  <data name="Gestión de Alertas" xml:space="preserve">
+    <value>Alert Management</value>
   </data>
 </root>

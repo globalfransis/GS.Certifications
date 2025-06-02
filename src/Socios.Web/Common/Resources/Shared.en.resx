@@ -356,7 +356,7 @@
     <value>Certification</value>
   </data>
   <data name="Fecha Solicitud" xml:space="preserve">
-    <value>Request Date</value>
+    <value>Application Date</value>
   </data>
   <data name="Estado" xml:space="preserve">
     <value>Status</value>
@@ -633,5 +633,8 @@
   </data>
   <data name="Documento analizado con éxito" xml:space="preserve">
     <value>Document analyzed successfully</value>
+  </data>
+  <data name="Solicitudes" xml:space="preserve">
+    <value>Certification Applications</value>
   </data>
 </root>

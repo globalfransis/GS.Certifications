@@ -1200,4 +1200,7 @@
   <data name="Responsable inscripto Agente de percepción" xml:space="preserve">
     <value>Responsable inscripto Agente de percepción</value>
   </data>
+  <data name="Gestión de Alertas" xml:space="preserve">
+    <value>Gestión de Alertas</value>
+  </data>
 </root>

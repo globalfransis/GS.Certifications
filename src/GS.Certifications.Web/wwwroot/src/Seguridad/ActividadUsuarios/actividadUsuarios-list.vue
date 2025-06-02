@@ -56,7 +56,7 @@
                                 {{ item.fecha | uidatetime }}
                             </td>
                             <td class="text-right align-middle">
-                                {{ item.actividad }}
+                                {{ loc[item.actividad] }}
                             </td>
                             <td class="text-right align-middle">
                                 {{ item.navegador }}

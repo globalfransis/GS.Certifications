@@ -1,5 +1,6 @@
-using GSFSharedResources;
+
 using Microsoft.Extensions.Localization;
+using Socios.Web.Common.Resources;
 using Socios.Web.Pages;
 
 namespace Socios.Web.Areas.Socios.Pages.Certificaciones;
