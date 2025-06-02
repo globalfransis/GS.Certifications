@@ -4,6 +4,9 @@
 @using GSF.Application.Common.Interfaces;
 @using Microsoft.AspNetCore.Http
 @using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<GS.Certifications.Web.Common.Resources.Shared> SharedLocalizer
 
 @inject IConfiguration configuration 
 
@@ -12,7 +15,7 @@
 
 <script>
     // Datos de aplicación
-    const appName = "@configuration.GetSection("Application:Name").Value";
+    const appName = "@SharedLocalizer[configuration.GetSection("Application:Name").Value]";
 
     // Estados de solicitud de certificación
     const SolicitudEstado = Object.freeze(
