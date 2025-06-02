@@ -608,4 +608,7 @@
   <data name="Documento analizado con éxito" xml:space="preserve">
     <value>Documento analizado con éxito</value>
   </data>
+  <data name="Solicitudes" xml:space="preserve">
+    <value>Solicitudes</value>
+  </data>
 </root>
