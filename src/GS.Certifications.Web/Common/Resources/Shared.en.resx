@@ -639,7 +639,7 @@
     <value>Date / Time Notification</value>
   </data>
   <data name="Destinatarios" xml:space="preserve">
-    <value>Addressees</value>
+    <value>To</value>
   </data>
   <data name="Asunto" xml:space="preserve">
     <value>Subject</value>
@@ -726,10 +726,10 @@
     <value>Notifications</value>
   </data>
   <data name="Consulta" xml:space="preserve">
-    <value>Consultation</value>
+    <value>View</value>
   </data>
   <data name="Gestión" xml:space="preserve">
-    <value>Management</value>
+    <value>Manage</value>
   </data>
   <data name="Importar Documento" xml:space="preserve">
     <value>Import Document</value>
@@ -915,7 +915,7 @@
     <value>Aditional Rules</value>
   </data>
   <data name="Para" xml:space="preserve">
-    <value>For</value>
+    <value>To</value>
   </data>
   <data name="Para Variable" xml:space="preserve">
     <value>For Variable</value>
@@ -1249,5 +1249,8 @@
   </data>
   <data name="Gestión de Alertas" xml:space="preserve">
     <value>Alert Management</value>
+  </data>
+  <data name="Ubicación" xml:space="preserve">
+    <value>Location</value>
   </data>
 </root>

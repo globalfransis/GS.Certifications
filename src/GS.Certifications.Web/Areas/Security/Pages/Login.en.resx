@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Usuario o Email" xml:space="preserve">
-    <value>User or Email</value>
-  </data>
   <data name="Contraseña" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -191,5 +188,26 @@
   </data>
   <data name="el documento actual" xml:space="preserve">
     <value>the current document</value>
+  </data>
+  <data name="Debe ingresar un usuario o email." xml:space="preserve">
+    <value>You must enter a username or email address.</value>
+  </data>
+  <data name="Usuario o clave incorrecta." xml:space="preserve">
+    <value>Incorrect user or password.</value>
+  </data>
+  <data name="El usuario no existe. Complete con un email válido." xml:space="preserve">
+    <value>The user does not exist. Please complete with a valid email address.</value>
+  </data>
+  <data name="Algo no salió bien al enviar la notificación de la recuperación de contraseña. Intentá más tarde o consultá a soporte." xml:space="preserve">
+    <value>Something went wrong when sending the password recovery notification. Please try again later or contact support.</value>
+  </data>
+  <data name="Se ha enviado un email a" xml:space="preserve">
+    <value>An email has been sent to</value>
+  </data>
+  <data name="por favor revise su casilla de correo." xml:space="preserve">
+    <value>please check your mailbox.</value>
+  </data>
+  <data name="Ha finalizado la sesión" xml:space="preserve">
+    <value>The session has ended</value>
   </data>
 </root>

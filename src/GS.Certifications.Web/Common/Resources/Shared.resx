@@ -1203,4 +1203,7 @@
   <data name="Gestión de Alertas" xml:space="preserve">
     <value>Gestión de Alertas</value>
   </data>
+  <data name="Ubicación" xml:space="preserve">
+    <value>Ubicación</value>
+  </data>
 </root>
