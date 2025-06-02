@@ -332,6 +332,15 @@ namespace GS.Certifications.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Usuario o Email.
+        /// </summary>
+        public static string Usuario_o_Email {
+            get {
+                return ResourceManager.GetString("Usuario o Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Volver al inicio.
         /// </summary>
         public static string Volver_al_inicio {

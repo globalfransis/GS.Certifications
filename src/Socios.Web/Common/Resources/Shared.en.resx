@@ -347,7 +347,7 @@
     <value>Minimum requirements to obtain the Fonasba Quality Standard:</value>
   </data>
   <data name="Listado de Solicitudes" xml:space="preserve">
-    <value>List of Certification Applications</value>
+    <value>Certification Application List</value>
   </data>
   <data name="Agregar" xml:space="preserve">
     <value>Add</value>
@@ -380,7 +380,7 @@
     <value>Approved Docs.</value>
   </data>
   <data name="No hay datos" xml:space="preserve">
-    <value>There are no data</value>
+    <value>No Data</value>
   </data>
   <data name="Click en 'Buscar' para traer resultados" xml:space="preserve">
     <value>Click on 'Search' to bring up results</value>

@@ -189,4 +189,25 @@
   <data name="Ha finalizado la sesión. Vuelva a ingresar." xml:space="preserve">
     <value>Ha finalizado la sesión. Vuelva a ingresar.</value>
   </data>
+  <data name="Ha finalizado la sesión" xml:space="preserve">
+    <value>Ha finalizado la sesión</value>
+  </data>
+  <data name="Usuario o clave incorrecta." xml:space="preserve">
+    <value>Usuario o clave incorrecta.</value>
+  </data>
+  <data name="Debe ingresar un usuario o email." xml:space="preserve">
+    <value>Debe ingresar un usuario o email.</value>
+  </data>
+  <data name="Se ha enviado un email a" xml:space="preserve">
+    <value>Se ha enviado un email a</value>
+  </data>
+  <data name="por favor revise su casilla de correo." xml:space="preserve">
+    <value>por favor revise su casilla de correo.</value>
+  </data>
+  <data name="El usuario no existe. Complete con un email válido." xml:space="preserve">
+    <value>El usuario no existe. Complete con un email válido.</value>
+  </data>
+  <data name="Algo no salió bien al enviar la notificación de la recuperación de contraseña. Intentá más tarde o consultá a soporte." xml:space="preserve">
+    <value>Algo no salió bien al enviar la notificación de la recuperación de contraseña. Intentá más tarde o consultá a soporte.</value>
+  </data>
 </root>

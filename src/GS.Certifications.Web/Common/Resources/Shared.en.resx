@@ -312,16 +312,16 @@
     <value>Certifications</value>
   </data>
   <data name="Listado de Solicitudes" xml:space="preserve">
-    <value>List of Certification Applications</value>
+    <value>Certification Application List</value>
   </data>
   <data name="Solicitudes1" xml:space="preserve">
     <value>Certification Applications</value>
   </data>
   <data name="Listado de Solicitudes1" xml:space="preserve">
-    <value>List of Certification Applications</value>
+    <value>Certification Application List</value>
   </data>
   <data name="Listado de Resultados" xml:space="preserve">
-    <value>List of Results</value>
+    <value>Result List</value>
   </data>
   <data name="Actividad Usuarios" xml:space="preserve">
     <value>User Activities</value>
@@ -363,7 +363,7 @@
     <value>Click on 'Search' to bring up results</value>
   </data>
   <data name="No hay datos" xml:space="preserve">
-    <value>No data</value>
+    <value>No Data</value>
   </data>
   <data name="Portal de" xml:space="preserve">
     <value>Portal of</value>
@@ -381,13 +381,13 @@
     <value>Administration</value>
   </data>
   <data name="Listado de Empresas" xml:space="preserve">
-    <value>List of Companies</value>
+    <value>Company List</value>
   </data>
   <data name="Agregar" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="Razón Social" xml:space="preserve">
-    <value>Social Reason</value>
+    <value>Company Name</value>
   </data>
   <data name="Identificador Tributario" xml:space="preserve">
     <value>Tax Identifier</value>
@@ -402,10 +402,10 @@
     <value>Confirmed</value>
   </data>
   <data name="Nombre Fantasía" xml:space="preserve">
-    <value>Fantasy Name</value>
+    <value>Trade Name</value>
   </data>
   <data name="Tipo de Socio" xml:space="preserve">
-    <value>Type of Member</value>
+    <value>Partner Type </value>
   </data>
   <data name="País" xml:space="preserve">
     <value>Country</value>
@@ -456,7 +456,7 @@
     <value>Not specified</value>
   </data>
   <data name="Se muestran" xml:space="preserve">
-    <value>Shown are</value>
+    <value>Display</value>
   </data>
   <data name="registros por página" xml:space="preserve">
     <value>records per page</value>
@@ -468,7 +468,7 @@
     <value>Web Users</value>
   </data>
   <data name="Listado de Usuarios Web" xml:space="preserve">
-    <value>List of Web Users</value>
+    <value>Web User List</value>
   </data>
   <data name="No hay Usuarios Web asociados a este proveedor" xml:space="preserve">
     <value>There are no Web Users associated with this provider</value>
@@ -504,10 +504,10 @@
     <value>The 'Supplier Code' field is mandatory</value>
   </data>
   <data name="El campo 'Razón Social' es obligatorio" xml:space="preserve">
-    <value>The 'Social Reason' field is mandatory</value>
+    <value>The 'Company Name' field is mandatory</value>
   </data>
   <data name="El campo 'Nombre Fantasía' es obligatorio" xml:space="preserve">
-    <value>The 'Fantasy Name' field is required</value>
+    <value>The 'Trade Name' field is required</value>
   </data>
   <data name="El campo 'Identificador Tributario' es obligatorio" xml:space="preserve">
     <value>The 'Tax Identifier' field is mandatory.</value>
@@ -591,7 +591,7 @@
     <value>Validated By</value>
   </data>
   <data name="Fecha Subida" xml:space="preserve">
-    <value>Date of Upload</value>
+    <value>Upload Date</value>
   </data>
   <data name="Archivo" xml:space="preserve">
     <value>File</value>
@@ -630,7 +630,7 @@
     <value>The 'Phone' field is required</value>
   </data>
   <data name="Listado de Notificaciones" xml:space="preserve">
-    <value>List of Notifications</value>
+    <value>Notification List</value>
   </data>
   <data name="Fecha / Hora Registración" xml:space="preserve">
     <value>Date / Time Registration</value>
@@ -810,7 +810,7 @@
     <value>Parameters Data</value>
   </data>
   <data name="Listado de Parametros" xml:space="preserve">
-    <value>List of Parameters</value>
+    <value>Parameters List</value>
   </data>
   <data name="Sistema" xml:space="preserve">
     <value>System</value>
@@ -828,7 +828,7 @@
     <value>Middleware Field</value>
   </data>
   <data name="Listado de Definiciones de Interfaces" xml:space="preserve">
-    <value>List of Interface Definitions</value>
+    <value>Interface Definition List</value>
   </data>
   <data name="Número Orden Campo" xml:space="preserve">
     <value>Order Number Field</value>
@@ -849,7 +849,7 @@
     <value>Interface Rule Definition</value>
   </data>
   <data name="Listado de Definiciones de Reglas" xml:space="preserve">
-    <value>List of Rule Definitions</value>
+    <value>Rule Definition List</value>
   </data>
   <data name="Últ. Modif. Estado" xml:space="preserve">
     <value>Last Status Modification</value>
@@ -1050,7 +1050,7 @@
     <value>View Alert body in plain text</value>
   </data>
   <data name="Listado de Alertas" xml:space="preserve">
-    <value>List of Alerts</value>
+    <value>Alert List</value>
   </data>
   <data name="Estado para Disparar la Notificacion de Alerta. Se debe especificar Alerta Tipo para utilizar este filtro" xml:space="preserve">
     <value>Status to Trigger Alert Notification. You must specify Alert Type to use this filter</value>

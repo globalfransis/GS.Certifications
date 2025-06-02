@@ -70,6 +70,16 @@ namespace Socios.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Algo no salió bien al enviar la notificación de la recuperación de contraseña. Intentá más tarde o consultá a soporte..
+        /// </summary>
+        public static string Algo_no_salió_bien_al_enviar_la_notificación_de_la_recuperación_de_contraseña__Intentá_más_tarde_o_consultá_a_soporte_ {
+            get {
+                return ResourceManager.GetString("Algo no salió bien al enviar la notificación de la recuperación de contraseña. In" +
+                        "tentá más tarde o consultá a soporte.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancelar.
         /// </summary>
         public static string Cancelar {
@@ -84,6 +94,24 @@ namespace Socios.Web.Areas.Security.Pages {
         public static string Contraseña {
             get {
                 return ResourceManager.GetString("Contraseña", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debe ingresar un usuario o email..
+        /// </summary>
+        public static string Debe_ingresar_un_usuario_o_email_ {
+            get {
+                return ResourceManager.GetString("Debe ingresar un usuario o email.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El usuario no existe. Complete con un email válido..
+        /// </summary>
+        public static string El_usuario_no_existe__Complete_con_un_email_válido_ {
+            get {
+                return ResourceManager.GetString("El usuario no existe. Complete con un email válido.", resourceCulture);
             }
         }
         
@@ -111,6 +139,15 @@ namespace Socios.Web.Areas.Security.Pages {
         public static string Grupo {
             get {
                 return ResourceManager.GetString("Grupo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ha finalizado la sesión.
+        /// </summary>
+        public static string Ha_finalizado_la_sesión {
+            get {
+                return ResourceManager.GetString("Ha finalizado la sesión", resourceCulture);
             }
         }
         
@@ -187,6 +224,15 @@ namespace Socios.Web.Areas.Security.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to por favor revise su casilla de correo..
+        /// </summary>
+        public static string por_favor_revise_su_casilla_de_correo_ {
+            get {
+                return ResourceManager.GetString("por favor revise su casilla de correo.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Portal de Proveedores de.
         /// </summary>
         public static string Portal_de_Proveedores_de {
@@ -201,6 +247,15 @@ namespace Socios.Web.Areas.Security.Pages {
         public static string Portal_de_Socios {
             get {
                 return ResourceManager.GetString("Portal de Socios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se ha enviado un email a.
+        /// </summary>
+        public static string Se_ha_enviado_un_email_a {
+            get {
+                return ResourceManager.GetString("Se ha enviado un email a", resourceCulture);
             }
         }
         
@@ -255,6 +310,15 @@ namespace Socios.Web.Areas.Security.Pages {
         public static string Usuario {
             get {
                 return ResourceManager.GetString("Usuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario o clave incorrecta..
+        /// </summary>
+        public static string Usuario_o_clave_incorrecta_ {
+            get {
+                return ResourceManager.GetString("Usuario o clave incorrecta.", resourceCulture);
             }
         }
         

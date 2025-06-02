@@ -210,4 +210,7 @@
   <data name="Ha finalizado la sesión" xml:space="preserve">
     <value>The session has ended</value>
   </data>
+  <data name="Usuario o Email" xml:space="preserve">
+    <value>User or Email</value>
+  </data>
 </root>

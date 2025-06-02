@@ -105,7 +105,7 @@ public class LoginModel : BasePageModel
         {
             await Mediator.Send(new SendPasswordRecoveryTokenCommand() { Login_or_Email = Login_or_Email, DomainFIdm = DomainFIdmConstants.Socios });
 
-            ViewData["PasswordChangeRequestedMessage"] = $"Se ha enviado un email a <b>{Login_or_Email}</b>, por favor revise su casilla de correo.";
+            ViewData["PasswordChangeRequestedMessage"] = $"{_pageLoc["Se ha enviado un email a"]} <b>{Login_or_Email}</b>, {_pageLoc["por favor revise su casilla de correo."]}";
             PasswordRecoveryRequested = true;
         }
         catch (NonExistentUserException)
