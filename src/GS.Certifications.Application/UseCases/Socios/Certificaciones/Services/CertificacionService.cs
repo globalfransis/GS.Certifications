@@ -223,9 +223,9 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         {
             var solicitud = await GetSolicitudAsync(id);
 
-            if (solicitud.EstadoId != SolicitudCertificacionEstado.BORRADOR || solicitud.EstadoId != SolicitudCertificacionEstado.BORRADOR && solicitud.PropietarioActualId == origenEliminacionId)
+            if (solicitud.EstadoId != SolicitudCertificacionEstado.BORRADOR || solicitud.EstadoId == SolicitudCertificacionEstado.BORRADOR && solicitud.PropietarioActualId != origenEliminacionId)
             {
-                throw new Exception("No se puede eliminar esta solicitud.");
+                throw new SolicitudEliminacionEstadoInvalidoException();
             }
 
             solicitud.RowVersion = rowVersion;

@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <!-- <div class="row">
         <div v-if="title != null">
             <p class="h6">{{ loc[title] }}</p>
             <hr>
@@ -9,9 +9,6 @@
             {{ errorBag.getGSFWebFileTransferServiceException() }}
         </span>
         <br>
-        <!-- <span v-if="showMessageAfterUpload" class="text-danger field-validation-error" :data-valmsg-for="`formFile-${target}`" data-valmsg-replace="true">
-          {{ MESSAGE_AFTER_UPLOAD }}
-        </span> -->
         <span v-if="showMessageAfterAction && showMessage" class="text-danger field-validation-error"
             :data-valmsg-for="`formFile-${target}`" data-valmsg-replace="true">
             {{ MESSAGE_AFTER_ACTION }}
@@ -36,6 +33,58 @@
             </div>
         </div>
 
+    </div> -->
+    <div>
+        <div class="d-flex align-items-center gap-2"> <input 
+                v-if="showDetail" 
+                class="form-control col-12 form-control-sm flex-grow-1" 
+                :value="archivoNombre ? archivoNombre : archivosImportadosDetalle" 
+                readonly 
+                :aria-label="loc['Nombre del archivo importado']"
+            />
+            <span v-else-if="!showDetail && importarMultiplesArchivos" class="text-muted small flex-grow-1">{{ loc["ARCHIVOS_IMPORTADOS_DETALLE"] || 'Seleccione los archivos que desea importar' }}</span>
+            <span v-else-if="!showDetail && !importarMultiplesArchivos" class="text-muted small flex-grow-1">{{ loc["ARCHIVO_IMPORTADO_DETALLE"] || 'Seleccione el archivo que desea importar' }}</span>
+        
+        
+            <label 
+                :class="['btn', 'btn-outline-primary', 'btn-sm', 'd-flex', 'align-items-center', {'disabled': disabled}]"
+                role="button" 
+                :aria-disabled="disabled"
+                tabindex="0" 
+                @keydown.enter.space.prevent="triggerFileInput"
+            >
+                <i class="fas fa-file-import me-1"></i>
+                <input 
+                    type="file" 
+                    :accept="extensionsTypes" 
+                    :multiple="importarMultiplesArchivos"
+                    :name="`formFile-${target}`" 
+                    :id="`formFile-${target}`" 
+                    @input="submitFile" 
+                    @change="fileSelected"
+                    style="display: none;"
+                    ref="fileInputForLabel"
+                    :disabled="disabled"
+                />
+                <span>{{ loc["Importar"] }}</span>
+            </label>
+        
+            <div 
+                v-if="toolTipVisible" 
+                class="d-flex align-items-center" 
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                :title="infoText"
+                @touchstart="mostrarTooltip('archivosTooltip')"
+            >
+                <i class="fas fa-info-circle text-muted" style="cursor: help;"></i>
+            </div>
+        </div>
+        
+        <div v-if="errorBag.hasGSFWebFileTransferServiceException()" class="text-danger field-validation-error mt-1 small">
+            {{ errorBag.getGSFWebFileTransferServiceException() }}
+        </div>
+        <div v-if="showMessageAfterAction && showMessage" class="text-info mt-1 small"> {{ MESSAGE_AFTER_ACTION }}
+        </div>
     </div>
 </template>
 

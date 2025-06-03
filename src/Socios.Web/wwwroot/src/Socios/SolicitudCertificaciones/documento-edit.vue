@@ -22,19 +22,19 @@
             <div class="card mt-3">
                 <div class="card-body">
 
-                    <!-- <div v-if="!documento.archivoURL && documento.id && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED" 
-                         class="text-center p-lg-4 p-3 mb-4">
+                    <div v-if="!documento.archivoURL && documento.id && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED" 
+                         class="text-center mb-4">
                         <div class="card shadow-sm bg-light" style="margin: auto; border-radius: 0.5rem">
-                            <div class="card-body p-4">
+                            <div class="card-body">
                                 <i class="fas fa-file-upload fa-3x text-primary mb-3"></i>
                                 <h5 class="card-title mb-3">{{ loc["Cargar Documento Requerido"] }}</h5>
                                 <p class="text-muted small">
                                     {{ loc["Para continuar, por favor seleccioná el archivo para"] }} <strong v-if="tipoDoc">{{ tipoDoc }}</strong><strong v-else>{{ loc['el documento actual'] }}</strong>.
                                     <br> {{ loc["Una vez cargado, se analizará para extraer información relevante."] }}
                                 </p>
-                                <div class="mt-4">
+                                <div class="mt-4 col-12 d-flex justify-content-center">
                                     <importar-documento idModal="__modal_DocumentoArchivo_empty" ref="importarDocumentoEmpty"
-                                        :title="loc['Seleccionar archivo...']" :disabled="!grants.update" 
+                                        :disabled="!grants.update" 
                                         :documentoId="documento.id" :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
                                         @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
                                     <span class="text-danger field-validation-error d-block mt-2 small">{{ errorBag.get("documentoError") }}</span>
@@ -52,6 +52,7 @@
                             <label class="control-label">{{ loc["Cambiar Documento"] }}</label>
                             <importar-documento idModal="__modal_DocumentoArchivo_loaded" ref="importarDocumentoLoaded"
                                 :title="loc['Cambiar archivo...']"
+                                class="col-6"
                                 :disabled="!grants.update || documento.operationStatus == PROCESSING"
                                 :documentoId="documento.id" :solicitudId="documento.solicitudId"
                                 :fileName="documento.archivoURL"
@@ -89,9 +90,9 @@
                                 @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
                         </div>
                     </div>
-                    <hr v-if="documento.id && (documento.operationStatus == PROCESSING || ((documento.operationStatus == COMPLETED || documento.operationStatus == FAILED) && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL))"> -->
+                    <hr v-if="documento.id && (documento.operationStatus == PROCESSING || ((documento.operationStatus == COMPLETED || documento.operationStatus == FAILED) && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL))">
 
-                    <div class="form-group col-sm-12 mb-4 row">
+                    <!-- <div class="form-group col-sm-12 mb-4 row">
                         <div class="col-8">
                             <label class="control-label">{{ loc["Importar Documento"] }}</label>
                             <importar-documento idModal="__modal_DocumentoArchivo" ref="importarDocumento"
@@ -102,7 +103,7 @@
                                 {{ errorBag.get("documentoError") }}
                             </span>
                         </div>
-                    </div>
+                    </div> -->
 
                     <hr>
 
