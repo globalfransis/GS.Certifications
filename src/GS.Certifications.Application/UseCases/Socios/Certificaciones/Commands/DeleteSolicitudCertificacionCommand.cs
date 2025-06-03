@@ -10,6 +10,7 @@ namespace GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Comman
     public class DeleteSolicitudCertificacionCommand : IRequest<Unit>
     {
         public int Id { get; set; }
+        public short OrigenEliminacionId { get; set; }
         public byte[] RowVersion { get; set; }
     }
 
@@ -26,7 +27,7 @@ namespace GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Comman
 
         protected override async Task<Unit> HandleRequestAsync(DeleteSolicitudCertificacionCommand request, CancellationToken cancellationToken)
         {
-            await certificacionService.DeleteSolicitudAsync(request.Id, request.RowVersion);
+            await certificacionService.DeleteSolicitudAsync(request.Id, request.OrigenEliminacionId, request.RowVersion);
             await Context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

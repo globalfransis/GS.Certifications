@@ -97,14 +97,14 @@
                     <hr>
 
                     <div class="row">
-                        <div :id="documentoArchivoDivId" class="col-6" style="height: 150vh;">
+                        <div :id="documentoArchivoDivId" class="col-6">
                             <iframe v-if="documento.archivoURL"
                                 :src="`${currentLocation}/CertificacionesWebRepository/Uploads/Solicitudes/Solicitud_${documento.solicitudGuid}/Doc_${documento.guid}/${documento.archivoURL}`"
                                 style="width: 100%; height: 100%; border: none;">
                             </iframe>
                         </div>
-                        <div :id="documentoFormularioDivId" class="col-6">
-                            <div class="form-group col-lg-6 col-sm-12 mb-2 required">
+                        <div :id="documentoFormularioDivId" class="row col-md-6 col-6">
+                            <!-- <div class="form-group col-lg-6 col-sm-12 mb-2 required">
                                 <label class="control-label">{{ loc["Fecha Desde"] }}</label>
                                 <input type="date" class="form-control" v-model="documento.fechaDesde">
                                 <span class="text-danger field-validation-error">
@@ -127,6 +127,27 @@
                                 </span>
                             </div>
 
+                            <div v-if="documento.estadoId == DOCUMENTO_RECHAZADO" class="form-group col-lg-12 col-sm-12 mb-4">
+                                <label class="control-label">{{ loc["Motivo Rechazo"] }}</label>
+                                <textarea id="motivoRechazoTxtArea" disabled class="form-control" enable cols="20"
+                                    rows="4" v-model="documento.motivoRechazo"></textarea>
+                            </div> -->
+                            <div class="form-group col-6 col-lg-6 col-sm-6 mb-3 required">
+                                <label class="control-label">{{ loc["Fecha Desde"] }}</label>
+                                <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date" class="form-control form-control-sm" v-model="documento.fechaDesde">
+                                <span class="text-danger field-validation-error small">{{ errorBag.get("fechaDesde") }}</span>
+                                <span class="text-danger field-validation-error small">{{ errorBag.get("vigencia") }}</span>
+                            </div>
+                            <div class="form-group col-6 col-lg-6 col-sm-6 mb-3 required">
+                                <label class="control-label">{{ loc["Fecha Hasta"] }}</label>
+                                <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date" class="form-control form-control-sm" v-model="documento.fechaHasta">
+                                <span class="text-danger field-validation-error small">{{ errorBag.get("fechaHasta") }}</span>
+                            </div>
+                            <div class="col-12 col-lg-12 col-sm-12 mb-3">
+                                <label class="control-label">{{ loc["Observaciones"] }}</label>
+                                <textarea class="form-control form-control-sm" rows="25" :disabled="!grants.update" v-model="documento.observaciones"></textarea>
+                                <span class="text-danger field-validation-error small">{{ errorBag.get("observaciones") }}</span>
+                            </div>
                             <div v-if="documento.estadoId == DOCUMENTO_RECHAZADO" class="form-group col-lg-12 col-sm-12 mb-4">
                                 <label class="control-label">{{ loc["Motivo Rechazo"] }}</label>
                                 <textarea id="motivoRechazoTxtArea" disabled class="form-control" enable cols="20"
@@ -302,11 +323,11 @@ export default {
                 this.pollingIntervalId = null;
             }
         },
-        onDocumentoAnalyzed(e) {
-            if (!this.errorBag.hasErrors()) {
-                this.getAsync(e[0]);
-            }
-        },
+        // onDocumentoAnalyzed(e) {
+        //     if (!this.errorBag.hasErrors()) {
+        //         this.getAsync(e[0]);
+        //     }
+        // },
         setLayout(mode) {
             this.currentLayoutMode = mode;
             this.currentLayoutMode.apply(this.documentoArchivoDivId, this.documentoFormularioDivId);
@@ -327,43 +348,165 @@ export default {
                 }
             }
         },
+        // async getAsync(id) {
+        //     this.uiService.showSpinner(true)
+        //     await this.$store.dispatch("getDocumentoAsync", id)
+        //         .then((res) => {
+        //             const previousStatus = this.documento.operationStatus;
+        //             this.documento = new Documento(res);
+        //             this.tipoDoc = this.documento.tipo;
+
+        //             if (this.documento.operationStatus === this.PROCESSING) {
+        //                 this.startStatusPolling();
+        //             } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
+        //                 this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]); // O un mensaje más específico
+        //                 this.stopStatusPolling();
+        //             }
+        //         })
+        //         .finally(() => {
+        //             this.uiService.showSpinner(false);
+        //         });
+        // },
+        // async getOperationStatusAsync(id) {
+        //     await this.$store.dispatch("getDocumentoAsync", id)
+        //         .then((res) => {
+        //             const previousStatus = this.documento.operationStatus;
+        //             this.documento.operationId = res.operationId;
+        //             this.documento.operationStatus = res.operationStatus;
+        //             this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : null;
+        //             this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : null;
+        //             this.documento.rowVersion = res.rowVersion;
+
+        //             if (this.documento.operationStatus === this.PROCESSING) {
+        //                 this.startStatusPolling();
+        //             } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
+        //                 this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]);
+        //                 this.stopStatusPolling();
+        //             }
+        //         });
+        // },
         async getAsync(id) {
-            this.uiService.showSpinner(true)
-            await this.$store.dispatch("getDocumentoAsync", id)
-                .then((res) => {
-                    const previousStatus = this.documento.operationStatus;
-                    this.documento = new Documento(res);
-                    this.tipoDoc = this.documento.tipo;
+    if (!id && this.documento.id) id = this.documento.id;
+    if (!id) return;
 
-                    if (this.documento.operationStatus === this.PROCESSING) {
-                        this.startStatusPolling();
-                    } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
-                        this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]); // O un mensaje más específico
-                        this.stopStatusPolling();
-                    }
-                })
-                .finally(() => {
-                    this.uiService.showSpinner(false);
-                });
-        },
-        async getOperationStatusAsync(id) {
-            await this.$store.dispatch("getDocumentoAsync", id)
-                .then((res) => {
-                    const previousStatus = this.documento.operationStatus;
-                    this.documento.operationId = res.operationId;
-                    this.documento.operationStatus = res.operationStatus;
-                    this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : null;
-                    this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : null;
-                    this.documento.rowVersion = res.rowVersion;
+    // Mostrar spinner global SOLO si no estamos ya en un polling que lo maneje,
+    // o si es una carga inicial que podría estar procesando.
+    // Si 'documento.operationStatus' ya es PROCESSING, el spinner ya debería estar activo.
+    if (this.documento.operationStatus !== this.PROCESSING) {
+        this.uiService.showSpinner(true);
+    }
 
-                    if (this.documento.operationStatus === this.PROCESSING) {
-                        this.startStatusPolling();
-                    } else if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
-                        this.uiService.showMessageSuccess(loc["Análisis de IA completado!"]);
-                        this.stopStatusPolling();
-                    }
-                });
-        },
+    try {
+        const res = await this.$store.dispatch("getDocumentoAsync", id);
+        const previousStatus = this.documento.operationStatus;
+        this.documento = new Documento(res);
+        this.tipoDoc = this.documento.tipo; // Asumiendo que 'tipo' existe en 'res'
+
+        if (this.documento.operationStatus === this.PROCESSING) {
+            this.uiService.showSpinner(true); // Asegurar que esté activo
+            this.startStatusPolling();
+            // No se reduce el iframeHeight aquí, ya que el spinner global "bloquea" la página
+        } else { // COMPLETED, FAILED, o cualquier otro estado
+            this.stopStatusPolling();
+            this.uiService.showSpinner(false); // Ocultar spinner global
+            // this.iframeHeight = '120vh'; // Restaurar altura si la habías cambiado
+
+            if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
+                if (this.documento.operationStatus === this.COMPLETED) {
+                    this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
+                } else if (this.documento.operationStatus === this.FAILED) {
+                    this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+                }
+            }
+        }
+    } catch (error) {
+        console.error(`${this.loc["Error en getAsync para el ID"]} ${id}:`, error);
+        this.uiService.showMessageError(this.loc["Error al obtener datos del documento."]);
+        this.stopStatusPolling();
+        this.uiService.showSpinner(false); // Asegurarse de ocultarlo en caso de error
+        // this.iframeHeight = '120vh';
+    } finally {
+        // Si no está procesando y no hubo error que ya lo ocultó, ocultarlo.
+        if (this.documento.operationStatus !== this.PROCESSING && this.uiService.isSpinnerVisible) {
+             this.uiService.showSpinner(false);
+        }
+    }
+},
+
+async getOperationStatusAsync(id) { // Llamado por el poller
+    try {
+        const res = await this.$store.dispatch("getDocumentoAsync", id);
+        const previousStatus = this.documento.operationStatus;
+
+        this.documento.operationId = res.operationId;
+        this.documento.operationStatus = res.operationStatus;
+        this.documento.rowVersion = res.rowVersion; // Muy importante
+
+        if (res.operationStatus === this.COMPLETED) {
+            this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : null;
+            this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : null;
+            if (res.archivoURL && !this.documento.archivoURL) {
+                this.documento.archivoURL = res.archivoURL; // Actualiza si es la primera vez
+            }
+        }
+
+        if (this.documento.operationStatus === this.PROCESSING) {
+            // El spinner global ya debería estar activo si entramos en polling.
+            // No es necesario this.uiService.showSpinner(true) aquí porque el poller es silencioso.
+            // this.startStatusPolling(); // El polling ya está corriendo, se auto-gestiona
+        } else { // COMPLETED o FAILED detectado por el poller
+            this.stopStatusPolling();
+            this.uiService.showSpinner(false); // OCULTAR SPINNER GLOBAL
+            // this.iframeHeight = '120vh';
+
+            if (previousStatus === this.PROCESSING && this.documento.operationStatus !== this.PROCESSING) {
+                if (this.documento.operationStatus === this.COMPLETED) {
+                    this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
+                } else if (this.documento.operationStatus === this.FAILED) {
+                    this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+                }
+            }
+        }
+    } catch (error) {
+        console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
+        // En caso de error en el polling, podrías querer detenerlo o reintentar N veces.
+        // Por ahora, no ocultamos el spinner global aquí para no dar una falsa impresión de finalización.
+        // Si el polling falla repetidamente, el usuario podría quedarse con el spinner global.
+        // Considera una lógica de reintentos o un timeout para el polling.
+    }
+},
+
+async onDocumentoAnalyzed(e) { // Cambiado de onDocumentoAnalyzedAsync para seguir tu código
+    if (this.errorBag.hasErrors() || !e || (Array.isArray(e) && e.length === 0)) {
+        if (!this.errorBag.hasErrors()) {
+            this.uiService.showMessageError(this.loc["Error al procesar el archivo cargado."]);
+        }
+        return;
+    }
+
+    const eventData = Array.isArray(e) ? e[0] : e; // e[0] si es un array, o e directamente
+
+    // ASUMCIÓN: eventData (o eventData.id) es el ID del DocumentoCargado
+    // O que el backend ya sabe qué documento analizar basado en la subida de 'importar-documento'
+    // y que el siguiente getAsync recuperará el estado PROCESSING.
+
+    this.uiService.showSpinner(true); // Activar spinner global INMEDIATAMENTE
+    // this.iframeHeight = '30vh'; // Opcional: reducir iframe mientras "procesa"
+
+    // Forzar una actualización del estado del documento que debería estar en PROCESSING
+    // El backend debe haber iniciado la operación de IA y marcado el estado como PROCESSING
+    // como resultado de la acción del componente 'importar-documento'.
+    // La siguiente llamada a getAsync debería recoger ese estado.
+    // Si `eventData` es el objeto documento completo y actualizado por el importador:
+    if (eventData && eventData.id) {
+         await this.getAsync(eventData.id);
+    } else if (this.documento.id) {
+         await this.getAsync(this.documento.id); // Re-obtener el actual
+    } else {
+        console.error("No hay ID de documento para iniciar el análisis/polling.");
+        this.uiService.showSpinner(false);
+    }
+},
         // completarFormularioDocumento(e) {
         //     this.errorBag.clear();
 

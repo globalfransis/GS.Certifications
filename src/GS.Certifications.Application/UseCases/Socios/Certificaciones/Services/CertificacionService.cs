@@ -219,9 +219,15 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             throw new NotImplementedException();
         }
 
-        public async Task DeleteSolicitudAsync(int id, byte[] rowVersion)
+        public async Task DeleteSolicitudAsync(int id, short origenEliminacionId, byte[] rowVersion)
         {
             var solicitud = await GetSolicitudAsync(id);
+
+            if (solicitud.EstadoId != SolicitudCertificacionEstado.BORRADOR && solicitud.PropietarioActualId == origenEliminacionId)
+            {
+                throw new Exception("No se puede eliminar esta solicitud.");
+            }
+
             solicitud.RowVersion = rowVersion;
 
             foreach (var item in solicitud.DocumentosCargados)
@@ -499,7 +505,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             }
             if (solicitud.EstadoId == SolicitudCertificacionEstado.APROBADA)
             {
-                if (!solicitudToUpdate.DocumentosCargados.All(d => d.EstadoId == DocumentoEstado.VALIDADO)) throw new AprobacionSolicitudDocumentosInvalidosException();
+                //if (!solicitudToUpdate.DocumentosCargados.All(d => d.EstadoId == DocumentoEstado.VALIDADO)) throw new AprobacionSolicitudDocumentosInvalidosException();
 
                 if (solicitud.VigenciaDesde is null || solicitud.VigenciaHasta is null)
                 {
@@ -522,7 +528,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
 
                     if (ultimaVersionDocumentoCargado != null && ultimaVersionDocumentoCargado.EstadoId != DocumentoEstado.VALIDADO)
                     {
-                        throw new PresentacionSolicitudDocumentosSinValidarException();
+                        throw new AprobacionSolicitudDocumentosInvalidosException();
                     }
                 }
             }

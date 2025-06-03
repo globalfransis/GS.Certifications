@@ -22,7 +22,7 @@
             <div class="card mt-3">
                 <div class="card-body">
 
-                    <div v-if="!documento.archivoURL && documento.id && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED" 
+                    <!-- <div v-if="!documento.archivoURL && documento.id && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED" 
                          class="text-center p-lg-4 p-3 mb-4">
                         <div class="card shadow-sm bg-light" style="margin: auto; border-radius: 0.5rem">
                             <div class="card-body p-4">
@@ -89,10 +89,25 @@
                                 @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
                         </div>
                     </div>
-                    <hr v-if="documento.id && (documento.operationStatus == PROCESSING || ((documento.operationStatus == COMPLETED || documento.operationStatus == FAILED) && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL))">
+                    <hr v-if="documento.id && (documento.operationStatus == PROCESSING || ((documento.operationStatus == COMPLETED || documento.operationStatus == FAILED) && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL))"> -->
+
+                    <div class="form-group col-sm-12 mb-4 row">
+                        <div class="col-8">
+                            <label class="control-label">{{ loc["Importar Documento"] }}</label>
+                            <importar-documento idModal="__modal_DocumentoArchivo" ref="importarDocumento"
+                                :title="loc['Documento']" :disabled="!updateGrant" :documentoId="documento.id"
+                                :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
+                                @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
+                            <span class="text-danger field-validation-error">
+                                {{ errorBag.get("documentoError") }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <hr>
 
                     <div class="row mt-2" v-if="documento.id && (documento.archivoURL || (!documento.archivoURL && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED))">
-                        <div :id="documentoArchivoDivId" class="col-md-6" :style="{ height: iframeHeight }">
+                        <div :id="documentoArchivoDivId" class="col-md-6" >
                             <iframe v-if="iframeSrc" :src="iframeSrc" style="width: 100%; height: 100%; border: none;"></iframe>
                             <div v-else-if="documento.archivoURL && !iframeSrc"
                                  class="alert alert-warning text-center d-flex align-items-center justify-content-center h-100">
@@ -103,21 +118,21 @@
                                 <span><i class="fas fa-eye-slash me-2"></i>{{ loc["No hay documento cargado para visualizar."] }}</span>
                             </div>
                         </div>
-                        <div :id="documentoFormularioDivId" class="col-md-6 col-6">
-                            <div class="form-group col-lg-10 col-sm-12 mb-3 required">
+                        <div :id="documentoFormularioDivId" class="row col-md-6 col-6">
+                            <div class="form-group col-6 col-lg-6 col-sm-6 mb-3 required">
                                 <label class="control-label">{{ loc["Fecha Desde"] }}</label>
                                 <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date" class="form-control form-control-sm" v-model="documento.fechaDesde">
                                 <span class="text-danger field-validation-error small">{{ errorBag.get("fechaDesde") }}</span>
                                 <span class="text-danger field-validation-error small">{{ errorBag.get("vigencia") }}</span>
                             </div>
-                            <div class="form-group col-lg-10 col-sm-12 mb-3 required">
+                            <div class="form-group col-6 col-lg-6 col-sm-6 mb-3 required">
                                 <label class="control-label">{{ loc["Fecha Hasta"] }}</label>
                                 <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date" class="form-control form-control-sm" v-model="documento.fechaHasta">
                                 <span class="text-danger field-validation-error small">{{ errorBag.get("fechaHasta") }}</span>
                             </div>
-                            <div class="form-group col-lg-12 col-sm-12 mb-3">
+                            <div class="col-12 col-lg-12 col-sm-12 mb-3">
                                 <label class="control-label">{{ loc["Observaciones"] }}</label>
-                                <textarea class="form-control form-control-sm" cols="50" rows="6" :disabled="!grants.update" v-model="documento.observaciones"></textarea>
+                                <textarea class="form-control form-control-sm" rows="25" :disabled="!grants.update" v-model="documento.observaciones"></textarea>
                                 <span class="text-danger field-validation-error small">{{ errorBag.get("observaciones") }}</span>
                             </div>
                             <div v-if="documento.estadoId == DOCUMENTO_RECHAZADO" class="form-group col-lg-12 col-sm-12 mb-4">
@@ -224,6 +239,11 @@ export default {
         };
     },
     computed: {
+        isDocumentProcessingForUI() {
+            // esta computada se usará para deshabilitar campos y botones
+            // mientras el spinner global está activo por el análisis de IA
+            return this.documento.operationStatus === this.PROCESSING;
+        },
         iframeSrc() {
             if (this.documento && this.documento.archivoURL && this.documento.solicitudGuid && this.documento.guid) {
                 try {
@@ -337,10 +357,26 @@ export default {
                 this.pollingIntervalId = null;
             }
         },
-        async onDocumentoAnalyzedAsync(e) {
-            if (!this.errorBag.hasErrors()) {
-                await this.getAsync(e[0]);
+        // async onDocumentoAnalyzedAsync(e) {
+        //     if (!this.errorBag.hasErrors()) {
+        //         await this.getAsync(e[0]);
+        //     }
+        // },
+        async onDocumentoAnalyzedAsync(eventPayload) {
+            if (this.errorBag.hasErrors() || !eventPayload || eventPayload.length === 0) {
+                if (!this.errorBag.hasErrors()) {
+                    this.uiService.showMessageError(this.loc["Error al procesar el archivo cargado."]);
+                }
+                return;
             }
+
+            this.uiService.showSpinner(true);
+            this.previousOperationStatusForMessage = this.PROCESSING; // Preparamos para el mensaje post-análisis
+            this.iframeHeight = '30vh'; // Reducir iframe
+
+            // getAsync se encargará de iniciar el polling si el estado es PROCESSING
+            // y de ocultar el spinner cuando el estado cambie
+            await this.getAsync(eventPayload[0].id || this.documento.id); 
         },
         setLayout(mode) {
             this.currentLayoutMode = mode;
@@ -362,93 +398,204 @@ export default {
                 }
             }
         },
-        async getAsync(id) { // Llamado en init y después de @archivosUpdated
-    if (!id && this.documento.id) id = this.documento.id;
-    if (!id) return;
+//         async getAsync(id) { // Llamado en init y después de @archivosUpdated
+//     if (!id && this.documento.id) id = this.documento.id;
+//     if (!id) return;
 
-    this.uiService.showSpinner(true);
-    try {
-        const res = await this.$store.dispatch("getDocumentoAsync", id);
-        const previousStatus = this.documento.operationStatus;
+//     this.uiService.showSpinner(true);
+//     try {
+//         const res = await this.$store.dispatch("getDocumentoAsync", id);
+//         const previousStatus = this.documento.operationStatus;
         
-        this.documento = new Documento(res);
-        this.tipoDoc = this.documento.tipo;
+//         this.documento = new Documento(res);
+//         this.tipoDoc = this.documento.tipo;
 
-        if (this.documento.operationStatus === this.PROCESSING) {
-            if (previousStatus !== this.PROCESSING) {
-                this.startAiMessageCycling();
-                this.previousOperationStatusForMessage = this.PROCESSING;
-            }
-            this.startStatusPolling();
-            this.iframeHeight = '30vh';
-        } else { // COMPLETED, FAILED, o cualquier otro estado que no sea PROCESSING
-            this.stopAiMessageCycling();
-            this.stopStatusPolling();
-            this.iframeHeight = '120vh';
-            if (previousStatus === this.PROCESSING) { //
-                if (this.documento.operationStatus === this.COMPLETED) {
-                    this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
-                } else if (this.documento.operationStatus === this.FAILED) {
-                    this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+//         if (this.documento.operationStatus === this.PROCESSING) {
+//             if (previousStatus !== this.PROCESSING) {
+//                 this.startAiMessageCycling();
+//                 this.previousOperationStatusForMessage = this.PROCESSING;
+//             }
+//             this.startStatusPolling();
+//             this.iframeHeight = '30vh';
+//         } else { // COMPLETED, FAILED, o cualquier otro estado que no sea PROCESSING
+//             this.stopAiMessageCycling();
+//             this.stopStatusPolling();
+//             this.iframeHeight = '120vh';
+//             if (previousStatus === this.PROCESSING) { //
+//                 if (this.documento.operationStatus === this.COMPLETED) {
+//                     this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
+//                 } else if (this.documento.operationStatus === this.FAILED) {
+//                     this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+//                 }
+//             } else {
+//                  this.previousOperationStatusForMessage = null;
+//             }
+//         }
+//     } catch (error) {
+//         console.error(`${this.loc["Error en getAsync para el ID"]} ${id}:`, error);
+//         this.uiService.showMessageError(this.loc["Error al obtener datos del documento."]);
+//         this.stopStatusPolling();
+//         this.stopAiMessageCycling();
+//         this.iframeHeight = '120vh';
+//         this.previousOperationStatusForMessage = null;
+//     } finally {
+//         this.uiService.showSpinner(false);
+//     }
+// },
+
+// async getOperationStatusAsync(id) { // Llamado por el poller
+//     try {
+//         const res = await this.$store.dispatch("getDocumentoAsync", id);
+//         const previousPollingStatus = this.documento.operationStatus;
+
+//         // Solo actualizamos los campos que el polling necesita para evitar sobreescribir datos del formulario
+//         this.documento.operationId = res.operationId;
+//         this.documento.operationStatus = res.operationStatus;
+//         this.documento.rowVersion = res.rowVersion;
+
+//         if (res.operationStatus === this.COMPLETED) {
+//             this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : this.documento.fechaDesde; // No sobreescribir si ya tiene valor
+//             this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : this.documento.fechaHasta;
+//             if (res.archivoURL && !this.documento.archivoURL) {
+//                 this.documento.archivoURL = res.archivoURL;
+//             }
+//         }
+
+//         if (this.documento.operationStatus === this.PROCESSING) {
+//             if (previousPollingStatus !== this.PROCESSING) {
+//                 this.startAiMessageCycling();
+//                 this.previousOperationStatusForMessage = this.PROCESSING;
+//             }
+//             this.iframeHeight = '30vh';
+//         } else { // COMPLETED o FAILED
+//             this.stopAiMessageCycling();
+//             this.stopStatusPolling();
+//             this.iframeHeight = '120vh';
+//             if (previousPollingStatus === this.PROCESSING) {
+//                 if (this.documento.operationStatus === this.COMPLETED) {
+//                     this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
+//                 } else if (this.documento.operationStatus === this.FAILED) {
+//                     this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+//                 }
+//             } else {
+//                  this.previousOperationStatusForMessage = null;
+//             }
+//         }
+//     } catch (error) {
+//         console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
+//     }
+// },
+async getAsync(id) {
+        if (!id && this.documento.id) id = this.documento.id;
+        if (!id) {
+            this.uiService.showSpinner(false); // Asegurarse que el spinner se oculte si no hay id
+            return;
+        }
+
+        // No mostramos spinner aquí directamente si es llamado por el poller.
+        // El spinner global se activa en onDocumentoAnalyzedAsync (acción del usuario)
+        // o cuando el polling detecta por primera vez el estado PROCESSING.
+        // Se desactiva cuando el polling detecta un estado final.
+
+        let shouldShowGlobalSpinner = this.isCurrentlyPolling ? false : true;
+        if (shouldShowGlobalSpinner) this.uiService.showSpinner(true);
+
+        try {
+            const res = await this.$store.dispatch("getDocumentoAsync", id);
+            const previousStatus = this.documento.operationStatus;
+
+            this.documento = new Documento(res);
+            this.tipoDoc = this.documento.tipo;
+
+            if (this.documento.operationStatus === this.PROCESSING) {
+                this.uiService.showSpinner(true); // Asegurar que el spinner global esté activo
+                if (previousStatus !== this.PROCESSING) {
+                    this.previousOperationStatusForMessage = this.PROCESSING;
                 }
-            } else {
-                 this.previousOperationStatusForMessage = null;
-            }
-        }
-    } catch (error) {
-        console.error(`${this.loc["Error en getAsync para el ID"]} ${id}:`, error);
-        this.uiService.showMessageError(this.loc["Error al obtener datos del documento."]);
-        this.stopStatusPolling();
-        this.stopAiMessageCycling();
-        this.iframeHeight = '120vh';
-        this.previousOperationStatusForMessage = null;
-    } finally {
-        this.uiService.showSpinner(false);
-    }
-},
-
-async getOperationStatusAsync(id) { // Llamado por el poller
-    try {
-        const res = await this.$store.dispatch("getDocumentoAsync", id);
-        const previousPollingStatus = this.documento.operationStatus;
-
-        // Solo actualizamos los campos que el polling necesita para evitar sobreescribir datos del formulario
-        this.documento.operationId = res.operationId;
-        this.documento.operationStatus = res.operationStatus;
-        this.documento.rowVersion = res.rowVersion;
-
-        if (res.operationStatus === this.COMPLETED) {
-            this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : this.documento.fechaDesde; // No sobreescribir si ya tiene valor
-            this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : this.documento.fechaHasta;
-            if (res.archivoURL && !this.documento.archivoURL) {
-                this.documento.archivoURL = res.archivoURL;
-            }
-        }
-
-        if (this.documento.operationStatus === this.PROCESSING) {
-            if (previousPollingStatus !== this.PROCESSING) {
-                this.startAiMessageCycling();
-                this.previousOperationStatusForMessage = this.PROCESSING;
-            }
-            this.iframeHeight = '30vh';
-        } else { // COMPLETED o FAILED
-            this.stopAiMessageCycling();
-            this.stopStatusPolling();
-            this.iframeHeight = '120vh';
-            if (previousPollingStatus === this.PROCESSING) {
-                if (this.documento.operationStatus === this.COMPLETED) {
-                    this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
-                } else if (this.documento.operationStatus === this.FAILED) {
-                    this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+                this.startStatusPolling();
+                this.iframeHeight = '30vh';
+            } else { // COMPLETED, FAILED, o cualquier otro estado que no sea PROCESSING
+                this.stopStatusPolling();
+                this.uiService.showSpinner(false); // OCULTAR SPINNER GLOBAL
+                this.iframeHeight = '120vh';
+                if (previousStatus === this.PROCESSING) {
+                    this.displayCompletionMessages(); // Nuevo método para encapsular esto
                 }
-            } else {
-                 this.previousOperationStatusForMessage = null;
+                // Resetear esto solo si no veníamos de PROCESSING, o después de mostrar el mensaje.
+                // La idea es que el bloque de alerta en el template use previousOperationStatusForMessage.
+                // Se podría resetear después de un timeout o una interacción del usuario.
+                // Por ahora, se resetea si el estado actual no es uno que requiera el mensaje.
+                if (this.documento.operationStatus !== this.COMPLETED && this.documento.operationStatus !== this.FAILED) {
+                   this.previousOperationStatusForMessage = null;
+                }
+            }
+        } catch (error) {
+            // ... (manejo de error y ocultar spinner)
+            console.error(`${this.loc["Error en getAsync para el ID"]} ${id}:`, error);
+            this.uiService.showMessageError(this.loc["Error al obtener datos del documento."]);
+            this.stopStatusPolling();
+            this.uiService.showSpinner(false);
+            this.iframeHeight = '120vh';
+            this.previousOperationStatusForMessage = null;
+        } finally {
+            if (shouldShowGlobalSpinner && this.documento.operationStatus !== this.PROCESSING) {
+                this.uiService.showSpinner(false);
             }
         }
-    } catch (error) {
-        console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
-    }
-},
+    },
+
+    async getOperationStatusAsync(id) { // Llamado por el poller
+        try {
+            const res = await this.$store.dispatch("getDocumentoAsync", id);
+            const previousPollingStatus = this.documento.operationStatus;
+
+            this.documento.operationId = res.operationId;
+            this.documento.operationStatus = res.operationStatus; // Punto clave de actualización
+            this.documento.rowVersion = res.rowVersion;
+
+            if (res.operationStatus === this.COMPLETED) {
+                this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : this.documento.fechaDesde;
+                this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : this.documento.fechaHasta;
+                if (res.archivoURL && !this.documento.archivoURL) {
+                    this.documento.archivoURL = res.archivoURL;
+                }
+            }
+
+            if (this.documento.operationStatus === this.PROCESSING) {
+                this.uiService.showSpinner(true); // Mantener spinner global
+                if (previousPollingStatus !== this.PROCESSING) {
+                    this.previousOperationStatusForMessage = this.PROCESSING;
+                }
+                this.iframeHeight = '30vh';
+            } else { // COMPLETED o FAILED detectado por el poller
+                this.stopStatusPolling();
+                this.uiService.showSpinner(false); // OCULTAR SPINNER GLOBAL
+                this.iframeHeight = '120vh';
+                if (previousPollingStatus === this.PROCESSING) {
+                   this.displayCompletionMessages();
+                }
+                // No resetear previousOperationStatusForMessage aquí inmediatamente,
+                // dejar que el template lo use para el render actual.
+            }
+        } catch (error) {
+            console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
+            // Considera si detener el polling o mostrar un error global aquí.
+            // Si el polling falla consistentemente, el spinner global podría quedarse activo.
+            // Podrías añadir un contador de fallos de polling y detenerlo si falla X veces.
+        }
+    },
+
+    displayCompletionMessages() {
+        if (this.documento.operationStatus === this.COMPLETED) {
+            this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
+        } else if (this.documento.operationStatus === this.FAILED) {
+            this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+        }
+        // Resetear después de un breve momento para que el v-if en el template pueda mostrar la alerta y luego desaparecer
+        // setTimeout(() => {
+        //     this.previousOperationStatusForMessage = null;
+        // }, 4000); // Ocultar mensaje de alerta después de 4 segundos
+    },
         // completarFormularioDocumento(e) {
         //     this.errorBag.clear();
 

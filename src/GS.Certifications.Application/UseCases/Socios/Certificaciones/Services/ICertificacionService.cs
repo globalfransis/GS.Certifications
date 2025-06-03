@@ -32,7 +32,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         Task UpdateAsync(ICertificacionUpdate p);
         Task UpdateSolicitudAsync(int id, ISolicitudCertificacionUpdate solicitud);
         Task DeleteAsync(int id);
-        Task DeleteSolicitudAsync(int id, byte[] rowVersion);
+        Task DeleteSolicitudAsync(int id, short origenEliminacionId, byte[] rowVersion);
         Task DeleteDocumentoSolicitudAsync(int id, byte[] rowVersion);
     }
 

@@ -16,8 +16,8 @@ export default class SolicitudCertificacion {
 
         this.fechaSolicitud = dto ? dto.fechaSolicitud : null;
         this.ultimaModificacionEstado = dto ? dto.ultimaModificacionEstado : null;
-        this.vigenciaDesde = dto ? dto.vigenciaDesde : null;
-        this.vigenciaHasta = dto ? dto.vigenciaHasta : null;
+        this.vigenciaDesde = dto ? dto.vigenciaDesde ? new Date(dto.vigenciaDesde).toISOString().split('T')[0] : null : null;
+        this.vigenciaHasta = dto ? dto.vigenciaHasta ? new Date(dto.vigenciaHasta).toISOString().split('T')[0] : null : null;
         this.propietarioActualId = dto ? dto.propietarioActualId : null;
         this.origenId = dto ? dto.origenId : null;
 

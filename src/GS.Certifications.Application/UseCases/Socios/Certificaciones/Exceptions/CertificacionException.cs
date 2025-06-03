@@ -42,7 +42,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptio
 
     public class PresentacionSolicitudDocumentosSinValidarException : Exception
     {
-        public PresentacionSolicitudDocumentosSinValidarException() : base($"Uno o más documentos de la solicitud no fueron validados.")
+        public PresentacionSolicitudDocumentosSinValidarException() : base($"Uno o más documentos de la solicitud no están validados.")
         {
         }
     }

@@ -168,7 +168,7 @@ namespace GS.Certifications.Web.Controllers.Certificaciones
         [HttpDelete("Solicitudes/{id}")]
         public async Task<ActionResult<Unit>> DeleteAsync([FromRoute] int id, [FromQuery] byte[] rowVersion)
         {
-            var cmd = new DeleteSolicitudCertificacionCommand() { Id = id, RowVersion = rowVersion };
+            var cmd = new DeleteSolicitudCertificacionCommand() { Id = id, RowVersion = rowVersion, OrigenEliminacionId = Origen.BACKOFFICE };
             return await _mediator.Send(cmd);
         }
 

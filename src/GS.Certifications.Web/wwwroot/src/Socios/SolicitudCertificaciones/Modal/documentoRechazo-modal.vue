@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-dialog-centered grid-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">{{loc["Rechazar Documento"]}} {{ documento.id }}</h4>
+                    <h4 class="modal-title">{{loc["Rechazo de Documento"]}}: {{ documento.tipo }}</h4>
                     <button type="button" class="btn-close" @click="modalClosed" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
