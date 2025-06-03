@@ -1277,3 +1277,17 @@ table td.gsf-table-cell {
     padding: 10px 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+/* Colors */
+.text-warning-darker {
+    color: #FF8C00; /* Naranja Oscuro (DarkOrange) */
+    transition: color 0.2s ease-in-out; 
+  }
+  
+  .text-warning-darker:hover {
+    color: #E67E22;
+  }
+  
+  .text-warning-darker:hover i,
+  .text-warning-darker:focus i { /* :focus por accesibilidad y consistencia */
+  }

@@ -90,7 +90,7 @@
 
                             <td class="text-center">
                                 <div v-if="item.estadoValidacionARCAQRId == NO_VALIDADA"
-                                    class="text-warning" title="QR sin constatar ARCA"
+                                    class="text-warning-darker" title="QR sin constatar ARCA"
                                     data-toggle="tooltip">
                                     <i class="fas fa-question-circle"></i>
                                     <!-- <span>QR sin constatar ARCA</span> -->
@@ -120,7 +120,7 @@
 
                             <td class="text-center">
                                 <div v-if="item.estadoValidacionARCAId == NO_VALIDADA"
-                                    class="text-warning" title="Comp. sin constatar ARCA"
+                                    class="text-warning-darker" title="Comp. sin constatar ARCA"
                                     data-toggle="tooltip">
                                     <i class="fas fa-question-circle"></i>
                                     <!-- <span>Comp. sin constatar ARCA</span> -->

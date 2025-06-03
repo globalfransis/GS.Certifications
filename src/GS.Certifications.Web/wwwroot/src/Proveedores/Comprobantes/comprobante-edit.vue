@@ -19,7 +19,7 @@
 
                         <div v-if="comprobante.estadoValidacionARCAQRId == NO_VALIDADA"
                             :key="`qrNoConstatado-${comprobante.id}`"
-                            class="d-flex gap-1 align-items-center text-warning">
+                            class="d-flex gap-1 align-items-center text-warning-darker">
                             <i class="fas fa-question-circle"></i>
                             <span>QR sin constatar ARCA</span>
                         </div>
@@ -54,7 +54,7 @@
 
                         <div v-if="comprobante.estadoValidacionARCAId == NO_VALIDADA"
                             :key="`cmpSinConstatar-${comprobante.id}`"
-                            class="d-flex gap-1 align-items-center text-warning">
+                            class="d-flex gap-1 align-items-center text-warning-darker">
                             <i class="fas fa-question-circle"></i>
                             <span>Comp. sin constatar ARCA</span>
                         </div>

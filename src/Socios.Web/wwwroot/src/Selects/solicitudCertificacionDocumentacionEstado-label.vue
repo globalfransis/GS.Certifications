@@ -41,7 +41,7 @@ export default {
                 {
                     condition: this.esDocumentacionEnRevision,
                     descripcion: this.loc["Doc. para Revisión"],
-                    color: "text-warning",
+                    color: "text-warning-darker",
                     icono: "fas fa-exclamation-circle"
                 },
                 {
@@ -53,7 +53,7 @@ export default {
                 {
                     condition: this.esDocumentacionPorVencer,
                     descripcion: this.loc["Documentación por Vencer"],
-                    color: "text-warning",
+                    color: "text-warning-darker",
                     icono: "fas fa-exclamation-triangle"
                 },
                 {
