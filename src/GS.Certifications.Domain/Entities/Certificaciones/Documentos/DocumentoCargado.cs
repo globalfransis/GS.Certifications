@@ -26,6 +26,7 @@ namespace GS.Certifications.Domain.Entities.Certificaciones.Documentos
         public User ValidadoPor { get; set; }
         public DateTime? FechaSubida { get; set; }
         public string Observaciones { get; set; }
+        public string MotivoRechazo { get; set; }
         public string OperationId { get; set; }
         public OperationStatus? OperationStatus { get; set; } = null;
     }

@@ -100,6 +100,14 @@ namespace GS.Certifications.Web.Controllers.Certificaciones
             return Ok();
         }
 
+        [HttpPut("Solicitudes/{id}/Revisiones")]
+        public async Task<ActionResult<Unit>> MandarRevisionSolicitudAsync([FromRoute] int id, [FromBody] MandarRevisionSolicitudCertificacionCommand command)
+        {
+            command.Id = id;
+            await _mediator.Send(command);
+            return Ok();
+        }
+
         [HttpPut("Solicitudes/Documentos/{id}/Validaciones")]
         public async Task<ActionResult<Unit>> ValidarDocumentoSolicitudAsync([FromRoute] int id, [FromBody] ValidarDocumentoSolicitudCertificacionCommand command)
         {

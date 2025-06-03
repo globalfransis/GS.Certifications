@@ -112,6 +112,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
     {
         short? EstadoId { get; set; }
         string Observaciones { get; set; }
+        string MotivoRechazo { get; set; }
         DateTime? FechaSolicitud { get; set; }
         DateTime? UltimaModificacionEstado { get; set; }
         DateTime? VigenciaDesde { get; set; }
@@ -133,6 +134,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
     {
         string ArchivoURL { get; set; }
         string Observaciones { get; set; }
+        string MotivoRechazo { get; set; }
         int? Version { get; set; }
         DateTime? FechaDesde { get; set; }
         DateTime? FechaHasta { get; set; }

@@ -108,6 +108,7 @@
                                 <label class="control-label">{{ loc["Fecha Desde"] }}</label>
                                 <input :disabled="documento.operationStatus == PROCESSING || !grants.update" type="date" class="form-control form-control-sm" v-model="documento.fechaDesde">
                                 <span class="text-danger field-validation-error small">{{ errorBag.get("fechaDesde") }}</span>
+                                <span class="text-danger field-validation-error small">{{ errorBag.get("vigencia") }}</span>
                             </div>
                             <div class="form-group col-lg-10 col-sm-12 mb-3 required">
                                 <label class="control-label">{{ loc["Fecha Hasta"] }}</label>
@@ -119,15 +120,20 @@
                                 <textarea class="form-control form-control-sm" cols="50" rows="6" :disabled="!grants.update" v-model="documento.observaciones"></textarea>
                                 <span class="text-danger field-validation-error small">{{ errorBag.get("observaciones") }}</span>
                             </div>
+                            <div v-if="documento.estadoId == DOCUMENTO_RECHAZADO" class="form-group col-lg-12 col-sm-12 mb-4">
+                                <label class="control-label">{{ loc["Motivo Rechazo"] }}</label>
+                                <textarea id="motivoRechazoTxtArea" disabled class="form-control" enable cols="20"
+                                    rows="4" v-model="documento.motivoRechazo"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div> </div> <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3"
                 v-if="currentLayoutMode != LayoutMode.File && documento.id">
-                <button @click.prevent="saveAsync" class="btn btn-secondary btn-sm"
+                <!-- <button @click.prevent="saveAsync" class="btn btn-secondary btn-sm"
                     :disabled="documento.operationStatus == PROCESSING || (!grants.update || documento.propietarioActualId == SOCIOS && documento.estadoId != DOCUMENTO_PRESENTADO) || (!grants.update || documento.propietarioActualId == BACKOFFICE && documento.estadoId == DOCUMENTO_PRESENTADO)">
                     <i class="fas fa-save"></i>
                     {{ loc["Guardar"] }}
-                </button>
+                </button> -->
                 <accept-button @click="updateAsync"
                     :disabled="documento.operationStatus == PROCESSING || (!grants.update || documento.propietarioActualId == SOCIOS && documento.estadoId != DOCUMENTO_PRESENTADO) || (!grants.update || documento.propietarioActualId == BACKOFFICE && documento.estadoId == DOCUMENTO_PRESENTADO)">
                     {{loc["Aceptar"]}}</accept-button>

@@ -11,10 +11,10 @@ using static GS.Certifications.Application.UseCases.Socios.Certificaciones.Servi
 
 namespace GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Commands;
 
-public class RechazarSolicitudCertificacionCommand : IRequest<Unit>
+public class MandarRevisionSolicitudCertificacionCommand : IRequest<Unit>
 {
     public int Id { get; set; }
-    public string MotivoRechazo { get; set; }
+    public string Observaciones { get; set; }
     public byte[] RowVersion { get; set; }
     //public string ArchivoURL { get; set; }
     //public int? Version { get; set; }
@@ -23,18 +23,18 @@ public class RechazarSolicitudCertificacionCommand : IRequest<Unit>
     //public DateTime? FechaSubida { get; set; }
 }
 
-public class ValidarSolicitudCertificacionCommandHandler : BaseRequestHandler<Unit, RechazarSolicitudCertificacionCommand, Unit> // Adjust TEntity and TResponse properly
+public class MandarRevisionSolicitudCertificacionCommandHandler : BaseRequestHandler<Unit, MandarRevisionSolicitudCertificacionCommand, Unit>
 {
     private readonly ICertificationsDbContext Context;
     private readonly ICertificacionService certificacionService;
 
-    public ValidarSolicitudCertificacionCommandHandler(ICertificationsDbContext context, ICertificacionService certificacionService)
+    public MandarRevisionSolicitudCertificacionCommandHandler(ICertificationsDbContext context, ICertificacionService certificacionService)
     {
         Context = context;
         this.certificacionService = certificacionService;
     }
 
-    protected override async Task<Unit> HandleRequestAsync(RechazarSolicitudCertificacionCommand request, CancellationToken cancellationToken)
+    protected override async Task<Unit> HandleRequestAsync(MandarRevisionSolicitudCertificacionCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -42,8 +42,8 @@ public class ValidarSolicitudCertificacionCommandHandler : BaseRequestHandler<Un
 
             var solicitudUpdateParameters = new SolicitudCertificacionUpdate()
             {
-                EstadoId = SolicitudCertificacionEstado.RECHAZADA,
-                MotivoRechazo = request.MotivoRechazo,
+                EstadoId = SolicitudCertificacionEstado.REVISION,
+                Observaciones = request.Observaciones,
                 //FechaSolicitud = fechaSolicitud,
                 UltimaModificacionEstado = fechaSolicitud,
                 PropietarioId = Origen.SOCIOS

@@ -159,6 +159,18 @@ const formModule = {
                 .finally(() => {
                 });
         },
+        async sendRevisionAsync(ctx, solicitudCertificacion) {
+            ctx.getters.getErrorBag.clear();
+            return await new ajax()
+                .put(
+                    `${API_URL}/Solicitudes/${solicitudCertificacion.id}/Revisiones`,
+                    solicitudCertificacion,
+                    {
+                        errorBag: ctx.getters.getErrorBag,
+                    })
+                .finally(() => {
+                });
+        },
         async updateDocumentoDraftAsync(ctx, documento) {
             ctx.getters.getErrorBag.clear();
             return await new ajax()

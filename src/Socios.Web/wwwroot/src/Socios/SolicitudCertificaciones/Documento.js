@@ -15,6 +15,7 @@ export default class Documento {
         this.guid = dto ? dto.guid : null;
         this.solicitudGuid = dto ? dto.solicitudGuid : null;
         this.observaciones = dto ? dto.observaciones : null;
+        this.motivoRechazo = dto ? dto.motivoRechazo : null;
         this.tipo = dto ? dto.tipo : null;
         this.operationId = dto ? dto.operationId : null;
         this.operationStatus = dto ? dto.operationStatus : null;

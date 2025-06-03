@@ -614,4 +614,7 @@
   <data name="Anterior" xml:space="preserve">
     <value>Anterior</value>
   </data>
+  <data name="Motivo" xml:space="preserve">
+    <value>Motivo</value>
+  </data>
 </root>

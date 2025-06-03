@@ -4,35 +4,36 @@
             <div class="col-12 d-flex justify-content-between sticky-header mt-4">
                 <div class="col-12 d-grid">
                     <div class="row">
-                        <p class="h5 col-6">{{ tipoDoc }} - {{loc["Solicitud nro."]}} {{ documento.solicitudId }}
+                        <p class="h5 col-6">{{ tipoDoc }} - {{ loc["Solicitud nro."] }} {{ documento.solicitudId }}
                         </p>
                         <div class="col-6 gap-4 d-flex justify-content-end">
                             <documentoEstado-label :value="documento.estadoId" />
 
                             <div :key="`operationStatus-${documento.operationStatus}`"
-                                v-if="documento.operationStatus == this.PROCESSING" class="d-flex align-items-center text-primary gap-1">
+                                v-if="documento.operationStatus == this.PROCESSING"
+                                class="d-flex align-items-center text-primary gap-1">
                                 <div :key="`operationStatus-${documento.operationStatus}`"
                                     v-if="documento.operationStatus == this.PROCESSING"
                                     class=" spinner-border spinner-border-sm text-primary" role="status">
-                                    <span class="visually-hidden">{{loc["Analizando documento..."]}}</span>
+                                    <span class="visually-hidden">{{ loc["Analizando documento..."] }}</span>
                                 </div>
-                                <span>{{loc["Analizando documento..."]}}</span>
+                                <span>{{ loc["Analizando documento..."] }}</span>
                             </div>
 
                             <div :key="`operationStatus-${documento.operationStatus}`"
                                 v-if="documento.operationStatus == this.COMPLETED"
                                 class="d-flex align-items-center text-success gap-1">
                                 <i class="fas fa-check-circle"></i>
-                                <span>{{loc["Documento analizado"]}}</span>
+                                <span>{{ loc["Documento analizado"] }}</span>
                             </div>
 
                             <div :key="`operationStatus-${documento.operationStatus}`"
                                 v-if="documento.operationStatus == this.FAILED"
                                 class="d-flex align-items-center text-danger gap-1">
                                 <i class="fas fa-times-circle"></i>
-                                <span>{{loc["Error de análisis"]}}</span>
+                                <span>{{ loc["Error de análisis"] }}</span>
                             </div>
-                            <cancel-button class="ms-2" @click="cancel">{{loc["Volver"]}}</cancel-button>
+                            <cancel-button class="ms-2" @click="cancel">{{ loc["Volver"] }}</cancel-button>
                         </div>
                     </div>
 
@@ -41,19 +42,22 @@
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.Split }"
                             @click="setLayout(LayoutMode.Split)" :title="loc['Mostrar vista dividida']"
-                            :aria-label="loc['Mostrar vista dividida']" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            :aria-label="loc['Mostrar vista dividida']" data-bs-toggle="tooltip"
+                            data-bs-placement="bottom">
                             <i class="fas fa-columns" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.File }"
                             @click="setLayout(LayoutMode.File)" :title="loc['Mostrar solo el documento']"
-                            :aria-label="loc['Mostrar solo el documento']" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            :aria-label="loc['Mostrar solo el documento']" data-bs-toggle="tooltip"
+                            data-bs-placement="bottom">
                             <i class="fas fa-file-alt" aria-hidden="true"></i>
                         </button>
                         <button type="button" class="btn btn-light"
                             :class="{ 'active': currentLayoutMode === LayoutMode.Form }"
                             @click="setLayout(LayoutMode.Form)" :title="loc['Mostrar solo el formulario']"
-                            :aria-label="loc['Mostrar solo el formulario']" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            :aria-label="loc['Mostrar solo el formulario']" data-bs-toggle="tooltip"
+                            data-bs-placement="bottom">
                             <i class="fas fa-list-alt" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -79,7 +83,7 @@
 
                     <div class="form-group col-sm-12 mb-4 row">
                         <div class="col-8">
-                            <label class="control-label">{{loc["Importar Documento"]}}</label>
+                            <label class="control-label">{{ loc["Importar Documento"] }}</label>
                             <importar-documento idModal="__modal_DocumentoArchivo" ref="importarDocumento"
                                 :title="loc['Documento']" :disabled="!updateGrant" :documentoId="documento.id"
                                 :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
@@ -101,55 +105,65 @@
                         </div>
                         <div :id="documentoFormularioDivId" class="col-6">
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
-                                <label class="control-label">{{loc["Fecha Desde"]}}</label>
+                                <label class="control-label">{{ loc["Fecha Desde"] }}</label>
                                 <input type="date" class="form-control" v-model="documento.fechaDesde">
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("vigencia") }}
                                 </span>
                             </div>
                             <div class="form-group col-lg-6 col-sm-12 mb-2 required">
-                                <label class="control-label">{{loc["Fecha Hasta"]}}</label>
+                                <label class="control-label">{{ loc["Fecha Hasta"] }}</label>
                                 <input type="date" class="form-control" v-model="documento.fechaHasta">
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("fechaHasta") }}
                                 </span>
                             </div>
                             <div class="form-group col-lg-12 col-sm-12 mb-2">
-                                <label class="control-label">{{loc["Observaciones"]}}</label>
+                                <label class="control-label">{{ loc["Observaciones"] }}</label>
                                 <textarea class="form-control" cols="50" rows="25"
                                     v-model="documento.observaciones"></textarea>
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("observaciones") }}
                                 </span>
                             </div>
+
+                            <div v-if="documento.estadoId == DOCUMENTO_RECHAZADO" class="form-group col-lg-12 col-sm-12 mb-4">
+                                <label class="control-label">{{ loc["Motivo Rechazo"] }}</label>
+                                <textarea id="motivoRechazoTxtArea" disabled class="form-control" enable cols="20"
+                                    rows="4" v-model="documento.motivoRechazo"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3" v-if="currentLayoutMode != LayoutMode.File">
-                <button @click.prevent="saveAsync"
+                <!-- <button @click.prevent="saveAsync"
                     :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
                     class="btn btn-secondary btn-sm">
                     <i class="fas fa-save"></i>
                     {{loc["Guardar"]}}
-                </button>
+                </button> -->
 
                 <accept-button @click="updateAsync"
                     :disabled="documento.operationStatus == PROCESSING || documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PRESENTADO"
                     v-if="documento.estadoId == DOCUMENTO_PRESENTADO">
-                    {{loc["Validar"]}}
+                    {{ loc["Validar"] }}
                 </accept-button>
 
-                <button
-                    :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
+                <a :disabled="documento.propietarioActualId != BACKOFFICE && documento.estadoId != DOCUMENTO_PENDIENTE"
                     v-if="documento.estadoId == DOCUMENTO_PRESENTADO" class="btn btn-outline-danger btn-sm"
-                    @click="rejectAsync" :title="loc['Rechazar solicitud']">
-                    {{loc["Rechazar"]}}
-                </button>
+                    :title="loc['Rechazar documento']" data-toggle="tooltip" data-bs-toggle="modal"
+                    :data-bs-target="`#${documentoRechazoId}-${documento.id}`" style="cursor:pointer">
+                    {{ loc["Rechazar"] }}
+                </a>
 
-                <cancel-button @click="cancel">{{loc["Volver"]}}</cancel-button>
+                <cancel-button @click="cancel">{{ loc["Volver"] }}</cancel-button>
             </div>
         </div>
+
+        <documentoRechazo-modal :documento="documento" @documentoRechazado="rejectAsync($event)"
+            :idModal="`${documentoRechazoId}-${documento.id}`" />
+
     </div>
 </template>
 
@@ -168,6 +182,8 @@ import LayoutMode from "./LayoutMode";
 
 import Documento from "./Documento";
 
+import documentoRechazoModal from './Modal/documentoRechazo-modal'
+
 import loc from "@/common/commonLoc.js"
 
 const NO_DATA_MESSAGE = loc["No hay datos"];
@@ -185,7 +201,8 @@ export default {
         inlineEdit,
         inlineDelete,
         inlineCancel,
-        documentoEstadoLabel
+        documentoEstadoLabel,
+        documentoRechazoModal
     },
     mixins: [commonMixin],
     name: "documento-edit",
@@ -223,8 +240,8 @@ export default {
             // ---
             pollingIntervalId: null, // Para guardar el ID del intervalo del polling
             isCurrentlyPolling: false, // Para evitar ejecuciones solapadas del poll
-            pollingDelay: 1500, // Tiempo en milisegundos para el polling 
-
+            pollingDelay: 1500, // Tiempo en milisegundos para el polling
+            documentoRechazoId: "documentoRechazoModal",
         };
     },
     computed: {
@@ -365,7 +382,7 @@ export default {
         async updateAsync() {
             if (
                 await this.uiService.confirmActionModal(
-                    loc["¿Está usted seguro que desea aprobar esta solicitud?"],
+                    loc["¿Está usted seguro que desea aprobar este documento?"],
                     loc["Aceptar"],
                     loc["Cancelar"]
                 )
@@ -389,7 +406,7 @@ export default {
         async rejectAsync() {
             if (
                 await this.uiService.confirmActionModal(
-                    loc["¿Está usted seguro que desea rechazar esta solicitud?"],
+                    loc["¿Está usted seguro que desea rechazar este documento?"],
                     loc["Aceptar"],
                     loc["Cancelar"]
                 )

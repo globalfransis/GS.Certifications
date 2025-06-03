@@ -1,5 +1,7 @@
 ﻿using GS.Certifications.Application.CQRS.DbContexts;
+using GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptions;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Services;
+using GSF.Application.Common.Exceptions;
 using GSF.Application.Extensions.GSFMediatR;
 using MediatR;
 using System;
@@ -20,6 +22,7 @@ public class UpdateDocumentoSolicitudCertificacionCommand : IRequest<Unit>, ISol
     public DateTime? FechaSubida { get; set; }
     public short? EstadoId { get; set; }
     public long? ValidadoPorId { get; set; }
+    public string MotivoRechazo { get; set; }
 }
 
 public class UpdateDocumentoSolicitudCertificacionCommandHandler : BaseRequestHandler<Unit, UpdateDocumentoSolicitudCertificacionCommand, Unit> // Adjust TEntity and TResponse properly
@@ -40,6 +43,18 @@ public class UpdateDocumentoSolicitudCertificacionCommandHandler : BaseRequestHa
             await certificacionService.UpdateDocumentoAsync(request.Id, request);
             await Context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
+        }
+        catch (DocumentoVigenciaNulaException ex)
+        {
+            throw new ValidationErrorException("Vigencia", ex.Message);
+        }
+        catch (DocumentoVigenciaInvalidaException ex)
+        {
+            throw new ValidationErrorException("Vigencia", ex.Message);
+        }
+        catch (DocumentoArchivoNuloException ex)
+        {
+            throw new ValidationErrorException("DocumentoError", ex.Message);
         }
         catch (Exception)
         {

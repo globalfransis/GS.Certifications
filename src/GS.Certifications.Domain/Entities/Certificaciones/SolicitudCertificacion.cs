@@ -21,6 +21,7 @@ public class SolicitudCertificacion : BaseIntEntity
     public short EstadoId { get; set; }
     public SolicitudCertificacionEstado Estado { get; set; }
     public string Observaciones { get; set; }
+    public string MotivoRechazo { get; set; }
     public List<DocumentoCargado> DocumentosCargados { get; set; }
     public DateTime? FechaSolicitud { get; set; }
     public DateTime? UltimaModificacionEstado { get; set; }
@@ -39,6 +40,7 @@ public class SolicitudCertificacionEstado : BaseFixedShortEntity
     public const short APROBADA = 3;
     public const short RECHAZADA = 4;
     public const short BORRADOR = 5;
+    public const short REVISION = 6;
 
     public string Descripcion { get; set; }
 }

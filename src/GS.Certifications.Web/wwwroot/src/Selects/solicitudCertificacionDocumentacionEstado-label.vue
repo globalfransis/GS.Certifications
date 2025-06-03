@@ -15,11 +15,11 @@ export default {
     props: {
         value: Object, // ID del estado
     },
-    data: function () {return {loc}},
+    data: function () { return { loc } },
     computed: {
         estado() {
             if (!this.value || typeof this.value.estadoId === 'undefined') {
-                return { descripcion: this.loc["Inválida"], color: "text-muted", icono: "fas fa-question-circle" };
+                return { descripcion: "Inválida", color: "text-muted", icono: "fas fa-question-circle" };
             }
 
             const hoy = new Date();
@@ -37,6 +37,12 @@ export default {
                     descripcion: this.loc["Doc. Pend. Verificación"],
                     color: "text-danger",
                     icono: "fas fa-hourglass-half"
+                },
+                {
+                    condition: this.esDocumentacionEnRevision,
+                    descripcion: this.loc["Doc. para Revisión"],
+                    color: "text-warning",
+                    icono: "fas fa-exclamation-circle"
                 },
                 {
                     condition: this.esDocumentacionVencida,
@@ -102,84 +108,104 @@ export default {
             return this.estado.icono;
         },
 
-        
+
     },
     async mounted() {
     },
     methods: {
+        getUltimasVersionesDocumentosCargados(documentosCargados) {
+            if (!documentosCargados || documentosCargados.length === 0) {
+                return [];
+            }
+            const agrupados = documentosCargados.reduce((acc, doc) => {
+                const key = doc.documentoRequeridoId;
+                if (!acc[key] || (doc.version && acc[key].version && doc.version > acc[key].version) || !acc[key].version) {
+                    acc[key] = doc;
+                }
+                return acc;
+            }, {});
+            return Object.values(agrupados);
+        },
         // Callbacks de verificación de condiciones
         esDocumentacionFaltante(solicitud) {
-            return solicitud.estadoId === SolicitudEstado.BORRADOR &&
-                (!solicitud.documentosCargados ||
-                    solicitud.documentosCargados.some(d => d.estadoId === DocumentoEstado.PENDIENTE));
+            if (solicitud.estadoId !== SolicitudEstado.BORRADOR) {
+                return false;
+            }
+            const ultimasVersiones = this.getUltimasVersionesDocumentosCargados(solicitud.documentosCargados);
+            if (!ultimasVersiones || ultimasVersiones.length === 0 && solicitud.certificacion && solicitud.certificacion.documentosRequeridos && solicitud.certificacion.documentosRequeridos.length > 0) {
+                return true;
+            }
+            return ultimasVersiones.some(d => d.estadoId === DocumentoEstado.PENDIENTE || !d.archivoURL);
         },
-        esDocumentacionVencida(solicitud, fechaHoy) {
-            if (solicitud.estadoId !== SolicitudEstado.APROBADA) return false;
-            if (!solicitud.documentosCargados || solicitud.documentosCargados.length === 0) return false;
 
-            return solicitud.documentosCargados.some(d => {
-                if (!d.fechaHasta) return false; // Si no hay fechaHasta, no puede estar vencido
+        esDocumentacionVencida(solicitud, fechaHoy) {
+            // Solo relevante si la solicitud está APROBADA
+            if (solicitud.estadoId !== SolicitudEstado.APROBADA) return false;
+            const ultimasVersiones = this.getUltimasVersionesDocumentosCargados(solicitud.documentosCargados);
+            if (!ultimasVersiones || ultimasVersiones.length === 0) return false;
+
+            return ultimasVersiones.some(d => {
+                if (d.estadoId !== DocumentoEstado.VALIDADO) return false;
+                if (!d.fechaHasta) return true; // si está validado pero no tiene fechaHasta, se considera problemático/vencido por defecto
                 const fechaHastaDoc = new Date(d.fechaHasta);
                 fechaHastaDoc.setHours(0, 0, 0, 0);
                 return fechaHastaDoc < fechaHoy;
             });
         },
+
         esDocumentacionPorVencer(solicitud, fechaHoy) {
             if (solicitud.estadoId !== SolicitudEstado.APROBADA) return false;
-            if (!solicitud.documentosCargados || solicitud.documentosCargados.length === 0) return false;
+            const ultimasVersiones = this.getUltimasVersionesDocumentosCargados(solicitud.documentosCargados);
+            if (!ultimasVersiones || ultimasVersiones.length === 0) return false;
 
-            // no debe estar ya vencida para ser "por vencer"
+            // No puede estar "por vencer" si ya está "vencida"
             if (this.esDocumentacionVencida(solicitud, fechaHoy)) return false;
 
             const fechaLimite = new Date(fechaHoy);
             fechaLimite.setDate(fechaHoy.getDate() + POR_VENCER_DIAS_LIMITE);
 
-            return solicitud.documentosCargados.some(d => {
+            return ultimasVersiones.some(d => {
+                if (d.estadoId !== DocumentoEstado.VALIDADO) return false;
                 if (!d.fechaHasta) return false;
                 const fechaHastaDoc = new Date(d.fechaHasta);
                 fechaHastaDoc.setHours(0, 0, 0, 0);
-                // está vigente hoy Y antes de la fecha limite de "por vencer"
                 return fechaHastaDoc >= fechaHoy && fechaHastaDoc < fechaLimite;
             });
         },
+
         esDocumentacionOk(solicitud, fechaHoy) {
+            // Solo tiene sentido si la solicitud está APROBADA
             if (solicitud.estadoId !== SolicitudEstado.APROBADA) return false;
 
-            // si está vencida o por vencer, no está "OK" en este contexto
+            // Si ya determinamos que está Vencida o Por Vencer, entonces no está OK
             if (this.esDocumentacionVencida(solicitud, fechaHoy)) return false;
-            if (this.esDocumentacionPorVencer(solicitud, fechaHoy, POR_VENCER_DIAS_LIMITE)) return false;
+            if (this.esDocumentacionPorVencer(solicitud, fechaHoy)) return false;
 
-            // si no hay documentos cargados, y la solicitud está aprobada, se considera OK
-            if (!solicitud.documentosCargados || solicitud.documentosCargados.length === 0) return true;
+            const ultimasVersiones = this.getUltimasVersionesDocumentosCargados(solicitud.documentosCargados);
 
-            // todos los documentos deben estar validados y dentro del rango de fechas
-            return solicitud.documentosCargados.every(d => {
-                if (d.estadoId !== DocumentoEstado.VALIDADO) return false;
-                if (!d.fechaDesde || !d.fechaHasta) return false; // si no hay fechas, no se puede validar el rango
-
-                const fechaDesdeDoc = new Date(d.fechaDesde);
-                const fechaHastaDoc = new Date(d.fechaHasta);
-                fechaDesdeDoc.setHours(0, 0, 0, 0);
-                fechaHastaDoc.setHours(0, 0, 0, 0);
-
-                return fechaDesdeDoc <= fechaHoy && fechaHastaDoc >= fechaHoy;
-            });
+            return true;
         },
+
         esDocumentacionPendienteVerificacion(solicitud) {
+            // Relevante si la solicitud está PRESENTADA
             if (solicitud.estadoId !== SolicitudEstado.PRESENTADA) return false;
-            if (!solicitud.documentosCargados || solicitud.documentosCargados.length === 0) return false;
+            const ultimasVersiones = this.getUltimasVersionesDocumentosCargados(solicitud.documentosCargados);
 
-            if (this.esDocumentacionRechazada(solicitud)) return false;
+            if (!ultimasVersiones || ultimasVersiones.length === 0) return false;
 
-            return solicitud.documentosCargados.some(
-                d => d.estadoId !== DocumentoEstado.VALIDADO && d.estadoId !== DocumentoEstado.RECHAZADO
-            );
+            if (ultimasVersiones.some(d => d.estadoId === DocumentoEstado.RECHAZADO)) return false;
+
+            return ultimasVersiones.some(d => d.estadoId !== DocumentoEstado.VALIDADO);
         },
-        esDocumentacionRechazada(solicitud) {
-            if (solicitud.estadoId !== SolicitudEstado.PRESENTADA) return false;
-            if (!solicitud.documentosCargados || solicitud.documentosCargados.length === 0) return false;
 
-            return solicitud.documentosCargados.some(d => d.estadoId === DocumentoEstado.RECHAZADO);
+        esDocumentacionRechazada(solicitud) {
+            const ultimasVersiones = this.getUltimasVersionesDocumentosCargados(solicitud.documentosCargados);
+            if (!ultimasVersiones || ultimasVersiones.length === 0) return false;
+            // Es "Rechazada" si la ÚLTIMA versión de AL MENOS UN documento está RECHAZADA
+            return ultimasVersiones.some(d => d.estadoId === DocumentoEstado.RECHAZADO);
+        },
+        esDocumentacionEnRevision(solicitud) {
+            return solicitud.estadoId === SolicitudEstado.REVISION;
         }
     }
 };

@@ -2,9 +2,15 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <p class="h5">{{loc["Solicitud nro."]}} {{ solicitudCertificacion.id }}</p>
-                <p class="h6">{{loc["Certificación"]}} {{ solicitudCertificacion.certificacion }}</p>
-                <p class="h6 col-12">{{ solicitudCertificacion.socio }}</p>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="h5">{{loc["Solicitud nro."]}} {{ solicitudCertificacion.id }}</p>
+                        <p class="h6">{{loc["Certificación"]}} {{ solicitudCertificacion.certificacion }} {{ solicitudCertificacion.socio }}</p>
+                    </div>
+                    <div class="col-6 gap-4 d-flex justify-content-end">
+                        <solicitudCertificacionEstado-label v-model="solicitudCertificacion.estadoId" />
+                    </div>
+                </div>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -39,7 +45,7 @@
                                     <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
                                 </tr>
                                 <template v-for="(cd, index) in solicitudCertificacion.documentosCargados">
-                                    <tr :class="cd.estadoId == DOCUMENTO_RECHAZADO ? 'table-danger' : ''" :key="index">
+                                    <tr :class="cd.estadoId == DOCUMENTO_RECHAZADO ? 'table-danger' : ''" :key="index" :title="cd.motivoRechazo">
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.tipo ? cd.tipo : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
@@ -55,13 +61,13 @@
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.archivoURL ? cd.archivoURL : "-" }}</td>
                                         <td class="text-center align-middle">
-                                            <div class="d-inline-flex">
+                                            <div class="d-inline-flex" v-if="cd.estadoId != DOCUMENTO_RECHAZADO">
                                                 <inlineEdit
-                                                    :disabled="!grants.update && solicitudCertificacion.propietarioActualId != BACKOFFICE"
+                                                    :enabled="grants.update && solicitudCertificacion.propietarioActualId == BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
                                                     @click="update(cd.id)" />
-                                                <inlineDelete
+                                                <!-- <inlineDelete
                                                     :disabled="!grants.update && solicitudCertificacion.propietarioActualId != BACKOFFICE"
-                                                    @click="remove(cd)" />
+                                                    @click="remove(cd)" /> -->
                                             </div>
                                         </td>
 
@@ -96,27 +102,43 @@
                             </span>
                         </div>
 
-
+                        <div v-if="solicitudCertificacion.estadoId == RECHAZADA"
+                            class="form-group col-lg-12 col-sm-12 mb-4">
+                            <label class="control-label">{{loc["Motivo Rechazo"]}}</label>
+                            <textarea id="motivoRechazoTxtArea" disabled class="form-control" enable cols="20"
+                                rows="4" v-model="solicitudCertificacion.motivoRechazo"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 d-flex justify-content-end gap-2 mb-3 mt-3">
             <accept-button
-                :disabled="!grants.update || solicitudCertificacion.propietarioActualId != BACKOFFICE || !solicitudCertificacion.documentosCargados.every(d => d.estadoId == DOCUMENTO_VALIDADO)"
+                :disabled="!grants.update || solicitudCertificacion.propietarioActualId != BACKOFFICE"
                 v-if="solicitudCertificacion.propietarioActualId == BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
                 @click="updateAsync">
                 {{ loc["Aprobar"]}}</accept-button>
 
-            <button
-                :disabled="solicitudCertificacion.propietarioActualId != BACKOFFICE && solicitudCertificacion.estadoId != BORRADOR"
-                v-if="solicitudCertificacion.estadoId == PRESENTADA" class="btn btn-outline-danger btn-sm"
-                @click="rejectAsync" :title="loc['Rechazar solicitud']">
+            <a :disabled="solicitudCertificacion.propietarioActualId != BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
+                v-if="solicitudCertificacion.estadoId == PRESENTADA"
+                class="btn btn-outline-danger btn-sm" :title="loc['Rechazar solicitud']" data-toggle="tooltip"
+                data-bs-toggle="modal" :data-bs-target="`#${solicitudRechazoId}-${solicitudCertificacion.id}`"
+                style="cursor:pointer">
                 {{ loc["Rechazar"]}}
+            </a>
+
+            <button
+                :disabled="solicitudCertificacion.propietarioActualId != BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
+                v-if="solicitudCertificacion.estadoId == PRESENTADA" class="btn btn-outline-warning btn-sm"
+                @click="sendRevisionAsync" :title="loc['Enviar solicitud a revisión']">
+                {{ loc["Revisión"]}}
             </button>
 
             <cancel-button @click="cancel">{{ loc["Volver"]}}</cancel-button>
         </div>
+
+        <solicitudRechazo-modal :solicitud="solicitudCertificacion" @solicitudRechazada="rejectAsync($event)"
+                :idModal="`${solicitudRechazoId}-${solicitudCertificacion.id}`" />
     </div>
 </template>
 
@@ -126,6 +148,10 @@ import CancelButton from "@/components/forms/cancel-button.vue";
 import UiService from "@/common/uiService";
 import SolicitudCertificacion from './SolicitudCertificacion'
 import commonMixin from '@/Common/Mixins/commonMixin';
+
+import solicitudCertificacionEstadoLabel from "@/Selects/solicitudCertificacionEstado-label.vue";
+
+import solicitudRechazoModal from './Modal/solicitudRechazo-modal'
 
 import inlineEdit from "@/components/forms/inline-edit-button.vue";
 import inlineDelete from "@/components/forms/inline-delete-button.vue";
@@ -142,7 +168,9 @@ export default {
         AcceptButton,
         CancelButton,
         inlineEdit,
-        inlineDelete
+        inlineDelete,
+        solicitudCertificacionEstadoLabel,
+        solicitudRechazoModal
     },
     mixins: [commonMixin],
     name: "solicitudCertificacion-edit",
@@ -159,6 +187,7 @@ export default {
             APROBADA: SolicitudEstado.APROBADA,
             RECHAZADA: SolicitudEstado.RECHAZADA,
             BORRADOR: SolicitudEstado.BORRADOR,
+            REVISION: SolicitudEstado.REVISION,
             // --- Estados de los documentos de una solicitud
             DOCUMENTO_PENDIENTE: DocumentoEstado.PENDIENTE,
             DOCUMENTO_VALIDADO: DocumentoEstado.VALIDADO,
@@ -168,6 +197,7 @@ export default {
             // ---
             solicitudCertificacion: new SolicitudCertificacion(),
             uiService: new UiService(),
+            solicitudRechazoId: "solicitudRechazoModal",
         };
     },
     computed: {
@@ -245,13 +275,36 @@ export default {
         async rejectAsync() {
             if (
                 await this.uiService.confirmActionModal(
-                loc["¿Está usted seguro que desea eliminar esta solicitud?"],
+                loc["¿Está usted seguro que desea rechazar esta solicitud?"],
                 loc["Aceptar"],
                 loc["Cancelar"]
                 )
             ) {
                 this.uiService.showSpinner(true)
                 await this.$store.dispatch("rejectAsync", this.solicitudCertificacion)
+                    .then(() => {
+                        if (!this.errorBag.hasErrors()) {
+                            this.uiService.showMessageSuccess(loc["Operación confirmada"])
+                            this.goHome();
+                        } else {
+                            this.uiService.showMessageError(loc["Operación rechazada"])
+                        }
+                    })
+                    .finally(() => {
+                        this.uiService.showSpinner(false);
+                    });
+            }
+        },
+        async sendRevisionAsync() {
+            if (
+                await this.uiService.confirmActionModal(
+                loc["¿Está usted seguro que desea enviar a revisión esta solicitud?"],
+                loc["Aceptar"],
+                loc["Cancelar"]
+                )
+            ) {
+                this.uiService.showSpinner(true)
+                await this.$store.dispatch("sendRevisionAsync", this.solicitudCertificacion)
                     .then(() => {
                         if (!this.errorBag.hasErrors()) {
                             this.uiService.showMessageSuccess(loc["Operación confirmada"])

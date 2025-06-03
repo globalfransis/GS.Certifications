@@ -2,8 +2,14 @@
     <div ref="top">
         <div class="col-12">
             <div class="col-12 mt-4">
-                <!-- <p class="h5">Solicitud nro. {{ solicitudCertificacion.id }}</p> -->
-                <p class="h5">{{ loc["Certificación"] }} {{ solicitudCertificacion.certificacion }} {{ solicitudCertificacion.vigenciaDesde && solicitudCertificacion.vigenciaHasta ? `(${solicitudCertificacion.vigenciaDesde | uidate}-${solicitudCertificacion.vigenciaHasta | uidate})` : ''  }}</p>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="h5">{{ loc["Certificación"] }} {{ solicitudCertificacion.certificacion }} {{ solicitudCertificacion.vigenciaDesde && solicitudCertificacion.vigenciaHasta ? `(${solicitudCertificacion.vigenciaDesde | uidate}-${solicitudCertificacion.vigenciaHasta | uidate})` : ''  }}</p>
+                    </div>
+                    <div class="col-6 gap-4 d-flex justify-content-end">
+                        <solicitudCertificacionEstado-label v-model="solicitudCertificacion.estadoId" />
+                    </div>
+                </div>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -38,7 +44,7 @@
                                     <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
                                 </tr>
                                 <template v-for="(cd, index) in solicitudCertificacion.documentosCargados">
-                                    <tr :class="cd.estadoId == DOCUMENTO_RECHAZADO ? 'table-danger' : ''" :key="index">
+                                    <tr :class="cd.estadoId == DOCUMENTO_RECHAZADO ? 'table-danger' : ''" :key="index" :title="cd.motivoRechazo">
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.tipo ? cd.tipo : "-" }}</td>
                                         <td data-toggle="tooltip" class="align-middle">
@@ -54,12 +60,11 @@
                                         <td data-toggle="tooltip" class="align-middle">
                                             {{ cd.archivoURL ? cd.archivoURL : "-" }}</td>
                                         <td class="text-center align-middle">
-                                            <div class="d-inline-flex">
-                                                <inlineEdit :disabled="!grants.update && solicitudCertificacion.propietarioActualId != SOCIOS" @click="update(cd.id)" />
-                                                <inlineDelete :disabled="!grants.update && solicitudCertificacion.propietarioActualId != SOCIOS" @click="remove(cd)" />
+                                            <div class="d-inline-flex" v-if="cd.estadoId != DOCUMENTO_RECHAZADO">
+                                                <inlineEdit :enabled="grants.update && solicitudCertificacion.propietarioActualId == SOCIOS && (solicitudCertificacion.estadoId == BORRADOR || solicitudCertificacion.estadoId == REVISION)" @click="update(cd.id)" />
+                                                <inlineDelete :enabled="grants.update && solicitudCertificacion.propietarioActualId == SOCIOS && (solicitudCertificacion.estadoId == BORRADOR || solicitudCertificacion.estadoId == REVISION)" @click="remove(cd)" />
                                             </div>
                                         </td>
-
                                     </tr>
                                 </template>
                             </tbody>
@@ -74,6 +79,13 @@
                             <span class="text-danger field-validation-error">
                                 {{ errorBag.get("observaciones") }}
                             </span>
+                        </div>
+
+                        <div v-if="solicitudCertificacion.estadoId == RECHAZADA"
+                            class="form-group col-lg-12 col-sm-12 mb-4">
+                            <label class="control-label">{{loc["Motivo Rechazo"]}}</label>
+                            <textarea id="motivoRechazoTxtArea" disabled class="form-control" enable cols="20"
+                                rows="4" v-model="solicitudCertificacion.motivoRechazo"></textarea>
                         </div>
 
 
@@ -101,6 +113,8 @@ import inlineDelete from "@/components/forms/inline-delete-button.vue";
 
 import loc from "@/common/commonLoc.js"
 
+import solicitudCertificacionEstadoLabel from "@/Selects/solicitudCertificacionEstado-label.vue";
+
 const NO_DATA_MESSAGE = loc["No hay datos"];
 
 // Origen de la solicitud
@@ -113,13 +127,14 @@ export default {
         AcceptButton,
         CancelButton,
         inlineEdit,
-        inlineDelete
+        inlineDelete,
+        solicitudCertificacionEstadoLabel
     },
     mixins: [commonMixin],
     name: "solicitudCertificacion-edit",
     data: function () {
         return {
-            loc : loc,
+            loc,
             // --- Origen de la solicitud ---
             SOCIOS,
             BACKOFFICE,
@@ -130,6 +145,13 @@ export default {
             APROBADA: SolicitudEstado.APROBADA,
             RECHAZADA: SolicitudEstado.RECHAZADA,
             BORRADOR: SolicitudEstado.BORRADOR,
+            REVISION: SolicitudEstado.REVISION,
+            // --- Estados de los documentos de una solicitud
+            DOCUMENTO_PENDIENTE: DocumentoEstado.PENDIENTE,
+            DOCUMENTO_VALIDADO: DocumentoEstado.VALIDADO,
+            DOCUMENTO_RECHAZADO: DocumentoEstado.RECHAZADO,
+            DOCUMENTO_VENCIDO: DocumentoEstado.VENCIDO,
+            DOCUMENTO_PRESENTADO: DocumentoEstado.PRESENTADO,
             // --- Estados de operacion
             PROCESSING: OperationStatus.PROCESSING,
             COMPLETED: OperationStatus.COMPLETED,

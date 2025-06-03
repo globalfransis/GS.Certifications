@@ -640,4 +640,7 @@
   <data name="Anterior" xml:space="preserve">
     <value>Previous</value>
   </data>
+  <data name="Motivo" xml:space="preserve">
+    <value>Reason</value>
+  </data>
 </root>

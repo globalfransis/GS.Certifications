@@ -13,7 +13,7 @@ namespace GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Comman
 public class RechazarDocumentoSolicitudCertificacionCommand : IRequest<Unit>
 {
     public int Id { get; set; }
-    public string Observaciones { get; set; }
+    public string MotivoRechazo { get; set; }
     public byte[] RowVersion { get; set; }
 }
 
@@ -35,7 +35,7 @@ public class RechazarDocumentoSolicitudCertificacionCommandHandler : BaseRequest
             var documentoSolicitudUpdate = new SolicitudCertificacionDocumentoUpdate()
             {
                 EstadoId = DocumentoEstado.RECHAZADO,
-                Observaciones = request.Observaciones,
+                MotivoRechazo = request.MotivoRechazo,
                 RowVersion = request.RowVersion,
             };
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex align-items-center" :class="estadoClase">
+    <div :class="estadoClase">
         <i :class="estadoIcono" class="me-1"></i>
         <span>{{ estadoDescripcion }}</span>
     </div>
@@ -22,6 +22,7 @@ export default {
         estado() {
             const estados = [
                 { idm: SolicitudEstado.PENDIENTE, descripcion: this.loc["Pendiente"], color: "text-warning", icono: "fas fa-circle" }, 
+                { idm: SolicitudEstado.REVISION, descripcion: this.loc["Revisión"], color: "text-warning", icono: "fas fa-exclamation-circle" }, // TODO: cambiar este ícono 
                 { idm: SolicitudEstado.PRESENTADA, descripcion: this.loc["Presentada"], color: "text-primary", icono: "fas fa-circle" },
                 { idm: SolicitudEstado.APROBADA, descripcion: this.loc["Aprobada"], color: "text-success", icono: "fas fa-check-circle" },
                 { idm: SolicitudEstado.RECHAZADA, descripcion: this.loc["Rechazada"], color: "text-danger", icono: "fas fa-times-circle" }, 

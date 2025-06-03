@@ -11,6 +11,8 @@ namespace GS.Certifications.Infrastructure.Persistence.Configurations.Certificac
         {
             builder.ToTable("doc_DocumentosCargados");
             builder.Property(i => i.ArchivoURL).HasMaxLength(2000);
+            builder.Property(i => i.Observaciones).HasMaxLength(2000);
+            builder.Property(i => i.MotivoRechazo).HasMaxLength(2000);
         }
     }
     

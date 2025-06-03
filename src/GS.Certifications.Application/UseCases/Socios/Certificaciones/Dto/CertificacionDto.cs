@@ -46,6 +46,7 @@ public class SolicitudCertificacionDto : IMapFrom<SolicitudCertificacion>
     public short PropietarioActualId { get; set; }
     public DateTime? VigenciaHasta { get; set; }
     public string Observaciones { get; set; }
+    public string MotivoRechazo { get; set; }
     public Guid Guid { get; set; }
     public byte[] RowVersion { get; set; }
 
@@ -105,6 +106,7 @@ public class DocumentoCargadoDto : IMapFrom<DocumentoCargado>
     public short? PropietarioActualId { get; set; }
 
     public string Observaciones { get; set; }
+    public string MotivoRechazo { get; set; }
 
     public string OperationId { get; set; }
     public OperationStatus? OperationStatus { get; set; }

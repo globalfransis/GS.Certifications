@@ -11,6 +11,7 @@ namespace GS.Certifications.Infrastructure.Persistence.Configurations.SolicitudC
         {
             builder.ToTable("cer_SolicitudCertificaciones");
             builder.Property(i => i.Observaciones).HasMaxLength(5000);
+            builder.Property(i => i.MotivoRechazo).HasMaxLength(5000);
         }
     }
 
@@ -30,7 +31,8 @@ namespace GS.Certifications.Infrastructure.Persistence.Configurations.SolicitudC
                 new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.PRESENTADA, Descripcion = "Presentada" },
                 new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.APROBADA, Descripcion = "Aprobada" },
                 new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.RECHAZADA, Descripcion = "Rechazada" },
-                new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.BORRADOR, Descripcion = "Borrador" }
+                new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.BORRADOR, Descripcion = "Borrador" },
+                new SolicitudCertificacionEstado() { Idm = SolicitudCertificacionEstado.REVISION, Descripcion = "Revisión" }
             );
         }
     }
