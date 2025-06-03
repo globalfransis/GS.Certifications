@@ -186,7 +186,7 @@ export default {
                             this.uiService.showMessageSuccess(loc["Operación confirmada"])
                             await this.getAsync();
                         } else {
-                            this.uiService.showMessageError(loc["Operación rechazada"])
+                            this.uiService.showMessageError(`${loc["Operación rechazada"]}: ${this.errorBag.get("certificacionId")}`)
                         }
                     })
                     .finally(() => {

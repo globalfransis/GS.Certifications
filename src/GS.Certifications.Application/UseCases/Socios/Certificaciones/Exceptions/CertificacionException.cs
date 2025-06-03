@@ -89,4 +89,11 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptio
         {
         }
     }
+
+    public class SolicitudEliminacionEstadoInvalidoException : Exception
+    {
+        public SolicitudEliminacionEstadoInvalidoException() : base($"No se puede eliminar esta solicitud.")
+        {
+        }
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using GS.Certifications.Application.CQRS.DbContexts;
+using GS.Certifications.Application.UseCases.Socios.Certificaciones.Exceptions;
 using GS.Certifications.Application.UseCases.Socios.Certificaciones.Services;
+using GSF.Application.Common.Exceptions;
 using GSF.Application.Extensions.GSFMediatR;
 using MediatR;
 using System.Threading;
@@ -27,9 +29,21 @@ namespace GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Comman
 
         protected override async Task<Unit> HandleRequestAsync(DeleteSolicitudCertificacionCommand request, CancellationToken cancellationToken)
         {
-            await certificacionService.DeleteSolicitudAsync(request.Id, request.OrigenEliminacionId, request.RowVersion);
-            await Context.SaveChangesAsync(cancellationToken);
-            return Unit.Value;
+            try
+            {
+                await certificacionService.DeleteSolicitudAsync(request.Id, request.OrigenEliminacionId, request.RowVersion);
+                await Context.SaveChangesAsync(cancellationToken);
+                return Unit.Value;
+            }
+            catch (SolicitudEliminacionEstadoInvalidoException ex)
+            {
+                throw new ValidationErrorException("CertificacionId", ex.Message);
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
