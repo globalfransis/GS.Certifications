@@ -32,6 +32,21 @@
         <div class="loading loading--full-height"></div>
     </div>
 
+    <div id="aiSpinnerOverlay" class="ai-global-spinner-overlay" style="display:none;">
+        <div class="spinner-content">
+            <div class="sparkles-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" id="aiGlobalSparkleSvg" class="ai-global-sparkle-svg" viewBox="0 0 24 24">
+                    <path d="M10,21.236,6.755,14.745.264,11.5,6.755,8.255,10,1.764l3.245,6.491L19.736,11.5l-6.491,3.245ZM18,21l1.5,3L21,21l3-1.5L21,18l-1.5-3L18,18l-3,1.5ZM19.333,4.667,20.5,7l1.167-2.333L24,3.5,21.667,2.333,20.5,0,19.333,2.333,17,3.5Z" />
+                </svg>
+            </div>
+            <div id="aiGlobalSpinnerTitle" class="ai-message">@loc["Procesando Documento con IA..."]</div>
+            <div id="aiGlobalSpinnerMessage" class="ai-sub-message">@loc["Analizando documento..."]</div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
 
@@ -292,9 +307,113 @@
         }
 
         #layoutbody.active {
-            opacity: 0.25;
+            opacity: 0.75;
             pointer-events: none;
             z-index: 999 !important;
+        }
+
+
+        .ai-global-spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.85); /* Fondo semi-transparente */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000 !important; /* Muy alto */
+            text-align: center;
+            padding: 20px;
+        }
+
+            .ai-global-spinner-overlay .spinner-content {
+                /* background-color: #fff; /* Caja de contenido opcional */
+                padding: 30px 40px;
+                /* border-radius: 10px; */
+                /* box-shadow: 0 5px 20px rgba(0,0,0,0.15); */
+                max-width: 90%;
+                width: auto; /* Ajustar al contenido */
+                min-width: 300px; /* Un mínimo para que no se vea muy pequeño */
+            }
+
+            .ai-global-spinner-overlay .sparkles-icon-wrapper {
+                margin-bottom: 1.25rem;
+            }
+
+        /* Estilos para el SVG animado global */
+        .ai-global-sparkle-svg { /* Clase que le dimos al SVG */
+            width: 3.5rem;
+            height: 3.5rem;
+            display: inline-block;
+            line-height: 1;
+            animation: aiGlobalSparkleAnimate 2.5s infinite ease-in-out;
+        }
+
+        @@keyframes aiGlobalSparkleAnimate {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.7;
+                fill: #FFD700; /* Gold */
+                filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
+            }
+
+            25% {
+                transform: scale(1.15);
+                opacity: 1;
+                fill: #00E5FF; /* Aqua/Cyan vibrante */
+                filter: drop-shadow(0 0 7px rgba(0, 229, 255, 0.7));
+            }
+
+            50% {
+                transform: scale(0.95);
+                opacity: 0.8;
+                fill: #FF00B2; /* Fucsia/Magenta vibrante */
+                filter: drop-shadow(0 0 5px rgba(255, 0, 178, 0.6));
+            }
+
+            75% {
+                transform: scale(1.1);
+                opacity: 1;
+                fill: #BF55EC; /* Lila/Púrpura medio */
+                filter: drop-shadow(0 0 7px rgba(191, 85, 236, 0.7));
+            }
+
+            100% {
+                transform: scale(0.9);
+                opacity: 0.7;
+                fill: #FFD700; /* Gold */
+                filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
+            }
+        }
+
+        /* Estilos para los mensajes */
+        .ai-global-spinner-overlay .ai-message {
+            font-size: 1.25rem;
+            color: #0c5460; /* Un azul oscuro/petróleo */
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .ai-global-spinner-overlay .ai-sub-message {
+            font-size: 1.0rem;
+            color: #545b62; /* Un gris oscuro */
+            margin-bottom: 1.75rem;
+            min-height: 1.2em; /* Para evitar saltos si el texto cambia */
+        }
+
+        .ai-global-spinner-overlay .progress {
+            width: 70%;
+            max-width: 300px;
+            height: 10px;
+            margin: 0 auto;
+            background-color: #e9ecef;
+        }
+
+        .ai-global-spinner-overlay .progress-bar {
+            background-color: #0d8b8b;
         }
     </style>
 

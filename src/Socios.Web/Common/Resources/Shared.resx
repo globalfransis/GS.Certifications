@@ -677,4 +677,7 @@
   <data name="La solicitud de certificación no existe." xml:space="preserve">
     <value>La solicitud de certificación no existe.</value>
   </data>
+  <data name="Procesando con IA..." xml:space="preserve">
+    <value>Procesando con IA...</value>
+  </data>
 </root>

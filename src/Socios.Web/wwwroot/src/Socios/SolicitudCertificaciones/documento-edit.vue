@@ -61,19 +61,19 @@
                         </div>
                     </div>
                     
-                    <div v-if="documento.id && (documento.operationStatus == PROCESSING || (documento.operationStatus == FAILED && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == COMPLETED && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL) )"
+                    <div v-if="documento.id && ((documento.operationStatus == FAILED && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == COMPLETED && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL) )"
                          class="mt-3 mb-4 p-3 text-center d-flex flex-column align-items-center justify-content-center">
                         
-                        <div :key="documento.operationStatus" v-if="documento.operationStatus == PROCESSING">
+                        <!-- <div :key="documento.operationStatus" v-if="documento.operationStatus == PROCESSING">
                             <div class="ai-animated-icon-container mb-3"> <sparkles-icon :animated="true" size="2.5rem"/> </div>
                             <h5 class="text-primary mb-2">{{ loc["Procesando Documento con IA..."] }}</h5>
                             <p class="text-muted small" style="min-height: 1.5em;">{{ currentAiMessage }}</p>
                             <div class="progress mt-2" style="height: 6px;">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div v-else-if="documento.operationStatus == COMPLETED && previousOperationStatusForMessage == PROCESSING"
+                        <div v-if="documento.operationStatus == COMPLETED && previousOperationStatusForMessage == PROCESSING"
                              class="alert alert-success d-flex align-items-center justify-content-center shadow-sm w-75">
                             <i class="fas fa-check-circle fa-lg me-2"></i> {{ loc["Documento analizado con éxito"] }}
                         </div>
@@ -370,10 +370,13 @@ export default {
                 }
                 return;
             }
-
-            this.uiService.showSpinner(true);
-            this.previousOperationStatusForMessage = this.PROCESSING; // Preparamos para el mensaje post-análisis
-            this.iframeHeight = '30vh'; // Reducir iframe
+            
+            showSpinnerAI(true, 
+                        loc["Procesando Documento con IA..."], 
+                        this.currentAiMessage, 
+                        this.aiProcessingMessages);
+            this.previousOperationStatusForMessage = this.PROCESSING;
+            this.startAiMessageCycling();
 
             // getAsync se encargará de iniciar el polling si el estado es PROCESSING
             // y de ocultar el spinner cuando el estado cambie
@@ -417,11 +420,9 @@ export default {
 //                 this.previousOperationStatusForMessage = this.PROCESSING;
 //             }
 //             this.startStatusPolling();
-//             this.iframeHeight = '30vh';
 //         } else { // COMPLETED, FAILED, o cualquier otro estado que no sea PROCESSING
 //             this.stopAiMessageCycling();
 //             this.stopStatusPolling();
-//             this.iframeHeight = '120vh';
 //             if (previousStatus === this.PROCESSING) { //
 //                 if (this.documento.operationStatus === this.COMPLETED) {
 //                     this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
@@ -437,7 +438,6 @@ export default {
 //         this.uiService.showMessageError(this.loc["Error al obtener datos del documento."]);
 //         this.stopStatusPolling();
 //         this.stopAiMessageCycling();
-//         this.iframeHeight = '120vh';
 //         this.previousOperationStatusForMessage = null;
 //     } finally {
 //         this.uiService.showSpinner(false);
@@ -467,11 +467,9 @@ export default {
 //                 this.startAiMessageCycling();
 //                 this.previousOperationStatusForMessage = this.PROCESSING;
 //             }
-//             this.iframeHeight = '30vh';
 //         } else { // COMPLETED o FAILED
 //             this.stopAiMessageCycling();
 //             this.stopStatusPolling();
-//             this.iframeHeight = '120vh';
 //             if (previousPollingStatus === this.PROCESSING) {
 //                 if (this.documento.operationStatus === this.COMPLETED) {
 //                     this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
@@ -486,116 +484,111 @@ export default {
 //         console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
 //     }
 // },
-async getAsync(id) {
-        if (!id && this.documento.id) id = this.documento.id;
-        if (!id) {
-            this.uiService.showSpinner(false); // Asegurarse que el spinner se oculte si no hay id
-            return;
-        }
-
-        // No mostramos spinner aquí directamente si es llamado por el poller.
-        // El spinner global se activa en onDocumentoAnalyzedAsync (acción del usuario)
-        // o cuando el polling detecta por primera vez el estado PROCESSING.
-        // Se desactiva cuando el polling detecta un estado final.
-
-        let shouldShowGlobalSpinner = this.isCurrentlyPolling ? false : true;
-        if (shouldShowGlobalSpinner) this.uiService.showSpinner(true);
-
-        try {
-            const res = await this.$store.dispatch("getDocumentoAsync", id);
-            const previousStatus = this.documento.operationStatus;
-
-            this.documento = new Documento(res);
-            this.tipoDoc = this.documento.tipo;
-
-            if (this.documento.operationStatus === this.PROCESSING) {
-                this.uiService.showSpinner(true); // Asegurar que el spinner global esté activo
-                if (previousStatus !== this.PROCESSING) {
-                    this.previousOperationStatusForMessage = this.PROCESSING;
-                }
-                this.startStatusPolling();
-                this.iframeHeight = '30vh';
-            } else { // COMPLETED, FAILED, o cualquier otro estado que no sea PROCESSING
-                this.stopStatusPolling();
-                this.uiService.showSpinner(false); // OCULTAR SPINNER GLOBAL
-                this.iframeHeight = '120vh';
-                if (previousStatus === this.PROCESSING) {
-                    this.displayCompletionMessages(); // Nuevo método para encapsular esto
-                }
-                // Resetear esto solo si no veníamos de PROCESSING, o después de mostrar el mensaje.
-                // La idea es que el bloque de alerta en el template use previousOperationStatusForMessage.
-                // Se podría resetear después de un timeout o una interacción del usuario.
-                // Por ahora, se resetea si el estado actual no es uno que requiera el mensaje.
-                if (this.documento.operationStatus !== this.COMPLETED && this.documento.operationStatus !== this.FAILED) {
-                   this.previousOperationStatusForMessage = null;
-                }
-            }
-        } catch (error) {
-            // ... (manejo de error y ocultar spinner)
-            console.error(`${this.loc["Error en getAsync para el ID"]} ${id}:`, error);
-            this.uiService.showMessageError(this.loc["Error al obtener datos del documento."]);
-            this.stopStatusPolling();
-            this.uiService.showSpinner(false);
-            this.iframeHeight = '120vh';
-            this.previousOperationStatusForMessage = null;
-        } finally {
-            if (shouldShowGlobalSpinner && this.documento.operationStatus !== this.PROCESSING) {
+        async getAsync(id) {
+            if (!id && this.documento.id) id = this.documento.id;
+            if (!id) {
                 this.uiService.showSpinner(false);
-            }
-        }
-    },
-
-    async getOperationStatusAsync(id) { // Llamado por el poller
-        try {
-            const res = await this.$store.dispatch("getDocumentoAsync", id);
-            const previousPollingStatus = this.documento.operationStatus;
-
-            this.documento.operationId = res.operationId;
-            this.documento.operationStatus = res.operationStatus; // Punto clave de actualización
-            this.documento.rowVersion = res.rowVersion;
-
-            if (res.operationStatus === this.COMPLETED) {
-                this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : this.documento.fechaDesde;
-                this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : this.documento.fechaHasta;
-                if (res.archivoURL && !this.documento.archivoURL) {
-                    this.documento.archivoURL = res.archivoURL;
-                }
+                return;
             }
 
-            if (this.documento.operationStatus === this.PROCESSING) {
-                this.uiService.showSpinner(true); // Mantener spinner global
-                if (previousPollingStatus !== this.PROCESSING) {
-                    this.previousOperationStatusForMessage = this.PROCESSING;
+            let shouldShowGlobalSpinner = this.isCurrentlyPolling ? false : true;
+            if (shouldShowGlobalSpinner) this.uiService.showSpinner(true);
+
+            try {
+                const res = await this.$store.dispatch("getDocumentoAsync", id);
+                const previousStatus = this.documento.operationStatus;
+
+                this.documento = new Documento(res);
+                this.tipoDoc = this.documento.tipo;
+
+                if (this.documento.operationStatus === this.PROCESSING) {
+                    // showSpinnerAI(true, 
+                    //   loc["Procesando Documento con IA..."], 
+                    //   this.currentAiMessage, 
+                    //   this.aiProcessingMessages);
+                    // if (previousStatus !== this.PROCESSING) {
+                    //     this.previousOperationStatusForMessage = this.PROCESSING;
+                    // }
+                    this.startStatusPolling();
+                } else { // COMPLETED, FAILED, o cualquier otro estado que no sea PROCESSING
+                    this.stopStatusPolling();
+                    showSpinnerAI(false);
+                    this.uiService.showSpinner(false);
+                    if (previousStatus === this.PROCESSING) {
+                        this.displayCompletionMessages(); // Nuevo método para encapsular esto
+                    }
+                    if (this.documento.operationStatus !== this.COMPLETED && this.documento.operationStatus !== this.FAILED) {
+                    this.previousOperationStatusForMessage = null;
+                    }
                 }
-                this.iframeHeight = '30vh';
-            } else { // COMPLETED o FAILED detectado por el poller
+            } catch (error) {
+                console.error(`${this.loc["Error en getAsync para el ID"]} ${id}:`, error);
+                this.uiService.showMessageError(this.loc["Error al obtener datos del documento."]);
                 this.stopStatusPolling();
-                this.uiService.showSpinner(false); // OCULTAR SPINNER GLOBAL
-                this.iframeHeight = '120vh';
-                if (previousPollingStatus === this.PROCESSING) {
-                   this.displayCompletionMessages();
-                }
-                // No resetear previousOperationStatusForMessage aquí inmediatamente,
-                // dejar que el template lo use para el render actual.
-            }
-        } catch (error) {
-            console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
-            // Considera si detener el polling o mostrar un error global aquí.
-            // Si el polling falla consistentemente, el spinner global podría quedarse activo.
-            // Podrías añadir un contador de fallos de polling y detenerlo si falla X veces.
-        }
-    },
+                // this.uiService.showSpinner(false);
+                // showSpinnerAI(false);
 
-    displayCompletionMessages() {
-        if (this.documento.operationStatus === this.COMPLETED) {
-            this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
-        } else if (this.documento.operationStatus === this.FAILED) {
-            this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
-        }
-        // setTimeout(() => {
-        //     this.previousOperationStatusForMessage = null;
-        // }, 5000); // 4 segundos
-    },
+                this.previousOperationStatusForMessage = null;
+            } finally {
+                if (shouldShowGlobalSpinner && this.documento.operationStatus !== this.PROCESSING) {
+                    this.uiService.showSpinner(false);
+                    showSpinnerAI(false);
+                }
+            }
+        },
+        async getOperationStatusAsync(id) { // Llamado por el poller
+            try {
+                const res = await this.$store.dispatch("getDocumentoAsync", id);
+                const previousPollingStatus = this.documento.operationStatus;
+
+                this.documento.operationId = res.operationId;
+                this.documento.operationStatus = res.operationStatus; // Punto clave de actualización
+                this.documento.rowVersion = res.rowVersion;
+
+                if (res.operationStatus === this.COMPLETED) {
+                    this.documento.fechaDesde = res.fechaDesde ? new Date(res.fechaDesde).toISOString().split('T')[0] : this.documento.fechaDesde;
+                    this.documento.fechaHasta = res.fechaHasta ? new Date(res.fechaHasta).toISOString().split('T')[0] : this.documento.fechaHasta;
+                    if (res.archivoURL && !this.documento.archivoURL) {
+                        this.documento.archivoURL = res.archivoURL;
+                    }
+                }
+
+                if (this.documento.operationStatus === this.PROCESSING) {
+                    // showSpinnerAI(true, 
+                    //   loc["Procesando Documento con IA..."], 
+                    //   this.currentAiMessage, 
+                    //   this.aiProcessingMessages); // Mantener spinner global
+                    // if (previousPollingStatus !== this.PROCESSING) {
+                    //     this.previousOperationStatusForMessage = this.PROCESSING;
+                    // }
+                } else { // COMPLETED o FAILED detectado por el poller
+                    this.stopStatusPolling();
+                    showSpinnerAI(false);
+                    this.uiService.showSpinner(false);
+                    if (previousPollingStatus === this.PROCESSING) {
+                    this.displayCompletionMessages();
+                    }
+                    // No resetear previousOperationStatusForMessage aquí inmediatamente,
+                    // dejar que el template lo use para el render actual.
+                }
+            } catch (error) {
+                console.error(`${this.loc["Error en getOperationStatusAsync para el ID"]} ${id}:`, error);
+                // Considera si detener el polling o mostrar un error global aquí.
+                // Si el polling falla consistentemente, el spinner global podría quedarse activo.
+                // Podrías añadir un contador de fallos de polling y detenerlo si falla X veces.
+            }
+        },
+
+        displayCompletionMessages() {
+            if (this.documento.operationStatus === this.COMPLETED) {
+                this.uiService.showMessageSuccess(this.loc["Documento analizado con éxito"]);
+            } else if (this.documento.operationStatus === this.FAILED) {
+                this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
+            }
+            // setTimeout(() => {
+            //     this.previousOperationStatusForMessage = null;
+            // }, 5000); // 4 segundos
+        },
         // completarFormularioDocumento(e) {
         //     this.errorBag.clear();
 

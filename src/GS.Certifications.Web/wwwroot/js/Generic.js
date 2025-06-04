@@ -23,15 +23,66 @@ function showSpinner(loading) {
 
 }
 
+let globalAiMessageIntervalId = null;
+let globalAiCurrentMessageIndex = 0;
+let globalAiMessagesArray = [];
+
+function showSpinnerAI(loading, mainMessage, initialSubMessage, messagesCycleArray = null) {
+    let aiSpinnerOverlay = document.getElementById("aiSpinnerOverlay");
+    let aiSpinnerTitle = document.getElementById("aiGlobalSpinnerTitle");
+    let aiSpinnerSubMessage = document.getElementById("aiGlobalSpinnerMessage");
+    let layoutBody = document.getElementById("layoutbody"); // Para el efecto de blur/disabled
+
+    // Detener cualquier ciclo de mensajes anterior
+    if (globalAiMessageIntervalId) {
+        clearInterval(globalAiMessageIntervalId);
+        globalAiMessageIntervalId = null;
+    }
+
+    if (loading) {
+        if (aiSpinnerTitle) aiSpinnerTitle.textContent = mainMessage;
+        if (aiSpinnerSubMessage) aiSpinnerSubMessage.textContent = initialSubMessage;
+
+        if (aiSpinnerOverlay) aiSpinnerOverlay.style.display = "flex";
+        if (layoutBody) layoutBody.classList.add('active');
+        toggleDisabledElements(true);
+
+        // Si se proporcionan mensajes para alternar
+        if (messagesCycleArray && messagesCycleArray.length > 0) {
+            globalAiMessagesArray = messagesCycleArray;
+            globalAiCurrentMessageIndex = 0;
+            if (aiSpinnerSubMessage) aiSpinnerSubMessage.textContent = globalAiMessagesArray[globalAiCurrentMessageIndex];
+
+            if (globalAiMessagesArray.length > 1) {
+                globalAiMessageIntervalId = setInterval(() => {
+                    globalAiCurrentMessageIndex++;
+                    if (globalAiCurrentMessageIndex >= globalAiMessagesArray.length - 1) {
+                        globalAiCurrentMessageIndex = globalAiMessagesArray.length - 1;
+                        if (aiSpinnerSubMessage) aiSpinnerSubMessage.textContent = globalAiMessagesArray[globalAiCurrentMessageIndex];
+                        clearInterval(globalAiMessageIntervalId);
+                        globalAiMessageIntervalId = null;
+                    } else {
+                        if (aiSpinnerSubMessage) aiSpinnerSubMessage.textContent = globalAiMessagesArray[globalAiCurrentMessageIndex];
+                    }
+                }, 1500);
+            }
+        }
+    } else {
+        if (aiSpinnerOverlay) aiSpinnerOverlay.style.display = "none";
+        if (layoutBody) layoutBody.classList.remove('active');
+        toggleDisabledElements(false);
+    }
+}
+
 
 function toggleDisabledElements(disable) {
     // Obtenemos todos los elementos que tienen el atributo 'disabled' o sean inputs, selects, buttons, etc.
     var elements = document.querySelectorAll("[disabled], input, select, textarea, button, a");
-    
+
     // Para cada elemento y según el parámetro 'disable':
     // 1. setteamos o removemos la clase 'deshabilitado'
     // 2. detenemos la propagación de los eventos click, keydown, tap y focus 
-    elements.forEach(function(element) {
+    elements.forEach(function (element) {
         if (disable) {
             element.classList.add('deshabilitado');
             element.addEventListener("click", detenerPropagacionEvento);
@@ -176,7 +227,7 @@ function initializeDataTable($element) {
                 }
                 return dateObject.format('YYYYMMDD')
             }
-        return null // not a date nor datetime (for instance, received '-' or anything that represents null date)
+            return null // not a date nor datetime (for instance, received '-' or anything that represents null date)
         },
         'datetime-moment-asc': function (a, b) {
             return a < b ? -1 : a > b ? 1 : 0;
@@ -262,7 +313,7 @@ function initializeDataTable($element) {
             $element.on('order.dt', function orderDtHandler(e, settings) {
                 e.stopImmediatePropagation();  // Bloquea la ejecución del handler original
                 var order = $element.DataTable().order();
-                
+
                 // En algunos casos order puede estar vacía, recordemos que este evento `order.dt` se dispara
                 // también en la inicialización de la tabla
                 var columnIndex = order[0][0] != null && order[0][0] != undefined ? order[0][0] : defaultOrderColumn.index; // Obtenemos el índice de la columna ordenada
@@ -276,7 +327,7 @@ function initializeDataTable($element) {
                     console.error("El `th` en la posición " + columnIndex + " no tiene un atributo `data-column`.");
                     throw new Error("Falta el atributo `data-column` en el `th` de la columna ordenada.");
                 }
-                
+
                 var customEvent = new CustomEvent('columnSorted', {
                     detail: {
                         columnIndex: columnIndex,
@@ -284,10 +335,10 @@ function initializeDataTable($element) {
                         orderDirection: orderDirection
                     }
                 });
-                
+
                 // Disparamos el evento personalizado en el elemento de la tabla
                 e.target.dispatchEvent(customEvent);
-                
+
             });
         }
     }
@@ -848,7 +899,7 @@ function showModalForConfirmMessagePromise(messageModal, messagePrimaryButton, m
         "<div id=\"layoutModalContents\" class=\"modal-dialog modal-dialog-centered\">\n" +
         "<div class=\"modal-content border-0\">\n" +
         "<div class=\"modal-header modalAndToastHeader py-2\">\n" +
-        "<h5 class=\"modal-title\">"+ appName +"</h5>\n" +
+        "<h5 class=\"modal-title\">" + appName + "</h5>\n" +
         "<button id=\"layoutModalCloseButton\" type=\"button\" class=\"btn-close\" aria-label=\"Close\"></button>\n" +
         "</div>\n" +
         "<div class=\"modal-body\">\n" +
@@ -1006,10 +1057,10 @@ function isMobile() {
 }
 
 // function parsearConMiles(value) {
-            
+
 //     var exp = /\B(?=(\d{3})+(?!\d))/g;
 //     const rep = '.';
-    
+
 //     if( value < 1000 && value > -1000){
 //         return value;
 //     }

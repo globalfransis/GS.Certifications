@@ -1242,4 +1242,8 @@
   <data name="No se ha importado un archivo para el documento." xml:space="preserve">
     <value>No se ha importado un archivo para el documento.</value>
   </data>
+  <data name="Rechazar documento" xml:space="preserve">
+    <value>Rechazar documento</value>
+    <comment>Reject document</comment>
+  </data>
 </root>
