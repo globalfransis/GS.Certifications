@@ -482,7 +482,7 @@
     <value>Documents</value>
   </data>
   <data name="¿Está usted seguro que desea eliminar esta solicitud?" xml:space="preserve">
-    <value>Are you sure you want to delete this request?</value>
+    <value>Are you sure you want to delete this application?</value>
   </data>
   <data name="¿Está usted seguro que desea iniciar una nueva solicitud de certificación?" xml:space="preserve">
     <value>Are you sure you want to start a new certification application?</value>
@@ -642,5 +642,65 @@
   </data>
   <data name="Motivo" xml:space="preserve">
     <value>Reason</value>
+  </data>
+  <data name="Doc. para Revisión" xml:space="preserve">
+    <value>Doc. for Review</value>
+  </data>
+  <data name="Revisión" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="Las extensiones soportadas son" xml:space="preserve">
+    <value>The supported extensions are</value>
+  </data>
+  <data name="Motivo Rechazo" xml:space="preserve">
+    <value>Reason for rejection</value>
+  </data>
+  <data name="Motivo Revisión" xml:space="preserve">
+    <value>Reason for review</value>
+  </data>
+  <data name="Modificar" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="con un máximo de" xml:space="preserve">
+    <value>with a maximum of</value>
+  </data>
+  <data name="megabytes" xml:space="preserve">
+    <value>megabytes</value>
+  </data>
+  <data name="No se puede eliminar esta solicitud." xml:space="preserve">
+    <value>This application cannot be deleted.</value>
+  </data>
+  <data name="La vigencia del documento es inválida." xml:space="preserve">
+    <value>The validity of the document is not valid.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no están validados." xml:space="preserve">
+    <value>One or more documents in the application are not validated.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no fueron presentados." xml:space="preserve">
+    <value>One or more application documents were not submitted.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no son válidos." xml:space="preserve">
+    <value>One or more documents in the application are not valid.</value>
+  </data>
+  <data name="No se ha importado un archivo para el documento." xml:space="preserve">
+    <value>No file was imported for the document.</value>
+  </data>
+  <data name="La vigencia del documento es requerida." xml:space="preserve">
+    <value>The validity of the document is required.</value>
+  </data>
+  <data name="La vigencia de la solicitud es inválida." xml:space="preserve">
+    <value>The validity of the application is invalid.</value>
+  </data>
+  <data name="La vigencia de la solicitud es requerida." xml:space="preserve">
+    <value>The validity of the application is required.</value>
+  </data>
+  <data name="Ya existe una solicitud en curso para la certificación indicada." xml:space="preserve">
+    <value>There is already an application in progress for the indicated certification.</value>
+  </data>
+  <data name="El documento no existe." xml:space="preserve">
+    <value>The document does not exist.</value>
+  </data>
+  <data name="La solicitud de certificación no existe." xml:space="preserve">
+    <value>The certification application does not exist.</value>
   </data>
 </root>

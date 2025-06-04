@@ -108,6 +108,13 @@
                             <textarea id="motivoRechazoTxtArea" disabled class="form-control" enable cols="20"
                                 rows="4" v-model="solicitudCertificacion.motivoRechazo"></textarea>
                         </div>
+                        
+                        <div v-if="solicitudCertificacion.estadoId == REVISION"
+                            class="form-group col-lg-12 col-sm-12 mb-4">
+                            <label class="control-label">{{loc["Motivo Revisión"]}}</label>
+                            <textarea id="motivoRevisionTxtArea" disabled class="form-control" enable cols="20"
+                                rows="4" v-model="solicitudCertificacion.motivoRevision"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,18 +134,21 @@
                 {{ loc["Rechazar"]}}
             </a>
 
-            <button
-                :disabled="solicitudCertificacion.propietarioActualId != BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
-                v-if="solicitudCertificacion.estadoId == PRESENTADA" class="btn btn-outline-warning btn-sm"
-                @click="sendRevisionAsync" :title="loc['Enviar solicitud a revisión']">
+            <a :disabled="solicitudCertificacion.propietarioActualId != BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
+            v-if="solicitudCertificacion.estadoId == PRESENTADA" class="btn btn-outline-warning btn-sm" :title="loc['Enviar solicitud a revisión']" data-toggle="tooltip"
+                data-bs-toggle="modal" :data-bs-target="`#${solicitudRevisionId}-${solicitudCertificacion.id}`"
+                style="cursor:pointer">
                 {{ loc["Revisión"]}}
-            </button>
+            </a>
 
             <cancel-button @click="cancel">{{ loc["Volver"]}}</cancel-button>
         </div>
 
         <solicitudRechazo-modal :solicitud="solicitudCertificacion" @solicitudRechazada="rejectAsync($event)"
                 :idModal="`${solicitudRechazoId}-${solicitudCertificacion.id}`" />
+        
+        <solicitudRevision-modal :solicitud="solicitudCertificacion" @solicitudRevision="sendRevisionAsync($event)"
+                :idModal="`${solicitudRevisionId}-${solicitudCertificacion.id}`" />
     </div>
 </template>
 
@@ -152,6 +162,7 @@ import commonMixin from '@/Common/Mixins/commonMixin';
 import solicitudCertificacionEstadoLabel from "@/Selects/solicitudCertificacionEstado-label.vue";
 
 import solicitudRechazoModal from './Modal/solicitudRechazo-modal'
+import solicitudRevisionModal from './Modal/solicitudRevision-modal'
 
 import inlineEdit from "@/components/forms/inline-edit-button.vue";
 import inlineDelete from "@/components/forms/inline-delete-button.vue";
@@ -170,7 +181,8 @@ export default {
         inlineEdit,
         inlineDelete,
         solicitudCertificacionEstadoLabel,
-        solicitudRechazoModal
+        solicitudRechazoModal,
+        solicitudRevisionModal
     },
     mixins: [commonMixin],
     name: "solicitudCertificacion-edit",
@@ -198,6 +210,7 @@ export default {
             solicitudCertificacion: new SolicitudCertificacion(),
             uiService: new UiService(),
             solicitudRechazoId: "solicitudRechazoModal",
+            solicitudRevisionId: "solicitudRevisionModal"
         };
     },
     computed: {

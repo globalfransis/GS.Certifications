@@ -1,10 +1,12 @@
 ﻿<template>
-  <button type="button" :disabled="!enabled" title="Confirmar" class="btn btn-link text-body" v-on:click="onClick()">
+  <button type="button" :disabled="!enabled" :title="loc['Aceptar']" class="btn btn-link text-body" v-on:click="onClick()">
     <i class="fas fa-check"></i>
   </button>
 </template>
 
 <script>
+import loc from '@/common/commonLoc'
+
 export default {
   inheritAttrs: false,
   name: "inline-accept",
@@ -13,6 +15,11 @@ export default {
       type: Boolean,
       default: true,
     },
+  },
+  data: function () {
+    return {
+      loc
+    }
   },
   methods: {
     onClick(e) {

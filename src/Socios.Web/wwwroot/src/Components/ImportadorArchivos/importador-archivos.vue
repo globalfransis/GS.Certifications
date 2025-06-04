@@ -203,7 +203,7 @@ export default {
             return document.getElementById(`formFile-${this.target}`);
         },
         infoText() {
-            `${loc['Las extensiones soportadas son']} ${this.extensionsTypes} ${loc['con un máximo de']} ${this.fileSizeLimit} ${loc['megabytes']}`
+            return this.infoTextProp ? this.infoTextProp : `${loc['Las extensiones soportadas son']} ${this.extensionsTypes} ${loc['con un máximo de']} ${this.fileSizeLimit} ${loc['megabytes']}`
         },
         urlImportarArchivos() {
             if (this.apiURL) return this.apiURL

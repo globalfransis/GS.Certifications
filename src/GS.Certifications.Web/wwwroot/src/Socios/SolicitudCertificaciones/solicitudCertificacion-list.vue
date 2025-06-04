@@ -7,10 +7,10 @@
 
         <div class="col-12 d-flex justify-content-between align-items-center mt-2 mb-2">
             <p class="h5 m-0">{{ loc["Listado de Solicitudes"] }}</p>
-            <button :disabled="!grants.create || !parameters.certificacionId || !parameters.socioId" type="button"
+            <!-- <button :disabled="!grants.create || !parameters.certificacionId || !parameters.socioId" type="button"
                 class="btn btn-outline-primary btn-sm" @click="createAsync">
                 <b><i class="fas fa-plus"></i>{{ loc["Agregar"]}}</b>
-            </button>
+            </button> -->
         </div>
 
         <div class="col-12 table-responsive">
@@ -58,7 +58,7 @@
                                 <div class="d-inline-flex">
                                     <inlineEdit :enabled="grants.update" @click="update(item.id)" />
                                     <!-- Habilitar este botón si aplica -->
-                                    <inlineDelete :enabled="grants.delete" @click="remove(item)" />
+                                    <!-- <inlineDelete :enabled="grants.delete" @click="remove(item)" /> -->
                                 </div>
                             </td>
                         </tr>

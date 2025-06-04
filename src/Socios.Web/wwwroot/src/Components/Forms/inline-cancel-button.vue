@@ -2,7 +2,7 @@
   <button
     type="button"
     :disabled="!enabled"
-    title="Cancelar"
+    :title="loc['Cancelar']"
     class="btn btn-link text-body"
     v-on:click="onClick()"
   >
@@ -11,14 +11,21 @@
 </template>
 
 <script>
+import loc from '@/common/commonLoc'
+
 export default {
   inheritAttrs: false,
-  name: "inline-cancel-button",
+  name: "inline-cancel",
   props: {
     enabled: {
       type: Boolean,
       default: true,
     },
+  },
+  data: function () {
+    return {
+      loc
+    }
   },
   methods: {
     onClick(e) {

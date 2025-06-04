@@ -47,6 +47,7 @@ public class SolicitudCertificacionDto : IMapFrom<SolicitudCertificacion>
     public DateTime? VigenciaHasta { get; set; }
     public string Observaciones { get; set; }
     public string MotivoRechazo { get; set; }
+    public string MotivoRevision { get; set; }
     public Guid Guid { get; set; }
     public byte[] RowVersion { get; set; }
 

@@ -10,6 +10,7 @@ export default class SolicitudCertificacion {
         this.cantidadAprobaciones = dto ? dto.cantidadAprobaciones : 0;
         this.observaciones = dto ? dto.observaciones : null;
         this.motivoRechazo = dto ? dto.motivoRechazo : null;
+        this.motivoRevision = dto ? dto.motivoRevision : null;
         this.rowVersion = dto ? dto.rowVersion : null;
         this.descripcion = dto ? dto.descripcion : null;
         this.guid = dto ? dto.guid : null;

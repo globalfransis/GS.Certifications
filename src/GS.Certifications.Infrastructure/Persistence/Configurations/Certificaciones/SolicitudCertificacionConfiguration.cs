@@ -12,6 +12,7 @@ namespace GS.Certifications.Infrastructure.Persistence.Configurations.SolicitudC
             builder.ToTable("cer_SolicitudCertificaciones");
             builder.Property(i => i.Observaciones).HasMaxLength(5000);
             builder.Property(i => i.MotivoRechazo).HasMaxLength(5000);
+            builder.Property(i => i.MotivoRevision).HasMaxLength(5000);
         }
     }
 

@@ -1206,4 +1206,40 @@
   <data name="Ubicación" xml:space="preserve">
     <value>Ubicación</value>
   </data>
+  <data name="Doc. para Revisión" xml:space="preserve">
+    <value>Doc. para Revisión</value>
+  </data>
+  <data name="Revisión" xml:space="preserve">
+    <value>Revisión</value>
+  </data>
+  <data name="Motivo Rechazo" xml:space="preserve">
+    <value>Motivo Rechazo</value>
+  </data>
+  <data name="Motivo Revisión" xml:space="preserve">
+    <value>Motivo Revisión</value>
+  </data>
+  <data name="¿Está usted seguro que desea enviar a revisión esta solicitud?" xml:space="preserve">
+    <value>¿Está usted seguro que desea enviar a revisión esta solicitud?</value>
+  </data>
+  <data name="¿Está usted seguro que desea aprobar este documento?" xml:space="preserve">
+    <value>¿Está usted seguro que desea aprobar este documento?</value>
+  </data>
+  <data name="¿Está usted seguro que desea rechazar este documento?" xml:space="preserve">
+    <value>¿Está usted seguro que desea rechazar este documento?</value>
+  </data>
+  <data name="Rechazo de Documento" xml:space="preserve">
+    <value>Rechazo de Documento</value>
+  </data>
+  <data name="Modificar" xml:space="preserve">
+    <value>Modificar</value>
+  </data>
+  <data name="No se puede eliminar esta solicitud." xml:space="preserve">
+    <value>No se puede eliminar esta solicitud.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no están validados." xml:space="preserve">
+    <value>Uno o más documentos de la solicitud no están validados.</value>
+  </data>
+  <data name="No se ha importado un archivo para el documento." xml:space="preserve">
+    <value>No se ha importado un archivo para el documento.</value>
+  </data>
 </root>

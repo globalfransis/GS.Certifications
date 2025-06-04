@@ -32,7 +32,7 @@
                                     {{ loc["Para continuar, por favor seleccioná el archivo para"] }} <strong v-if="tipoDoc">{{ tipoDoc }}</strong><strong v-else>{{ loc['el documento actual'] }}</strong>.
                                     <br> {{ loc["Una vez cargado, se analizará para extraer información relevante."] }}
                                 </p>
-                                <div class="mt-4 col-12 d-flex justify-content-center">
+                                <div class="d-flex justify-content-center">
                                     <importar-documento idModal="__modal_DocumentoArchivo_empty" ref="importarDocumentoEmpty"
                                         :disabled="!grants.update" 
                                         :documentoId="documento.id" :solicitudId="documento.solicitudId" :fileName="documento.archivoURL"
@@ -90,7 +90,9 @@
                                 @archivosUpdated="onDocumentoAnalyzedAsync($event)" />
                         </div>
                     </div>
-                    <hr v-if="documento.id && (documento.operationStatus == PROCESSING || ((documento.operationStatus == COMPLETED || documento.operationStatus == FAILED) && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL))">
+                    
+                    <hr v-if="documento.id && (documento.operationStatus == PROCESSING ||
+                    documento.operationStatus == COMPLETED || ((documento.operationStatus == COMPLETED || documento.operationStatus == FAILED) && previousOperationStatusForMessage == PROCESSING) || (documento.operationStatus == FAILED && !documento.archivoURL))">
 
                     <!-- <div class="form-group col-sm-12 mb-4 row">
                         <div class="col-8">
@@ -104,8 +106,6 @@
                             </span>
                         </div>
                     </div> -->
-
-                    <hr>
 
                     <div class="row mt-2" v-if="documento.id && (documento.archivoURL || (!documento.archivoURL && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED))">
                         <div :id="documentoArchivoDivId" class="col-md-6" >
@@ -592,10 +592,9 @@ async getAsync(id) {
         } else if (this.documento.operationStatus === this.FAILED) {
             this.uiService.showMessageError(this.loc["Error en el análisis del documento"]);
         }
-        // Resetear después de un breve momento para que el v-if en el template pueda mostrar la alerta y luego desaparecer
         // setTimeout(() => {
         //     this.previousOperationStatusForMessage = null;
-        // }, 4000); // Ocultar mensaje de alerta después de 4 segundos
+        // }, 5000); // 4 segundos
     },
         // completarFormularioDocumento(e) {
         //     this.errorBag.clear();

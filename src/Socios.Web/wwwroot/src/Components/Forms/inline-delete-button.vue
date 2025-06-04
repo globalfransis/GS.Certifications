@@ -1,10 +1,12 @@
 ﻿<template>
-  <button :disabled="!enabled" type="button" title="Eliminar" class="btn btn-link text-danger" @click="onClick">
+  <button :disabled="!enabled" type="button" :title="loc['Eliminar']" class="btn btn-link text-danger" @click="onClick">
     <i class="fas fa-trash"></i>
   </button>
 </template>
 
 <script>
+import loc from '@/common/commonLoc'
+
 export default {
   inheritAttrs: false,
   name: "inline-delete",
@@ -14,6 +16,11 @@ export default {
       default: true,
     }
   },
+  data: function () {
+        return{
+            loc
+        }
+    },
   methods: {
     onClick(e) {
       this.$emit("click");

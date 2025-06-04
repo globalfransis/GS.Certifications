@@ -113,6 +113,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
         short? EstadoId { get; set; }
         string Observaciones { get; set; }
         string MotivoRechazo { get; set; }
+        string MotivoRevision { get; set; }
         DateTime? FechaSolicitud { get; set; }
         DateTime? UltimaModificacionEstado { get; set; }
         DateTime? VigenciaDesde { get; set; }

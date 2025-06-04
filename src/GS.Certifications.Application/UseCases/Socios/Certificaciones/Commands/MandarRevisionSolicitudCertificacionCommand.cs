@@ -14,7 +14,7 @@ namespace GS.Certifications.Application.UseCases.Proveedores.Comprobantes.Comman
 public class MandarRevisionSolicitudCertificacionCommand : IRequest<Unit>
 {
     public int Id { get; set; }
-    public string Observaciones { get; set; }
+    public string MotivoRevision { get; set; }
     public byte[] RowVersion { get; set; }
     //public string ArchivoURL { get; set; }
     //public int? Version { get; set; }
@@ -43,7 +43,7 @@ public class MandarRevisionSolicitudCertificacionCommandHandler : BaseRequestHan
             var solicitudUpdateParameters = new SolicitudCertificacionUpdate()
             {
                 EstadoId = SolicitudCertificacionEstado.REVISION,
-                Observaciones = request.Observaciones,
+                MotivoRevision = request.MotivoRevision,
                 //FechaSolicitud = fechaSolicitud,
                 UltimaModificacionEstado = fechaSolicitud,
                 PropietarioId = Origen.SOCIOS

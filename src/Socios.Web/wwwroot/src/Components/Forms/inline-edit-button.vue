@@ -1,15 +1,17 @@
 ﻿<template>
-  <button type="button" :disabled="!enabled" title="Modificar" class="btn btn-link text-body" @click="onClick">
+  <button type="button" :disabled="!enabled" :title="loc['Modificar']" class="btn btn-link text-body" @click="onClick">
     <i class="fas fa-edit"></i>
   </button>
 </template>
 
 <script>
+import loc from '@/common/commonLoc'
+
 export default {
   inheritAttrs: false,
   name: "inline-edit",
   props: {
-    enabled:{
+    enabled: {
       type: Boolean,
       default: true
     }
@@ -19,7 +21,12 @@ export default {
       this.$emit("click");
     },
   },
-  created(){
+  data: function () {
+    return {
+      loc
+    }
+  },
+  created() {
   }
 };
 </script>

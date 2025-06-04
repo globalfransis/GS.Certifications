@@ -617,4 +617,64 @@
   <data name="Motivo" xml:space="preserve">
     <value>Motivo</value>
   </data>
+  <data name="Doc. para Revisión" xml:space="preserve">
+    <value>Doc. para Revisión</value>
+  </data>
+  <data name="Revisión" xml:space="preserve">
+    <value>Revisión</value>
+  </data>
+  <data name="Las extensiones soportadas son" xml:space="preserve">
+    <value>Las extensiones soportadas son</value>
+  </data>
+  <data name="Motivo Rechazo" xml:space="preserve">
+    <value>Motivo Rechazo</value>
+  </data>
+  <data name="Motivo Revisión" xml:space="preserve">
+    <value>Motivo Revisión</value>
+  </data>
+  <data name="Modificar" xml:space="preserve">
+    <value>Modificar</value>
+  </data>
+  <data name="con un máximo de" xml:space="preserve">
+    <value>con un máximo de</value>
+  </data>
+  <data name="megabytes" xml:space="preserve">
+    <value>megabytes</value>
+  </data>
+  <data name="No se puede eliminar esta solicitud." xml:space="preserve">
+    <value>No se puede eliminar esta solicitud.</value>
+  </data>
+  <data name="La vigencia del documento es inválida." xml:space="preserve">
+    <value>La vigencia del documento es inválida.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no están validados." xml:space="preserve">
+    <value>Uno o más documentos de la solicitud no están validados.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no fueron presentados." xml:space="preserve">
+    <value>Uno o más documentos de la solicitud no fueron presentados.</value>
+  </data>
+  <data name="Uno o más documentos de la solicitud no son válidos." xml:space="preserve">
+    <value>Uno o más documentos de la solicitud no son válidos.</value>
+  </data>
+  <data name="No se ha importado un archivo para el documento." xml:space="preserve">
+    <value>No se ha importado un archivo para el documento.</value>
+  </data>
+  <data name="La vigencia del documento es requerida." xml:space="preserve">
+    <value>La vigencia del documento es requerida.</value>
+  </data>
+  <data name="La vigencia de la solicitud es inválida." xml:space="preserve">
+    <value>La vigencia de la solicitud es inválida.</value>
+  </data>
+  <data name="La vigencia de la solicitud es requerida." xml:space="preserve">
+    <value>La vigencia de la solicitud es requerida.</value>
+  </data>
+  <data name="Ya existe una solicitud en curso para la certificación indicada." xml:space="preserve">
+    <value>Ya existe una solicitud en curso para la certificación indicada.</value>
+  </data>
+  <data name="El documento no existe." xml:space="preserve">
+    <value>El documento no existe.</value>
+  </data>
+  <data name="La solicitud de certificación no existe." xml:space="preserve">
+    <value>La solicitud de certificación no existe.</value>
+  </data>
 </root>

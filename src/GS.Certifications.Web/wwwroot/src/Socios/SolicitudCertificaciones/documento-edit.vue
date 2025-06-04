@@ -81,7 +81,7 @@
             <div class="card mt-2">
                 <div class="card-body">
 
-                    <div class="form-group col-sm-12 mb-4 row">
+                    <!-- <div class="form-group col-sm-12 mb-4 row">
                         <div class="col-8">
                             <label class="control-label">{{ loc["Importar Documento"] }}</label>
                             <importar-documento idModal="__modal_DocumentoArchivo" ref="importarDocumento"
@@ -94,7 +94,7 @@
                         </div>
                     </div>
 
-                    <hr>
+                    <hr> -->
 
                     <div class="row">
                         <div :id="documentoArchivoDivId" class="col-6">

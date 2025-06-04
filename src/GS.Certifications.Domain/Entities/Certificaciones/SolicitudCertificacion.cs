@@ -22,6 +22,7 @@ public class SolicitudCertificacion : BaseIntEntity
     public SolicitudCertificacionEstado Estado { get; set; }
     public string Observaciones { get; set; }
     public string MotivoRechazo { get; set; }
+    public string MotivoRevision { get; set; }
     public List<DocumentoCargado> DocumentosCargados { get; set; }
     public DateTime? FechaSolicitud { get; set; }
     public DateTime? UltimaModificacionEstado { get; set; }

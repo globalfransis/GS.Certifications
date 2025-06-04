@@ -402,6 +402,11 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
                 solicitudToUpdate.MotivoRechazo = solicitud.MotivoRechazo;
             }
 
+            if (!string.IsNullOrEmpty(solicitud.MotivoRevision))
+            {
+                solicitudToUpdate.MotivoRevision = solicitud.MotivoRevision;
+            }
+
             if (solicitud.FechaSolicitud is not null)
             {
                 solicitudToUpdate.FechaSolicitud = solicitud.FechaSolicitud;
@@ -583,6 +588,7 @@ namespace GS.Certifications.Application.UseCases.Socios.Certificaciones.Services
             public short? EstadoId { get; set; }
             public string Observaciones { get; set; }
             public string MotivoRechazo { get; set; }
+            public string MotivoRevision { get; set; }
             public DateTime? FechaSolicitud { get; set; }
             public DateTime? UltimaModificacionEstado { get; set; }
             public DateTime? VigenciaDesde { get; set; }

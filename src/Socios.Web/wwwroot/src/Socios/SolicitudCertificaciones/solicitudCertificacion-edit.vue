@@ -88,6 +88,13 @@
                                 rows="4" v-model="solicitudCertificacion.motivoRechazo"></textarea>
                         </div>
 
+                        <div v-if="solicitudCertificacion.estadoId == REVISION"
+                            class="form-group col-lg-12 col-sm-12 mb-4">
+                            <label class="control-label">{{loc["Motivo Revisión"]}}</label>
+                            <textarea id="motivoRevisionTxtArea" disabled class="form-control" enable cols="20"
+                                rows="4" v-model="solicitudCertificacion.motivoRevision"></textarea>
+                        </div>
+
 
                     </div>
                 </div>
