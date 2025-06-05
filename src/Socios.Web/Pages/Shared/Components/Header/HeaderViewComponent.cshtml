@@ -14,7 +14,7 @@
 
     <!-- Mobile Menu -->
     <div class="d-xl-none p-0">
-        <nav class="navbar header navbar-expand-lg navbar-light">
+        <nav class="navbar header navbar-expand-lg navbar-light" style="border-bottom: 3px solid #2D353;">
             <div class="container-fluid">
 
                 @* <div class="w-20 w-md-10">
@@ -110,7 +110,7 @@
     </div>
 
 
-    <nav id="navbar" class="navbar header d-xl-inline-flex d-none d-lg-none d-sm-none d-md-none ">
+    <nav id="navbar" class="navbar header d-xl-inline-flex d-none d-lg-none d-sm-none d-md-none " style="border-bottom: 3px solid rgb(0, 0, 0, 0.5) !important">
 
         <div class="d-inline-flex align-items-center">
             <div class="environment-ribbon" style="@(Model.CurrentEnvironment != null ? "display:block" : "display:none")">
@@ -229,6 +229,7 @@
         #navbar {
             position: fixed;
             z-index: 10000;
+            border-bottom: 3px solid rgb(0, 0, 0, 0.5) !important;
         }
     </style>
 }

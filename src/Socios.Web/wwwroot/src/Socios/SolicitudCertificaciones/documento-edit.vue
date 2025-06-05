@@ -109,7 +109,7 @@
 
                     <div class="row mt-2" v-if="documento.id && (documento.archivoURL || (!documento.archivoURL && documento.operationStatus != PROCESSING && documento.operationStatus != FAILED))">
                         <div :id="documentoArchivoDivId" class="col-md-6" >
-                            <iframe v-if="iframeSrc" :src="iframeSrc" style="width: 100%; height: 100%; border: none;"></iframe>
+                            <iframe v-if="iframeSrc" :src="iframeSrc" style="width: 100%; border: none; height: 100%;" ></iframe>
                             <div v-else-if="documento.archivoURL && !iframeSrc"
                                  class="alert alert-warning text-center d-flex align-items-center justify-content-center h-100">
                                 <span><i class="fas fa-exclamation-triangle me-2"></i>{{ loc["No se puede mostrar el documento. La URL podría ser inválida o el archivo no está accesible."] }}</span>

@@ -97,10 +97,10 @@
                     <hr> -->
 
                     <div class="row">
-                        <div :id="documentoArchivoDivId" class="col-6">
+                        <div :id="documentoArchivoDivId" class="col-md-6">
                             <iframe v-if="documento.archivoURL"
                                 :src="`${currentLocation}/CertificacionesWebRepository/Uploads/Solicitudes/Solicitud_${documento.solicitudGuid}/Doc_${documento.guid}/${documento.archivoURL}`"
-                                style="width: 100%; height: 100%; border: none;">
+                                style="width: 100%; border: none; height: 100%;">
                             </iframe>
                         </div>
                         <div :id="documentoFormularioDivId" class="row col-md-6 col-6">

@@ -16,9 +16,9 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+                        <div class="col-12 d-flex align-items-center mb-2">
                             <div>
-                                <p class="h5 m-0">{{loc["Documentos"]}}</p>
+                                <p class="h5">{{loc["Documentos"]}}</p>
                                 <span class="text-danger field-validation-error">
                                     {{ errorBag.get("documentos") }}
                                 </span>
@@ -27,65 +27,76 @@
                                     <b><i class="fas fa-plus"></i>Agregar</b>
                                 </button> -->
                         </div>
-                        <table :id="`${idTable}`" class="table table-bordered table-hover">
-                            <thead class="table-top">
-                                <tr class="text-center align-middle">
-                                    <th class="w-10" scope="col">{{loc["Tipo"]}}</th>
-                                    <th class="w-2" scope="col">{{loc["Versión"]}}</th>
-                                    <th class="w-10" scope="col">{{loc["Vigencia"]}}</th>
-                                    <th class="w-10" scope="col">{{loc["Estado"]}}</th>
-                                    <th class="w-10" scope="col">{{loc["Validado Por"]}}</th>
-                                    <th class="w-10" scope="col">{{loc["Fecha Subida"]}}</th>
-                                    <th class="w-10" scope="col">{{loc["Archivo"]}}</th>
-                                    <th class="w-2" scope="col">{{loc["Acciones"]}}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="solicitudCertificacion.documentosCargados.length === 0" class="no-data">
-                                    <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
-                                </tr>
-                                <template v-for="(cd, index) in solicitudCertificacion.documentosCargados">
-                                    <tr :class="cd.estadoId == DOCUMENTO_RECHAZADO ? 'table-danger' : ''" :key="index" :title="cd.motivoRechazo">
-                                        <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.tipo ? cd.tipo : "-" }}</td>
-                                        <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.version ? cd.version : "-" }}</td>
-                                        <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.fechaDesde | uidate }} - {{ cd.fechaHasta | uidate }}</td>
-                                        <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.estado ? loc[cd.estado] : "-" }}</td>
-                                        <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.validadoPor ? cd.validadoPor : "-" }}</td>
-                                        <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.fechaSubida | uidate }}</td>
-                                        <td data-toggle="tooltip" class="align-middle">
-                                            {{ cd.archivoURL ? cd.archivoURL : "-" }}</td>
-                                        <td class="text-center align-middle">
-                                            <div class="d-inline-flex" v-if="cd.estadoId != DOCUMENTO_RECHAZADO">
-                                                <inlineEdit
-                                                    :enabled="grants.update && solicitudCertificacion.propietarioActualId == BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
-                                                    @click="update(cd.id)" />
-                                                <!-- <inlineDelete
-                                                    :disabled="!grants.update && solicitudCertificacion.propietarioActualId != BACKOFFICE"
-                                                    @click="remove(cd)" /> -->
-                                            </div>
-                                        </td>
-
+                        <div class="col-12 d-flex align-items-center mb-2">
+                            <table :id="`${idTable}`" class="table table-bordered table-hover table-responsive">
+                                <thead class="table-top">
+                                    <tr class="text-center align-middle">
+                                        <th class="w-10" scope="col">{{loc["Tipo"]}}</th>
+                                        <th class="w-2" scope="col">{{loc["Versión"]}}</th>
+                                        <th class="w-10" scope="col">{{loc["Vigencia"]}}</th>
+                                        <th class="w-10" scope="col">{{loc["Estado"]}}</th>
+                                        <th class="w-10" scope="col">{{loc["Validado Por"]}}</th>
+                                        <th class="w-10" scope="col">{{loc["Fecha Subida"]}}</th>
+                                        <th class="w-10" scope="col">{{loc["Archivo"]}}</th>
+                                        <th class="w-2" scope="col">{{loc["Acciones"]}}</th>
                                     </tr>
-                                </template>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="solicitudCertificacion.documentosCargados.length === 0" class="no-data">
+                                        <td colspan="100" class="text-center">{{ NO_DATA_MESSAGE }}</td>
+                                    </tr>
+                                    <template v-for="(cd, index) in solicitudCertificacion.documentosCargados">
+                                        <tr :class="cd.estadoId == DOCUMENTO_RECHAZADO ? 'table-danger' : ''" :key="index" :title="cd.motivoRechazo">
+                                            <td data-toggle="tooltip" class="align-middle">
+                                                {{ cd.tipo ? cd.tipo : "-" }}</td>
+                                            <td data-toggle="tooltip" class="align-middle">
+                                                {{ cd.version ? cd.version : "-" }}</td>
+                                            <td data-toggle="tooltip" class="align-middle">
+                                                {{ cd.fechaDesde | uidate }} - {{ cd.fechaHasta | uidate }}</td>
+                                            <td data-toggle="tooltip" class="align-middle">
+                                                {{ cd.estado ? loc[cd.estado] : "-" }}</td>
+                                            <td data-toggle="tooltip" class="align-middle">
+                                                {{ cd.validadoPor ? cd.validadoPor : "-" }}</td>
+                                            <td data-toggle="tooltip" class="align-middle">
+                                                {{ cd.fechaSubida | uidate }}</td>
+                                            <td data-toggle="tooltip" class="align-middle">
+                                                {{ cd.archivoURL ? cd.archivoURL : "-" }}</td>
+                                            <td class="text-center align-middle">
+                                                <div class="d-inline-flex" v-if="cd.estadoId != DOCUMENTO_RECHAZADO">
+                                                    <inlineEdit
+                                                        :enabled="grants.update && solicitudCertificacion.propietarioActualId == BACKOFFICE && solicitudCertificacion.estadoId == PRESENTADA"
+                                                        @click="update(cd.id)" />
+                                                    <!-- <inlineDelete
+                                                        :disabled="!grants.update && solicitudCertificacion.propietarioActualId != BACKOFFICE"
+                                                        @click="remove(cd)" /> -->
+                                                </div>
+                                            </td>
+                            
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <hr>
+
+                        <div class="col-12 d-flex align-items-center mb-2">
+                            <div>
+                                <p class="h5">{{loc["Vigencia"]}}</p>
+                                <span class="text-danger field-validation-error">
+                                    {{ errorBag.get("vigencia") }}
+                                </span>
+                            </div>
+                        </div>
 
                         <div class="form-group col-lg-6 col-sm-12 mb-2 required">
                             <label class="control-label">{{ loc["Fecha Desde"]}}</label>
                             <input type="date" class="form-control" v-model="solicitudCertificacion.vigenciaDesde">
-                            <span class="text-danger field-validation-error">
+                            <!-- <span class="text-danger field-validation-error">
                                 {{ errorBag.get("vigencia") }}
-                            </span>
+                            </span> -->
                         </div>
-                        <div class="form-group col-lg-6 col-sm-12 mb-2 required">
+                        <div class="form-group col-lg-6 col-sm-12 mb-4 required">
                             <label class="control-label">{{ loc["Fecha Hasta"]}}</label>
                             <input type="date" class="form-control" v-model="solicitudCertificacion.vigenciaHasta">
                             <span class="text-danger field-validation-error">
@@ -93,8 +104,14 @@
                             </span>
                         </div>
 
+                        <hr>
+
+                        <div class="col-12 d-flex align-items-center mb-2">
+                            <div>
+                                <p class="h5">{{loc["Observaciones"]}}</p>
+                            </div>
+                        </div>
                         <div class="form-group col-lg-12 col-sm-12 mb-2">
-                            <label class="control-label">{{ loc["Observaciones"]}}</label>
                             <textarea class="form-control" cols="20" rows="5"
                                 v-model="solicitudCertificacion.observaciones"></textarea>
                             <span class="text-danger field-validation-error">

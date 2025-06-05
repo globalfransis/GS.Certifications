@@ -2,13 +2,11 @@
 
 
 :root {
-    --main-bg-color: #2D353C;
-    --header-bg-color: #2D353C;
+    --main-bg-color: #0d8b8b;
+    --header-bg-color: #0d8b8b;
     --main-content-color: #DEE2E6;
-
-    --table-head-color: #2D353C;
-
-    --card-bg-color: #0d8b8b;
+    --table-head-color: #0d8b8b;
+    --card-bg-color: #2D353C;
     --card-hover-bg: #33CCCC;
     --card-text-color: #F5F5F5;
 }
